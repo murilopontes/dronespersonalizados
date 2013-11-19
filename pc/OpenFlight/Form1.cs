@@ -167,5 +167,10 @@ namespace OpenFlight
             return x / 3.1415926 * 180;
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
