@@ -1,0 +1,572 @@
+/**
+ * Stylesheet for Gray-1 theme
+ */
+a {
+	color:#787878;
+}
+a:visited {
+	color: #787878;
+}
+
+a.dbx-toggle, a.dbx-toggle:visited {
+	background-image:url(../../images/exp-coll-gray.png);
+	background-repeat:no-repeat;
+}
+
+* html a.dbx-toggle,
+* html a.dbx-toggle:visited {
+	background-image:url(../../images/exp-coll-gray.gif);
+	background-repeat:no-repeat;
+}
+
+.scheme a.dbx-toggle, .scheme a.dbx-toggle:visited {
+	background-image:url(../../images/exp-coll-gray.png);
+	background-repeat:no-repeat;
+}
+
+* html .scheme a.dbx-toggle,
+* html .scheme a.dbx-toggle:visited {
+	background-image:url(../../images/exp-coll-gray.gif);
+	background-repeat:no-repeat;
+}
+
+.suf-widget h3.scheme {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+#wrapper {
+	border: 1px solid #c0c0c0;
+	background-color: #f0f0f0;
+}
+
+/* Blog title */
+.blogtitle a:hover {
+	color: #787878;
+}
+
+/* search form */
+.searchform input[type="submit"].searchsubmit {
+	background: url(../../images/search-button-gray-1.png) no-repeat 0 0;
+}
+
+* html #right-header-widgets .searchsubmit, * html #left-header-widgets .searchsubmit, * html #top-bar-right-widgets .searchsubmit, * html #top-bar-left-widgets .searchsubmit,
+* html #sidebar .searchsubmit, * html #sidebar-2 .searchsubmit, * html #sidebar-b .searchsubmit, * html #sidebar-2-b .searchsubmit, * html #horizontal-outer-widgets-1 .searchsubmit, * html #horizontal-outer-widgets-2 .searchsubmit {
+	bac\kground: url(../../images/search-button-gray-1.gif) no-repeat 0 0;
+}
+
+/* main menu */
+#nav {
+	border-bottom: 1px solid #c0c0c0;
+}
+#nav.continuous {
+	border-bottom: 1px solid #a5a7aa;
+}
+#nav.continuous, #nav.continuous ul li, #nav.continuous ul li a, #nav.continuous ul li a:visited,
+#nav-top.continuous, #nav-top.continuous ul li, #nav-top.continuous ul li a, #nav-top.continuous ul li a:visited {
+	color: #222;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+#nav.continuous .current_page_item a, #nav.continuous .current_page_item a:hover,#nav.continuous ul li a:hover, #nav.continuous li a:active, #nav.continuous ul ul li a, #nav.continuous ul ul li a:visited,
+#nav-top.continuous .current_page_item a, #nav-top.continuous .current_page_item a:hover,#nav-top.continuous ul li a:hover, #nav-top.continuous li a:active, #nav-top.continuous ul ul li a, #nav-top.continuous ul ul li a:visited {
+	background: #f0f0f0;
+	color: #222;
+}
+#nav.continuous ul ul li a:hover, #nav.continuous .current_page_item li a:hover, #nav.continuous .current-cat li a:hover, #nav.continuous .current-menu-item li a:hover,
+#nav-top.continuous ul ul li a:hover, #nav-top.continuous .current_page_item li a:hover, #nav-top.continuous .current-cat li a:hover, #nav-top.continuous .current-menu-item li a:hover {
+	color: #222;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+#nav ul li, #nav.continuous ul ul li, #nav-top.continuous ul ul li{
+	border: 1px solid #c0c0c0;
+}
+
+#nav ul li a{
+	color: #222;
+	background-color: #f0f0f0;
+}
+
+#nav .current_page_item a, #nav .current_page_item a:hover,#nav li a:active {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+	color: #444;
+}
+
+#nav li a:hover {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+#nav li a:active{
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* Styling for navigation menus */
+#nav ul ul li {
+	border: 1px solid #c0c0c0;
+}
+
+#nav ul ul li a:hover {
+	color: #444;
+}
+
+/* style the links for the top level */
+#nav a,
+#nav a:visited {
+	color: #222;
+}
+
+#nav li.current_page_item a,
+#nav li.current-cat a,
+#nav li.current-menu-item a,
+#nav a:active {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* style the third level hover */
+#nav ul ul ul a:hover {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* style the second level links */
+#nav ul ul a,
+#nav ul ul a:visited,
+#nav li.current_page_item li a,
+#nav li.current-cat li a,
+#nav li.current-menu-item li a {
+	background: #f0f0f0;
+	color:#222;
+}
+
+/* style the top level hover */
+#nav a:hover,
+#nav ul ul a:hover {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* style the second level background */
+#nav ul ul a.drop,
+#nav ul ul a.drop:visited {
+	background: #f0f0f0;
+}
+
+/* style the second level hover */
+#nav ul ul a.drop:hover {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+#nav ul ul :hover > a.drop {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+#nav :hover > a,
+#nav ul ul :hover > a {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* main menu */
+#nav-top {
+	background-color: #f0f0f0;
+	border: 1px solid #c0c0c0;
+	border-top: none;
+}
+
+#nav-top ul li{
+	border: 1px solid #c0c0c0;
+}
+
+#nav-top ul li a{
+	color: #222;
+	background-color: #f0f0f0;
+}
+
+#nav-top .current_page_item a, #nav-top .current_page_item a:hover,#nav-top li a:active {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+	color: #444;
+}
+
+#nav-top li a:hover {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+#nav-top li a:active{
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* Styling for navigation menus */
+#nav-top ul ul li {
+	border: 1px solid #c0c0c0;
+}
+
+#nav-top ul ul li a:hover {
+	color: #444;
+}
+
+/* style the links for the top level */
+#nav-top a,
+#nav-top a:visited {
+	color: #222;
+}
+
+#nav-top li.current_page_item a,
+#nav-top li.current-cat a,
+#nav-top li.current-menu-item a,
+#nav-top a:active {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* style the second level background */
+#nav-top ul ul a.drop,
+#nav-top ul ul a.drop:visited {
+	background: #f0f0f0;
+}
+
+/* style the second level hover */
+#nav-top ul ul a.drop:hover {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+#nav-top ul ul :hover > a.drop {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* style the third level hover */
+#nav-top ul ul ul a:hover {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* style the second level links */
+#nav-top ul ul a,
+#nav-top ul ul a:visited,
+#nav-top li.current_page_item li a,
+#nav-top li.current-cat li a,
+#nav-top li.current-menu-item li a {
+	background: #f0f0f0;
+	color:#222;
+}
+
+/* style the top level hover */
+#nav-top a:hover,
+#nav-top ul ul a:hover {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+#nav-top :hover > a,
+#nav-top ul ul :hover > a {
+	color: #444;
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+/* sub menu */
+#subnav {
+	background: #fff;
+	margin-top: 15px;
+	border: 1px solid #c0c0c0;
+}
+#subnav ul {
+	margin: 0px;
+	padding: 0px 0px 0px 5px;
+	list-style: none;
+}
+#subnav .current_page_item a,
+#subnav .current_page_item a:visited,
+#subnav .current_page_parent a,
+#subnav .current_page_parent a:visited {
+	color: #787878;
+}
+#subnav li a:hover {
+	color: #787878;
+}
+
+/* Level 3 */
+.hier-nav {
+	background: #f0f0f0;
+}
+
+.hier-nav .current_page_item a, .hier-nav .current_page_item a:visited, .hier-nav .current_page_parent a, .hier-nav .current_page_parent a:visited {
+	color: #787878;
+}
+
+.hier-nav li a:hover {
+	color: #787878;
+}
+
+#top-bar-right-spanel-tab .toggle {
+	border: 1px solid #c0c0c0;
+}
+
+#top-bar-right-spanel-tab .toggle a {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+	color: #444;
+}
+
+/* content */
+.post .date {
+	background: url(../../images/calgray-1.png) no-repeat;
+	color: #444;
+}
+
+.post .date span.day, .post .date span.month {
+	color: #444;
+}
+.post .date span.year {
+	color: #444;
+}
+
+.bookdata a:hover,
+.postdata a:hover {
+	color: #787878;
+}
+
+/* post title */
+h1.posttitle a:hover,
+h2.posttitle a:hover {
+	color: #787878;
+}
+.tags a:hover {
+	color: #787878;
+}
+
+div.page-links span {
+	border-color: #787878;
+}
+
+div.page-links > span {
+	background-color: #787878;
+	color: #fff;
+}
+
+div.page-links a:hover {
+	background-color: #787878;
+	color: #fff;
+}
+
+/* next & previous page navigation */
+.page-nav a:hover {
+	color: #787878;
+}
+
+/* next & previous post navigation */
+.post-nav a:hover {
+	color: #787878;
+}
+
+.suf-page-nav a,
+.suf-page-nav a:visited,
+.suf-page-nav span {
+	border-color: #787878;
+	color: #787878;
+}
+
+.suf-page-nav a:hover {
+	background-color: #787878;
+}
+
+.suf-page-nav span.current {
+	background-color: #787878;
+	color: #ffffff;
+}
+
+/* Comments  */
+h3#comments,
+h3.comments {
+	background-color: #f0f0f0;
+}
+
+h3#respond, h3.respond, #reply-title {
+	background-color: #f0f0f0;
+}
+
+/* comment list */
+.commentlist cite {
+	color: #787878;
+}
+.commentlist cite a, .commentlist cite a:visited {
+	color: #787878;
+}
+
+.commentlist .alt {
+	background-color: #f0f0f0;
+}
+
+div.comment-response-types span {
+	border-color: #787878;
+}
+
+div.comment-response-types > span {
+	background-color: #787878;
+	color: #fff;
+}
+
+div.comment-response-types a:hover {
+	background-color: #787878;
+	color: #fff;
+}
+
+/* Credits  */
+#page-footer, #cred {
+	border-top: 1px solid #c0c0c0;
+}
+
+#cred a:hover {
+	color: #787878;
+}
+
+.button, input[type="submit"], input[type="button"] {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+	color: #444;
+}
+
+/* sidebar */
+.suf-widget h3,
+.suf-widget h3:hover,
+.suf-widget h3 a,
+.suf-widget h3 a:visited {
+	color: #444;
+}
+
+.suf-widget h3.scheme,
+.suf-widget h3.scheme:hover,
+.suf-widget h3.scheme a,
+.suf-widget h3.scheme a:visited {
+	color: #444;
+}
+
+div.sidebar-tab-content a:hover,
+div.sidebar-tab-content a:focus,
+div.sidebar-tab-content a:active,
+.suf-widget a:hover,
+.suf-widget a:focus,
+.suf-widget a:active,
+.warea a:hover,
+.warea a:focus,
+.warea a:active  {
+	color: #787878;
+}
+
+.suf-mag-category li,
+.sidebar-tab-content ul li,
+.suf-widget li,
+.suf-flat-widget li,
+.suf-panel-widget li {
+	background-image: url(../../images/icons/bulletgray.png);
+}
+
+.sidebar-tab-content ul li ul li,
+.suf-widget ul li ul li {
+	background-image: url(../../images/icons/bulletgray.png);
+}
+
+.tab-box div.sbtab-content-categories ul li,
+.tab-box div.sbtab-content-categories ul li ul li,
+.tab-box div.sbtab-content-categories ul li ul li ul li,
+.widget_categories ul li,
+.widget_categories ul li ul li,
+.widget_categories ul li ul li ul li {
+	background-image: url(../../images/icons/folder-gray16.png);
+}
+
+/* meta */
+div.sbtab-content-meta .rss,
+.suf-widget .rss,
+.suf-flat-widget .rss,
+.suf-panel-widget .rss,
+.widget_meta .rss {
+	background-image: url(../../images/icons/008.png);
+}
+
+.widget_calendar td.with-posts { background: #a5a7aa; }
+.widget_calendar td.with-posts a { color: #444; }
+
+#commentform label.fancy {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+	color: #444;
+}
+
+/* These settings are required for Featured Posts */
+.sliderIndex a, .sliderIndex a:visited,
+#sliderIndex a,
+#sliderIndex a:visited {
+	border-color: #787878;
+	color: #787878;
+}
+
+.sliderIndex a:hover, .sliderIndex a.activeSlide,
+#sliderIndex a:hover,
+#sliderIndex a.activeSlide {
+	background-color: #787878;
+	color: #fff;
+}
+
+/* These settings are for common plugins */
+.wp-pagenavi a,
+.wp-pagenavi a:visited,
+.wp-pagenavi span {
+	border-color: #787878;
+	color: #787878;
+}
+
+.wp-pagenavi span.current {
+	background-color: #787878;
+	color: #fff;
+}
+
+.wp-pagenavi a:hover {
+	background-color: #787878;
+	color: #fff;
+}
+
+.warea ul.sidebar-tabs li a.tab-current,
+ul.sidebar-tabs li a.tab-current {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+	color: #444;
+}
+
+/* Magazine */
+.suf-mag-headline-block li.suf-mag-headline a.tab-current,
+h2.suf-mag-category-title,
+a.suf-mag-excerpt-full-story,
+a.suf-mag-excerpt-full-story:visited,
+.warea a.suf-mag-category-all-posts,
+.warea a.suf-mag-category-all-posts:visited,
+a.suf-mag-category-all-posts,
+a.suf-mag-category-all-posts:visited {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+	color: #444;
+}
+
+/* BuddyPress */
+#item-nav div.item-list-tabs ul li.selected {
+	background: #a5a7aa url(../../images/bg-gray-1.png) repeat-x top left;
+}
+
+#item-body div.item-list-tabs ul li.current a, #item-body div.item-list-tabs ul li.current a:visited, #item-body div.item-list-tabs ul li.current a:hover {
+	color: #787878;
+}
+
+div.item-list-tabs ul li.selected a, div.item-list-tabs ul li.selected a:visited, div.item-list-tabs ul li.selected a:focus, div.item-list-tabs ul li.selected a:hover,
+.dir-form h3 a.button, .dir-form h3 a.button:hover, .dir-form h3 a.button:visited {
+	color: #444;
+}
+
+#item-nav div.item-list-tabs ul li {
+	border: 1px solid #ddd;
+	border-bottom: none;
+}
+
+.post form#whats-new-form, ul.item-list .activity, ul.item-list .groups, ul.item-list .blog, ul.item-list li div.activity-comments ul li, .standard-form, ul.item-list .member {
+	border: 1px solid #ccc;
+	background-color: #f0f0f0;
+}
+
+#l3nav .current a, #l3nav .current a:visited, #l3nav .current a, #l3nav .current a:visited {
+	color: #444;
+}
