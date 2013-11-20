@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!-- saved from url=(0107)http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/blog/2012/01/12/Enabling-The-Drone-USB-Port/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>Navigation for Robots with WIFI and CV | Enabling the Drone USB Port</title>
+	<!--<base href="http://taghof.github.com/Navigation-for-Robots-with-WIFI-and-CV/" target="_blank"/>-->
+	<link rel="stylesheet" href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/css/master.css">
+	<script src="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/master.js"></script>
+<script src="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/alfie.js" async="" charset="UTF-8"></script></head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <p id="logo"><a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV">Navigation for Robots with WIFI and CV</a></p>
+      <nav>
+	<ul class="clearfix">
+	  <li><a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/archive.html">Archive</a></li>
+	  <li><a href="https://github.com/taghof/Navigation-for-Robots-with-WIFI-and-CV">Code</a></li>
+	  <li><a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/project.html">The Project</a></li>
+	</ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="content-wrap">
+    <div class="container" style="”text-align:" justify;="" text-justify:="" newspaper”="">
+
+		<article class="post container">
+	<h2>Enabling the Drone USB Port</h2>
+	<div class="post-meta span-3">
+		<time class="pill" datetime="2012-01-12">January 12, 2012</time>
+	</div>
+	<div class="post-content span-15 last">
+	  <h1>Purpose</h1>
+
+<p>To determine whether attaching extra sensors to the AR.Drone is
+possible and to make a proof of concept by attaching and mounting a
+USB memory stick.</p>
+
+<h1>Procedure</h1>
+
+<p>To enable the On-The-Go USB port several steps must be taken: Editing the port
+driver to enable host mode, compiling the driver and other necessary
+kernel modules with a cross compiler toolchain, uploading the compiled
+modules to the drone and inserting the modules in the kernel and
+lastly changing the state of an I/O pin with the drone gpio tool. The following
+steps assume you are using a linux build environment.</p>
+
+<ol>
+<li><p>To begin editing the port driver one must first obtain the
+    source code, luckily the custom Parrot kernel source(including
+    drivers) is freely available from the <a href="https://projects.ardrone.org/documents/show/19" title="Kernel Source">AR.Drone website</a>. Also available is the kernel config file, so we
+    are able to build modules for the exact kernel running on the drone.</p>
+
+<ul>
+<li>  Download and unpack the kernel source and 
+kernel.config. Rename kernel.config to .config and place it in
+the kernel source root.</li>
+<li>  Setup a cross compilation environment by following the instructions
+    from <a href="http://www.nas-central.org/wiki/Setting_up_the_codesourcery_toolchain_for_X86_to_ARM9_cross_compiling" title="cross compilation setup">www.nas-central.com</a>, instructions include a setup script which automatically fetches the <a href="http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/editions/lite-edition/" title="Codesourcery(Mentor) lite edition">codesourcery toolchain</a>.</li>
+</ul></li>
+<li><p>Edit the file "drivers/parrot/usb/dwc_otg/dwc_otg_driver.c",
+instructions are on <a href="http://embedded-software.blogspot.com/2010/12/ar-drone-usb.html" title="E/S and I, AR.Drone USB">the E/S and I blog</a>.
+In short, around line 224 comment out: </p>
+
+<pre><code>params-&gt;ctrl_mode = info-&gt;ctrl_mode;
+params-&gt;vbus_detection = info-&gt;vbus_detection;
+</code></pre>
+
+<p><br>and around line 135 set <code>.overcurrent_pin = -1</code>.</p></li><p></p>
+<li><p>To open the graphical kernel configuration tool and select the kernel modules you want to compile(including the one you edited), go to the kernel tree root and run:</p>
+
+<pre><code>make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- menuconfig
+</code></pre>
+
+<p><br>Remember to select as modules(M, not *).   </p>
+
+<ul>
+<li>  To enable the usb port select:<br>
+"System Type -&gt; Parrot Drivers -&gt; PARROT6 USB driver (Synopsys)".<br></li>
+<li>  To enable the FAT32 file system select:<br>
+"File systems -&gt; DOS/FAT/NT Filesystems -&gt; VFAT (Windows-95) fs support"<br>
+"File systems -&gt; Native language support"<br>
+"File systems -&gt; Native language support -&gt; Codepage 437 (United States, Canada)"<br>
+"File systems -&gt; Native language support -&gt; NLS ISO 8859-1  (Latin 1..."<br>
+"File systems -&gt; Native language support -&gt; NLS UTF-8"<br></li>
+<li>  For a USB stick to be recognized as a SCSI disk, we must add SCSI support by selecting:<br>
+"Device Drivers -&gt; SCSI device support -&gt; SCSI disk support"<br></li>
+</ul>
+
+<p>Alternatively you could use <a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/downloads/custom-kernel.config" title="Our kernel config">our kernel config</a> and spare yourself the trouble, anyway the selected modules can now be compiled by running:</p>
+
+<pre><code>make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules
+</code></pre>
+
+<p><br>This should, among other things, generate the following modules:</p>
+
+<pre><code>drivers/block/nbd.ko
+drivers/parrot/usb/dwc_otg/dwc_otg.ko
+drivers/scsi/scsi_wait_scan.ko
+drivers/scsi/sd_mod.ko
+fs/fat/fat.ko
+fs/nls/nls_base.ko
+fs/nls/nls_cp437.ko
+fs/nls/nls_iso8859-1.ko
+fs/nls/nls_utf8.ko
+fs/vfat/vfat.ko
+</code></pre>
+
+<p><br>   </p></li>
+<li><p>Transfer these modules to the drone via FTP and before inserting the modules, login to the drone via telnet and run the following commands to activate the USB port in the      drone hardware:</p>
+
+<pre><code># gpio 127 -d ho 1
+# gpio 127 -d i
+</code></pre>
+
+<p><br>Then insert the modules with <code>insmod &lt;module file&gt;</code>. Consider a shell script for automating the on-drone proces, we made a <a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/downloads/load.sh" title="Our load script">script</a> that copies all transferred .ko        files to a custom_modules directory, sets the I/O pin and inserts the needed modules. For further ease of use this script could be called from the drone startup script.</p></li>
+<li><p>At this point we are able to plugin our <a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/blog/2012/01/17/Cables-And-Physical-Setup-For-USB-Testing/" title="Cables and physical setup for USB testing">home made USB cable</a>, with a USB stick atttached, and see with <code>$ dmesg</code> that the stick is correctly recognized.
+The stick usually appears as <code>/dev/sda1</code> but you might need to run <code>$ devmem</code> for this to happen. Left is only mounting and manipulating(see images below). </p></li>
+</ol>
+
+<h1>Results</h1>
+
+<p>After following the procedure above we were able to power the USB port, compile and insert the necessary kernel modules, recognize our USB stick 
+as a SCSI disk, mount the stick and copy files from the stick to the drone internal memory and back. Below are screen caps of the on-drone-process and results.   </p>
+
+<p><a href="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/load.png"><img src="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/load.png" width="150" height="150"></a>
+<a href="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/fdisk-df.png"><img src="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/fdisk-df.png" width="150" height="150"></a>
+<a href="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/copying.png"><img src="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/copying.png" width="150" height="150"></a></p>
+
+<h1>References</h1>
+
+<p>Much of the tweaking described above was developed by the users <a href="http://embedded-software.blogspot.com/">"Scorpion2k"</a>
+ and "MAPGPS" of <a href="http://www.ardrone-flyers.com/">www.ardrone-flyers.com</a>.<br>
+<br> 
+Threads, blogpost and wikis used above:<br>
+<a href="http://www.nas-central.org/wiki/Setting_up_the_codesourcery_toolchain_for_X86_to_ARM9_cross_compiling" title="cross compilation setup">NAS central, cross compilation setup</a><br>
+<a href="http://embedded-software.blogspot.com/2010/12/ar-drone-usb.html" title="E/S and I, AR.Drone USB">E/S and I, AR.Drone USB</a><br>
+<a href="http://www.ardrone-flyers.com/forum/viewtopic.php?t=829" title="AR.Drone Flyers, USB disc thread">AR.Drone Flyers, USB disk thread</a><br>
+<br>
+Code resources:<br>
+<a href="https://projects.ardrone.org/documents/show/19" title="Kernel Source">Kernel source and kernel config</a><br>
+<a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/downloads/custom-kernel.config" title="Our kernel config">Our custom kernel config</a><br>
+<a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/downloads/load.sh" title="Our load script">Our load script</a>   </p>
+
+<!-- references -->
+
+<!-- downloads -->
+
+	  <hr>
+	  <div id="disqus">
+	    <div id="disqus_thread"><iframe id="dsq-2" data-disqus-uid="2" allowtransparency="true" frameborder="0" role="complementary" width="100%" src="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/saved_resource.htm" style="width: 100% !important; border: none !important; overflow: hidden !important; height: 345px !important;" scrolling="no" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+	    <script type="text/javascript" src="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/embed.js"></script>
+	    <noscript>
+	      &lt;a href="http://navigationforrobotswithwifiandcv.disqus.com/?url=ref"&gt;
+		View the discussion thread.
+	      &lt;/a&gt;
+	    </noscript>
+	<!--    <a href="http://disqus.com" class="dsq-brlink">
+	    blog comments powered by <span class="logo-disqus">Disqus</span>
+	    </a>-->
+	  </div>
+	</div>
+
+</article>
+
+
+    </div>
+  </section>
+
+  <footer class="container">
+    <p>
+      <a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/rss.xml"><img src="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/28.png" width="14px" style="padding-bottom: 4px; vertical-align: middle;"></a>
+      <a href="http://taghof.github.io/Navigation-for-Robots-with-WIFI-and-CV/atom.xml"><img src="./Navigation for Robots with WIFI and CV   Enabling the Drone USB Port_files/31.png" width="14px" style="padding-bottom: 4px; vertical-align: middle;"></a>
+      &nbsp;&nbsp;«&nbsp;&nbsp; 2011-2012 Master thesis project &nbsp;&nbsp;»&nbsp;&nbsp; <a href="mailto:taghof@cs.au.dk">Navigation for Robots with WIFI and CV</a>
+    </p>
+  </footer>
+
+
+
+</body></html>
