@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -24,6 +25,11 @@ namespace OpenFlight
             timer1.Interval = 1000/10;
             timer1.Enabled = true;
 
+            backgroundWorker1.RunWorkerAsync();
+
+
+            ping_rtt.SmartLabelStyle.Enabled = true;
+            
             
             this.chart1.Series.Clear();
             this.chart2.Series.Clear();
@@ -32,6 +38,9 @@ namespace OpenFlight
             this.chart5.Series.Clear();
             this.chart6.Series.Clear();
             this.chart7.Series.Clear();
+            this.chart8.Series.Clear();
+
+            this.chart8.Series.Add(ping_rtt);
 
             this.chart1.Series.Add(log_ax);
             this.chart1.Series.Add(log_ay);
@@ -63,6 +72,8 @@ namespace OpenFlight
             this.chart6.Series.Add(udp_tx_roll);
             this.chart6.Series.Add(udp_tx_yaw);
 
+            
+
             foreach (Series x in chart1.Series) {
                 x.ChartType = SeriesChartType.FastLine;
             }
@@ -87,6 +98,10 @@ namespace OpenFlight
                 x.ChartType = SeriesChartType.FastLine;
             }
             foreach (Series x in chart7.Series)
+            {
+                x.ChartType = SeriesChartType.FastLine;
+            }
+            foreach (Series x in chart8.Series)
             {
                 x.ChartType = SeriesChartType.FastLine;
             }
@@ -203,7 +218,20 @@ namespace OpenFlight
             udp_tx_roll.Points.AddY(RAD2DEG(drone.Roll));
             udp_tx_yaw.Points.AddY(RAD2DEG(drone.Yaw));
 
-            drone.SendCmd();
+            if (
+                previous_state.H != drone.H || 
+                previous_state.Yaw != drone.Yaw || 
+                previous_state.Roll != drone.Roll || 
+                previous_state.Pitch != drone.Pitch 
+                ) {
+
+                previous_state.H = drone.H ;
+                previous_state.Yaw = drone.Yaw ; 
+                previous_state.Roll = drone.Roll ;
+                previous_state.Pitch = drone.Pitch; 
+
+                    drone.SendCmd();
+                }
             //////////////////////////////////////////////////////////////////////////////////////
             
             toolStripStatusLabel_send_count.Text = "UDP TX " + drone.cmd_count + " packets";
@@ -212,6 +240,7 @@ namespace OpenFlight
 
         }
 
+        Drone previous_state = new Drone();
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -232,6 +261,78 @@ namespace OpenFlight
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void chart4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+          
+        }
+
+        Series ping_rtt = new Series("192.168.1.1 RTT (ms)");
+
+
+        double last_ping_rtt = -1;
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            
+            while (true) {
+                try
+                {
+                    Ping pingSender = new Ping();
+                    PingOptions options = new PingOptions();
+
+                    // Use the default Ttl value which is 128, 
+                    // but change the fragmentation behavior.
+                    options.DontFragment = true;
+
+                    // Create a buffer of 32 bytes of data to be transmitted. 
+                    string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                    byte[] buffer = Encoding.ASCII.GetBytes(data);
+                    int timeout = 1;
+                    PingReply reply = pingSender.Send("192.168.1.1", timeout, buffer, options);
+                    if (reply.Status == IPStatus.Success)
+                    {
+                        toolStripStatusLabel1.Text = "192.168.1.1 RoundTripTime(RTT): " + reply.RoundtripTime + " ms";
+                        last_ping_rtt = reply.RoundtripTime;
+
+
+                        Console.WriteLine("Address: {0}", reply.Address.ToString());
+                        Console.WriteLine("RoundTrip time: {0} ms", reply.RoundtripTime);
+                        Console.WriteLine("Time to live: {0}", reply.Options.Ttl);
+                        Console.WriteLine("Don't fragment: {0}", reply.Options.DontFragment);
+                        Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
+                    }
+                    else
+                    {
+                        last_ping_rtt = -1;
+                        Console.WriteLine("Ping status=" + reply.Status);
+                        toolStripStatusLabel1.Text = "192.168.1.1 RoundTripTime(RTT): " + reply.Status;
+
+                    }
+                    backgroundWorker1.ReportProgress(0);
+                    System.Threading.Thread.Sleep(100);
+                }
+                catch (Exception e1) { 
+                
+                }
+            }
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            try
+            {
+                ping_rtt.Points.AddY(last_ping_rtt);
+            }
+            catch (Exception e2) { 
+            
+            }
         }
 
 
