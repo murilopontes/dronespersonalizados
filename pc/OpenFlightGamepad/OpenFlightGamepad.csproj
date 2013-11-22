@@ -44,6 +44,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -93,6 +94,10 @@
     <Compile Include="UdpLogger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SimpleWifi\SimpleWifi.csproj">
+      <Project>{6aa425c9-ea6a-4b01-aaed-5ff122e8b663}</Project>
+      <Name>SimpleWifi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XInputDotNetPure\XInputDotNetPure.csproj">
       <Project>{952700cd-a384-43a4-ac4b-52256f83836e}</Project>
       <Name>XInputDotNetPure</Name>

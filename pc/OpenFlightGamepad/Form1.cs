@@ -1,10 +1,13 @@
-﻿using System;
+﻿using SimpleWifi;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Speech.Synthesis;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -22,15 +25,15 @@ namespace OpenFlight
             InitializeComponent();
 
             log = new UdpLogger(7778, string.Format("{0:yyyyMMddHHmmss}_navlog.csv", DateTime.Now));
-            timer1.Interval = 1000/10;
-            timer1.Enabled = true;
+            timer_gamepad.Interval = 1000 / 10;
+            timer_gamepad.Enabled = true;
 
-            backgroundWorker1.RunWorkerAsync();
+            backgroundWorker_pinger.RunWorkerAsync();
 
 
             ping_rtt.SmartLabelStyle.Enabled = true;
-            
-            
+
+
             this.chart1.Series.Clear();
             this.chart2.Series.Clear();
             this.chart3.Series.Clear();
@@ -41,6 +44,8 @@ namespace OpenFlight
             this.chart8.Series.Clear();
 
             this.chart8.Series.Add(ping_rtt);
+            this.chart8.Series.Add(wifi_rssi);
+
 
             this.chart1.Series.Add(log_ax);
             this.chart1.Series.Add(log_ay);
@@ -72,9 +77,10 @@ namespace OpenFlight
             this.chart6.Series.Add(udp_tx_roll);
             this.chart6.Series.Add(udp_tx_yaw);
 
-            
 
-            foreach (Series x in chart1.Series) {
+
+            foreach (Series x in chart1.Series)
+            {
                 x.ChartType = SeriesChartType.FastLine;
             }
             foreach (Series x in chart2.Series)
@@ -192,13 +198,14 @@ namespace OpenFlight
             drone.Roll += DEG2RAD(state.ThumbSticks.Left.X * 5);
             ///////////////////////////////////////////////////////////////////////////////////////
             //Throttle (subir e descer)
-            drone.H += state.ThumbSticks.Right.Y*5;
+            drone.H += state.ThumbSticks.Right.Y * 5;
             //Yaw (Rotate clockwise/anticlockwise)
-            drone.Yaw += DEG2RAD(state.ThumbSticks.Right.X*5);
+            drone.Yaw += DEG2RAD(state.ThumbSticks.Right.X * 5);
 
             if (state.Buttons.A == XInputDotNetPure.ButtonState.Pressed)
             {
                 //takeoff
+                voice_queue.TryAdd("decolar");
                 drone.Pitch = 0;
                 drone.Roll = 0;
                 drone.Yaw = 0;
@@ -207,6 +214,7 @@ namespace OpenFlight
             if (state.Buttons.B == XInputDotNetPure.ButtonState.Pressed)
             {
                 //land / emergency
+                voice_queue.TryAdd("emergência");
                 drone.Pitch = 0;
                 drone.Roll = 0;
                 drone.Yaw = 0;
@@ -219,21 +227,22 @@ namespace OpenFlight
             udp_tx_yaw.Points.AddY(RAD2DEG(drone.Yaw));
 
             if (
-                previous_state.H != drone.H || 
-                previous_state.Yaw != drone.Yaw || 
-                previous_state.Roll != drone.Roll || 
-                previous_state.Pitch != drone.Pitch 
-                ) {
+                previous_state.H != drone.H ||
+                previous_state.Yaw != drone.Yaw ||
+                previous_state.Roll != drone.Roll ||
+                previous_state.Pitch != drone.Pitch
+                )
+            {
 
-                previous_state.H = drone.H ;
-                previous_state.Yaw = drone.Yaw ; 
-                previous_state.Roll = drone.Roll ;
-                previous_state.Pitch = drone.Pitch; 
+                previous_state.H = drone.H;
+                previous_state.Yaw = drone.Yaw;
+                previous_state.Roll = drone.Roll;
+                previous_state.Pitch = drone.Pitch;
 
-                    drone.SendCmd();
-                }
+                drone.SendCmd();
+            }
             //////////////////////////////////////////////////////////////////////////////////////
-            
+
             toolStripStatusLabel_send_count.Text = "UDP TX " + drone.cmd_count + " packets";
 
 
@@ -258,10 +267,29 @@ namespace OpenFlight
             return x / 3.1415926 * 180;
         }
 
+        // Initialize a new instance of the SpeechSynthesizer.
+        SpeechSynthesizer synth = new SpeechSynthesizer();
+
+        static BlockingCollection<string> voice_queue = new BlockingCollection<string>(1);
+
+
+        static void wifi_ConnectionStatusChanged(object sender, WifiStatusEventArgs e)
+        {
+            //Console.WriteLine("\nNew status: {0}", e.NewStatus.ToString());
+            voice_queue.TryAdd("wifi mudou de estado para " + e.NewStatus.ToString());
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            synth.SetOutputToDefaultAudioDevice();
+
+
+            //voice_queue.Add("olá, vamos voar?");
+
+            backgroundWorker_voice.RunWorkerAsync();
 
         }
+
 
         private void chart4_Click(object sender, EventArgs e)
         {
@@ -270,7 +298,7 @@ namespace OpenFlight
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-          
+
         }
 
         Series ping_rtt = new Series("192.168.1.1 RTT (ms)");
@@ -278,49 +306,104 @@ namespace OpenFlight
 
         double last_ping_rtt = -1;
 
+        Series wifi_rssi = new Series("wifi RSSI(%)");
+        AccessPoint drone_ap = null;
+
+        bool ardrone_wifi_previous_state = false;
+
+        private bool ardrone_wifi_is_ok()
+        {
+
+            try
+            {
+                Wifi wifi = new Wifi();
+                IEnumerable<AccessPoint> accessPoints = wifi.GetAccessPoints();
+                foreach (AccessPoint ap in accessPoints)
+                {
+                    if (ap.Name.StartsWith("ardrone_"))
+                    {
+                        drone_ap = ap;
+                        if (!ap.IsConnected)
+                        {
+                            ardrone_wifi_previous_state = false;
+                            voice_queue.TryAdd("drone não conectado");
+                            AuthRequest authRequest = new AuthRequest(ap);
+                            ap.Connect(authRequest);
+                        }
+                        else
+                        {
+                            if (ardrone_wifi_previous_state == false)
+                            {
+                                ardrone_wifi_previous_state = true;
+                                voice_queue.TryAdd("drone conectado");
+                            }
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception e2)
+            {
+
+            }
+
+            voice_queue.TryAdd("drone não encontrado");
+            return false;
+        }
+
+
+        int ping_counter = 0;
+        private void ardrone_ping()
+        {
+            try
+            {
+                Ping pingSender = new Ping();
+                PingOptions options = new PingOptions();
+                options.DontFragment = true;
+
+                string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                byte[] buffer = Encoding.ASCII.GetBytes(data);
+                int timeout = 100;
+                ping_counter++;
+
+                PingReply reply = pingSender.Send("192.168.1.1", timeout, buffer, options);
+                if (reply.Status == IPStatus.Success)
+                {
+                    toolStripStatusLabel1.Text = "192.168.1.1 seq=" + ping_counter + " RoundTripTime(RTT): " + reply.RoundtripTime + " ms";
+                    last_ping_rtt = reply.RoundtripTime;
+                }
+                else
+                {
+                    last_ping_rtt = -10;
+                    voice_queue.TryAdd("ping falhou");
+                    toolStripStatusLabel1.Text = "192.168.1.1 seq=" + ping_counter + " RoundTripTime(RTT): " + reply.Status;
+
+                }
+                backgroundWorker_pinger.ReportProgress(0);
+                System.Threading.Thread.Sleep(100);
+            }
+            catch (Exception e1)
+            {
+
+            }
+
+
+        }
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            
-            while (true) {
-                try
+            while (true)
+            {
+                //
+                if (!ardrone_wifi_is_ok())
                 {
-                    Ping pingSender = new Ping();
-                    PingOptions options = new PingOptions();
-
-                    // Use the default Ttl value which is 128, 
-                    // but change the fragmentation behavior.
-                    options.DontFragment = true;
-
-                    // Create a buffer of 32 bytes of data to be transmitted. 
-                    string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                    byte[] buffer = Encoding.ASCII.GetBytes(data);
-                    int timeout = 1;
-                    PingReply reply = pingSender.Send("192.168.1.1", timeout, buffer, options);
-                    if (reply.Status == IPStatus.Success)
-                    {
-                        toolStripStatusLabel1.Text = "192.168.1.1 RoundTripTime(RTT): " + reply.RoundtripTime + " ms";
-                        last_ping_rtt = reply.RoundtripTime;
-
-
-                        Console.WriteLine("Address: {0}", reply.Address.ToString());
-                        Console.WriteLine("RoundTrip time: {0} ms", reply.RoundtripTime);
-                        Console.WriteLine("Time to live: {0}", reply.Options.Ttl);
-                        Console.WriteLine("Don't fragment: {0}", reply.Options.DontFragment);
-                        Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
-                    }
-                    else
-                    {
-                        last_ping_rtt = -1;
-                        Console.WriteLine("Ping status=" + reply.Status);
-                        toolStripStatusLabel1.Text = "192.168.1.1 RoundTripTime(RTT): " + reply.Status;
-
-                    }
-                    backgroundWorker1.ReportProgress(0);
-                    System.Threading.Thread.Sleep(100);
+                    System.Threading.Thread.Sleep(1000);
+                    continue;
                 }
-                catch (Exception e1) { 
-                
-                }
+                //
+                ardrone_ping();
+                //
+                System.Threading.Thread.Sleep(250);
             }
         }
 
@@ -328,10 +411,22 @@ namespace OpenFlight
         {
             try
             {
+                wifi_rssi.Points.AddY(drone_ap.SignalStrength);
                 ping_rtt.Points.AddY(last_ping_rtt);
             }
-            catch (Exception e2) { 
-            
+            catch (Exception e2)
+            {
+
+            }
+        }
+
+        private void backgroundWorker_voice_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                string text = voice_queue.Take();
+                //Console.WriteLine(text);
+                synth.Speak(text);
             }
         }
 
