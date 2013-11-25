@@ -18,18 +18,16 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
+
+
+
 #include <stdlib.h>
 #include <stdio.h>   /* Standard input/output definitions */
 #include <string.h>  /* String function definitions */
 #include <unistd.h>  /* UNIX standard function definitions */
-//#include <fcntl.h>   /* File control definitions */
-//#include <errno.h>   /* Error number definitions */
-//#include <termios.h> /* POSIX terminal control definitions */
-//#include <stdlib.h>  //exit()
 #include <pthread.h>
-#include <ctype.h>    /* For tolower() function */
+#include <ctype.h>
 #include <math.h>
-
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -42,58 +40,69 @@
 
 int main()
 {
-  udp_struct udpCmd;
-  char buf[1024];
 
-
+  ///////////////////////////////////////////////////////////////////////////
   //kill program.elf
   int rc = system("/usr/bin/killall -9 program.elf > /dev/null 2>&1");
   printf("killall -9 program.elf -> returncode=%d  (0=killed,256=not found)\n",rc);	
 
-  //init controller
-  ctl_Init(inet_ntoa(udpCmd.si_other.sin_addr));
-  printf("ctl_Init completed\n");
-  
-  
-  udpServer_Init(&udpCmd,7777,1/*blocking*/);
-  
-  printf("Waiting for UDP wakeup on port 7777\n");
-  int bufcnt=udpServer_Receive(&udpCmd, buf, 1024);
-  if(bufcnt<=0) return 1;
-  buf[bufcnt]=0;
-  printf("UDP wakeup received from %s\n",inet_ntoa(udpCmd.si_other.sin_addr));
+  //////////////////////////////////////////////////////////////////////////
+  //controller start
+  ctl_Init("192.168.1.255");
 
-  
-
-  //main loop	
+  ///////////////////////////////////////////////////////////////////////////////
+  //command packet buffer
+  char cmdbuf[1024];
+  //control channel is UDP port 7777
+  udp_struct udpCmd;
+  //server UDP server in blocking mode
+  udpServer_Init(&udpCmd,7777,1);
   while(1) { 
+	//clear command buffer
+	memset(&cmdbuf,0,sizeof(cmdbuf));
     //wait for next packet on cmd port
-    bufcnt=udpServer_Receive(&udpCmd, buf, 1024);
-    if(bufcnt<=0) continue;
-    buf[bufcnt]=0;
-    
-    //split tokens
-    int i=0;
+	int cmdlen=udpServer_Receive(&udpCmd, cmdbuf, sizeof(cmdbuf));
+	if(cmdlen<=0){
+		continue;
+	}
+
+	///////////////////////////////////////
+    //command format "s,<pitch>,<roll>,<yaw>,<height>" //
+	//example:
+	// "s,30,0,0,100" -> set pitch to 30 degree, roll to 0 degree, yaw to 0 degree, height to 100 cm
+
+	//////////////////////////////////
+	//delimiter
     char delims[] = ",";
+
+    ///////////////////////////////////
+    //search for "s"
     char *result = NULL;
-    result = strtok( buf, delims );
+    result = strtok( cmdbuf, delims );
     if(strcmp(result,"s")) continue;
-    result = strtok( NULL, delims );
+
+    ///////////////////////////////////
+    //search for <pitch>,<roll>,<yaw>,<height>
+    int i=0;
     float val[4];
+    result = strtok( NULL, delims );
     while( i<4 && result != NULL ) {
       val[i]=atof(result);
-      //printf( "->token%d is \"%s\" %f\n", i, result, val[i] );
       result = strtok( NULL, delims );
       i++;
     }
+    //////////////////////////////////////////////////
     if(i==4) {
-      printf("set:%f,%f,%f,%f\n", val[0],val[1],val[2],val[3] );
+      //print successfully decoded command <pitch>,<roll>,<yaw>,<height>
+      printf("s:%f,%f,%f,%f\r\n", val[0],val[1],val[2],val[3] );
+      //send to controller execute command <pitch>,<roll>,<yaw>,<height>
       ctl_SetSetpoint(val[0],val[1],val[2],val[3]);
     }
 
   }
+
+  //controller end
   ctl_Close();
-  printf("\nDone...\n");
   return 0;
 
 }
