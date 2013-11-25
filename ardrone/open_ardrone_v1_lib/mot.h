@@ -1,5 +1,5 @@
 /*
-    main_vbat.c - AR.Drone battery voltage monitor demo program
+    mot.h - AR.Drone motor thread
 
     Copyright (C) 2011 Hugo Perquin - http://blog.perquin.com
 
@@ -18,23 +18,18 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-#include <stdio.h>
-#include <unistd.h>
-#include "../open_ardrone_v1_lib/vbat.h"
+#ifndef _MOT_H
+#define _MOT_H
 
-int main(int argc, char *argv[]) {
-	vbat_struct vbat;
+#include "type.h"
+#include "motorboard.h"
 
-	if(vbat_init(&vbat)) return 1;
+int mot_Init();
+void mot_SetLed(u08 mot_id, u08 led);
+void mot_SetLeds(u08 led0, u08 led1, u08 led2, u08 led3);
+void mot_Stop();
+void mot_Run(float m0, float m1, float m2, float m3);
+void mot_GetMot(float *m);
+void mot_Close();
 
-	printf("Setpoints:  Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV\n",vbat.vdd0_setpoint,vbat.vdd1_setpoint,vbat.vdd2_setpoint,vbat.vdd3_setpoint,vbat.vdd4_setpoint);
-	printf("==================================================================\n");
-
-	while(1) {
-		vbat_read(&vbat);
-		printf("Vbat=%5.2fV Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV\n",vbat.vbat,vbat.vdd0,vbat.vdd1,vbat.vdd2,vbat.vdd3,vbat.vdd4);
-		usleep(100000);
-	}
-
-	return 0;
-}
+#endif

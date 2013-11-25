@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include "video.h"
+#include "../open_ardrone_v1_lib/video.h"
 
 void video_cg(img_struct* img) 
 {
@@ -35,7 +35,8 @@ void video_cg(img_struct* img)
 	int x=0;
 	int y=0;
 	unsigned char* buf = img->buf;
-	for(int i=0;i<n;i++) {
+	int i;
+	for(i=0;i<n;i++) {
 		p+=buf[i];
 		px+=x*buf[i];
 		py+=y*buf[i];
@@ -62,13 +63,14 @@ void video_blocksum(img_struct* img1, img_struct* img2, int* dx_out, int* dy_out
 	int min_sum = 2000000000;
 	int min_dx = -99;
 	int min_dy = -99;
-	for(int dy=-dmax;dy<=dmax;dy++) {
-		for(int dx=-dmax;dx<=dmax;dx++) {
+	int dy,dx,y,x;
+	for(dy=-dmax;dy<=dmax;dy++) {
+		for(dx=-dmax;dx<=dmax;dx++) {
 			int sum=0;
-			for(int y=dmax;y<h-dmax;y++) {
+			for(y=dmax;y<h-dmax;y++) {
 				int i1 = y*w + dmax;
 				int i2 = (y+dy)*w + dmax+dx;
-				for(int x=dmax;x<w-dmax;x++) {
+				for(x=dmax;x<w-dmax;x++) {
 					//printf("x=%d y=%d i1=%d i2=%d\n",x,y,i1,i2);
 					sum += abs(buf1[i1] - buf2[i2]);
 					i1++;

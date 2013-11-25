@@ -34,32 +34,36 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "../util/type.h"
-#include "../util/util.h"
-#include "../motorboard/mot.h"
-#include "../udp/udp.h"
+#include "../open_ardrone_v1_lib/type.h"
+#include "../open_ardrone_v1_lib/util.h"
+#include "../open_ardrone_v1_lib/mot.h"
+#include "../open_ardrone_v1_lib/udp.h"
 #include "controlthread.h"
 
 int main()
 {
-  printf("'fly' version 1.00 - Copyright (C) 2011 Hugo Perquin - http://blog.perquin.com\n");
-  //wait for udp packet on port 7777
   udp_struct udpCmd;
-  udpServer_Init(&udpCmd,7777,1/*blocking*/);
   char buf[1024];
+
+
+  //kill program.elf
+  int rc = system("/usr/bin/killall -9 program.elf > /dev/null 2>&1");
+  printf("killall -9 program.elf -> returncode=%d  (0=killed,256=not found)\n",rc);	
+
+  //init controller
+  ctl_Init(inet_ntoa(udpCmd.si_other.sin_addr));
+  printf("ctl_Init completed\n");
+  
+  
+  udpServer_Init(&udpCmd,7777,1/*blocking*/);
+  
   printf("Waiting for UDP wakeup on port 7777\n");
   int bufcnt=udpServer_Receive(&udpCmd, buf, 1024);
   if(bufcnt<=0) return 1;
   buf[bufcnt]=0;
   printf("UDP wakeup received from %s\n",inet_ntoa(udpCmd.si_other.sin_addr));
 
-  //kill program.elf
-  int rc = system("/usr/bin/killall program.elf > /dev/null 2>&1");
-  printf("killall program.elf -> returncode=%d  (0=killed,256=not found)\n",rc);	
   
-  //init controller
-  ctl_Init(inet_ntoa(udpCmd.si_other.sin_addr));
-  printf("ctl_Init completed\n");
 
   //main loop	
   while(1) { 

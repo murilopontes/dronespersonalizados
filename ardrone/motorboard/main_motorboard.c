@@ -29,9 +29,9 @@
 #include <ctype.h>    /* For tolower() function */
 #include <math.h>
 
-#include "../util/type.h"
-#include "../util/util.h"
-#include "mot.h"
+#include "../open_ardrone_v1_lib/type.h"
+#include "../open_ardrone_v1_lib/util.h"
+#include "../open_ardrone_v1_lib/mot.h"
 
 
 int main()

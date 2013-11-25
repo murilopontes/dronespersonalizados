@@ -1,5 +1,5 @@
 /*
-    main_vbat.c - AR.Drone battery voltage monitor demo program
+    motorboard.h - AR.Drone motor driver
 
     Copyright (C) 2011 Hugo Perquin - http://blog.perquin.com
 
@@ -18,23 +18,19 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-#include <stdio.h>
-#include <unistd.h>
-#include "../open_ardrone_v1_lib/vbat.h"
+#ifndef _MOTORBOARD_H
+#define _MOTORBOARD_H
 
-int main(int argc, char *argv[]) {
-	vbat_struct vbat;
+#include "type.h"
 
-	if(vbat_init(&vbat)) return 1;
+#define MOT_LEDOFF 0
+#define MOT_LEDRED 1
+#define MOT_LEDGREEN 2
+#define MOT_LEDORANGE 3
 
-	printf("Setpoints:  Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV\n",vbat.vdd0_setpoint,vbat.vdd1_setpoint,vbat.vdd2_setpoint,vbat.vdd3_setpoint,vbat.vdd4_setpoint);
-	printf("==================================================================\n");
+int motorboard_Init();
+void motorboard_SetPWM(u16 pwm0, u16 pwm1, u16 pwm2, u16 pwm3);
+void motorboard_SetLeds(u08 led0, u08 led1, u08 led2, u08 led3);
+void motorboard_Close();
 
-	while(1) {
-		vbat_read(&vbat);
-		printf("Vbat=%5.2fV Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV\n",vbat.vbat,vbat.vdd0,vbat.vdd1,vbat.vdd2,vbat.vdd3,vbat.vdd4);
-		usleep(100000);
-	}
-
-	return 0;
-}
+#endif

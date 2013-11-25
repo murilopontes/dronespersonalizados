@@ -30,11 +30,11 @@
 #include <pthread.h>
 #include <math.h>
 
-#include "../util/type.h"
-#include "../util/util.h"
-#include "../motorboard/mot.h"
-#include "../attitude/attitude.h"
-#include "../udp/udp.h"
+#include "../open_ardrone_v1_lib/type.h"
+#include "../open_ardrone_v1_lib/util.h"
+#include "../open_ardrone_v1_lib/mot.h"
+#include "../open_ardrone_v1_lib/attitude.h"
+#include "../open_ardrone_v1_lib/udp.h"
 #include "pid.h"
 #include "controlthread.h"
 

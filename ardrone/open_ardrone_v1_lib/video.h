@@ -1,5 +1,5 @@
 /*
-    main_vbat.c - AR.Drone battery voltage monitor demo program
+    video.h - video driver
 
     Copyright (C) 2011 Hugo Perquin - http://blog.perquin.com
 
@@ -17,24 +17,42 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
-*/
-#include <stdio.h>
-#include <unistd.h>
-#include "../open_ardrone_v1_lib/vbat.h"
+*/ 
+#ifndef _VIDEO_H
+#define _VIDEO_H
 
-int main(int argc, char *argv[]) {
-	vbat_struct vbat;
+typedef struct  {
+    void * buf;
+    size_t length;
+} buffer_struct;
 
-	if(vbat_init(&vbat)) return 1;
+typedef struct  {
+	int seq;
+	double timestamp;
+	unsigned char *buf;
+	int w;
+	int h;
+} img_struct;
 
-	printf("Setpoints:  Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV\n",vbat.vdd0_setpoint,vbat.vdd1_setpoint,vbat.vdd2_setpoint,vbat.vdd3_setpoint,vbat.vdd4_setpoint);
-	printf("==================================================================\n");
+typedef struct  {
+	char *device;
+	int w;
+	int h;
+	int seq;
+	unsigned int n_buffers;
+	
+//private members	
+	int trigger;
+	img_struct *img;
+	buffer_struct * buffers;
+	int fd;
+} vid_struct;
 
-	while(1) {
-		vbat_read(&vbat);
-		printf("Vbat=%5.2fV Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV\n",vbat.vbat,vbat.vdd0,vbat.vdd1,vbat.vdd2,vbat.vdd3,vbat.vdd4);
-		usleep(100000);
-	}
 
-	return 0;
-}
+int video_Init(vid_struct *vid);
+//create a new blank image
+img_struct *video_CreateImage(vid_struct *vid);
+//grabs next B&W image from stream (blocking)
+void video_GrabImage(vid_struct *vid, img_struct *img);
+void video_Close(vid_struct *vid);
+#endif

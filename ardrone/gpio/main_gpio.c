@@ -20,8 +20,8 @@
 */
 #include <stdio.h>
 #include <ctype.h>    /* For tolower() function */
-#include "gpio.h"
-#include "../util/util.h"
+#include "../open_ardrone_v1_lib/gpio.h"
+#include "../open_ardrone_v1_lib/util.h"
 
 int main(int argc, char *argv[]) {
 	printf("Main Led:  a=loff  s=green  d=orange  f=red     q=quit\r\n");

@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-struct pid_struct 
+typedef struct
 {
 	float kp;
 	float ki;
@@ -26,7 +26,7 @@ struct pid_struct
 	float i;
 	float e_prev;
 	float i_max;
-};
+} pid_struct;
 
 void pid_Init(pid_struct *pid, float kp, float ki, float kd, float i_max);
 float pid_Calc(pid_struct *pid, float error, float dt);
