@@ -46,11 +46,8 @@ int main()
 	if(rc) return rc;
 	printf("Init Navboard OK\r\n");
 
-	//calibrate
-	printf("Calibration ...\r\n");
-	rc=nav_FlatTrim();
-	if(rc) {printf("Failed: retcode=%d\r\n",rc); return rc;}
-	printf("Calibration OK\r\n");
+	//rc=nav_FlatTrim();
+	//if(rc) {printf("Failed: retcode=%d\r\n",rc); return rc;}
 	 
 	//main loop	
 	while(1) { 

@@ -46,6 +46,9 @@ int main()
 	if(rc) return rc;
 	printf("Init Attitute Estimate OK\r\n");
 
+   //flat trim
+	att_FlatTrim(&att);
+
 	//main loop	
 	while(1) { 
 		//get sample

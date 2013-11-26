@@ -35,6 +35,7 @@
 #include "../open_ardrone_v1_lib/mot.h"
 #include "../open_ardrone_v1_lib/attitude.h"
 #include "../open_ardrone_v1_lib/udp.h"
+#include "../open_ardrone_v1_lib/vbat.h"
 #include "pid.h"
 #include "controlthread.h"
 
@@ -69,14 +70,16 @@ typedef struct  {
 
 setpoint_t setpoint;
 udp_struct udpNavLog;
+vbat_struct vbat;
+
 
 int logcnt=0;
 void navLog_Send();
 void *ctl_thread_main(void* data);
 
-int ctl_Init(char *client_addr) 
+void ctl_Init(char *client_addr)
 {
-	int rc;
+
 
 	//defaults from AR.Drone app:
 	//pitch,roll max=12deg;
@@ -100,26 +103,25 @@ int ctl_Init(char *client_addr)
 
 	throttle=0.00;
 
+
+	//start motor and leds thread
+	mot_Init();
+
+    //battery / voltages monitor
+	vbat_init(&vbat);
+
 	//Attitude Estimate
-	rc = att_Init(&att);
-	if(rc) return rc;
+	att_Init(&att);
 
-
-	//udp logger
+	//UDP command feedback
 	udpClient_Init(&udpNavLog, client_addr, 7778);
 	navLog_Send();
-	printf("udpClient_Init\n", rc);
 
-	//start motor thread
-	rc = mot_Init();
-	if(rc) return rc;
 
 	//start ctl thread 
-	rc = pthread_create(&ctl_thread, NULL, ctl_thread_main, NULL); 
-	if(rc) {
-		printf("ctl_Init: Return code from pthread_create(mot_thread) is %d\n", rc);
-		return 202;
-	}
+	pthread_create(&ctl_thread, NULL, ctl_thread_main, NULL);
+
+
 }
 
 void *ctl_thread_main(void* data)
@@ -183,14 +185,20 @@ void *ctl_thread_main(void* data)
 //logging
 void navLog_Send()
 {
+
+
 	char logbuf[1024];
 	int logbuflen;
 
 	float motval[4];
 	mot_GetMot(motval);
 
+
+	vbat_read(&vbat);
+
+
 	logcnt++;
-	logbuflen=sprintf(logbuf,"%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f"
+	logbuflen=sprintf(logbuf,"%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f"
 			//sequence+timestamp
 			,logcnt
 			,att.ts   // navdata timestamp in sec
@@ -218,6 +226,13 @@ void navLog_Send()
 			,RAD2DEG(setpoint.yaw)    //yaw pitch [deg]
 			,RAD2DEG(att.yaw)         //actual yaw
 			,adj_yaw                  //yaw motor adjustment
+			,vbat.vbat
+			,vbat.vdd0
+			,vbat.vdd1
+			,vbat.vdd2
+			,vbat.vdd3
+			,vbat.vdd4
+
 	);
 	udpClient_Send(&udpNavLog,logbuf,logbuflen);
 }
