@@ -23,9 +23,20 @@ int udpClient_Init(udp_struct *udp, const char* host, int port)
   if ((udp->s=socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1) return 1;
   
   memset((char *) &udp->si_other, 0, sizeof(udp->si_other));
+
   udp->si_other.sin_family = AF_INET;
   udp->si_other.sin_port = htons(port);
-  if (inet_aton(host, &udp->si_other.sin_addr)==0) return 2;
+
+  udp->si_other.sin_addr.s_addr = htonl(INADDR_BROADCAST);
+
+  int broadcastEnable=1;
+  int ret=setsockopt(udp->s, SOL_SOCKET, SO_BROADCAST, &broadcastEnable, sizeof(broadcastEnable));
+
+  char *opt;
+  opt = "ath0";
+  setsockopt(udp->s, SOL_SOCKET, SO_BINDTODEVICE, opt, 4);
+
+  //if (inet_aton(host, &udp->si_other.sin_addr)==0) return 2;
 
   return 0;
 }
