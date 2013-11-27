@@ -20,6 +20,7 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <sys/types.h>
 #include "../open_ardrone_v1_lib/video.h"
 #include "../open_ardrone_v1_lib/udp.h"
@@ -56,12 +57,13 @@ int main(int argc,char ** argv)
 
 	img_struct* img_vertial = video_CreateImage(&vid_vertical);
 
+
 	int i=0;
     for (;;) {
     	i++;
 
-		int len_vertical=(176*144)/2;
-		int len_horizontal=(640*480)/2;
+		unsigned int len_vertical=(vid_vertical.w*vid_vertical.h)/2;
+		unsigned int len_horizontal=(vid_horizontal.w*vid_horizontal.h)/2;
 
     	printf("send frame=%d len_v=%d len_h=%d\r\n",i,len_vertical,len_horizontal);
 
@@ -70,9 +72,6 @@ int main(int argc,char ** argv)
 
 		video_GrabImage(&vid_horizontal, img_horizontal);
 		udpClient_Send(&udp_horizontal1, img_horizontal->buf, len_horizontal);
-		//udpClient_Send(&udp_horizontal2, img_horizontal->buf+51200, len_horizontal/3);
-		//udpClient_Send(&udp_horizontal3, img_horizontal->buf+102400, len_horizontal/3);
-
 
     }
 
