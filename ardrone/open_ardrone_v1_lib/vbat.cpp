@@ -106,4 +106,5 @@ int vbat_read(vbat_struct *vbat)
 	vbat->vdd2=vbat_get(6);
 	vbat->vdd3=vbat_get(7);
 	vbat->vdd4=vbat_get(8);
+	return 0;
 }

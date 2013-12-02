@@ -102,10 +102,13 @@ int nav_GetSample(nav_struct* nav)
 	nav->gx = (((float)nav->gyro[0]) - gyros_offset[0]) * gyros_gains[0];
 	nav->gy = (((float)nav->gyro[1]) - gyros_offset[1]) * gyros_gains[1];
 	nav->gz = (((float)nav->gyro[2]) - gyros_offset[2]) * gyros_gains[2];	
+
 	if(nav->gx>DEG2RAD(-100) && nav->gx<DEG2RAD(100)) nav->gx = ((float)nav->gyro_110[0] - gyros110_offset[0]) * gyros110_gains[0];
 	if(nav->gy>DEG2RAD(-100) && nav->gy<DEG2RAD(100)) nav->gy = ((float)nav->gyro_110[1] - gyros110_offset[1]) * gyros110_gains[1];
+
 	nav->h  = (float)((nav->us_echo&0x7fff)) * 0.0340;
-  nav->h_meas = nav->us_echo >> 15;
+
+    nav->h_meas = nav->us_echo >> 15;
 	nav->tg  = (( (float)nav->gyro_temp * 0.806 /*mv/lsb*/ ) - 1250 /*Offset 1250mV at room temperature*/) / 4.0 /*Sensitivity 4mV/°C*/ + 20 /*room temperature*/;
 	nav->ta  = ((float)nav->acc_temp) * 0.5 /*C/lsb*/ - 30 /*Offset is -30C*/;
 	
@@ -124,7 +127,7 @@ void nav_Print(nav_struct* nav)
 		,nav->gyro_temp
 	);
 */	
-	printf("a=%6.3f,%6.3f,%6.3fG g=%4.0f,%4.0f,%4.0fdeg/s h=%3.0fcm ta=%4.1fC tg=%4.1fC dt=%2.0fms\n"
+	printf("seq=%d a=%6.3f,%6.3f,%6.3fG g=%4.0f,%4.0f,%4.0fdeg/s h=%3.0fcm ta=%4.1fC tg=%4.1fC dt=%2.0fms\n"
 		,nav->seq
 		,nav->ax,nav->ay,nav->az
 		,RAD2DEG(nav->gx),RAD2DEG(nav->gy),RAD2DEG(nav->gz)
@@ -201,9 +204,9 @@ int nav_FlatTrim()
 	for(i=0;i<3;i++) if(std[i]>10) return 1+i; //validate accs
 	for(i=3;i<8;i++) if(std[i]>10) return 1+i; //validate gyros
 	int tol=120;
-	if(avg[0]<2048-tol || avg[0]>2048+tol) {printf("nav_Calibrate: ax_avg out of tolerance: %d\r\n",avg[0]); return 10;}
-	if(avg[1]<2048-tol || avg[1]>2048+tol) {printf("nav_Calibrate: ay_avg out of tolerance: %d\r\n",avg[1]); return 11;}
-	if(avg[2]<3096-tol || avg[2]>3096+tol) {printf("nav_Calibrate: az_avg out of tolerance: %d\r\n",avg[2]); return 12;}
+	if(avg[0]<2048-tol || avg[0]>2048+tol) {printf("nav_Calibrate: ax_avg out of tolerance: %.2f\r\n",avg[0]); return 10;}
+	if(avg[1]<2048-tol || avg[1]>2048+tol) {printf("nav_Calibrate: ay_avg out of tolerance: %.2f\r\n",avg[1]); return 11;}
+	if(avg[2]<3096-tol || avg[2]>3096+tol) {printf("nav_Calibrate: az_avg out of tolerance: %.2f\r\n",avg[2]); return 12;}
 	
 	//set offsets
 	accs_offset[0]=avg[0];

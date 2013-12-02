@@ -55,7 +55,7 @@ void video_blocksum(img_struct* img1, img_struct* img2, int* dx_out, int* dy_out
 {
 	int h=img1->h;
 	int w=img1->w;
-	int n=w*h;
+	//int n=w*h;
 	unsigned char* buf1 = img1->buf;
 	unsigned char* buf2 = img2->buf;
 	

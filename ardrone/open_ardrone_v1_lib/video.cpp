@@ -69,7 +69,7 @@ void *video_thread_main(void* data)
 		}
 
 		struct v4l2_buffer buf;
-		unsigned int i;
+		//unsigned int i;
 
 		CLEAR(buf);
 		buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
@@ -95,6 +95,7 @@ void *video_thread_main(void* data)
 			break;    
 		}
     }
+    return NULL;
 }
 
 int video_Init(vid_struct *vid)
@@ -201,7 +202,7 @@ int video_Init(vid_struct *vid)
 
 void video_Close(vid_struct *vid)
 {
-	int i;
+	unsigned int i;
     for (i = 0; i < vid->n_buffers; ++i) {
     	if (-1 == munmap(vid->buffers[i].buf, vid->buffers[i].length)) printf("munmap() failed.\n");
     }

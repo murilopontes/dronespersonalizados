@@ -20,7 +20,7 @@
 */
 #ifndef _CONTROLTRHEAD_H
 #define _CONTROLTRHEAD_H
-void ctl_Init(char *client_addr);
+void ctl_Init();
 int ctl_FlatTrim();
 void ctl_SetSetpoint(float pitch, float roll, float yawsp, float h);
 void ctl_SetSetpointDiff(float pitch, float roll, float yaw, float h);

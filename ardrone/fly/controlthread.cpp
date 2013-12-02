@@ -77,7 +77,7 @@ int logcnt=0;
 void navLog_Send();
 void *ctl_thread_main(void* data);
 
-void ctl_Init(char *client_addr)
+void ctl_Init()
 {
 
 
@@ -114,7 +114,7 @@ void ctl_Init(char *client_addr)
 	att_Init(&att);
 
 	//UDP command feedback
-	udpClient_Init(&udpNavLog, client_addr, 7778);
+	udpClient_Init(&udpNavLog, 7778);
 	navLog_Send();
 
 
@@ -187,7 +187,7 @@ void navLog_Send()
 {
 
 
-	char logbuf[1024];
+	uint8_t logbuf[1024];
 	int logbuflen;
 
 	float motval[4];
@@ -198,7 +198,7 @@ void navLog_Send()
 
 
 	logcnt++;
-	logbuflen=sprintf(logbuf,"%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f"
+	logbuflen=sprintf((char*)logbuf,"%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f"
 			//sequence+timestamp
 			,logcnt
 			,att.ts   // navdata timestamp in sec
@@ -234,7 +234,11 @@ void navLog_Send()
 			,vbat.vdd4
 
 	);
+
+
 	udpClient_Send(&udpNavLog,logbuf,logbuflen);
+
+
 }
 
 int ctl_FlatTrim()

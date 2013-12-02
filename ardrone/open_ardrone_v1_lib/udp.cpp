@@ -16,7 +16,7 @@
 #include <fcntl.h>
 #include "udp.h"
 
-int udpClient_Init(udp_struct *udp, const char* host, int port)
+int udpClient_Init(udp_struct *udp,  int port)
 {
   udp->slen=sizeof(udp->si_other);
   
@@ -30,10 +30,12 @@ int udpClient_Init(udp_struct *udp, const char* host, int port)
   udp->si_other.sin_addr.s_addr = htonl(INADDR_BROADCAST);
 
   int broadcastEnable=1;
-  int ret=setsockopt(udp->s, SOL_SOCKET, SO_BROADCAST, &broadcastEnable, sizeof(broadcastEnable));
+  //int ret=
 
-  char *opt;
-  opt = "ath0";
+  setsockopt(udp->s, SOL_SOCKET, SO_BROADCAST, &broadcastEnable, sizeof(broadcastEnable));
+
+  char *opt = (char*)"ath0";
+
   setsockopt(udp->s, SOL_SOCKET, SO_BINDTODEVICE, opt, 4);
 
   //if (inet_aton(host, &udp->si_other.sin_addr)==0) return 2;
@@ -41,7 +43,7 @@ int udpClient_Init(udp_struct *udp, const char* host, int port)
   return 0;
 }
 
-int udpClient_Send(udp_struct *udp, char* buf, int len)
+int udpClient_Send(udp_struct *udp, void* buf, int len)
 {  
   if (sendto(udp->s, buf, len, 0, (const struct sockaddr*)&udp->si_other, udp->slen)==-1) return 1;
   return 0;
@@ -79,7 +81,7 @@ int udpServer_Init(udp_struct *udp, int port, int blocking)
 }
 
 //returns size of packet received or returns -1 and errno=EWOULDBLOCK if no data available
-int udpServer_Receive(udp_struct *udp, char* buf, int len)  
+int udpServer_Receive(udp_struct *udp, void* buf, int len)
 {
   return recvfrom(udp->s, buf, len, 0, (struct sockaddr*)&udp->si_other, &udp->slen);
 }
