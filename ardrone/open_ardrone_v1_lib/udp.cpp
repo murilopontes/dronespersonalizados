@@ -1,19 +1,7 @@
 
 
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-
-
-#include <netinet/in.h>
-#include <sys/time.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
+#include "all_headers_cpp.h"
 #include "udp.h"
 
 int udpClient_Init(udp_struct *udp,  int port)

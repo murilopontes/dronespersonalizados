@@ -21,17 +21,7 @@
 
 
 
-#include <stdlib.h>
-#include <stdio.h>   /* Standard input/output definitions */
-#include <string.h>  /* String function definitions */
-#include <unistd.h>  /* UNIX standard function definitions */
-#include <pthread.h>
-#include <ctype.h>
-#include <math.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
+#include "../open_ardrone_v1_lib/all_headers_cpp.h"
 #include "../open_ardrone_v1_lib/type.h"
 #include "../open_ardrone_v1_lib/util.h"
 #include "../open_ardrone_v1_lib/mot.h"

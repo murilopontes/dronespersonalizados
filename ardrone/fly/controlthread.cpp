@@ -20,16 +20,7 @@
  */
 
 
-#include <stdio.h>   /* Standard input/output definitions */
-#include <string.h>  /* String function definitions */
-#include <unistd.h>  /* UNIX standard function definitions */
-#include <fcntl.h>   /* File control definitions */
-#include <errno.h>   /* Error number definitions */
-#include <termios.h> /* POSIX terminal control definitions */
-#include <stdlib.h>  //exit()
-#include <pthread.h>
-#include <math.h>
-
+#include "../open_ardrone_v1_lib/all_headers_cpp.h"
 #include "../open_ardrone_v1_lib/type.h"
 #include "../open_ardrone_v1_lib/util.h"
 #include "../open_ardrone_v1_lib/mot.h"

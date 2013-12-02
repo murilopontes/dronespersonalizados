@@ -18,15 +18,16 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-#include <stdio.h>   /* Standard input/output definitions */
-#include <string.h>  /* String function definitions */
-#include <unistd.h>  /* UNIX standard function definitions */
-#include <fcntl.h>   /* File control definitions */
-#include <errno.h>   /* Error number definitions */
-#include <termios.h> /* POSIX terminal control definitions */
-#include <stdlib.h>  //exit()
-#include <math.h>
 
+
+
+
+
+
+
+
+
+#include "all_headers_cpp.h"
 #include "navboard.h"
 #include "gpio.h"
 #include "util.h"

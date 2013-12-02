@@ -18,13 +18,9 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-#include <stdio.h>   /* Standard input/output definitions */
-#include <string.h>  /* String function definitions */
-#include <unistd.h>  /* UNIX standard function definitions */
-#include <errno.h>   /* Error number definitions */
-#include <stdlib.h>  //exit()
-#include <pthread.h>
 
+
+#include "all_headers_cpp.h"
 #include "mot.h"
 #include "motorboard.h"
 

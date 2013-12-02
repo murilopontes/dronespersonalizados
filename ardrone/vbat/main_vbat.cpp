@@ -18,8 +18,14 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-#include <stdio.h>
-#include <unistd.h>
+
+
+
+
+
+
+
+#include "../open_ardrone_v1_lib/all_headers_cpp.h"
 #include "../open_ardrone_v1_lib/vbat.h"
 
 int main(int argc, char *argv[]) {

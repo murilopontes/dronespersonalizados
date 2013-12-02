@@ -18,8 +18,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-#include <stdio.h>
-#include <stdlib.h>
+
+
+
+#include "all_headers_cpp.h"
 #include "gpio.h"
 
 //val=0 -> set gpio output lo

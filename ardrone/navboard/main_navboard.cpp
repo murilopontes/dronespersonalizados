@@ -1,6 +1,8 @@
 /*
     main_navboard.c - AR.Drone navboard demo program
 
+
+
     Copyright (C) 2011 Hugo Perquin - http://blog.perquin.com
 
     This program is free software; you can redistribute it and/or modify
@@ -18,17 +20,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-#include <stdio.h>   /* Standard input/output definitions */
-//#include <string.h>  /* String function definitions */
-#include <unistd.h>  /* UNIX standard function definitions */
-//#include <fcntl.h>   /* File control definitions */
-//#include <errno.h>   /* Error number definitions */
-//#include <termios.h> /* POSIX terminal control definitions */
-//#include <stdlib.h>  //exit()
-#include <pthread.h>
-#include <ctype.h>    /* For tolower() function */
-#include <math.h>
 
+
+
+#include "../open_ardrone_v1_lib/all_headers_cpp.h"
 #include "../open_ardrone_v1_lib/type.h"
 #include "../open_ardrone_v1_lib/util.h"
 #include "../open_ardrone_v1_lib/navboard.h"

@@ -18,13 +18,9 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/time.h>
-#include <unistd.h>
+
+
+#include "all_headers_cpp.h"
 #include "i2c-dev.h"
 #include "vbat.h"
 

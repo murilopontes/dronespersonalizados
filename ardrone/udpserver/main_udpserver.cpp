@@ -1,7 +1,10 @@
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+
+
+
+
+
+
+#include "../open_ardrone_v1_lib/all_headers_cpp.h"
 #include "../open_ardrone_v1_lib/udp.h"
 
 void diep(const char *s)

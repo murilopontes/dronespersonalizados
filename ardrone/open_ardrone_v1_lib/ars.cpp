@@ -37,7 +37,7 @@
 
 #include "ars.h"
 
-#include <math.h>
+#include "all_headers_cpp.h"
 
 
 void ars_Init(ars_Gyro1DKalman *ars, double Q_angle, double Q_gyro, double R_angle)

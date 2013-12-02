@@ -18,13 +18,9 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
     MA 02110-1301 USA.
 */
-#include <stdio.h>   /* Standard input/output definitions */
-#include <fcntl.h>   /* File control definitions */
-#include <termios.h> /* POSIX terminal control definitions */
-#include <unistd.h>  /* UNIX standard function definitions */
-#include <time.h>  
-#include <sys/time.h>
 
+
+#include "all_headers_cpp.h"
 #include "util.h"
 
 //non blocking getchar

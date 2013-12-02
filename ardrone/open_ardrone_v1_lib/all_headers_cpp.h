@@ -172,5 +172,26 @@
 #endif
 
 
+//posix API
+#include <unistd.h>
+
+//posix threads
+#include <pthread.h>
+
+//ioctl API
+#include <sys/ioctl.h>
+
+//mmap, munmap - map or unmap files or devices into memory
+#include <sys/mman.h>
+
+//file control options
+#include <fcntl.h>
+
+//terminal I/O interfaces
+#include <termios.h>
+
+// V4L API
+#include <linux/videodev2.h>
+
 
 #endif /* ALL_HEADERS_CPP_H_ */
