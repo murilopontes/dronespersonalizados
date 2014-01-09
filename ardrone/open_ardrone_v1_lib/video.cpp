@@ -127,7 +127,7 @@ int video_Init(vid_struct *vid)
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	fmt.fmt.pix.width = vid->w;	
 	fmt.fmt.pix.height = vid->h;
-    fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUV420;
+    fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUV422P;
 
     if (ioctl(vid->fd, VIDIOC_S_FMT, &fmt) < 0) {
 		printf("ioctl() VIDIOC_S_FMT failed.\n");
