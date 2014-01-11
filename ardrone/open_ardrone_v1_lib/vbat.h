@@ -37,4 +37,6 @@ typedef struct  {
 
 int vbat_init(vbat_struct *vbat);
 int vbat_read(vbat_struct *vbat);
+void *vbat_work(void* data);
+
 #endif

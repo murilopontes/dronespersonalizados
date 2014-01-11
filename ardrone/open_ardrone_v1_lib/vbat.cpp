@@ -23,10 +23,72 @@
 #include "all_headers_cpp.h"
 #include "i2c-dev.h"
 #include "vbat.h"
+#include "udp.h"
 
 #define VBAT_ADDRESS 0x49
 
 int fd;
+
+
+void *vbat_work(void* data)
+{
+
+	udp_struct udp;
+    int msglen;
+	char buf[512];
+
+	vbat_struct vbat;
+	int ret;
+
+
+	while(1){
+	  ret = udpClient_Init(&udp,50001);
+		if(ret==0){
+			break;
+		}
+		printf("udpClient_Init ret=%d\r\n",ret);
+	}
+
+	while(1){
+		ret = vbat_init(&vbat);
+		if(ret==0){
+			break;
+		}
+		printf("vbat_ret ret=%d\r\n",ret);
+	}
+
+	uint32_t count=0;
+	while(1) {
+
+		vbat_read(&vbat);
+
+		printf("set|%d|%4.2f|%4.2f|%4.2f|%4.2f|%4.2f|\n",
+				count,
+				vbat.vdd0_setpoint,
+				vbat.vdd1_setpoint,
+				vbat.vdd2_setpoint,
+				vbat.vdd3_setpoint,
+				vbat.vdd4_setpoint);
+
+		msglen=sprintf(buf, (char*)"get|%d|%4.2f|%4.2f|%4.2f|%4.2f|%4.2f|%5.2f|\n",
+				count,
+				vbat.vdd0,
+				vbat.vdd1,
+				vbat.vdd2,
+				vbat.vdd3,
+				vbat.vdd4,
+				vbat.vbat
+				);
+		udpClient_Send(&udp, buf, msglen);
+		printf(buf);
+
+		usleep(5000);
+		count++;
+	}
+
+}
+
+
 
 float vbat_get(unsigned char channel) 
 {

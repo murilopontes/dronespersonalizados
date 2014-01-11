@@ -149,13 +149,13 @@
             this.chart_battery.ChartAreas.Add(chartArea5);
             legend5.Name = "Legend1";
             this.chart_battery.Legends.Add(legend5);
-            this.chart_battery.Location = new System.Drawing.Point(362, 524);
+            this.chart_battery.Location = new System.Drawing.Point(12, 524);
             this.chart_battery.Name = "chart_battery";
             series5.ChartArea = "ChartArea1";
             series5.Legend = "Legend1";
             series5.Name = "Series1";
             this.chart_battery.Series.Add(series5);
-            this.chart_battery.Size = new System.Drawing.Size(314, 122);
+            this.chart_battery.Size = new System.Drawing.Size(1029, 122);
             this.chart_battery.TabIndex = 6;
             this.chart_battery.Text = "chart_ba";
             // 
@@ -182,6 +182,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Drone Set Point";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart_pitch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_roll)).EndInit();
