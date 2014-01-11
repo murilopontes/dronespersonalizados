@@ -28,31 +28,50 @@
 #include "../open_ardrone_v1_lib/all_headers_cpp.h"
 #include "../open_ardrone_v1_lib/vbat.h"
 
-int main(int argc, char *argv[]) {
+void *vbat_work(void* data){
+
 	vbat_struct vbat;
-
-	if(vbat_init(&vbat)) return 1;
-
-	printf("Setpoints:  Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV\n",
-			vbat.vdd0_setpoint,
-			vbat.vdd1_setpoint,
-			vbat.vdd2_setpoint,
-			vbat.vdd3_setpoint,
-			vbat.vdd4_setpoint);
-	printf("==================================================================\n");
+	int ret;
+	while(1){
+		ret = vbat_init(&vbat);
+		if(ret==0){
+			break;
+		}
+		printf("vbat_ret ret=%d\r\n",ret);
+	}
 
 	while(1) {
+
 		vbat_read(&vbat);
-		printf("Vbat=%5.2fV Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV\n",
-				vbat.vbat,
+
+		printf("set Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV\n",
+				vbat.vdd0_setpoint,
+				vbat.vdd1_setpoint,
+				vbat.vdd2_setpoint,
+				vbat.vdd3_setpoint,
+				vbat.vdd4_setpoint);
+		printf("get Vdd0=%4.2fV Vdd1=%4.2fV Vdd2=%4.2fV Vdd3=%4.2fV Vdd4=%4.2fV Vbat=%5.2fV\n",
 				vbat.vdd0,
 				vbat.vdd1,
 				vbat.vdd2,
 				vbat.vdd3,
-				vbat.vdd4
+				vbat.vdd4,
+				vbat.vbat
 				);
-		usleep(100000);
+
+		usleep(5000);
 	}
+
+}
+
+int main(int argc, char *argv[]) {
+
+	pthread_t thread_vbat;
+
+	pthread_create(&thread_vbat, NULL,vbat_work, NULL);
+
+	pthread_join(thread_vbat,NULL);
+
 
 	return 0;
 }
