@@ -1,4 +1,5 @@
 ﻿using SharpFtpServer;
+using SimpleWifi;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -359,6 +360,40 @@ namespace DroneSetPoint
             if (bmp_vertical != null) {
                 pictureBox_vertical.Image = bmp_vertical;
             }
+        }
+
+        Wifi wifi = new Wifi();
+        private void timer_wifi_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+
+                //get list of access points
+                IEnumerable<AccessPoint> accessPoints = wifi.GetAccessPoints();
+
+                //scan for ardrone
+                foreach (AccessPoint ap in accessPoints)
+                {
+                    //
+                    if (ap.Name.StartsWith("ardrone_"))
+                    {
+                        //verify connection
+                        if (!ap.IsConnected)
+                        {
+                            //connect if not connected
+                            AuthRequest authRequest = new AuthRequest(ap);
+                            ap.Connect(authRequest);
+                        }
+                    }
+                }
+                dataGridView1.DataSource = accessPoints;
+                dataGridView1.Update();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
         }
     }
 }

@@ -89,6 +89,10 @@
       <Project>{ea31f646-f757-4436-b3d2-d54ae82db920}</Project>
       <Name>SharpFtpServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimpleWifi\SimpleWifi.csproj">
+      <Project>{6aa425c9-ea6a-4b01-aaed-5ff122e8b663}</Project>
+      <Name>SimpleWifi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

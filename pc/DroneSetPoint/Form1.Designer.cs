@@ -57,6 +57,8 @@
             this.backgroundWorker_video_vertical = new System.ComponentModel.BackgroundWorker();
             this.timer_cameras = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker_cameras = new System.ComponentModel.BackgroundWorker();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.timer_wifi = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chart_pitch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_roll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_yaw)).BeginInit();
@@ -64,6 +66,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_horizontal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_vertical)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_battery)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // chart_pitch
@@ -72,7 +75,7 @@
             this.chart_pitch.ChartAreas.Add(chartArea6);
             legend6.Name = "Legend1";
             this.chart_pitch.Legends.Add(legend6);
-            this.chart_pitch.Location = new System.Drawing.Point(12, 12);
+            this.chart_pitch.Location = new System.Drawing.Point(9, 312);
             this.chart_pitch.Name = "chart_pitch";
             series6.ChartArea = "ChartArea1";
             series6.Legend = "Legend1";
@@ -88,7 +91,7 @@
             this.chart_roll.ChartAreas.Add(chartArea7);
             legend7.Name = "Legend1";
             this.chart_roll.Legends.Add(legend7);
-            this.chart_roll.Location = new System.Drawing.Point(12, 178);
+            this.chart_roll.Location = new System.Drawing.Point(9, 478);
             this.chart_roll.Name = "chart_roll";
             series7.ChartArea = "ChartArea1";
             series7.Legend = "Legend1";
@@ -104,7 +107,7 @@
             this.chart_yaw.ChartAreas.Add(chartArea8);
             legend8.Name = "Legend1";
             this.chart_yaw.Legends.Add(legend8);
-            this.chart_yaw.Location = new System.Drawing.Point(734, 12);
+            this.chart_yaw.Location = new System.Drawing.Point(322, 312);
             this.chart_yaw.Name = "chart_yaw";
             series8.ChartArea = "ChartArea1";
             series8.Legend = "Legend1";
@@ -120,7 +123,7 @@
             this.chart_height.ChartAreas.Add(chartArea9);
             legend9.Name = "Legend1";
             this.chart_height.Legends.Add(legend9);
-            this.chart_height.Location = new System.Drawing.Point(734, 178);
+            this.chart_height.Location = new System.Drawing.Point(322, 478);
             this.chart_height.Name = "chart_height";
             series9.ChartArea = "ChartArea1";
             series9.Legend = "Legend1";
@@ -133,9 +136,9 @@
             // pictureBox_horizontal
             // 
             this.pictureBox_horizontal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.pictureBox_horizontal.Location = new System.Drawing.Point(325, 12);
+            this.pictureBox_horizontal.Location = new System.Drawing.Point(635, 312);
             this.pictureBox_horizontal.Name = "pictureBox_horizontal";
-            this.pictureBox_horizontal.Size = new System.Drawing.Size(403, 310);
+            this.pictureBox_horizontal.Size = new System.Drawing.Size(194, 160);
             this.pictureBox_horizontal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_horizontal.TabIndex = 4;
             this.pictureBox_horizontal.TabStop = false;
@@ -143,9 +146,9 @@
             // pictureBox_vertical
             // 
             this.pictureBox_vertical.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.pictureBox_vertical.Location = new System.Drawing.Point(434, 328);
+            this.pictureBox_vertical.Location = new System.Drawing.Point(635, 478);
             this.pictureBox_vertical.Name = "pictureBox_vertical";
-            this.pictureBox_vertical.Size = new System.Drawing.Size(203, 190);
+            this.pictureBox_vertical.Size = new System.Drawing.Size(194, 160);
             this.pictureBox_vertical.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_vertical.TabIndex = 5;
             this.pictureBox_vertical.TabStop = false;
@@ -156,13 +159,13 @@
             this.chart_battery.ChartAreas.Add(chartArea10);
             legend10.Name = "Legend1";
             this.chart_battery.Legends.Add(legend10);
-            this.chart_battery.Location = new System.Drawing.Point(12, 524);
+            this.chart_battery.Location = new System.Drawing.Point(12, 131);
             this.chart_battery.Name = "chart_battery";
             series10.ChartArea = "ChartArea1";
             series10.Legend = "Legend1";
             series10.Name = "Series1";
             this.chart_battery.Series.Add(series10);
-            this.chart_battery.Size = new System.Drawing.Size(1029, 122);
+            this.chart_battery.Size = new System.Drawing.Size(576, 156);
             this.chart_battery.TabIndex = 6;
             this.chart_battery.Text = "chart_ba";
             // 
@@ -198,11 +201,26 @@
             this.backgroundWorker_cameras.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_cameras_DoWork);
             this.backgroundWorker_cameras.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_cameras_ProgressChanged);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(576, 113);
+            this.dataGridView1.TabIndex = 7;
+            // 
+            // timer_wifi
+            // 
+            this.timer_wifi.Enabled = true;
+            this.timer_wifi.Interval = 2000;
+            this.timer_wifi.Tick += new System.EventHandler(this.timer_wifi_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1053, 652);
+            this.ClientSize = new System.Drawing.Size(891, 652);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.chart_battery);
             this.Controls.Add(this.pictureBox_vertical);
             this.Controls.Add(this.pictureBox_horizontal);
@@ -224,6 +242,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_horizontal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_vertical)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_battery)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -242,6 +261,8 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker_video_vertical;
         private System.Windows.Forms.Timer timer_cameras;
         private System.ComponentModel.BackgroundWorker backgroundWorker_cameras;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Timer timer_wifi;
     }
 }
 
