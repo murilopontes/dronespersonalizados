@@ -141,10 +141,12 @@ void tailSerialReply() {
 }
 
 void serializeNames(PGM_P s) {
+	/*
   headSerialReply(strlen_P(s));
   for (PGM_P c = s; pgm_read_byte(c); c++) {
     serialize8(pgm_read_byte(c));
   }
+  */
 }
 
 void serialCom() {
@@ -480,18 +482,18 @@ void evaluateCommand() {
      s_struct((uint8_t*)&conf.pid[0].P8,3*PIDITEMS);
      break;
    case MSP_PIDNAMES:
-     serializeNames(pidnames);
+     //serializeNames(pidnames);
      break;
    case MSP_BOX:
      s_struct((uint8_t*)&conf.activate[0],2*CHECKBOXITEMS);
      break;
    case MSP_BOXNAMES:
-     serializeNames(boxnames);
+     //serializeNames(boxnames);
      break;
    case MSP_BOXIDS:
      headSerialReply(CHECKBOXITEMS);
      for(uint8_t i=0;i<CHECKBOXITEMS;i++) {
-       serialize8(pgm_read_byte(&(boxids[i])));
+       //serialize8(pgm_read_byte(&(boxids[i])));
      }
      break;
    case MSP_MOTOR_PINS:

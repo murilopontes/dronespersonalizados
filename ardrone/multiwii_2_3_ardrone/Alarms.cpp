@@ -325,7 +325,7 @@ void blinkLED(uint8_t num, uint8_t ontime,uint8_t repeat) {
       #if defined(LANDING_LIGHTS_DDR)
         switch_landing_lights(1);
       #endif
-      LEDPIN_TOGGLE; // switch LEDPIN state
+      //LEDPIN_TOGGLE; // switch LEDPIN state
       delay(ontime);
       #if defined(LED_FLASHER)
         switch_led_flasher(0);
@@ -379,8 +379,8 @@ void blinkLED(uint8_t num, uint8_t ontime,uint8_t repeat) {
         #endif
         case 0:
         default:
-          if (activate == 1) {LEDPIN_ON;}
-          else LEDPIN_OFF;
+          //if (activate == 1) {LEDPIN_ON;}
+          //else LEDPIN_OFF;
           break;
       }
       return;

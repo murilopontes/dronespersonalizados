@@ -183,41 +183,54 @@ static uint32_t neutralizeTime = 0;
 // ************************************************************************************************************
 
 void i2c_init(void) {
+	/*
   #if defined(INTERNAL_I2C_PULLUPS)
     I2C_PULLUPS_ENABLE
   #else
     I2C_PULLUPS_DISABLE
   #endif
+  */
+    /*
   TWSR = 0;                                    // no prescaler => prescaler = 1
   TWBR = ((F_CPU / I2C_SPEED) - 16) / 2;       // change the I2C clock rate
   TWCR = 1<<TWEN;                              // enable twi module, no interrupt
+  */
 }
 
 void i2c_rep_start(uint8_t address) {
+	/*
   TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN) ; // send REPEAT START condition
   waitTransmissionI2C();                       // wait until transmission completed
   TWDR = address;                              // send device address
   TWCR = (1<<TWINT) | (1<<TWEN);
   waitTransmissionI2C();                       // wail until transmission completed
+  */
 }
 
 void i2c_stop(void) {
+	/*
   TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWSTO);
   //  while(TWCR & (1<<TWSTO));                // <- can produce a blocking state with some WMP clones
+*/
 }
 
 void i2c_write(uint8_t data ) {
+	/*
   TWDR = data;                                 // send data to the previously addressed device
   TWCR = (1<<TWINT) | (1<<TWEN);
   waitTransmissionI2C();
+  */
 }
 
 uint8_t i2c_read(uint8_t ack) {
+	/*
   TWCR = (1<<TWINT) | (1<<TWEN) | (ack? (1<<TWEA) : 0);
   waitTransmissionI2C();
   uint8_t r = TWDR;
   if (!ack) i2c_stop();
   return r;
+  */
+	return 0;
 }
 
 uint8_t i2c_readAck() {
@@ -229,6 +242,7 @@ uint8_t i2c_readNak(void) {
 }
 
 void waitTransmissionI2C() {
+	/*
   uint16_t count = 255;
   while (!(TWCR & (1<<TWINT))) {
     count--;
@@ -238,7 +252,7 @@ void waitTransmissionI2C() {
       i2c_errors_count++;
       break;
     }
-  }
+  }*/
 }
 
 size_t i2c_read_to_buf(uint8_t add, void *buf, size_t size) {
@@ -588,7 +602,7 @@ void i2c_BMP085_Calculate() {
 uint8_t Baro_update() {                   // first UT conversion is started in init procedure
   if (currentTime < bmp085_ctx.deadline) return 0; 
   bmp085_ctx.deadline = currentTime+6000; // 1.5ms margin according to the spec (4.5ms T convetion time)
-  TWBR = ((F_CPU / 400000L) - 16) / 2; // change the I2C clock rate to 400kHz, BMP085 is ok with this speed
+  //TWBR = ((F_CPU / 400000L) - 16) / 2; // change the I2C clock rate to 400kHz, BMP085 is ok with this speed
   if (bmp085_ctx.state == 0) {
     i2c_BMP085_UT_Read(); 
     i2c_BMP085_UP_Start(); 
@@ -1106,7 +1120,7 @@ uint8_t Mag_getADC() { // return 1 when news values are available, 0 otherwise
   uint8_t axis;
   if ( currentTime < t ) return 0; //each read is spaced by 100ms
   t = currentTime + 100000;
-  TWBR = ((F_CPU / 400000L) - 16) / 2; // change the I2C clock rate to 400kHz
+  //TWBR = ((F_CPU / 400000L) - 16) / 2; // change the I2C clock rate to 400kHz
   Device_Mag_getADC();
   imu.magADC[ROLL]  = imu.magADC[ROLL]  * magGain[ROLL];
   imu.magADC[PITCH] = imu.magADC[PITCH] * magGain[PITCH];
@@ -1128,7 +1142,7 @@ uint8_t Mag_getADC() { // return 1 when news values are available, 0 otherwise
  
   if (tCal != 0) {
     if ((t - tCal) < 30000000) { // 30s: you have 30s to turn the multi in all directions
-      LEDPIN_TOGGLE;
+      //LEDPIN_TOGGLE;
       for(axis=0;axis<3;axis++) {
         if (imu.magADC[axis] < magZeroTempMin[axis]) magZeroTempMin[axis] = imu.magADC[axis];
         if (imu.magADC[axis] > magZeroTempMax[axis]) magZeroTempMax[axis] = imu.magADC[axis];
@@ -1369,7 +1383,7 @@ void Device_Mag_getADC() {
 #if defined(MPU6050)
 
 void Gyro_init() {
-  TWBR = ((F_CPU / 400000L) - 16) / 2; // change the I2C clock rate to 400kHz
+  //TWBR = ((F_CPU / 400000L) - 16) / 2; // change the I2C clock rate to 400kHz
   i2c_writeReg(MPU6050_ADDRESS, 0x6B, 0x80);             //PWR_MGMT_1    -- DEVICE_RESET 1
   delay(5);
   i2c_writeReg(MPU6050_ADDRESS, 0x6B, 0x03);             //PWR_MGMT_1    -- SLEEP 0; CYCLE 0; TEMP_DIS 0; CLKSEL 3 (PLL with Z Gyro reference)
@@ -1790,7 +1804,7 @@ void Sonar_update() {}
 
 void initSensors() {
   delay(200);
-  POWERPIN_ON;
+  //POWERPIN_ON;
   delay(100);
   i2c_init();
   delay(100);

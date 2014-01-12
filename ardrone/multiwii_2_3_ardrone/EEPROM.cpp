@@ -1,4 +1,4 @@
-#include <avr/eeprom.h>
+//#include <avr/eeprom.h>
 #include "Arduino.h"
 #include "config.h"
 #include "def.h"
@@ -17,14 +17,17 @@ uint8_t calculate_sum(uint8_t *cb , uint8_t siz) {
 }
 
 void readGlobalSet() {
+	/*
   eeprom_read_block((void*)&global_conf, (void*)0, sizeof(global_conf));
   if(calculate_sum((uint8_t*)&global_conf, sizeof(global_conf)) != global_conf.checksum) {
     global_conf.currentSet = 0;
     global_conf.accZero[ROLL] = 5000;    // for config error signalization
   }
+  */
 }
  
 bool readEEPROM() {
+	/*
   uint8_t i;
   #ifdef MULTIPLE_CONFIGURATION_PROFILES
     if(global_conf.currentSet>2) global_conf.currentSet=0;
@@ -63,19 +66,24 @@ bool readEEPROM() {
     ArmedTimeWarningMicroSeconds = (conf.armedtimewarning *1000000);
   #endif
   return true;    // setting is OK
+  */
+	return true;
 }
 
 void writeGlobalSet(uint8_t b) {
+	/*
   global_conf.checksum = calculate_sum((uint8_t*)&global_conf, sizeof(global_conf));
   eeprom_write_block((const void*)&global_conf, (void*)0, sizeof(global_conf));
   if (b == 1) blinkLED(15,20,1);
   #if defined(BUZZER)
     alarmArray[7] = 1; 
   #endif
+  */
 
 }
  
 void writeParams(uint8_t b) {
+	/*
   #ifdef MULTIPLE_CONFIGURATION_PROFILES
     if(global_conf.currentSet>2) global_conf.currentSet=0;
   #else
@@ -88,6 +96,7 @@ void writeParams(uint8_t b) {
   #if defined(BUZZER)
     alarmArray[7] = 1; //beep if loaded from gui or android
   #endif
+  */
 }
 
 void update_constants() { 

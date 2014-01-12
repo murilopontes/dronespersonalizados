@@ -8,7 +8,7 @@ November  2013     V2.3
  any later version. see <http://www.gnu.org/licenses/>
 */
 
-#include <avr/io.h>
+//#include <avr/io.h>
 
 #include "Arduino.h"
 #include "config.h"
@@ -26,11 +26,11 @@ November  2013     V2.3
 #include "GPS.h"
 #include "Protocol.h"
 
-#include <avr/pgmspace.h>
+//#include <avr/pgmspace.h>
 
 /*********** RC alias *****************/
 
-const char pidnames[] PROGMEM =
+const char pidnames[]  =
   "ROLL;"
   "PITCH;"
   "YAW;"
@@ -43,7 +43,7 @@ const char pidnames[] PROGMEM =
   "VEL;"
 ;
 
-const char boxnames[] PROGMEM = // names for dynamic generation of config GUI
+const char boxnames[]  = // names for dynamic generation of config GUI
   "ARM;"
   #if ACC
     "ANGLE;"
@@ -94,7 +94,7 @@ const char boxnames[] PROGMEM = // names for dynamic generation of config GUI
   #endif
 ;
 
-const uint8_t boxids[] PROGMEM = {// permanent IDs associated to boxes. This way, you can rely on an ID number to identify a BOX function.
+const uint8_t boxids[]  = {// permanent IDs associated to boxes. This way, you can rely on an ID number to identify a BOX function.
   0, //"ARM;"
   #if ACC
     1, //"ANGLE;"
@@ -452,13 +452,13 @@ void annexCode() { // this code is excetuted at each loop and won't interfere wi
     alarmHandler(); // external buzzer routine that handles buzzer events globally now
   #endif
 
-
+/*
   if ( (calibratingA>0 && ACC ) || (calibratingG>0) ) { // Calibration phasis
     LEDPIN_TOGGLE;
   } else {
     if (f.ACC_CALIBRATED) {LEDPIN_OFF;}
     if (f.ARMED) {LEDPIN_ON;}
-  }
+  }*/
 
   #if defined(LED_RING)
     static uint32_t LEDTime;
@@ -476,7 +476,7 @@ void annexCode() { // this code is excetuted at each loop and won't interfere wi
     if (! f.SMALL_ANGLES_25) {
       // the multi uses ACC and is not calibrated or is too much inclinated
       f.ACC_CALIBRATED = 0;
-      LEDPIN_TOGGLE;
+      //LEDPIN_TOGGLE;
       calibratedAccTime = currentTime + 100000;
     } else {
       f.ACC_CALIBRATED = 1;
@@ -564,11 +564,11 @@ void setup() {
       SerialOpen(3,SERIAL3_COM_SPEED);
     #endif
   #endif
-  LEDPIN_PINMODE;
-  POWERPIN_PINMODE;
-  BUZZERPIN_PINMODE;
-  STABLEPIN_PINMODE;
-  POWERPIN_OFF;
+  //LEDPIN_PINMODE;
+ // POWERPIN_PINMODE;
+ // BUZZERPIN_PINMODE;
+  //STABLEPIN_PINMODE;
+ // POWERPIN_OFF;
   initOutput();
   readGlobalSet();
   #ifndef NO_FLASH_CHECK
@@ -1342,4 +1342,9 @@ void loop () {
   // do not update servos during unarmed calibration of sensors which are sensitive to vibration
   if ( (f.ARMED) || ((!calibratingG) && (!calibratingA)) ) writeServos();
   writeMotors();
+}
+
+int main(int argc,char** argv){
+	setup();
+	for(;;) loop();
 }

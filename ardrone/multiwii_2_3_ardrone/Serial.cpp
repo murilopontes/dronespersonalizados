@@ -111,6 +111,8 @@ void UartSendData(uint8_t port) {
 #endif
 
 void SerialOpen(uint8_t port, uint32_t baud) {
+/*
+
   uint8_t h = ((F_CPU  / 4 / baud -1) / 2) >> 8;
   uint8_t l = ((F_CPU  / 4 / baud -1) / 2);
   switch (port) {
@@ -130,6 +132,7 @@ void SerialOpen(uint8_t port, uint32_t baud) {
       case 3: UCSR3A  = (1<<U2X3); UBRR3H = h; UBRR3L = l; UCSR3B |= (1<<RXEN3)|(1<<TXEN3)|(1<<RXCIE3); break;
     #endif
   }
+  */
 }
 
 void SerialEnd(uint8_t port) {

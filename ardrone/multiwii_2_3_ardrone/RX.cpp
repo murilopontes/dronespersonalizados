@@ -48,13 +48,15 @@ void configureReceiver() {
     #if defined(MEGA)
       DDRK = 0;  // defined PORTK as a digital port ([A8-A15] are consired as digital PINs and not analogical)
     #endif
+
+      /*
     // PCINT activation
     for(uint8_t i = 0; i < PCINT_PIN_COUNT; i++){ // i think a for loop is ok for the init.
       PCINT_RX_PORT |= PCInt_RX_Pins[i];
       PCINT_RX_MASK |= PCInt_RX_Pins[i];
     }
     PCICR = PCIR_PORT_BIT;
-    
+    */
     /*************    atmega328P's Specific Aux2 Pin Setup    *********************/
     #if defined(PROMINI)
      #if defined(RCAUXPIN)
@@ -137,6 +139,7 @@ void configureReceiver() {
     }
 #endif
 
+/*
   // port change Interrupt
   ISR(RX_PC_INTERRUPT) { //this ISR is common to every receiver channel, it is call everytime a change state occurs on a RX input pin
     uint8_t mask;
@@ -187,6 +190,7 @@ void configureReceiver() {
       }
     #endif
   }
+  */
   /*********************      atmega328P's Aux2 Pins      *************************/
   #if defined(PROMINI)
     #if defined(RCAUXPIN)
@@ -388,10 +392,12 @@ uint16_t readRawRC(uint8_t chan) {
       data = rcValue[rcChannel[chan]];
     } else data = 1500;
   #else
+    /*
     uint8_t oldSREG;
     oldSREG = SREG; cli(); // Let's disable interrupts
     data = rcValue[rcChannel[chan]]; // Let's copy the data Atomically
     SREG = oldSREG;        // Let's restore interrupt state
+    */
   #endif
   return data; // We return the value correctly copied when the IRQ's where disabled
 }

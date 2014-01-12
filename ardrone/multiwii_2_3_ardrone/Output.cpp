@@ -437,7 +437,7 @@ void writeAllMotors(int16_t mc) {   // Sends commands to all motors
 void initOutput() {
   /****************            mark all PWM pins as Output             ******************/
   for(uint8_t i=0;i<NUMBER_MOTOR;i++) {
-    pinMode(PWM_PIN[i],OUTPUT);
+    //pinMode(PWM_PIN[i],OUTPUT);
   }
     
   /****************  Specific PWM Timers & Registers for the MEGA's    ******************/
