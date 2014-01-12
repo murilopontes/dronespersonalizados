@@ -10,6 +10,31 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Alarms.cpp" />
+    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Arduino.cpp" />
+    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\IMU.cpp" />
+    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\MultiWii.cpp" />
+    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Output.cpp" />
+    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Protocol.cpp" />
+    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\RX.cpp" />
+    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Sensors.cpp" />
+    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Serial.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Alarms.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Arduino.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\config.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\def.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\IMU.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\MultiWii.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Output.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Protocol.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\RX.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Sensors.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Serial.h" />
+    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\types.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{503B259B-44A5-4F71-8BCB-CF73A6ED146F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -75,31 +100,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Alarms.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Arduino.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\IMU.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\MultiWii.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Output.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Protocol.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\RX.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Sensors.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Serial.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Alarms.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Arduino.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\config.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\def.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\IMU.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\MultiWii.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Output.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Protocol.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\RX.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Sensors.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Serial.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\types.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

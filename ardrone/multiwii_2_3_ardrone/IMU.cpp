@@ -15,27 +15,7 @@ void computeIMU () {
   int16_t gyroADCinter[3];
   static uint32_t timeInterleave = 0;
 
-  //we separate the 2 situations because reading gyro values with a gyro only setup can be acchieved at a higher rate
-  //gyro+nunchuk: we must wait for a quite high delay betwwen 2 reads to get both WM+ and Nunchuk data. It works with 3ms
-  //gyro only: the delay to read 2 consecutive values can be reduced to only 0.65ms
-  #if defined(NUNCHUCK)
-    annexCode();
-    while((uint16_t)(micros()-timeInterleave)<INTERLEAVING_DELAY) ; //interleaving delay between 2 consecutive reads
-    timeInterleave=micros();
-    ACC_getADC();
-    getEstimatedAttitude(); // computation time must last less than one interleaving delay
-    while((uint16_t)(micros()-timeInterleave)<INTERLEAVING_DELAY) ; //interleaving delay between 2 consecutive reads
-    timeInterleave=micros();
-    f.NUNCHUKDATA = 1;
-    while(f.NUNCHUKDATA) ACC_getADC(); // For this interleaving reading, we must have a gyro update at this point (less delay)
-
-    for (axis = 0; axis < 3; axis++) {
-      // empirical, we take a weighted value of the current and the previous values
-      // /4 is to average 4 values, note: overflow is not possible for WMP gyro here
-      imu.gyroData[axis] = (imu.gyroADC[axis]*3+gyroADCprevious[axis])>>2;
-      gyroADCprevious[axis] = imu.gyroADC[axis];
-    }
-  #else
+ 
     #if ACC
       ACC_getADC();
       getEstimatedAttitude();
@@ -60,18 +40,8 @@ void computeIMU () {
       gyroADCprevious[axis] = gyroADCinter[axis]>>1;
       if (!ACC) imu.accADC[axis]=0;
     }
-  #endif
-  #if defined(GYRO_SMOOTHING)
-    static int16_t gyroSmooth[3] = {0,0,0};
-    for (axis = 0; axis < 3; axis++) {
-      imu.gyroData[axis] = (int16_t) ( ( (int32_t)((int32_t)gyroSmooth[axis] * (conf.Smoothing[axis]-1) )+imu.gyroData[axis]+1 ) / conf.Smoothing[axis]);
-      gyroSmooth[axis] = imu.gyroData[axis];
-    }
-  #elif defined(TRI)
-    static int16_t gyroYawSmooth = 0;
-    imu.gyroData[YAW] = (gyroYawSmooth*2+imu.gyroData[YAW])/3;
-    gyroYawSmooth = imu.gyroData[YAW];
-  #endif
+
+
 }
 
 // **************************************************
@@ -231,18 +201,7 @@ void getEstimatedAttitude(){
   att.angle[ROLL]  = _atan2(EstG32.V.X , EstG32.V.Z);
   att.angle[PITCH] = _atan2(EstG32.V.Y , InvSqrt(sqGX_sqGZ)*sqGX_sqGZ);
 
-  #if MAG
-    att.heading = _atan2(
-      EstM32.V.Z * EstG32.V.X - EstM32.V.X * EstG32.V.Z,
-      (EstM.V.Y * sqGX_sqGZ  - (EstM32.V.X * EstG32.V.X + EstM32.V.Z * EstG32.V.Z) * EstG.V.Y)*invG ); 
-    att.heading += conf.mag_declination; // Set from GUI
-    att.heading /= 10;
-  #endif
 
-  #if defined(THROTTLE_ANGLE_CORRECTION)
-    cosZ = EstG.V.Z / ACC_1G * 100.0f;                                                        // cos(angleZ) * 100 
-    throttleAngleCorrection = THROTTLE_ANGLE_CORRECTION * constrain(100 - cosZ, 0, 100) >>3;  // 16 bit ok: 200*150 = 30000  
-  #endif
 }
 
 #define UPDATE_INTERVAL 25000    // 40hz update rate (20hz LPF on acc)
