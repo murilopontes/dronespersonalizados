@@ -17,6 +17,8 @@ namespace DroneConnect
 {
     public partial class Form1 : Form
     {
+        public static int ping_timeout = 50;
+
         public Form1()
         {
             InitializeComponent();
@@ -49,7 +51,7 @@ namespace DroneConnect
                 while (ping_rtt_ms.Points.Count > 10) {
                     ping_rtt_ms.Points.RemoveAt(0);
                 }
-                chart1.ChartAreas[0].AxisY.Maximum = 105;
+                chart1.ChartAreas[0].AxisY.Maximum = ping_timeout;
                 chart1.ChartAreas[0].AxisY.Minimum = 0;
                 chart1.ChartAreas[0].RecalculateAxesScale();
                 ping_rtt_ms.Points.AddXY(packet,(int)ping("192.168.1.1"));
@@ -87,7 +89,7 @@ namespace DroneConnect
         {
 
             //ping timeout
-            int timeout = 100;
+            int timeout = ping_timeout;
 
             try
             {
@@ -109,9 +111,9 @@ namespace DroneConnect
                 //report it
                 if (reply.Status == IPStatus.Success)
                 {
-                    if (reply.RoundtripTime > 100)
+                    if (reply.RoundtripTime > timeout)
                     {
-                        return 100;
+                        return timeout;
                     }
                     return reply.RoundtripTime;
                 }

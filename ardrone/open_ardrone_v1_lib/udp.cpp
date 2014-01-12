@@ -33,7 +33,10 @@ int udpClient_Init(udp_struct *udp,  int port)
 
 int udpClient_Send(udp_struct *udp, void* buf, int len)
 {  
-  if (sendto(udp->s, buf, len, 0, (const struct sockaddr*)&udp->si_other, udp->slen)==-1) return 1;
+  if (sendto(udp->s, buf, len, 0, (const struct sockaddr*)&udp->si_other, udp->slen)<0){
+	  perror("udpClient_Send -> ");
+	  return 1;
+  }
   return 0;
 }
 

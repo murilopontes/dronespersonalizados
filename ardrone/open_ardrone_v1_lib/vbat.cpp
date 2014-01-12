@@ -57,11 +57,14 @@ void *vbat_work(void* data)
 		printf("vbat_ret ret=%d\r\n",ret);
 	}
 
+
+	printf("vbat-thread-loop: started\n");
 	uint32_t count=0;
 	while(1) {
 
 		vbat_read(&vbat);
 
+		/*
 		printf("set|%d|%4.2f|%4.2f|%4.2f|%4.2f|%4.2f|\n",
 				count,
 				vbat.vdd0_setpoint,
@@ -69,6 +72,7 @@ void *vbat_work(void* data)
 				vbat.vdd2_setpoint,
 				vbat.vdd3_setpoint,
 				vbat.vdd4_setpoint);
+*/
 
 		msglen=sprintf(buf, (char*)"get|%d|%4.2f|%4.2f|%4.2f|%4.2f|%4.2f|%5.2f|\n",
 				count,
@@ -79,8 +83,10 @@ void *vbat_work(void* data)
 				vbat.vdd4,
 				vbat.vbat
 				);
+
 		udpClient_Send(&udp, buf, msglen);
-		printf(buf);
+
+		//printf(buf);
 
 		usleep(5000);
 		count++;

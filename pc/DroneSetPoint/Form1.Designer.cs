@@ -28,21 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.chart_pitch = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chart_roll = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -52,6 +53,10 @@
             this.pictureBox_vertical = new System.Windows.Forms.PictureBox();
             this.chart_battery = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.backgroundWorker_battery = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker_video_horizontal = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker_video_vertical = new System.ComponentModel.BackgroundWorker();
+            this.timer_cameras = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorker_cameras = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.chart_pitch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_roll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_yaw)).BeginInit();
@@ -63,64 +68,64 @@
             // 
             // chart_pitch
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart_pitch.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart_pitch.Legends.Add(legend1);
+            chartArea6.Name = "ChartArea1";
+            this.chart_pitch.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart_pitch.Legends.Add(legend6);
             this.chart_pitch.Location = new System.Drawing.Point(12, 12);
             this.chart_pitch.Name = "chart_pitch";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart_pitch.Series.Add(series1);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chart_pitch.Series.Add(series6);
             this.chart_pitch.Size = new System.Drawing.Size(307, 160);
             this.chart_pitch.TabIndex = 0;
             this.chart_pitch.Text = "chart1";
             // 
             // chart_roll
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chart_roll.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart_roll.Legends.Add(legend2);
+            chartArea7.Name = "ChartArea1";
+            this.chart_roll.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.chart_roll.Legends.Add(legend7);
             this.chart_roll.Location = new System.Drawing.Point(12, 178);
             this.chart_roll.Name = "chart_roll";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart_roll.Series.Add(series2);
+            series7.ChartArea = "ChartArea1";
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.chart_roll.Series.Add(series7);
             this.chart_roll.Size = new System.Drawing.Size(307, 160);
             this.chart_roll.TabIndex = 1;
             this.chart_roll.Text = "chart2";
             // 
             // chart_yaw
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chart_yaw.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart_yaw.Legends.Add(legend3);
+            chartArea8.Name = "ChartArea1";
+            this.chart_yaw.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.chart_yaw.Legends.Add(legend8);
             this.chart_yaw.Location = new System.Drawing.Point(734, 12);
             this.chart_yaw.Name = "chart_yaw";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart_yaw.Series.Add(series3);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.chart_yaw.Series.Add(series8);
             this.chart_yaw.Size = new System.Drawing.Size(307, 160);
             this.chart_yaw.TabIndex = 2;
             this.chart_yaw.Text = "chart3";
             // 
             // chart_height
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart_height.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart_height.Legends.Add(legend4);
+            chartArea9.Name = "ChartArea1";
+            this.chart_height.ChartAreas.Add(chartArea9);
+            legend9.Name = "Legend1";
+            this.chart_height.Legends.Add(legend9);
             this.chart_height.Location = new System.Drawing.Point(734, 178);
             this.chart_height.Name = "chart_height";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart_height.Series.Add(series4);
+            series9.ChartArea = "ChartArea1";
+            series9.Legend = "Legend1";
+            series9.Name = "Series1";
+            this.chart_height.Series.Add(series9);
             this.chart_height.Size = new System.Drawing.Size(307, 160);
             this.chart_height.TabIndex = 3;
             this.chart_height.Text = "chart4";
@@ -131,6 +136,7 @@
             this.pictureBox_horizontal.Location = new System.Drawing.Point(325, 12);
             this.pictureBox_horizontal.Name = "pictureBox_horizontal";
             this.pictureBox_horizontal.Size = new System.Drawing.Size(403, 310);
+            this.pictureBox_horizontal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_horizontal.TabIndex = 4;
             this.pictureBox_horizontal.TabStop = false;
             // 
@@ -140,21 +146,22 @@
             this.pictureBox_vertical.Location = new System.Drawing.Point(434, 328);
             this.pictureBox_vertical.Name = "pictureBox_vertical";
             this.pictureBox_vertical.Size = new System.Drawing.Size(203, 190);
+            this.pictureBox_vertical.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_vertical.TabIndex = 5;
             this.pictureBox_vertical.TabStop = false;
             // 
             // chart_battery
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart_battery.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart_battery.Legends.Add(legend5);
+            chartArea10.Name = "ChartArea1";
+            this.chart_battery.ChartAreas.Add(chartArea10);
+            legend10.Name = "Legend1";
+            this.chart_battery.Legends.Add(legend10);
             this.chart_battery.Location = new System.Drawing.Point(12, 524);
             this.chart_battery.Name = "chart_battery";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chart_battery.Series.Add(series5);
+            series10.ChartArea = "ChartArea1";
+            series10.Legend = "Legend1";
+            series10.Name = "Series1";
+            this.chart_battery.Series.Add(series10);
             this.chart_battery.Size = new System.Drawing.Size(1029, 122);
             this.chart_battery.TabIndex = 6;
             this.chart_battery.Text = "chart_ba";
@@ -164,6 +171,32 @@
             this.backgroundWorker_battery.WorkerReportsProgress = true;
             this.backgroundWorker_battery.WorkerSupportsCancellation = true;
             this.backgroundWorker_battery.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_battery_DoWork);
+            // 
+            // backgroundWorker_video_horizontal
+            // 
+            this.backgroundWorker_video_horizontal.WorkerReportsProgress = true;
+            this.backgroundWorker_video_horizontal.WorkerSupportsCancellation = true;
+            this.backgroundWorker_video_horizontal.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_video_horizontal_DoWork);
+            this.backgroundWorker_video_horizontal.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_video_horizontal_ProgressChanged);
+            // 
+            // backgroundWorker_video_vertical
+            // 
+            this.backgroundWorker_video_vertical.WorkerReportsProgress = true;
+            this.backgroundWorker_video_vertical.WorkerSupportsCancellation = true;
+            this.backgroundWorker_video_vertical.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_video_vertical_DoWork);
+            this.backgroundWorker_video_vertical.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_video_vertical_ProgressChanged);
+            // 
+            // timer_cameras
+            // 
+            this.timer_cameras.Enabled = true;
+            this.timer_cameras.Tick += new System.EventHandler(this.timer_cameras_Tick);
+            // 
+            // backgroundWorker_cameras
+            // 
+            this.backgroundWorker_cameras.WorkerReportsProgress = true;
+            this.backgroundWorker_cameras.WorkerSupportsCancellation = true;
+            this.backgroundWorker_cameras.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_cameras_DoWork);
+            this.backgroundWorker_cameras.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_cameras_ProgressChanged);
             // 
             // Form1
             // 
@@ -205,6 +238,10 @@
         private System.Windows.Forms.PictureBox pictureBox_vertical;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_battery;
         private System.ComponentModel.BackgroundWorker backgroundWorker_battery;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_video_horizontal;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_video_vertical;
+        private System.Windows.Forms.Timer timer_cameras;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_cameras;
     }
 }
 

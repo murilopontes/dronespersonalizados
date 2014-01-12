@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 
 	system("killall -9 program.elf");
 
-	daemonize();
+	//daemonize();
 
 	pthread_t thread_vbat;
 

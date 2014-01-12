@@ -36,7 +36,7 @@ namespace DroneUdpVideoRX
 
 
 
-        ConcurrentQueue<Bitmap> frames_6969 = new ConcurrentQueue<Bitmap>();
+        ConcurrentQueue<Bitmap> frames_vertical = new ConcurrentQueue<Bitmap>();
         private void backgroundWorker_6969_DoWork(object sender, DoWorkEventArgs e)
         {
             int listenPort = 6969;
@@ -66,7 +66,7 @@ namespace DroneUdpVideoRX
                         z+=3;
                     }
                 }
-                frames_6969.Enqueue(bmp_work);
+                frames_vertical.Enqueue(bmp_work);
                 this.backgroundWorker_6969.ReportProgress(1);
 
             }
@@ -78,7 +78,7 @@ namespace DroneUdpVideoRX
         private void backgroundWorker_6969_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             Bitmap output;
-            if (frames_6969.TryDequeue(out output))
+            if (frames_vertical.TryDequeue(out output))
             {
                 vertical_dequeue++;
                 this.pictureBox_vertical.Image = (Bitmap)output.Clone();
