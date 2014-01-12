@@ -28,6 +28,36 @@ namespace DroneSetPoint
             InitializeComponent();
         }
 
+        public class TextBoxStreamWriter : TextWriter
+        {
+            TextBox _output = null;
+
+            public TextBoxStreamWriter(TextBox output)
+            {
+                _output = output;
+            }
+
+            public override void Write(char value)
+            {
+                base.Write(value);
+                if (_output.InvokeRequired)
+                {
+                    _output.Invoke(new MethodInvoker(() =>
+                    {
+                        _output.AppendText(value.ToString()); // When character data is written, append it to the text box.
+                    }));
+                }
+                else {
+                    _output.AppendText(value.ToString()); // When character data is written, append it to the text box.
+                }
+            }
+
+            public override Encoding Encoding
+            {
+                get { return System.Text.Encoding.UTF8; }
+            }
+        }
+
 
         //
         Series serie_battery = new Series("battery");
@@ -56,9 +86,16 @@ namespace DroneSetPoint
         Series serie_yaw_fusion = new Series("yaw_fusion");
 
 
+        // That's our custom TextWriter class
+        TextWriter _writer = null;
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Instantiate the writer
+            _writer = new TextBoxStreamWriter(this.textBox1);
+            // Redirect the out Console stream
+            Console.SetOut(_writer);
+
             FtpServer server = new FtpServer();
             server.Start();
 
