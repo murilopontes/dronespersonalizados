@@ -93,6 +93,10 @@
       <Project>{6aa425c9-ea6a-4b01-aaed-5ff122e8b663}</Project>
       <Name>SimpleWifi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\telnet\Telnet\Telnet.csproj">
+      <Project>{c0a19260-2ce0-4253-80cb-8579bcfdded3}</Project>
+      <Name>Telnet</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

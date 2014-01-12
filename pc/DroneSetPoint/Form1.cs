@@ -1,4 +1,6 @@
-﻿using SharpFtpServer;
+﻿using De.Mud.Telnet;
+using Net.Graphite.Telnet;
+using SharpFtpServer;
 using SimpleWifi;
 using System;
 using System.Collections.Concurrent;
@@ -100,6 +102,7 @@ namespace DroneSetPoint
             this.backgroundWorker_video_vertical.RunWorkerAsync();
             this.backgroundWorker_video_horizontal.RunWorkerAsync();
             this.backgroundWorker_cameras.RunWorkerAsync();
+            this.backgroundWorker_telnet.RunWorkerAsync();
         }
 
 
@@ -393,6 +396,41 @@ namespace DroneSetPoint
             {
 
             }
+
+        }
+
+        private void backgroundWorker_telnet_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                try
+                {
+                    TelnetWrapper t = new TelnetWrapper();
+                    t.Disconnected += new DisconnectedEventHandler(this.telnet_OnDisconnect);
+                    t.DataAvailable += new DataAvailableEventHandler(this.telnet_OnDataAvailable);
+                    t.Connect("192.168.1.1", 23);
+                    t.Send("/data/video/xtudo\r\n");
+                    t.Close();
+                    Thread.Sleep(1000);
+                }
+                catch (Exception ex) {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
+        private void telnet_OnDisconnect(object sender, EventArgs e)
+        {
+            Console.WriteLine("telnet Disconnected.");
+        }
+
+        private void telnet_OnDataAvailable(object sender, DataAvailableEventArgs e)
+        {
+            Console.Write(e.Data);
+        }
+
+        private void backgroundWorker_telnet_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
 
         }
     }

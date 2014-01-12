@@ -59,6 +59,7 @@
             this.backgroundWorker_cameras = new System.ComponentModel.BackgroundWorker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.timer_wifi = new System.Windows.Forms.Timer(this.components);
+            this.backgroundWorker_telnet = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.chart_pitch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_roll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_yaw)).BeginInit();
@@ -215,6 +216,13 @@
             this.timer_wifi.Interval = 2000;
             this.timer_wifi.Tick += new System.EventHandler(this.timer_wifi_Tick);
             // 
+            // backgroundWorker_telnet
+            // 
+            this.backgroundWorker_telnet.WorkerReportsProgress = true;
+            this.backgroundWorker_telnet.WorkerSupportsCancellation = true;
+            this.backgroundWorker_telnet.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_telnet_DoWork);
+            this.backgroundWorker_telnet.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_telnet_ProgressChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -263,6 +271,7 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker_cameras;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Timer timer_wifi;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_telnet;
     }
 }
 

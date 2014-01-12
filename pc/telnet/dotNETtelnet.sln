@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telnet", "Telnet\Telnet.csproj", "{C0A19260-2CE0-4253-80CB-8579BCFDDED3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{03006024-1074-4541-8470-FC5649D91805}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ssh", "Ssh\Ssh.csproj", "{A3CF5C83-93FC-4AB8-B73E-3627478433EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{C0A19260-2CE0-4253-80CB-8579BCFDDED3}.Debug.ActiveCfg = Debug|.NET
+		{C0A19260-2CE0-4253-80CB-8579BCFDDED3}.Debug.Build.0 = Debug|.NET
+		{C0A19260-2CE0-4253-80CB-8579BCFDDED3}.Release.ActiveCfg = Release|.NET
+		{C0A19260-2CE0-4253-80CB-8579BCFDDED3}.Release.Build.0 = Release|.NET
+		{03006024-1074-4541-8470-FC5649D91805}.Debug.ActiveCfg = Debug|.NET
+		{03006024-1074-4541-8470-FC5649D91805}.Debug.Build.0 = Debug|.NET
+		{03006024-1074-4541-8470-FC5649D91805}.Release.ActiveCfg = Release|.NET
+		{03006024-1074-4541-8470-FC5649D91805}.Release.Build.0 = Release|.NET
+		{A3CF5C83-93FC-4AB8-B73E-3627478433EF}.Debug.ActiveCfg = Debug|.NET
+		{A3CF5C83-93FC-4AB8-B73E-3627478433EF}.Debug.Build.0 = Debug|.NET
+		{A3CF5C83-93FC-4AB8-B73E-3627478433EF}.Release.ActiveCfg = Release|.NET
+		{A3CF5C83-93FC-4AB8-B73E-3627478433EF}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
