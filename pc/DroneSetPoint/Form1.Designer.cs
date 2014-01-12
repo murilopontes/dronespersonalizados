@@ -61,6 +61,7 @@
             this.timer_wifi = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker_telnet = new System.ComponentModel.BackgroundWorker();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.backgroundWorker_navboard = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.chart_pitch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_roll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_yaw)).BeginInit();
@@ -83,7 +84,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart_pitch.Series.Add(series1);
-            this.chart_pitch.Size = new System.Drawing.Size(307, 160);
+            this.chart_pitch.Size = new System.Drawing.Size(433, 160);
             this.chart_pitch.TabIndex = 0;
             this.chart_pitch.Text = "chart1";
             // 
@@ -99,7 +100,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chart_roll.Series.Add(series2);
-            this.chart_roll.Size = new System.Drawing.Size(307, 160);
+            this.chart_roll.Size = new System.Drawing.Size(433, 160);
             this.chart_roll.TabIndex = 1;
             this.chart_roll.Text = "chart2";
             // 
@@ -109,13 +110,13 @@
             this.chart_yaw.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
             this.chart_yaw.Legends.Add(legend3);
-            this.chart_yaw.Location = new System.Drawing.Point(322, 292);
+            this.chart_yaw.Location = new System.Drawing.Point(448, 293);
             this.chart_yaw.Name = "chart_yaw";
             series3.ChartArea = "ChartArea1";
             series3.Legend = "Legend1";
             series3.Name = "Series1";
             this.chart_yaw.Series.Add(series3);
-            this.chart_yaw.Size = new System.Drawing.Size(307, 160);
+            this.chart_yaw.Size = new System.Drawing.Size(402, 160);
             this.chart_yaw.TabIndex = 2;
             this.chart_yaw.Text = "chart3";
             // 
@@ -125,20 +126,20 @@
             this.chart_height.ChartAreas.Add(chartArea4);
             legend4.Name = "Legend1";
             this.chart_height.Legends.Add(legend4);
-            this.chart_height.Location = new System.Drawing.Point(322, 458);
+            this.chart_height.Location = new System.Drawing.Point(448, 459);
             this.chart_height.Name = "chart_height";
             series4.ChartArea = "ChartArea1";
             series4.Legend = "Legend1";
             series4.Name = "Series1";
             this.chart_height.Series.Add(series4);
-            this.chart_height.Size = new System.Drawing.Size(307, 160);
+            this.chart_height.Size = new System.Drawing.Size(402, 160);
             this.chart_height.TabIndex = 3;
             this.chart_height.Text = "chart4";
             // 
             // pictureBox_horizontal
             // 
             this.pictureBox_horizontal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.pictureBox_horizontal.Location = new System.Drawing.Point(635, 292);
+            this.pictureBox_horizontal.Location = new System.Drawing.Point(594, 12);
             this.pictureBox_horizontal.Name = "pictureBox_horizontal";
             this.pictureBox_horizontal.Size = new System.Drawing.Size(194, 160);
             this.pictureBox_horizontal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -148,7 +149,7 @@
             // pictureBox_vertical
             // 
             this.pictureBox_vertical.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.pictureBox_vertical.Location = new System.Drawing.Point(635, 458);
+            this.pictureBox_vertical.Location = new System.Drawing.Point(794, 12);
             this.pictureBox_vertical.Name = "pictureBox_vertical";
             this.pictureBox_vertical.Size = new System.Drawing.Size(194, 160);
             this.pictureBox_vertical.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -176,6 +177,7 @@
             this.backgroundWorker_battery.WorkerReportsProgress = true;
             this.backgroundWorker_battery.WorkerSupportsCancellation = true;
             this.backgroundWorker_battery.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_battery_DoWork);
+            this.backgroundWorker_battery.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_battery_ProgressChanged);
             // 
             // backgroundWorker_video_horizontal
             // 
@@ -235,11 +237,18 @@
             this.textBox1.Size = new System.Drawing.Size(817, 121);
             this.textBox1.TabIndex = 8;
             // 
+            // backgroundWorker_navboard
+            // 
+            this.backgroundWorker_navboard.WorkerReportsProgress = true;
+            this.backgroundWorker_navboard.WorkerSupportsCancellation = true;
+            this.backgroundWorker_navboard.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_navboard_DoWork);
+            this.backgroundWorker_navboard.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_navboard_ProgressChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(841, 757);
+            this.ClientSize = new System.Drawing.Size(995, 757);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.chart_battery);
@@ -287,6 +296,7 @@
         private System.Windows.Forms.Timer timer_wifi;
         private System.ComponentModel.BackgroundWorker backgroundWorker_telnet;
         private System.Windows.Forms.TextBox textBox1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_navboard;
     }
 }
 

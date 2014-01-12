@@ -14,17 +14,34 @@ void* vbat_task(void* arg){
 }
 
 void* video_horizontal_task(void* arg){
+
+	 udp_struct udp;
+	 udpClient_Init(&udp,50003);
+	  int msglen;
+	  char buf[512];
+
+	  udp_struct udps;
+	  udpServer_Init(&udps,50004,1);
+
 	for(;;){
+
+		////////////////////////////////////////////////////////////////////////
 		system("/data/video/video_tool -d /dev/video0 -c 1");
-		usleep(500);
 		//system("/data/video/udp_broadcast_file 7070 /tmp/horizontal.yuv");
 		system("ftpput -v 192.168.1.2 horizontal.yuv  /tmp/horizontal.yuv");
-		usleep(500);
+
+		///////////////////////////////////////////////////////////////////////
 		system("/data/video/video_tool -d /dev/video1 -c 1");
-		usleep(500);
 		//system("/data/video/udp_broadcast_file 6969 /tmp/vertical.yuv");
 		system("ftpput -v 192.168.1.2 vertical.yuv  /tmp/vertical.yuv");
-		usleep(500);
+		///////////////////////////////////////////////////////////////////////
+
+		msglen=sprintf(buf,"read-now");
+		udpClient_Send(&udp, buf, msglen);
+		///////////////////////////////////////////////////////////////////////
+		msglen = udpServer_Receive(&udps, buf, 512);
+		//////////////////////////////////////////////////////////////////////
+
 	}
 	return NULL;
 }
@@ -46,6 +63,8 @@ int main(int argc, char *argv[]) {
 	system("sync");
 	system("killall -9 program.elf");
 	system("killall -9 vbat_udp");
+	system("sysctl -w kernel.panic=0");
+    system("sysctl -w kernel.panic_on_oops=0");
 
 	daemonize();
 

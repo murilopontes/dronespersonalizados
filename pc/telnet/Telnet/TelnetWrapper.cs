@@ -77,10 +77,10 @@ namespace De.Mud.Telnet
 		{
 			set
 			{
-				if (value > 0)
+				//if (value > 0)
 					port = value;
-				else
-					throw (new ArgumentException("Port number must be greater than 0.", "Port"));
+				//else
+					//throw (new ArgumentException("Port number must be greater than 0.", "Port"));
 			}
 		}
 
@@ -160,17 +160,20 @@ namespace De.Mud.Telnet
 				socket = new Socket(AddressFamily.InterNetwork,
 					SocketType.Stream, ProtocolType.Tcp);
 
+                //socket.ReceiveTimeout = 5;
+                //socket.SendTimeout = 5;
+
 				// Connect to the remote endpoint.
 				socket.BeginConnect(remoteEP, 
 					new AsyncCallback(ConnectCallback), socket);
-				connectDone.WaitOne();
+                connectDone.WaitOne(5000);
 
 				Reset();
 			}
 			catch
 			{
 				Disconnect();
-				throw;
+				//throw;
 			}
 		}
   
@@ -190,7 +193,8 @@ namespace De.Mud.Telnet
 			catch (Exception e)
 			{
 				Disconnect();
-				throw(new ApplicationException("Error writing to socket.", e));
+				//throw(new ApplicationException("Error writing to socket.", e));
+                return null;
 			}
 		}
 
@@ -227,7 +231,7 @@ namespace De.Mud.Telnet
 		{
 			if (socket.Connected)
 				Send(socket, b);
-			sendDone.WaitOne();
+			sendDone.WaitOne(5000);
 		}
 
 		/// <summary>
@@ -279,7 +283,7 @@ namespace De.Mud.Telnet
 			catch (Exception e) 
 			{
 				Disconnect();
-				throw(new ApplicationException("Error on read from socket.", e));
+				//throw(new ApplicationException("Error on read from socket.", e));
 			}
 		}
 
@@ -322,7 +326,7 @@ namespace De.Mud.Telnet
 			catch (Exception e) 
 			{
 				Disconnect();
-				throw(new ApplicationException("Error reading from socket.", e));
+				//throw(new ApplicationException("Error reading from socket.", e));
 			}
 		}
 

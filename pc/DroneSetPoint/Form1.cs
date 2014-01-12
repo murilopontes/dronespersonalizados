@@ -28,6 +28,8 @@ namespace DroneSetPoint
             InitializeComponent();
         }
 
+        #region console redirect stuff
+
         public class TextBoxStreamWriter : TextWriter
         {
             TextBox _output = null;
@@ -47,7 +49,8 @@ namespace DroneSetPoint
                         _output.AppendText(value.ToString()); // When character data is written, append it to the text box.
                     }));
                 }
-                else {
+                else
+                {
                     _output.AppendText(value.ToString()); // When character data is written, append it to the text box.
                 }
             }
@@ -57,6 +60,9 @@ namespace DroneSetPoint
                 get { return System.Text.Encoding.UTF8; }
             }
         }
+
+        #endregion
+
 
 
         //
@@ -85,9 +91,13 @@ namespace DroneSetPoint
         Series serie_yaw_giro = new Series("yaw_giro");
         Series serie_yaw_fusion = new Series("yaw_fusion");
 
-
         // That's our custom TextWriter class
         TextWriter _writer = null;
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -96,9 +106,13 @@ namespace DroneSetPoint
             // Redirect the out Console stream
             Console.SetOut(_writer);
 
+            //
+            
             FtpServer server = new FtpServer();
             server.Start();
+            
 
+            //
             chart_roll.Series.Clear();
             chart_pitch.Series.Clear();
             chart_yaw.Series.Clear();
@@ -106,44 +120,69 @@ namespace DroneSetPoint
             chart_battery.Series.Clear();
 
             //
-            chart_pitch.Series.Add(serie_pitch_setpoint);
+            serie_pitch_setpoint.ChartType = SeriesChartType.FastLine;
+            serie_pitch_accel.ChartType = SeriesChartType.FastLine;
+            serie_pitch_giro.ChartType = SeriesChartType.FastLine;
+            serie_pitch_fusion.ChartType = SeriesChartType.FastLine;
+
+           // chart_pitch.Series.Add(serie_pitch_setpoint);
             chart_pitch.Series.Add(serie_pitch_accel);
             chart_pitch.Series.Add(serie_pitch_giro);
             chart_pitch.Series.Add(serie_pitch_fusion);
 
             //
-            chart_roll.Series.Add(serie_roll_setpoint);
+
+            serie_roll_setpoint.ChartType = SeriesChartType.FastLine;
+            serie_roll_accel.ChartType = SeriesChartType.FastLine;
+            serie_roll_giro.ChartType = SeriesChartType.FastLine;
+            serie_roll_fusion.ChartType = SeriesChartType.FastLine;
+
+            //chart_roll.Series.Add(serie_roll_setpoint);
             chart_roll.Series.Add(serie_roll_accel);
             chart_roll.Series.Add(serie_roll_giro);
             chart_roll.Series.Add(serie_roll_fusion);
 
             //
-            chart_yaw.Series.Add(serie_yaw_setpoint);
-            chart_yaw.Series.Add(serie_yaw_accel);
+
+            serie_yaw_setpoint.ChartType = SeriesChartType.FastLine;
+            serie_yaw_accel.ChartType = SeriesChartType.FastLine;
+            serie_yaw_giro.ChartType = SeriesChartType.FastLine;
+            serie_yaw_fusion.ChartType = SeriesChartType.FastLine;
+
+            //chart_yaw.Series.Add(serie_yaw_setpoint);
+           // chart_yaw.Series.Add(serie_yaw_accel);
             chart_yaw.Series.Add(serie_yaw_giro);
-            chart_yaw.Series.Add(serie_yaw_fusion);
+            //chart_yaw.Series.Add(serie_yaw_fusion);
 
             //
+
+            serie_height_setpoint.ChartType = SeriesChartType.FastLine;
+            serie_height_ultrasonic.ChartType = SeriesChartType.FastLine;
+
             chart_height.Series.Add(serie_height_setpoint);
             chart_height.Series.Add(serie_height_ultrasonic);
 
             //
-            serie_battery.ChartType = SeriesChartType.Line;
+            serie_battery.ChartType = SeriesChartType.FastLine;
             chart_battery.Series.Add(serie_battery);
 
             //
-            //serie_battery2.ChartType = SeriesChartType.Line;
+            //serie_battery2.ChartType = SeriesChartType.FastLine;
             //chart_battery.Series.Add(serie_battery2);
 
             this.backgroundWorker_battery.RunWorkerAsync();
-            this.backgroundWorker_video_vertical.RunWorkerAsync();
-            this.backgroundWorker_video_horizontal.RunWorkerAsync();
+            //this.backgroundWorker_video_vertical.RunWorkerAsync();
+            //this.backgroundWorker_video_horizontal.RunWorkerAsync();
             this.backgroundWorker_cameras.RunWorkerAsync();
             this.backgroundWorker_telnet.RunWorkerAsync();
+            this.backgroundWorker_navboard.RunWorkerAsync();
         }
 
 
-        string vbat_data = "";
+        #region drone battery monitor
+
+
+        ConcurrentQueue<string> battery = new ConcurrentQueue<string>();
         private void backgroundWorker_battery_DoWork(object sender, DoWorkEventArgs e)
         {
             try
@@ -153,12 +192,11 @@ namespace DroneSetPoint
                 listener.DontFragment = true;
                 IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, listenPort);
 
-                this.backgroundWorker_battery.ProgressChanged += backgroundWorker_battery_ProgressChanged;
                 while (true)
                 {
-                    this.backgroundWorker_battery.ReportProgress(1);
                     byte[] receive_byte_array = listener.Receive(ref groupEP);
-                    vbat_data = Encoding.ASCII.GetString(receive_byte_array);
+                    battery.Enqueue(Encoding.ASCII.GetString(receive_byte_array));
+                    this.backgroundWorker_battery.ReportProgress(1);
                 }
             }
             catch (Exception ex)
@@ -171,29 +209,32 @@ namespace DroneSetPoint
         {
             try
             {
-                //Console.WriteLine("vbat->" + vbat_data);
-                string[] aa = vbat_data.Split('|');
-                if (aa.Length >= 8)
+                string vbat_data = "";
+                if (battery.TryDequeue(out vbat_data))
                 {
-                    int vbat_packet = int.Parse(aa[1]);
-                    double vbat_voltage = double.Parse(aa[7], CultureInfo.InvariantCulture);
-                    //Console.WriteLine(aa[1] + "==" + vbat_packet);
-                    //Console.WriteLine(aa[7] + "==" + vbat_voltage);
-
-                    while (serie_battery.Points.Count > 1000)
+                    //Console.WriteLine("vbat->" + vbat_data);
+                    string[] aa = vbat_data.Split('|');
+                    if (aa.Length >= 8)
                     {
-                        serie_battery.Points.RemoveAt(0);
-                    }
-                    //serie_battery.Points.AddXY(vbat_packet, vbat_voltage);
-                    serie_battery.Points.AddY( vbat_voltage);
-                    chart_battery.ChartAreas[0].AxisY.IsStartedFromZero = false;
-                    //chart_battery.ChartAreas[0].AxisY.Minimum = 8;
-                    //chart_battery.ChartAreas[0].AxisY.Maximum = 13;
-                    chart_battery.ChartAreas[0].RecalculateAxesScale();
+                        int vbat_packet = int.Parse(aa[1], CultureInfo.InvariantCulture);
+                        double vbat_voltage = double.Parse(aa[7], CultureInfo.InvariantCulture);
+                        //Console.WriteLine(aa[1] + "==" + vbat_packet);
+                        //Console.WriteLine(aa[7] + "==" + vbat_voltage);
 
-                    //chart_battery.DataManipulator.CopySeriesValues("battery", "battery2");
-                    //chart_battery.DataManipulator.FinancialFormula(FinancialFormula.WeightedMovingAverage, "battery2");
-                    
+                        while (serie_battery.Points.Count > 1000)
+                        {
+                            serie_battery.Points.RemoveAt(0);
+                        }
+                        //serie_battery.Points.AddXY(vbat_packet, vbat_voltage);
+                        serie_battery.Points.AddY(vbat_voltage);
+                        chart_battery.ChartAreas[0].AxisY.IsStartedFromZero = false;
+                        //chart_battery.ChartAreas[0].AxisY.Minimum = 8;
+                        //chart_battery.ChartAreas[0].AxisY.Maximum = 13;
+                        chart_battery.ChartAreas[0].RecalculateAxesScale();
+
+                        //chart_battery.DataManipulator.CopySeriesValues("battery", "battery2");
+                        //chart_battery.DataManipulator.FinancialFormula(FinancialFormula.WeightedMovingAverage, "battery2");
+                    }
                 }
             }
             catch (Exception ex)
@@ -203,11 +244,12 @@ namespace DroneSetPoint
 
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
+        #endregion
 
+
+
+
+        #region camera YU12 stuff
 
         static double[,] YUV2RGB_CONVERT_MATRIX = new double[3, 3] { { 1, 0, 1.4022 }, { 1, -0.3456, -0.7145 }, { 1, 1.771, 0 } };
         static byte clamp(float input)
@@ -253,6 +295,9 @@ namespace DroneSetPoint
 
         }
 
+        #endregion
+
+        #region camera udp stuff
 
         ConcurrentQueue<Bitmap> frames_vertical = new ConcurrentQueue<Bitmap>();
         private void backgroundWorker_video_vertical_DoWork(object sender, DoWorkEventArgs e)
@@ -265,23 +310,27 @@ namespace DroneSetPoint
             UdpClient listener = new UdpClient(listenPort);
             listener.DontFragment = true;
             IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, listenPort);
-            byte[] image = new byte[1024*1024*3];
+            byte[] image = new byte[1024 * 1024 * 3];
 
             while (true)
             {
                 byte[] receive_byte_array = listener.Receive(ref groupEP);
                 int tipo = BitConverter.ToInt32(receive_byte_array, 0);
                 int offset = BitConverter.ToInt32(receive_byte_array, 4);
-                Console.WriteLine("tipo="+tipo+" offset="+offset);
-                if (tipo == 0) {
+                Console.WriteLine("tipo=" + tipo + " offset=" + offset);
+                if (tipo == 0)
+                {
                     image = new byte[1024 * 1024 * 3];
                 }
-                if (tipo == 1) {
-                    for (int idx = 0; idx < 1024; idx++) {
-                        image[offset+idx] = receive_byte_array[idx + 8];
+                if (tipo == 1)
+                {
+                    for (int idx = 0; idx < 1024; idx++)
+                    {
+                        image[offset + idx] = receive_byte_array[idx + 8];
                     }
                 }
-                if (tipo == 2) {
+                if (tipo == 2)
+                {
                     Bitmap bmp_work = ConvertYUV2RGB(image, width, height);
                     frames_vertical.Enqueue(bmp_work);
                     this.backgroundWorker_video_vertical.ReportProgress(1);
@@ -348,13 +397,17 @@ namespace DroneSetPoint
             }
         }
 
+        #endregion
+
+        #region camera ftp timer test
+
         private void timer_cameras_Tick(object sender, EventArgs e)
         {
             try
             {
 
-              //pictureBox_vertical.Image = ConvertYUV2RGB(File.ReadAllBytes("c:\\ftp\\vertical.yuv"), 176, 144);
-              //pictureBox_horizontal.Image = ConvertYUV2RGB(File.ReadAllBytes("c:\\ftp\\horizontal.yuv"), 640, 480);
+                //pictureBox_vertical.Image = ConvertYUV2RGB(File.ReadAllBytes("c:\\ftp\\vertical.yuv"), 176, 144);
+                //pictureBox_horizontal.Image = ConvertYUV2RGB(File.ReadAllBytes("c:\\ftp\\horizontal.yuv"), 640, 480);
             }
             catch (Exception ex)
             {
@@ -362,15 +415,29 @@ namespace DroneSetPoint
             }
         }
 
+        #endregion
+
+        #region camera ftp approach
+
         Bitmap bmp_vertical = null;
         Bitmap bmp_horizontal = null;
         private void backgroundWorker_cameras_DoWork(object sender, DoWorkEventArgs e)
         {
-            while (true) {
+            int listenPort = 50003;
+            UdpClient listener = new UdpClient(listenPort);
+            listener.DontFragment = true;
+            
+            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, listenPort);
+
+            while (true)
+            {
+                //byte[] receive_byte_array = listener.Receive(ref groupEP);
+                //Console.WriteLine("read camera ftp");
+
                 try
                 {
                     Bitmap bmp = ConvertYUV2RGB(File.ReadAllBytes("c:\\ftp\\vertical.yuv"), 176, 144);
-                    bmp_vertical = (Bitmap) bmp.Clone();
+                    bmp_vertical = (Bitmap)bmp.Clone();
                     backgroundWorker_cameras.ReportProgress(1);
                 }
                 catch (Exception ex)
@@ -388,19 +455,33 @@ namespace DroneSetPoint
 
                 }
 
-                Thread.Sleep(10);
+                Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram,ProtocolType.Udp);
+                IPAddress serverAddr = IPAddress.Parse("192.168.1.1");
+                IPEndPoint endPoint = new IPEndPoint(serverAddr, 50004);
+                string text = "Hello";
+                byte[] send_buffer = Encoding.ASCII.GetBytes(text);
+                sock.SendTo(send_buffer, endPoint);
+                sock.Close();
+
+                Thread.Sleep(5000);
             }
         }
 
         private void backgroundWorker_cameras_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            if (bmp_horizontal != null) {
+            if (bmp_horizontal != null)
+            {
                 pictureBox_horizontal.Image = bmp_horizontal;
             }
-            if (bmp_vertical != null) {
+            if (bmp_vertical != null)
+            {
                 pictureBox_vertical.Image = bmp_vertical;
             }
         }
+
+        #endregion
+
+        #region wifi stuff
 
         Wifi wifi = new Wifi();
         private void timer_wifi_Tick(object sender, EventArgs e)
@@ -436,21 +517,32 @@ namespace DroneSetPoint
 
         }
 
+        #endregion
+
+        #region telnet stuff
+
         private void backgroundWorker_telnet_DoWork(object sender, DoWorkEventArgs e)
         {
             while (true)
             {
                 try
                 {
+
                     TelnetWrapper t = new TelnetWrapper();
                     t.Disconnected += new DisconnectedEventHandler(this.telnet_OnDisconnect);
                     t.DataAvailable += new DataAvailableEventHandler(this.telnet_OnDataAvailable);
+
+                    Console.WriteLine("telnet connect to ardrone");
                     t.Connect("192.168.1.1", 23);
+                    Console.WriteLine("telnet send command");
                     t.Send("/data/video/xtudo\r\n");
+                    t.Send("exit\r\n");
+                    Console.WriteLine("telnet close");
                     t.Close();
                     Thread.Sleep(1000);
                 }
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
                     Console.WriteLine(ex.Message);
                 }
             }
@@ -470,5 +562,126 @@ namespace DroneSetPoint
         {
 
         }
+
+        #endregion
+
+
+
+        public static double pitch_setpoint = 0.0;
+        public static double roll_setpoint = 0.0;
+        public static double yaw_setpoint = 0.0;
+        public static double height_setpoint = 30.0;
+
+        ConcurrentQueue<string> navboard = new ConcurrentQueue<string>();
+        private void backgroundWorker_navboard_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                int listenPort = 50002;
+                UdpClient listener = new UdpClient(listenPort);
+                listener.DontFragment = true;
+                IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, listenPort);
+
+                while (true)
+                {
+                    byte[] receive_byte_array = listener.Receive(ref groupEP);
+                    navboard.Enqueue(Encoding.ASCII.GetString(receive_byte_array));
+                    backgroundWorker_navboard.ReportProgress(1);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+
+        public static int limite_pontos = 100;
+
+        public static int nav_count = 0;
+        private void backgroundWorker_navboard_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            try
+            {
+                string navboard_data = "";
+                if (navboard.TryDequeue(out navboard_data))
+                {
+                    string[] aa = navboard_data.Split('|');
+                    if (aa.Length >= 3) {
+
+                        nav_count++;
+
+                        double height_ultrasonic = double.Parse(aa[1], CultureInfo.InvariantCulture);
+                        double pitch_accel = double.Parse(aa[2], CultureInfo.InvariantCulture);
+                        double roll_accel = double.Parse(aa[3], CultureInfo.InvariantCulture);
+
+                        double gx = double.Parse(aa[4], CultureInfo.InvariantCulture);
+                        double gy = double.Parse(aa[5], CultureInfo.InvariantCulture);
+                        double gz = double.Parse(aa[6], CultureInfo.InvariantCulture);
+
+                        double fusion_pitch = double.Parse(aa[7], CultureInfo.InvariantCulture);
+                        double fusion_roll = double.Parse(aa[8], CultureInfo.InvariantCulture);
+
+
+                        chart_pitch.ChartAreas[0].AxisY.Minimum = -181;
+                        chart_pitch.ChartAreas[0].AxisY.Maximum = 181;
+                        chart_roll.ChartAreas[0].AxisY.Minimum = -181;
+                        chart_roll.ChartAreas[0].AxisY.Maximum = 181;
+                        chart_yaw.ChartAreas[0].AxisY.Minimum = -181;
+                        chart_yaw.ChartAreas[0].AxisY.Maximum = 181;
+                        //chart_height.ChartAreas[0].AxisY.Minimum = -5;
+                        //chart_height.ChartAreas[0].AxisY.Maximum = 650;
+                        chart_height.ChartAreas[0].AxisY.IsStartedFromZero = false;
+
+                        ////////////////////////////////////////////////////////////////////////////////////////////
+                        while (serie_pitch_accel.Points.Count > limite_pontos) serie_pitch_accel.Points.RemoveAt(0);
+                        while (serie_roll_accel.Points.Count > limite_pontos) serie_roll_accel.Points.RemoveAt(0);
+                        serie_pitch_accel.Points.AddXY(nav_count, pitch_accel);
+                        serie_roll_accel.Points.AddXY(nav_count, roll_accel);
+                        ////////////////////////////////////////////////////////////////////////////////////////////
+                        while (serie_pitch_giro.Points.Count > limite_pontos) serie_pitch_giro.Points.RemoveAt(0);
+                        while (serie_roll_giro.Points.Count > limite_pontos) serie_roll_giro.Points.RemoveAt(0);
+                        while (serie_yaw_giro.Points.Count > limite_pontos) serie_yaw_giro.Points.RemoveAt(0);
+                        serie_pitch_giro.Points.AddXY(nav_count, gx);
+                        serie_roll_giro.Points.AddXY(nav_count, gy);
+                        serie_yaw_giro.Points.AddXY(nav_count, gz);
+
+                        ////////////////////////////////////////////////////////////////////////////////////////////
+                        while (serie_height_ultrasonic.Points.Count > limite_pontos) serie_height_ultrasonic.Points.RemoveAt(0);
+                        serie_height_ultrasonic.Points.AddXY(nav_count, height_ultrasonic);
+                        chart_height.ChartAreas[0].RecalculateAxesScale();
+
+                        chart_roll.ChartAreas[0].RecalculateAxesScale();
+                        chart_pitch.ChartAreas[0].RecalculateAxesScale();
+                        chart_yaw.ChartAreas[0].RecalculateAxesScale();                        
+
+                        ///////////////////////////////////////////////////////////////////////////////////////////
+                        while (serie_pitch_setpoint.Points.Count > limite_pontos) serie_pitch_setpoint.Points.RemoveAt(0);
+                        while (serie_roll_setpoint.Points.Count > limite_pontos) serie_roll_setpoint.Points.RemoveAt(0);
+                        while (serie_yaw_setpoint.Points.Count > limite_pontos) serie_yaw_setpoint.Points.RemoveAt(0);
+                        while (serie_height_setpoint.Points.Count > limite_pontos) serie_height_setpoint.Points.RemoveAt(0);
+                        serie_pitch_setpoint.Points.AddXY(nav_count, pitch_setpoint);
+                        serie_roll_setpoint.Points.AddXY(nav_count, roll_setpoint);
+                        serie_yaw_setpoint.Points.AddXY(nav_count, yaw_setpoint);
+                        serie_height_setpoint.Points.AddXY(nav_count, height_setpoint);
+                        ///////////////////////////////////////////////////////////////////////////////////////////
+                        while (serie_pitch_fusion.Points.Count > limite_pontos) serie_pitch_fusion.Points.RemoveAt(0);
+                        while (serie_roll_fusion.Points.Count > limite_pontos) serie_roll_fusion.Points.RemoveAt(0);
+                        serie_pitch_fusion.Points.AddXY(nav_count, fusion_pitch);
+                        serie_roll_fusion.Points.AddXY(nav_count, fusion_roll);
+                        //////////////////////////////////////////////////////////////////////////////////////////
+                    }
+                }
+            }
+            catch (Exception ex) { 
+            
+            }
+        }
+
+
+
+
+
+
     }
 }

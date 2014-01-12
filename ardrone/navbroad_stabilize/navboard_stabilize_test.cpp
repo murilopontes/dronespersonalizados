@@ -13,6 +13,7 @@
 //terminal I/O interfaces
 #include <termios.h>
 
+#include "../open_ardrone_v1_lib/util.h"
 #include "../open_ardrone_v1_lib/all_headers_cpp.h"
 #include "../open_ardrone_v1_lib/gpio.h"
 #include "../open_ardrone_v1_lib/udp.h"
@@ -61,7 +62,7 @@ void make_stable(double kp,double ki, double kd){
 	write(fd,&cmd,1);
 	////////////////////////////////////////////////////////////
 	udp_struct udp_vertical;
-	udpClient_Init(&udp_vertical,8080);
+	udpClient_Init(&udp_vertical,50002);
 	/////////////////////////////////////////////////////////////
 	double motor[4]={0,0,0,0};
 	mot_Init();
@@ -107,9 +108,25 @@ void make_stable(double kp,double ki, double kd){
     PID_ROLL_Control.SetMode(AUTOMATIC);
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    char udp_buffer[1000];
 	uint8_t buffer[128];
 	double height=0;
-	for(;;){
+
+    double sum_pitch_calibration=0;
+    double sum_roll_calibration=0;
+    int calibration_qtd=200;
+    ///////////////////////
+    double sum_ax=0;
+    double sum_ay=0;
+    double sum_az=0;
+    ////////////////////////
+    double sum_gx=0;
+    double sum_gy=0;
+    double sum_gz=0;
+
+    printf("navboard cabibration samples=%d wait...\n",calibration_qtd);
+	for(int l=0;l<calibration_qtd;l++){
 		////////////////////////////////////////////////////////////
 		int count_ok=0;
 		int count_rest=52;
@@ -127,14 +144,156 @@ void make_stable(double kp,double ki, double kd){
 		   height=packet[17] / 37.5f;
 		}
 		/////////////////////////////////////////////////////////
-		double ax=(packet[2] - 2068.0)/100.0;
-		double ay=(packet[3] - 1976.0)/100.0;
-		double az=(packet[4] - 2052.0)/100.0;
-		//printf("ax=%.2f ay=%.2f az=%.2f ",ax,ay,az);
+		double ax=(packet[2]);
+		double ay=(packet[3]);
+		double az=(packet[4]);
+		//printf("a %.2f %.2f %.2f\n",ax,ay,az);
+		sum_ax+=ax;
+		sum_ay+=ay;
+		sum_az+=az;
+		///////////////////////////////////////////////////////////
+		double gx=(packet[5]);
+		double gy=(packet[6]);
+		double gz=(packet[7]);
+		sum_gx+=gx;
+		sum_gy+=gy;
+		sum_gz+=gz;
+		///////////////////////////////////////////////////////////
+		//printf("g %.2f %.2f %.2f\n",gx,gy,gz);
+		////////////////////////////////////////////////////////////
+		/*
         double radian2degree = 57.295779513082320876798154814105f;
 		double apitch =  -atan2(ax,az) * radian2degree;
 		double aroll  =   atan2(ay,az) * radian2degree;
+		sum_pitch_calibration+=apitch;
+		sum_roll_calibration+=aroll;
+		*/
+	}
+
+	double ax_off=sum_ax/(double)calibration_qtd;
+	double ay_off=sum_ay/(double)calibration_qtd;
+	double az_off=sum_az/(double)calibration_qtd;
+
+	double gx_off=sum_gx/(double)calibration_qtd;
+	double gy_off=sum_gy/(double)calibration_qtd;
+	double gz_off=sum_gz/(double)calibration_qtd;
+
+
+
+	double gravidade = az_off - ((ax_off+ay_off)/2.0f);
+	printf("gravidade=%.2f\n",gravidade);
+	az_off = az_off - gravidade;
+
+
+	printf("ax_off=%.2f\n",ax_off);
+	printf("ay_off=%.2f\n",ay_off);
+	printf("az_off=%.2f\n",az_off);
+
+	printf("gx_off=%.2f\n",gx_off);
+	printf("gy_off=%.2f\n",gy_off);
+	printf("gz_off=%.2f\n",gz_off);
+
+
+	double pitch_offset=sum_pitch_calibration/(double)calibration_qtd;
+	double roll_offset=sum_roll_calibration/(double)calibration_qtd;
+    printf("navboard calibration done pitch_offset=%.2f roll_offset=%.2f\n",pitch_offset,roll_offset);
+
+    /*
+    if(fabs(pitch_offset)>6 || fabs(roll_offset)>6){
+    	printf("navboard calibration error exit\n");
+    	exit(1);
+    }
+    */
+
+    printf("navboard started udp broadcast\n");
+
+
+    double g_pitch = 0;
+    double g_roll = 0;
+    double g_yaw = 0;
+
+    double ts_back = util_timestamp();
+    double ts_now = util_timestamp();
+
+    double fusion_pitch = 0.0;
+    double fusion_roll = 0.0;
+
+    uint32_t bad_count=0;
+
+	for(;;){
+		////////////////////////////////////////////////////////////
+		int count_ok=0;
+		int count_rest=52;
+		do {
+		 //
+	     int n = read(fd, &buffer[count_ok], count_rest);
+	     if(n<0) continue;
+	     count_ok+=n;
+	     count_rest-=n;
+		} while(count_ok<52);
+       ///////////////////////////////////////////////////////////
+		uint16_t *packet = (uint16_t*)&buffer;
+
+		/*
+		for(int i=0;i<26;i++){
+		printf("%04x|",packet[i]);
+		}
+		printf("\n");
+		*/
+		if(packet[0]!=0x0032){
+			printf("drop bad read=%d\n",bad_count);
+			bad_count++;
+			continue;
+		}
+
+		/////////////////////////////////////////////////////////
+		if(packet[17] /37.5f < 650 ){
+		   height=packet[17] / 37.5f;
+		}
+		/////////////////////////////////////////////////////////
+		double ax=(packet[2] - ax_off)/100.0f;
+		double ay=(packet[3] - ay_off)/100.0f;
+		double az=(packet[4] - az_off)/100.0f;
+        double radian2degree = 57.295779513082320876798154814105f;
+		double apitch = ( -atan2(ax,az) * radian2degree );
+		double aroll  = (  atan2(ay,az) * radian2degree );
+		/////////////////////////////////////////////////////////
+		double gx=(packet[5] - gx_off)/2.0f;//6.2f;
+		double gy=(packet[6] - gy_off)/2.0f;//6.2f;
+		double gz=(packet[7] - gz_off)/4.0f;//6.2f;
+		/////////////////////////////////////////////////////////
+
+		ts_back = ts_now;
+		ts_now  = util_timestamp();
+		double dt = ts_now-ts_back;
+
+		g_pitch+=gy*dt;
+		g_roll+=gx*dt;
+		g_yaw+=gz*dt;
+
+		//
+		if(g_pitch<-180)g_pitch=-180;
+		if(g_pitch>180)g_pitch=180;
+		//
+		if(g_roll<-180)g_roll=-180;
+		if(g_roll>180)g_roll=180;
+		//
+		if(g_yaw<-180)g_yaw=-180;
+		if(g_yaw>180)g_yaw=180;
+
+		//
+		fusion_pitch= 0.98*(fusion_pitch+gy*dt)+0.02*apitch;
+		fusion_roll = 0.98*(fusion_roll+gx*dt)+0.02*aroll;
+
+		/////////////////////////////////////////////////////////
+
+		sprintf(udp_buffer,"navboard|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|\n",
+				height,apitch,aroll,g_pitch,g_roll,g_yaw,fusion_pitch,fusion_roll);
+		//printf(udp_buffer);
+		udpClient_Send(&udp_vertical, udp_buffer, strlen(udp_buffer));
+
 		///////////////////////////////////////////////////////////
+/*
 
  	    PID_H_Input = height;
 		PID_H_Control.Compute();
@@ -153,17 +312,16 @@ void make_stable(double kp,double ki, double kd){
 		motor[1] = PID_H_Output  -PID_ROLL_Output -PID_PITCH_Output +adj_yaw;
 		motor[2] = PID_H_Output  -PID_ROLL_Output +PID_PITCH_Output -adj_yaw;
 		motor[3] = PID_H_Output  +PID_ROLL_Output +PID_PITCH_Output +adj_yaw;
-
-		mot_Run(motor[0],motor[1],motor[2],motor[3]);
-
+*/
+		//mot_Run(motor[0],motor[1],motor[2],motor[3]);
 		///////////////////////////////////////////////////////////////
-
+        /*
 		printf("h=%.2f(adj=%.2f) pitch=%.2f(adj=%.2f) roll=%.2f(adj=%.2f)  m=|%.2f|%.2f|%.2f|%.2f|\r\n",
 				height,PID_H_Output,
 				apitch,PID_PITCH_Output,
 				aroll,PID_ROLL_Output,
 				motor[0],motor[1],motor[2],motor[3]);
-
+*/
 
 
 
@@ -172,8 +330,8 @@ void make_stable(double kp,double ki, double kd){
 		
 
 
-	    //udpClient_Send(&udp_vertical, &buffer, 52);
-
+	    //
+		//usleep(5000);
 	}
 
 	//init nav structure
@@ -200,6 +358,9 @@ int main(int argc, char** argv)
 
 	//
 	system("killall -9 program.elf");
+
+	system("sysctl -w kernel.panic=0");
+	system("sysctl -w kernel.panic_on_oops=0");
 
 	make_stable(0,0,0);
 
