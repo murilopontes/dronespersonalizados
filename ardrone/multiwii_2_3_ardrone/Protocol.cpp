@@ -2,10 +2,7 @@
 #include "config.h"
 #include "def.h"
 #include "types.h"
-#include "EEPROM.h"
-#include "LCD.h"
 #include "Output.h"
-#include "GPS.h"
 #include "MultiWii.h"
 #include "Serial.h"
 #include "Protocol.h"
@@ -551,7 +548,7 @@ void evaluateCommand() {
      break;
    #endif
    case MSP_RESET_CONF:
-     if(!f.ARMED) LoadDefaults();
+     //if(!f.ARMED) LoadDefaults();
      headSerialReply(0);
      break;
    case MSP_ACC_CALIBRATION:
@@ -569,7 +566,7 @@ void evaluateCommand() {
      break;
    #endif
    case MSP_EEPROM_WRITE:
-     writeParams(0);
+     //writeParams(0);
      headSerialReply(0);
      break;
    case MSP_DEBUG:
@@ -685,5 +682,7 @@ static void debugmsg_serialize(uint8_t l) {
   }
 }
 #else
-void debugmsg_append_str(const char *str) {};
+void debugmsg_append_str(const char *str) {
+	printf(str);
+}
 #endif

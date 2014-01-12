@@ -78,10 +78,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Alarms.cpp" />
     <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Arduino.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\EEPROM.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\GPS.cpp" />
     <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\IMU.cpp" />
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\LCD.cpp" />
     <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\MultiWii.cpp" />
     <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Output.cpp" />
     <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Protocol.cpp" />
@@ -94,10 +91,7 @@
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Arduino.h" />
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\config.h" />
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\def.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\EEPROM.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\GPS.h" />
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\IMU.h" />
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\LCD.h" />
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\MultiWii.h" />
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Output.h" />
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\Protocol.h" />

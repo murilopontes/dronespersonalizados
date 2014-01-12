@@ -4,9 +4,8 @@
 #include "types.h"
 #include "MultiWii.h"
 #include "Alarms.h"
-#include "EEPROM.h"
 #include "IMU.h"
-#include "LCD.h"
+
 
 void i2c_BMP085_UT_Start(void);
 
@@ -420,7 +419,7 @@ void ACC_Common() {
       global_conf.accZero[YAW]   = ((a[YAW]+256)>>9)-ACC_1G; // for nunchuk 200=1G
       conf.angleTrim[ROLL]   = 0;
       conf.angleTrim[PITCH]  = 0;
-      writeGlobalSet(1); // write accZero in EEPROM
+      //writeGlobalSet(1); // write accZero in EEPROM
     }
     calibratingA--;
   }
@@ -1810,7 +1809,7 @@ void initSensors() {
   delay(100);
   if (GYRO) Gyro_init();
   if (BARO) Baro_init();
-  if (MAG) Mag_init();
+  //if (MAG) Mag_init();
   if (ACC) ACC_init();
   if (SONAR) Sonar_init();
   f.I2C_INIT_DONE = 1;

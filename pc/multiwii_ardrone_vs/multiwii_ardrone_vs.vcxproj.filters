@@ -21,16 +21,7 @@
     <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\Arduino.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\EEPROM.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\GPS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\IMU.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\LCD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ardrone\multiwii_2_3_ardrone\MultiWii.cpp">
@@ -65,16 +56,7 @@
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\def.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\EEPROM.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\GPS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\IMU.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\LCD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ardrone\multiwii_2_3_ardrone\MultiWii.h">

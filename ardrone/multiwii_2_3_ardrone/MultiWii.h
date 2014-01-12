@@ -75,7 +75,7 @@ extern int16_t angle[2];
 #endif
 
 extern int16_t axisPID[3];
-extern int16_t motor[8];
+extern double motor[8];
 extern int16_t servo[8];
 
 extern int16_t failsafeEvents;
