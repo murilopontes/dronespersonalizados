@@ -12,6 +12,11 @@ void diep(const char *s)
 
 int main(void)
 {
+
+	system("killall -9 program.elf");
+	system("sysctl -w kernel.panic=0");
+	system("sysctl -w kernel.panic_on_oops=0");
+
   udp_struct udp;
 
   int msglen;

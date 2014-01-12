@@ -31,6 +31,8 @@ int main(int argc, char *argv[]) {
 	singleton(argv[0]);
 
 	system("killall -9 program.elf");
+	system("sysctl -w kernel.panic=0");
+	system("sysctl -w kernel.panic_on_oops=0");
 
 	//daemonize();
 

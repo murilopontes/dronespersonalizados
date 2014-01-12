@@ -14,6 +14,10 @@ typedef struct {
 
 int main(int argc, char *argv[]) {
 
+	system("killall -9 program.elf");
+	system("sysctl -w kernel.panic=0");
+	system("sysctl -w kernel.panic_on_oops=0");
+
 	if(argc!=3){
 		printf("%s <port> <file>\n",argv[0]);
 		exit(1);

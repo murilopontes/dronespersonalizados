@@ -202,6 +202,10 @@ void make_stable(void){
 	printf("gz_off=%.2f\n",gz_off);
 
 
+	//ax_off=2000;
+	//ay_off=2000;
+	//az_off=2000;
+
 	double pitch_offset=sum_pitch_calibration/(double)calibration_qtd;
 	double roll_offset=sum_roll_calibration/(double)calibration_qtd;
 	printf("navboard calibration done pitch_offset=%.2f roll_offset=%.2f\n",pitch_offset,roll_offset);
@@ -307,10 +311,6 @@ void make_stable(void){
 
 		/////////////////////////////////////////////////////////
 
-		sprintf(udp_buffer,"navboard|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|\n",
-				height,apitch,aroll,g_pitch,g_roll,g_yaw,fusion_pitch,fusion_roll);
-		//printf(udp_buffer);
-		udpClient_Send(&udp_vertical, udp_buffer, strlen(udp_buffer));
 
 		///////////////////////////////////////////////////////////
 
@@ -346,7 +346,7 @@ void make_stable(void){
 		if(height_speed<0.52) height_speed=0.52;
 		if(height_speed>0.60) height_speed=0.60;
 
-		printf("height_error=(%.2f-%.2f)=%.2f height_speed=%.2f\n",height_setpoint,height,height_error,height_speed);
+		//printf("height_error=(%.2f-%.2f)=%.2f height_speed=%.2f\n",height_setpoint,height,height_error,height_speed);
 
 		double pitch_error = pitch_setpoint - fusion_pitch;
 		if(pitch_error>0){
@@ -375,6 +375,13 @@ void make_stable(void){
 		motor[3] = height_speed +pitch_speed + roll_speed + yaw_speed;
 
 		mot_Run(motor[0],motor[1],motor[2],motor[3]);
+
+		sprintf(udp_buffer,"navboard|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|%.2f|\n",
+				height,apitch,aroll,g_pitch,g_roll,g_yaw,fusion_pitch,fusion_roll,
+				motor[0],motor[1],motor[2],motor[3]);
+
+		//printf(udp_buffer);
+		udpClient_Send(&udp_vertical, udp_buffer, strlen(udp_buffer));
 
 		///////////////////////////////////////////////////////////////
 		/*

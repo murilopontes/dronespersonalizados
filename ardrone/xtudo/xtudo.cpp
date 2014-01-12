@@ -60,11 +60,10 @@ int main(int argc, char *argv[]) {
 
 	singleton(argv[0]);
 
-	system("sync");
 	system("killall -9 program.elf");
-	system("killall -9 vbat_udp");
 	system("sysctl -w kernel.panic=0");
     system("sysctl -w kernel.panic_on_oops=0");
+
 
 	daemonize();
 

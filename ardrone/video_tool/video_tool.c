@@ -767,7 +767,9 @@ long_options[] = {
 
 int main(int argc, char **argv)
 {
-	//system("killall -9 program.elf");
+	system("killall -9 program.elf");
+	system("sysctl -w kernel.panic=0");
+	system("sysctl -w kernel.panic_on_oops=0");
 
 	dev_name = "/dev/video0";
 
