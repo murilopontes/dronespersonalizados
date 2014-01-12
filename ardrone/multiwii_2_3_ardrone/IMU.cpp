@@ -274,14 +274,14 @@ uint8_t getEstimatedAltitude(){
   previousT = currentT;
 
   if(calibratingB > 0) {
-    logBaroGroundPressureSum = log(baroPressureSum);
+    logBaroGroundPressureSum = logf(baroPressureSum);
     baroGroundTemperatureScale = (baroTemperature + 27315) *  29.271267f;
     calibratingB--;
   }
 
   // baroGroundPressureSum is not supposed to be 0 here
   // see: https://code.google.com/p/ardupilot-mega/source/browse/libraries/AP_Baro/AP_Baro.cpp
-  BaroAlt = ( logBaroGroundPressureSum - log(baroPressureSum) ) * baroGroundTemperatureScale;
+  BaroAlt = ( logBaroGroundPressureSum - logf(baroPressureSum) ) * baroGroundTemperatureScale;
 
   alt.EstAlt = (alt.EstAlt * 6 + BaroAlt * 2) >> 3; // additional LPF to reduce baro noise (faster by 30 µs)
 

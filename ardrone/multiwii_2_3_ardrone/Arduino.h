@@ -8,7 +8,11 @@
 #ifndef ARDUINO_H_
 #define ARDUINO_H_
 
-#include "../open_ardrone_v1_lib/all_headers_cpp.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#include "stdint.h"
+#include "math.h"
 
 int millis(void);
 int micros(void);
