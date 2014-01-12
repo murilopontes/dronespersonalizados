@@ -237,6 +237,9 @@ void make_stable(void){
 	double roll_setpoint=0.0;
 	double roll_speed=0.0;
 
+	double yaw_setpoint=0.0;
+	double yaw_speed=0.0;
+
 	for(;;){
 		////////////////////////////////////////////////////////////
 		int count_ok=0;
@@ -340,7 +343,7 @@ void make_stable(void){
 			//printf("muito alto -> desaccelerar -> ");
 			height_speed-=0.01/10.0f;
 		}
-		if(height_speed<0.20) height_speed=0.20;
+		if(height_speed<0.52) height_speed=0.52;
 		if(height_speed>0.60) height_speed=0.60;
 
 		printf("height_error=(%.2f-%.2f)=%.2f height_speed=%.2f\n",height_setpoint,height,height_error,height_speed);
@@ -366,10 +369,10 @@ void make_stable(void){
 		if(roll_speed>5) roll_speed=5;
 
 
-		motor[0] = height_speed -pitch_speed + roll_speed;
-		motor[1] = height_speed -pitch_speed - roll_speed;
-		motor[2] = height_speed +pitch_speed - roll_speed;
-		motor[3] = height_speed +pitch_speed + roll_speed;
+		motor[0] = height_speed -pitch_speed + roll_speed - yaw_speed;
+		motor[1] = height_speed -pitch_speed - roll_speed + yaw_speed;
+		motor[2] = height_speed +pitch_speed - roll_speed - yaw_speed;
+		motor[3] = height_speed +pitch_speed + roll_speed + yaw_speed;
 
 		mot_Run(motor[0],motor[1],motor[2],motor[3]);
 
