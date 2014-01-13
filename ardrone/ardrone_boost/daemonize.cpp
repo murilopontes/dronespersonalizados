@@ -8,9 +8,22 @@
 
 #include "daemonize.h"
 
-#include "all_headers_cpp.h"
 
+//posix API
+#include <unistd.h>
 
+//posix threads
+#include <pthread.h>
+
+//file control options
+#include <fcntl.h>
+
+//terminal I/O interfaces
+#include <termios.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 #define EXIT_SUCCESS 0

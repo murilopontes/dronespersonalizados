@@ -16,6 +16,9 @@
 #include <boost/accumulators/statistics/moment.hpp>
 #include <boost/accumulators/statistics/median.hpp>
 
+#include "singleton.h"
+#include "daemonize.h"
+
 //#pragma pack(push,1)
 typedef struct
 {
@@ -48,6 +51,48 @@ typedef struct
 //#pragma pack(pop)
 
 
+typedef struct {
+
+   double acc_x;
+   double acc_y;
+   double acc_z;
+
+   double gyro_x;
+   double gyro_y;
+   double gyro_z;
+
+   double gyro_x_dt;
+   double gyro_y_dt;
+   double gyro_z_dt;
+
+   double gyro_x_integrate;
+   double gyro_y_integrate;
+   double gyro_z_integrate;
+
+   double acc_pitch;
+   double acc_roll;
+
+   double fusion_pitch;
+   double fusion_roll;
+   double fusion_yaw;
+
+   double height;
+
+   double dt;
+   double seq;
+
+} navboard_fusion_t;
+
+typedef struct {
+	double acc_x_offset;
+	double acc_y_offset;
+	double acc_z_offset;
+	double gyro_x_offset;
+	double gyro_y_offset;
+	double gyro_z_offset;
+} navboard_calibration_t;
+
+
 
 /*
 boost::atomic_int producer_count(0);
@@ -56,6 +101,7 @@ boost::atomic<bool> done (false);
 */
 
 boost::lockfree::queue<navboard_packet_t> navboard_queue(1);
+boost::lockfree::queue<navboard_fusion_t> fusion_queue(1);
 
 
 //val=0 -> set gpio output lo
@@ -138,41 +184,6 @@ void navboard_producer(void)
 	//boost::this_thread::sleep(boost::posix_time::milliseconds(500));
 }
 
-typedef struct {
-
-   double acc_x;
-   double acc_y;
-   double acc_z;
-
-   double gyro_x;
-   double gyro_y;
-   double gyro_z;
-
-   double gyro_x_dt;
-   double gyro_y_dt;
-   double gyro_z_dt;
-
-   double gyro_x_integrate;
-   double gyro_y_integrate;
-   double gyro_z_integrate;
-
-   double acc_pitch;
-   double acc_roll;
-
-   double fusion_pitch;
-   double fusion_roll;
-   double fusion_yaw;
-
-} navboard_fusion_t;
-
-typedef struct {
-	double acc_x_offset;
-	double acc_y_offset;
-	double acc_z_offset;
-	double gyro_x_offset;
-	double gyro_y_offset;
-	double gyro_z_offset;
-} navboard_calibration_t;
 
 double navboard_constraint(double value,double min,double max){
 	double out=value;
@@ -182,6 +193,9 @@ double navboard_constraint(double value,double min,double max){
 }
 
 void navboard_sensor_fusion(navboard_packet_t* packet,navboard_fusion_t* fusion,double dt,navboard_calibration_t* calibration){
+
+    fusion->dt = dt;
+    fusion->seq = packet->seq;
 
 	//
 	double radian2degree = 180.0f / M_PI;
@@ -231,6 +245,12 @@ void navboard_sensor_fusion(navboard_packet_t* packet,navboard_fusion_t* fusion,
 	fusion->fusion_roll=navboard_constraint(fusion->fusion_roll,-180,180);
 	fusion->fusion_yaw=navboard_constraint(fusion->fusion_yaw,-180,180);
 
+	/////////////////////////////////////////////////////////////////////////////
+
+	if(packet->us_echo / 37.5f < 650){
+		fusion->height=packet->us_echo / 37.5f;
+	}
+
 }
 
 
@@ -276,35 +296,49 @@ void navboard_calibration(navboard_calibration_t* calibration){
 
 void navboard_consumer(void){
 
+	//
 	navboard_packet_t packet;
 	navboard_fusion_t fusion;
 	navboard_calibration_t calibration;
 
+	//
 	boost::posix_time::ptime tick_back;
 	boost::posix_time::ptime tick_now;
 	boost::posix_time::time_duration tick_diff;
 
+	//
 	tick_back = boost::posix_time::microsec_clock::local_time();
 	tick_now = boost::posix_time::microsec_clock::local_time();
 
 	//
 	navboard_calibration(&calibration);
 
+	//
+	fusion.height=24;
+
 	for(;;){
 		if(navboard_queue.pop(packet)){
-
 			///////////////////////////////////////////////////////////////
 			tick_back = tick_now;
 			tick_now = boost::posix_time::microsec_clock::local_time();
 			tick_diff = tick_now - tick_back;
 			double dt = tick_diff.total_microseconds() / 1000000.0f;
 			//////////////////////////////////////////////////////////////
-
 			navboard_sensor_fusion(&packet,&fusion,dt,&calibration);
+			fusion_queue.push(fusion);
+			///////////////////////////////////////////////////////////////
+		}
+	}
+}
 
-			printf("dt=%.6f seq=%d pitch=%.2f roll=%.2f g(%.2f|%.2f|%.2f) gi(%.2f|%.2f|%.2f) f(%.2f|%.2f|%.2f)\r\n",
-					dt,
-					packet.seq,
+void drone_stabilizer(void){
+	navboard_fusion_t fusion;
+	for(;;){
+		if(fusion_queue.pop(fusion)){
+
+			printf("dt=%.6f seq=%.0f pitch=%.2f roll=%.2f g(%.2f|%.2f|%.2f) gi(%.2f|%.2f|%.2f) f(%.2f|%.2f|%.2f) h=%.2f\r\n",
+					fusion.dt,
+					fusion.seq,
 					fusion.acc_pitch,
 					fusion.acc_roll,
 					fusion.gyro_x,
@@ -315,24 +349,56 @@ void navboard_consumer(void){
 					fusion.gyro_z_integrate,
 					fusion.fusion_pitch,
 					fusion.fusion_roll,
-					fusion.fusion_yaw
+					fusion.fusion_yaw,
+					fusion.height
 			);
-
-
-
-
-
 		}
 	}
+}
+
+
+void drone_motors(void){
+
+	//
+	boost::asio::io_service io;
+	boost::asio::serial_port port(io);
+	port.open("/dev/ttyPA1");
+	port.set_option(boost::asio::serial_port_base::baud_rate(115200));
+
+	//reset IRQ flipflop - on error 106 read 1, this code resets 106 to 0
+	gpio_set(106,-1);
+	gpio_set(107,0);
+	gpio_set(107,1);
+	//all select lines inactive
+	gpio_set(68,1);
+	gpio_set(69,1);
+	gpio_set(70,1);
+	gpio_set(71,1);
+
 
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
 int main(int argc, char *argv[]) {
+
+	singleton(argv[0]);
 
 	system("killall -9 program.elf");
 	system("sysctl -w kernel.panic=0");
 	system("sysctl -w kernel.panic_on_oops=0");
+
+	//daemonize();
 
 
 	//threads group
@@ -341,6 +407,7 @@ int main(int argc, char *argv[]) {
 	//create threads
 	ardrone_threads.create_thread(navboard_producer);
 	ardrone_threads.create_thread(navboard_consumer);
+	ardrone_threads.create_thread(drone_stabilizer);
 
 
 	//wait all threads

@@ -8,8 +8,6 @@
 
 #include "singleton.h"
 
-#include "all_headers_cpp.h"
-
 //posix API
 #include <unistd.h>
 
@@ -22,6 +20,9 @@
 //terminal I/O interfaces
 #include <termios.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 //
 void singleton(char* program_name) {
