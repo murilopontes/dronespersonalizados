@@ -20,7 +20,6 @@
 #include "../open_ardrone_v1_lib/mot.h"
 #include "../open_ardrone_v1_lib/singleton.h"
 #include "../open_ardrone_v1_lib/daemonize.h"
-#include "../open_ardrone_v1_lib/PID_v1.h"
 
 
 void make_stable(void){
@@ -79,42 +78,6 @@ void make_stable(void){
 	  wait(dt)
 	  goto start
 	 */
-	//
-	double PID_H_Setpoint, PID_H_Input, PID_H_Output;
-	double PID_PITCH_Setpoint,PID_PITCH_Input,PID_PITCH_Output;
-	double PID_ROLL_Setpoint,PID_ROLL_Input,PID_ROLL_Output;
-	//
-	PID_H_Input = 0;
-	PID_H_Setpoint = 30;
-	PID_PITCH_Input=0;
-	PID_PITCH_Setpoint=0;
-	PID_ROLL_Input=0;
-	PID_ROLL_Setpoint=0;
-
-	//
-	double ku=1.0;
-	double tu=1.0;
-	//
-	double kp=0.8*ku;
-	double ki=2*kp/tu;
-	double kd=kp*tu/8;
-	//
-	PID     PID_H_Control(&PID_H_Input    ,&PID_H_Output    ,&PID_H_Setpoint    ,kp,ki,kd,DIRECT);
-	PID PID_PITCH_Control(&PID_PITCH_Input,&PID_PITCH_Output,&PID_PITCH_Setpoint,kp,ki,kd,DIRECT);
-	PID  PID_ROLL_Control(&PID_ROLL_Input ,&PID_ROLL_Output ,&PID_ROLL_Setpoint ,kp,ki,kd,DIRECT);
-	//
-	PID_H_Control.SetSampleTime(100);
-	PID_PITCH_Control.SetSampleTime(100);
-	PID_ROLL_Control.SetSampleTime(100);
-	//
-	PID_H_Control.SetOutputLimits(0.10,0.60);
-	PID_PITCH_Control.SetOutputLimits(0.00,0.01);
-	PID_ROLL_Control.SetOutputLimits(0.00,0.01);
-	//
-	PID_H_Control.SetMode(AUTOMATIC);
-	PID_PITCH_Control.SetMode(AUTOMATIC);
-	PID_ROLL_Control.SetMode(AUTOMATIC);
-	/////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 	char udp_buffer[1000];
@@ -155,67 +118,12 @@ void make_stable(void){
 		double ax=(packet[2]);
 		double ay=(packet[3]);
 		double az=(packet[4]);
-		//printf("a %.2f %.2f %.2f\n",ax,ay,az);
-		sum_ax+=ax;
-		sum_ay+=ay;
-		sum_az+=az;
-		///////////////////////////////////////////////////////////
 		double gx=(packet[5]);
 		double gy=(packet[6]);
 		double gz=(packet[7]);
-		sum_gx+=gx;
-		sum_gy+=gy;
-		sum_gz+=gz;
-		///////////////////////////////////////////////////////////
-		//printf("g %.2f %.2f %.2f\n",gx,gy,gz);
-		////////////////////////////////////////////////////////////
-		/*
-        double radian2degree = 57.295779513082320876798154814105f;
-		double apitch =  -atan2(ax,az) * radian2degree;
-		double aroll  =   atan2(ay,az) * radian2degree;
-		sum_pitch_calibration+=apitch;
-		sum_roll_calibration+=aroll;
-		 */
+
 	}
 
-	double ax_off=sum_ax/(double)calibration_qtd;
-	double ay_off=sum_ay/(double)calibration_qtd;
-	double az_off=sum_az/(double)calibration_qtd;
-
-	double gx_off=sum_gx/(double)calibration_qtd;
-	double gy_off=sum_gy/(double)calibration_qtd;
-	double gz_off=sum_gz/(double)calibration_qtd;
-
-
-
-	double gravidade = az_off - ((ax_off+ay_off)/2.0f);
-	printf("gravidade=%.2f\n",gravidade);
-	az_off = az_off - gravidade;
-
-
-	printf("ax_off=%.2f\n",ax_off);
-	printf("ay_off=%.2f\n",ay_off);
-	printf("az_off=%.2f\n",az_off);
-
-	printf("gx_off=%.2f\n",gx_off);
-	printf("gy_off=%.2f\n",gy_off);
-	printf("gz_off=%.2f\n",gz_off);
-
-
-	//ax_off=2000;
-	//ay_off=2000;
-	//az_off=2000;
-
-	double pitch_offset=sum_pitch_calibration/(double)calibration_qtd;
-	double roll_offset=sum_roll_calibration/(double)calibration_qtd;
-	printf("navboard calibration done pitch_offset=%.2f roll_offset=%.2f\n",pitch_offset,roll_offset);
-
-	/*
-    if(fabs(pitch_offset)>6 || fabs(roll_offset)>6){
-    	printf("navboard calibration error exit\n");
-    	exit(1);
-    }
-	 */
 
 	printf("navboard started udp broadcast\n");
 
@@ -275,16 +183,16 @@ void make_stable(void){
 			height=packet[17] / 37.5f;
 		}
 		/////////////////////////////////////////////////////////
-		double ax=(packet[2] - ax_off)/100.0f;
-		double ay=(packet[3] - ay_off)/100.0f;
-		double az=(packet[4] - az_off)/100.0f;
+		double ax=(packet[2] - 2000.0f)/100.0f;
+		double ay=(packet[3] - 2000.0f)/100.0f;
+		double az=(packet[4] - 2000.0f)/100.0f;
 		double radian2degree = 57.295779513082320876798154814105f;
 		double apitch = ( -atan2(ax,az) * radian2degree );
 		double aroll  = (  atan2(ay,az) * radian2degree );
 		/////////////////////////////////////////////////////////
-		double gx=(packet[5] - gx_off)/2.0f;//6.2f;
-		double gy=(packet[6] - gy_off)/2.0f;//6.2f;
-		double gz=(packet[7] - gz_off)/4.0f;//6.2f;
+		double gx=(packet[5] - 1666.0f)/2.0f;//6.2f;
+		double gy=(packet[6] - 1666.0f)/2.0f;//6.2f;
+		double gz=(packet[7] - 1666.0f)/4.0f;//6.2f;
 		/////////////////////////////////////////////////////////
 
 		ts_back = ts_now;
@@ -312,27 +220,6 @@ void make_stable(void){
 		/////////////////////////////////////////////////////////
 
 
-		///////////////////////////////////////////////////////////
-
-
-		PID_H_Input = height;
-		PID_H_Control.Compute();
-
-		PID_PITCH_Input=fusion_pitch;
-		PID_PITCH_Control.Compute();
-
-		PID_ROLL_Input=fusion_roll;
-		PID_ROLL_Control.Compute();
-
-		/////////////////////////////////////////////////////////////
-
-		/*
-		double adj_yaw=0;
-		motor[0] = PID_H_Output  +PID_ROLL_Output -PID_PITCH_Output -adj_yaw;
-		motor[1] = PID_H_Output  -PID_ROLL_Output -PID_PITCH_Output +adj_yaw;
-		motor[2] = PID_H_Output  -PID_ROLL_Output +PID_PITCH_Output -adj_yaw;
-		motor[3] = PID_H_Output  +PID_ROLL_Output +PID_PITCH_Output +adj_yaw;
-		 */
 
 		double height_error = height_setpoint - height ;
 		if(height_error>0){
