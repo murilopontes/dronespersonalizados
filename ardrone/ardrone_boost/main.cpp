@@ -252,15 +252,12 @@ typedef struct {
 
 boost::mutex mutex_h;
 boost::mutex mutex_v;
-
 camera_image_horizontal_t img_h;
 camera_image_vertical_t img_v;
 
 void process_image(const void *p, int size)
 {
-	printf("%s: called! size=%d\n", __func__,size);
-
-
+	//printf("%s: called! size=%d\n", __func__,size);
 	if(size==614400){
 		boost::mutex::scoped_lock lock_h(mutex_h, boost::try_to_lock);
 		if(lock_h){
@@ -277,39 +274,6 @@ void process_image(const void *p, int size)
 			printf("fail to lock img_v\r\n");
 		}
 	}
-
-
-	//	printf("sendto udp camera-horizontal \n");
-		/*
-		pFile = fopen ("/tmp/horizontal.yuv", "wb");
-		fwrite (p , 1, size, pFile);
-		fclose (pFile);
-*/
-		//system("/data/video/udp_broadcast_file 7070 /tmp/horizontal.yuv");
-	//}
-
-	//if(size==50688){
-		//printf("sendto udp camera-vertical \n");
-		/*
-		pFile = fopen ("/tmp/vertical.yuv", "wb");
-		fwrite (p , 1, size, pFile);
-		fclose (pFile);
-*/
-		//system("/data/video/udp_broadcast_file 6969 /tmp/vertical.yuv");
-	//}
-
-
-
-	//if (out_buf)
-	//	fwrite(p, size, 1, stdout);
-
-
-/*
-	fflush(stderr);
-	fprintf(stderr, ".");
-	fflush(stdout);
-*/
-
 }
 
 
@@ -991,6 +955,8 @@ void drone_motors(void){
 	port.open("/dev/ttyPA1");
 	port.set_option(boost::asio::serial_port_base::baud_rate(115200));
 
+motor_cmd_init:
+
 	//reset IRQ flipflop - on error 106 read 1, this code resets 106 to 0
 	gpio_set(106,-1);
 	gpio_set(107,0);
@@ -1003,7 +969,7 @@ void drone_motors(void){
 
 	uint8_t reply[256];
 
-	motor_cmd_init:
+
 	for(int m=0;m<4;m++) {
 
 		//
@@ -1248,29 +1214,20 @@ void murix_drone_start(void){
 	//threads group
 	boost::thread_group ardrone_threads;
 	//create threads
-	//ardrone_threads.create_thread(thread_navboard_read_raw);
-	//ardrone_threads.create_thread(thread_navboard_decoder);
-	//	ardrone_threads.create_thread(thread_stabilizer);
-	//ardrone_threads.create_thread(drone_motors);
+	ardrone_threads.create_thread(thread_navboard_read_raw);
+	ardrone_threads.create_thread(thread_navboard_decoder);
+	//ardrone_threads.create_thread(thread_stabilizer);
+	ardrone_threads.create_thread(drone_motors);
 	//ardrone_threads.create_thread(motor_test);
 	//ardrone_threads.create_thread(drone_console_pilot);
-	//ardrone_threads.create_thread(thread_vbat);
+	ardrone_threads.create_thread(thread_vbat);
 	//ardrone_threads.create_thread(vbat_show);
+	//ardrone_threads.create_thread(camera_horizontal);
+	ardrone_threads.create_thread(camera_vertical);
 
-	boost::thread_group cam_h;
-	cam_h.create_thread(camera_horizontal);
-
-	//boost::this_thread::sleep(boost::posix_time::milliseconds(5000));
-
-	boost::thread_group cam_v;
-	cam_v.create_thread(camera_vertical);
-
-
-
+	printf("wait all threads foverer\r\n");
 	//wait all threads
 	ardrone_threads.join_all();
-	cam_h.join_all();
-	cam_v.join_all();
 }
 
 }
