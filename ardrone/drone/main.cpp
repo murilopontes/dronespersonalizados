@@ -34,11 +34,41 @@
 #include <boost/accumulators/statistics/mean.hpp>
 #include <boost/accumulators/statistics/moment.hpp>
 #include <boost/accumulators/statistics/median.hpp>
+#include <boost/date_time/gregorian/gregorian.hpp>
+
 
 #include "singleton.h"
 #include "daemonize.h"
 
+
 namespace murix_ardrone {
+
+long millis(void){
+	boost::posix_time::ptime tick_back(boost::gregorian::date(1970,boost::gregorian::Jan,1));
+	boost::posix_time::ptime tick_now = boost::posix_time::microsec_clock::universal_time();
+	boost::posix_time::time_duration tick_diff;
+	tick_diff = tick_now - tick_back;
+	return tick_diff.total_milliseconds();
+}
+
+long micros(void){
+	boost::posix_time::ptime tick_back(boost::gregorian::date(1970,boost::gregorian::Jan,1));
+	boost::posix_time::ptime tick_now = boost::posix_time::microsec_clock::universal_time();
+	boost::posix_time::time_duration tick_diff;
+	tick_diff = tick_now - tick_back;
+	return tick_diff.total_microseconds();
+}
+
+long nanos(void){
+	boost::posix_time::ptime tick_back(boost::gregorian::date(1970,boost::gregorian::Jan,1));
+	boost::posix_time::ptime tick_now = boost::posix_time::microsec_clock::universal_time();
+	boost::posix_time::time_duration tick_diff;
+	tick_diff = tick_now - tick_back;
+	return tick_diff.total_nanoseconds();
+}
+
+
+
 
 class PID {
 public:
@@ -48,20 +78,62 @@ public:
 	double errSum, lastErr;
 	double kp, ki, kd;
 
+	//
+	double autotune_ku;
+	double autotune_pu;
+	double autotune_input_back;
+	double autotune_input_oscillation;
+
 	PID(){
-		lastTime = boost::posix_time::microsec_clock::local_time();
+		//
 		Input=0;
 		Output=0;
 		Setpoint=0;
+		//
+		lastTime = boost::posix_time::microsec_clock::local_time();
 		errSum=0;
 		lastErr=0;
+		//
 		kp=0;
 		ki=0;
 		kd=0;
+		//
+		autotune_ku=0;
+		autotune_pu=0;
+		autotune_input_back=Input;
 	}
 
-	void Compute()
+
+
+	void online_autotune(){
+
+		autotune_input_oscillation=Input-autotune_input_back;
+
+		//oscillation is not sufficient
+		if(abs(autotune_input_oscillation)<1){
+			//increase ku
+			printf("ku=%.2f\r\n",autotune_ku);
+			autotune_ku+=1;
+		}
+		//oscillation is ok
+		else {
+			//calcute tunning
+			kp = 0.6*autotune_ku;
+			ki = 2*kp/autotune_pu;
+			kd = kp*autotune_pu/8.0f;
+			printf("kp=%.2f ki=%.2f kd=%.2f\r\n",kp,ki,kd);
+		}
+
+	}
+
+	void Compute(double input_now)
 	{
+		//
+		autotune_input_back = Input;
+		Input = input_now;
+		online_autotune();
+
+
 		/*How long since we last calculated*/
 		boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
 		boost::posix_time::time_duration tick_diff = now - lastTime;
@@ -80,13 +152,17 @@ public:
 		lastTime = now;
 	}
 
+	/*
 	void SetTunings(double Kp, double Ki, double Kd)
 	{
 		kp = Kp;
 		ki = Ki;
 		kd = Kd;
 	}
+	 */
 };
+
+
 
 
 typedef struct  {
@@ -138,6 +214,17 @@ int vbat_read(vbat_t *vbat,int fd)
 
 void thread_vbat(void){
 
+	/*
+	/dev/i2c-0
+	0×49 Atmel AT73C246 Power Management and Analog Companions (PMAAC)
+	0×50 24C32WI eeprom
+	0x5d Bottom camera
+
+	/dev/i2c-1
+	 0×21 Horizontal Camera – OmniVision ov7725
+	 */
+
+	printf("vbat init!\r\n");
 	const int VBAT_ADDRESS=0x49;
 
 
@@ -182,6 +269,7 @@ void thread_vbat(void){
 	vbat.vdd4_setpoint = (v&0x80 ? (v & 0x3f) * 0.05 + 2.70 : 0);
 
 	//printf("Setpoints %f %f %f %f\n",vbat->vdd0_setpoint,vbat->vdd1_setpoint,vbat->vdd2_setpoint,vbat->vdd3_setpoint);
+	printf("vbat working!\r\n");
 	while(1) {
 		vbat_read(&vbat,fd);
 		vbat_queue.push(vbat);
@@ -242,11 +330,11 @@ struct buffer {
 
 
 typedef struct {
-   uint8_t buf[614400];
+	uint8_t buf[614400];
 } camera_image_horizontal_t;
 
 typedef struct {
-   uint8_t buf[50688];
+	uint8_t buf[50688];
 } camera_image_vertical_t;
 
 
@@ -377,15 +465,15 @@ void camera_service(char* dev_name){
 	}
 
 	printf("\tfmt.fmt.pix.pixelformat: %c,%c,%c,%c\n",
-                            fmt.fmt.pix.pixelformat & 0xFF,
-                            (fmt.fmt.pix.pixelformat >> 8) & 0xFF,
-                            (fmt.fmt.pix.pixelformat >> 16) & 0xFF,
-                            (fmt.fmt.pix.pixelformat >> 24) & 0xFF
-                            );
+			fmt.fmt.pix.pixelformat & 0xFF,
+			(fmt.fmt.pix.pixelformat >> 8) & 0xFF,
+			(fmt.fmt.pix.pixelformat >> 16) & 0xFF,
+			(fmt.fmt.pix.pixelformat >> 24) & 0xFF
+	);
 	printf("\n");
 
-            if (-1 == xioctl(fd, VIDIOC_S_FMT, &fmt))
-                    errno_exit("VIDIOC_S_FMT");
+	if (-1 == xioctl(fd, VIDIOC_S_FMT, &fmt))
+		errno_exit("VIDIOC_S_FMT");
 
 
 	/////////////////////////////////////////////////////////////////
@@ -832,6 +920,13 @@ void navboard_sensor_fusion(navboard_packet_t* packet,navboard_fusion_t* fusion,
 
 }
 
+double calibration_ref(double value,double ref,double error){
+	if(value<ref-error || value>ref+error){
+		return ref;
+	}
+	return value;
+}
+
 
 void navboard_calibration(navboard_calibration_t* calibration){
 	navboard_packet_t packet;
@@ -871,7 +966,45 @@ void navboard_calibration(navboard_calibration_t* calibration){
 	calibration->gyro_z_offset = median(gyro_raw_z);
 	//////////////////////////////////////////////////////
 
+	printf("navboard_calibration before ao=(%.2f,%.2f,%.2f) go=(%.2f,%.2f,%.2f)\r\n",
+			calibration->acc_x_offset,
+			calibration->acc_y_offset,
+			calibration->acc_z_offset,
+			calibration->gyro_x_offset,
+			calibration->gyro_y_offset,
+			calibration->gyro_z_offset
+	);
+
+	//ao=(2063.16,1976.81,2019.99) go=(1658.00,1669.98,1663.00)
+	double ref_ao_error = 5.0;
+	double ref_ao_x = 2063.16;
+	double ref_ao_y = 1976.81;
+	double ref_ao_z = 2019.99;
+
+	double ref_go_error = 5.0;
+	double ref_go_x = 1658.00;
+	double ref_go_y = 1669.98;
+	double ref_go_z = 1663.00;
+
+	calibration->acc_x_offset = calibration_ref(calibration->acc_x_offset,ref_ao_x,ref_ao_error);
+	calibration->acc_y_offset = calibration_ref(calibration->acc_y_offset,ref_ao_y,ref_ao_error);
+	calibration->acc_z_offset = calibration_ref(calibration->acc_z_offset,ref_ao_z,ref_ao_error);
+	calibration->gyro_x_offset = calibration_ref(calibration->gyro_x_offset,ref_go_x,ref_go_error);
+	calibration->gyro_y_offset = calibration_ref(calibration->gyro_y_offset,ref_go_y,ref_go_error);
+	calibration->gyro_z_offset = calibration_ref(calibration->gyro_z_offset,ref_go_z,ref_go_error);
+
+
+	printf("navboard_calibration after  ao=(%.2f,%.2f,%.2f) go=(%.2f,%.2f,%.2f)\r\n",
+			calibration->acc_x_offset,
+			calibration->acc_y_offset,
+			calibration->acc_z_offset,
+			calibration->gyro_x_offset,
+			calibration->gyro_y_offset,
+			calibration->gyro_z_offset
+	);
+
 }
+
 
 void thread_navboard_decoder(void){
 
@@ -903,7 +1036,7 @@ void thread_navboard_decoder(void){
 			tick_back = tick_now;
 			tick_now = boost::posix_time::microsec_clock::local_time();
 			tick_diff = tick_now - tick_back;
-			double dt = tick_diff.total_microseconds() / 1000000.0f;
+			double dt = tick_diff.total_nanoseconds() / 1000000000.0f;
 			//////////////////////////////////////////////////////////////
 			navboard_sensor_fusion(&packet,&fusion,dt,&calibration);
 			fusion_queue.push(fusion);
@@ -913,10 +1046,11 @@ void thread_navboard_decoder(void){
 }
 
 void thread_stabilizer(void){
+
 	navboard_fusion_t fusion;
+
 	for(;;){
 		if(fusion_queue.pop(fusion)){
-
 			printf("dt=%.6f seq=%.0f a(%.2f|%.2f) g(%.2f|%.2f|%.2f) gi(%.2f|%.2f|%.2f) f(%.2f|%.2f|%.2f) h=%.2f\r\n",
 					fusion.dt,
 					fusion.seq,
@@ -955,7 +1089,7 @@ void drone_motors(void){
 	port.open("/dev/ttyPA1");
 	port.set_option(boost::asio::serial_port_base::baud_rate(115200));
 
-motor_cmd_init:
+	motor_cmd_init:
 
 	//reset IRQ flipflop - on error 106 read 1, this code resets 106 to 0
 	gpio_set(106,-1);
@@ -1176,7 +1310,7 @@ void drone_console_pilot(void){
 		}
 
 		//clamp
-		height_speed=constraint_s16(height_speed,    -511  ,  511  );
+		height_speed=constraint_s16(height_speed,       0  ,  511  );
 		pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
 		roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
 		yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
@@ -1205,6 +1339,19 @@ void drone_console_pilot(void){
 
 
 
+
+/*
+# program.elf
+posix init start build on : Aug 20 2012 14:37:42
+Use ctrl+\ (SIGQUIT) to end the application
+plog drop: thread RT_THRESHOLD=19, SUP_THREAD_MINPRIORITY=31
+plog drop: RR time quantum 0s 10000000ns
+plog drop: thread guard size : default 4096
+plog drop: thread guard size : set to 65536
+plog drop: thread stack size : default 32768, minimal 16384, (system default 8388608)
+plog drop: disable smp
+
+ */
 void murix_drone_start(void){
 
 	boost::thread::attributes attrs;
@@ -1213,17 +1360,18 @@ void murix_drone_start(void){
 
 	//threads group
 	boost::thread_group ardrone_threads;
+
 	//create threads
 	ardrone_threads.create_thread(thread_navboard_read_raw);
 	ardrone_threads.create_thread(thread_navboard_decoder);
-	//ardrone_threads.create_thread(thread_stabilizer);
-	ardrone_threads.create_thread(drone_motors);
-	//ardrone_threads.create_thread(motor_test);
-	//ardrone_threads.create_thread(drone_console_pilot);
 	ardrone_threads.create_thread(thread_vbat);
 	//ardrone_threads.create_thread(vbat_show);
 	//ardrone_threads.create_thread(camera_horizontal);
-	ardrone_threads.create_thread(camera_vertical);
+	//ardrone_threads.create_thread(camera_vertical);
+	//ardrone_threads.create_thread(thread_stabilizer);
+	ardrone_threads.create_thread(drone_motors);
+	//ardrone_threads.create_thread(motor_test);
+	ardrone_threads.create_thread(drone_console_pilot);
 
 	printf("wait all threads foverer\r\n");
 	//wait all threads
