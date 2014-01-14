@@ -29,7 +29,7 @@
 #define EXIT_SUCCESS 0
 #define EXIT_FAILURE 1
 
-void daemonize(void)
+void murix_utils::daemonize(void)
 {
     pid_t pid, sid;
     int fd;

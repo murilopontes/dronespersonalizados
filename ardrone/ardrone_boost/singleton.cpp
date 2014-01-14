@@ -25,7 +25,7 @@
 #include <string.h>
 
 //
-void singleton(char* program_name) {
+void murix_utils::singleton(char* program_name) {
 
 
     //strip program_name from complete path

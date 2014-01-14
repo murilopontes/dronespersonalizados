@@ -8,9 +8,12 @@
 #ifndef DAEMONIZE_H_
 #define DAEMONIZE_H_
 
+namespace murix_utils {
 
 
 void daemonize(void);
+
+}
 
 
 #endif /* DAEMONIZE_H_ */
