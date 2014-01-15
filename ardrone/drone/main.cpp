@@ -2,6 +2,7 @@
 //POSIX
 #include <termios.h>
 #include <unistd.h>
+#include <signal.h>
 
 // i2c library
 #include "i2c-dev.h"
@@ -12,6 +13,9 @@
 
 // C++ library
 #include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 // Camera library
 #include <sys/stat.h>
@@ -22,6 +26,9 @@
 #include <linux/videodev2.h>
 
 // Boost C++
+#include <boost/bind.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 #include <boost/thread.hpp>
 #include <boost/asio/serial_port.hpp>
 #include <boost/asio.hpp>
@@ -40,8 +47,17 @@
 #include "singleton.h"
 #include "daemonize.h"
 
+int global_run_foverer=1;
 
-namespace murix_ardrone {
+void ctrlchandler(int) {
+	printf("ctrlchandler\r\n");
+	global_run_foverer=0;
+}
+void killhandler(int) {
+	printf("killhandler\r\n");
+	global_run_foverer=0;
+}
+
 
 long millis(void){
 	boost::posix_time::ptime tick_back(boost::gregorian::date(1970,boost::gregorian::Jan,1));
@@ -270,7 +286,7 @@ void thread_vbat(void){
 
 	//printf("Setpoints %f %f %f %f\n",vbat->vdd0_setpoint,vbat->vdd1_setpoint,vbat->vdd2_setpoint,vbat->vdd3_setpoint);
 	printf("vbat working!\r\n");
-	while(1) {
+	while(global_run_foverer) {
 		vbat_read(&vbat,fd);
 		vbat_queue.push(vbat);
 	}
@@ -281,7 +297,7 @@ void thread_vbat(void){
 void vbat_show(void){
 	vbat_t vbat;
 
-	for(;;){
+	while(global_run_foverer){
 		if(vbat_queue.pop(vbat)){
 			printf("set|%4.2f|%4.2f|%4.2f|%4.2f|%4.2f|\r\n",
 					vbat.vdd0_setpoint,
@@ -301,33 +317,15 @@ void vbat_show(void){
 
 }
 
-boost::mutex mutex_xioctl;
-
-int xioctl(int fh, int request, void *arg)
-{
-	boost::mutex::scoped_lock lock(mutex_xioctl);
-
-	int r;
-	do {
-		r = ioctl(fh, request, arg);
-	} while (-1 == r && EINTR == errno);
-	return r;
-}
-
-static void errno_exit(const char *s)
-{
-	fprintf(stderr, "%s error %d, %s\n", s, errno, strerror(errno));
-}
 
 
-struct buffer {
-	void   *start;
-	size_t  length;
-};
-
-#define CLEAR(x) memset(&(x), 0, sizeof(x))
 
 
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 typedef struct {
 	uint8_t buf[614400];
@@ -337,336 +335,231 @@ typedef struct {
 	uint8_t buf[50688];
 } camera_image_vertical_t;
 
+boost::mutex camera_mutex_h;
+boost::mutex camera_mutex_v;
+camera_image_horizontal_t camera_img_h;
+camera_image_vertical_t camera_img_v;
 
-boost::mutex mutex_h;
-boost::mutex mutex_v;
-camera_image_horizontal_t img_h;
-camera_image_vertical_t img_v;
-
-void process_image(const void *p, int size)
+void camera_process_image(const void *p, int size)
 {
-	//printf("%s: called! size=%d\n", __func__,size);
 	if(size==614400){
-		boost::mutex::scoped_lock lock_h(mutex_h, boost::try_to_lock);
+		boost::mutex::scoped_lock lock_h(camera_mutex_h, boost::try_to_lock);
 		if(lock_h){
-			memcpy(&img_h.buf,p,size);
+			memcpy(&camera_img_h.buf,p,size);
 		} else {
 			printf("fail to lock img_h\r\n");
 		}
 	}
 	if(size==50688){
-		boost::mutex::scoped_lock lock_v(mutex_v, boost::try_to_lock);
+		boost::mutex::scoped_lock lock_v(camera_mutex_v, boost::try_to_lock);
 		if(lock_v){
-			memcpy(&img_v.buf,p,size);
+			memcpy(&camera_img_v.buf,p,size);
 		} else {
 			printf("fail to lock img_v\r\n");
 		}
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-int read_frame(int fd,struct buffer *buffers,unsigned int n_buffers)
+typedef struct  {
+	void   *start;
+	size_t  length;
+} camera_buffer_t;
+
+typedef struct {
+	char* dev_name;
+	int width;
+	int height;
+	//////////////////////////
+	int fd;
+	camera_buffer_t *buffers;
+	int n_buffers;
+} camera_context_t;
+
+int camera_xioctl(int fh, int request, void *arg,const char *name)
 {
-	struct v4l2_buffer buf;
-
-	CLEAR(buf);
-	buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-	buf.memory = V4L2_MEMORY_MMAP;
-
-	if (-1 == xioctl(fd, VIDIOC_DQBUF, &buf)) {
-		switch (errno) {
-		case EAGAIN:
-			return 0;
-		case EIO:
-			/* Could ignore EIO, see spec. */
-			/* fall through */
-		default:
-			errno_exit("VIDIOC_DQBUF");
-		}
+	int r = ioctl(fh, request, arg);
+	if(r==-1){
+		printf("ioctl fd=%d name=%s \033[1;31mFAIL\033[m\r\n",fh,name);
+	} else {
+		printf("ioctl fd=%d name=%s \033[1;32mOK\033[m\r\n",fh,name);
 	}
-
-	//assert(buf.index < n_buffers);
-	process_image(buffers[buf.index].start, buf.bytesused);
-
-	if (-1 == xioctl(fd, VIDIOC_QBUF, &buf))
-		errno_exit("VIDIOC_QBUF");
-
-
-	return 1;
+	return r;
 }
 
 
-void camera_service(char* dev_name){
-
-	struct buffer          *buffers;
-	static unsigned int     n_buffers = 4;
+void camera_init(camera_context_t* ctx){
 
 	///////////////////////////////////////////////////////////////////////////
-	//////////////////
+	////////////////// ------ OPEN DEVICE
 
-	int fd = open(dev_name, O_RDWR | O_NONBLOCK, 0);
-	if (-1 == fd) {
-		fprintf(stderr, "Cannot open '%s': %d, %s\n", dev_name, errno, strerror(errno));
+	//| O_NONBLOCK
+	ctx->fd = open(ctx->dev_name, O_RDWR , 0);
+	if(ctx->fd<0){
+		printf("error cannot open device\r\n");
 	}
 
 	////////////////////////////////////////////////////////////////
-	///////////////// ---------- DEVICE INIT ----------------------
+	///////////////// ---------- DEVICE CAPS ----------------------
 
 	struct v4l2_capability cap;
-
-	if (-1 == xioctl(fd, VIDIOC_QUERYCAP, &cap)) {
-		if (EINVAL == errno) {
-			fprintf(stderr, "%s is no V4L2 device\n", dev_name);
-			exit(EXIT_FAILURE);
-		} else {
-			errno_exit("VIDIOC_QUERYCAP");
-		}
-	}
-
-	printf("\tdriver: %s\n"
-			"\tcard: %s \n"
-			"\tbus_info: %s\n",
-			cap.driver, cap.card, cap.bus_info);
-	printf("\tversion: %u.%u.%u\n",
-			(cap.version >> 16) & 0xFF,
-			(cap.version >> 8) & 0xFF,
-			cap.version & 0xFF);
-	printf("\tcapabilities: 0x%08x\n", cap.capabilities);
-
-	if (!(cap.capabilities & V4L2_CAP_VIDEO_CAPTURE)) {
-		fprintf(stderr, "%s is no video capture device\n",
-				dev_name);
-		exit(EXIT_FAILURE);
-	}
-
-	if (!(cap.capabilities & V4L2_CAP_STREAMING)) {
-		fprintf(stderr, "%s does not support streaming i/o\n", dev_name);
-		exit(EXIT_FAILURE);
-	}
+	memset(&cap,0,sizeof(cap));
+	camera_xioctl(ctx->fd, VIDIOC_QUERYCAP, &cap,"VIDIOC_QUERYCAP");
 
 	//////////////////////////////////////////////////////////////////////
 	///////////////////--------- SET FORMAT
 
 	struct v4l2_format fmt;
-	CLEAR(fmt);
-
-	if(strstr("p6_camif.0",(const char *)cap.driver)){
-		printf("camera-horizontal\n");
-		fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-		fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUV420;
-		fmt.fmt.pix.width=640;
-		fmt.fmt.pix.height=480;
-	} else {
-		printf("camera-vertical\n");
-		fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-		fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUV420;
-		fmt.fmt.pix.width=176;
-		fmt.fmt.pix.height=144;
-	}
-
-	printf("\tfmt.fmt.pix.pixelformat: %c,%c,%c,%c\n",
-			fmt.fmt.pix.pixelformat & 0xFF,
-			(fmt.fmt.pix.pixelformat >> 8) & 0xFF,
-			(fmt.fmt.pix.pixelformat >> 16) & 0xFF,
-			(fmt.fmt.pix.pixelformat >> 24) & 0xFF
-	);
-	printf("\n");
-
-	if (-1 == xioctl(fd, VIDIOC_S_FMT, &fmt))
-		errno_exit("VIDIOC_S_FMT");
-
+	memset(&fmt,0,sizeof(fmt));
+	fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+	fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUV420;
+	fmt.fmt.pix.width=ctx->width;
+	fmt.fmt.pix.height=ctx->height;
+	camera_xioctl(ctx->fd, VIDIOC_S_FMT, &fmt,"VIDIOC_S_FMT");
 
 	/////////////////////////////////////////////////////////////////
-	/////////////// ---------------- MMAP INIT ---------//////////////
+	/////////////// ----------------  REQUEST BUFFER ---------///////
 
 	struct v4l2_requestbuffers req;
-
-	printf("%s: called!\n", __func__);
-
-	CLEAR(req);
-
+	memset(&req,0,sizeof(req));
 	req.count = 4;
 	req.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	req.memory = V4L2_MEMORY_MMAP;
+	camera_xioctl(ctx->fd, VIDIOC_REQBUFS, &req,"VIDIOC_REQBUFS");
 
-	if (-1 == xioctl(fd, VIDIOC_REQBUFS, &req)) {
-		if (EINVAL == errno) {
-			fprintf(stderr, "%s does not support "
-					"memory mapping\n", dev_name);
-			exit(EXIT_FAILURE);
-		} else {
-			errno_exit("VIDIOC_REQBUFS");
-		}
-	}
-	printf("\treq.count: %d\n", req.count);
-	printf("\treq.type: %d\n", req.type);
-	printf("\treq.memory: %d\n", req.memory);
-	printf("\n");
+	/////////////////////////////////////////////////////////////////////////////
+	////////////////--------------- MMAP INIT
 
+	ctx->n_buffers=req.count;
+	ctx->buffers = (camera_buffer_t*) calloc(ctx->n_buffers, sizeof(camera_buffer_t));
 
-	if (req.count < 2) {
-		fprintf(stderr, "Insufficient buffer memory on %s\n",
-				dev_name);
-		exit(EXIT_FAILURE);
-	}
-
-	buffers = (struct buffer*) calloc(req.count, sizeof(struct buffer));
-
-	if (!buffers) {
-		fprintf(stderr, "Out of memory\n");
-		exit(EXIT_FAILURE);
-	}
-
-	for (n_buffers = 0; n_buffers < req.count; ++n_buffers) {
+	for (int i = 0; i < ctx->n_buffers; ++i) {
 		struct v4l2_buffer buf;
-
-		CLEAR(buf);
-
+		memset(&buf,0,sizeof(buf));
 		buf.type        = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 		buf.memory      = V4L2_MEMORY_MMAP;
-		buf.index       = n_buffers;
+		buf.index       = i;
+		camera_xioctl(ctx->fd, VIDIOC_QUERYBUF, &buf,"VIDIOC_QUERYBUF");
+		ctx->buffers[i].length = buf.length;
+		ctx->buffers[i].start = mmap(NULL,buf.length,PROT_READ | PROT_WRITE ,MAP_SHARED, ctx->fd, buf.m.offset);
+	}
 
-		if (-1 == xioctl(fd, VIDIOC_QUERYBUF, &buf))
-			errno_exit("VIDIOC_QUERYBUF");
+	/////////////////////////////////////////////////////////////////////
+	////////////---------------- enqueue request
 
-		printf("\tbuf.index: %d\n", buf.index);
-		printf("\tbuf.type: %d\n", buf.type);
-		printf("\tbuf.bytesused: %d\n", buf.bytesused);
-		printf("\tbuf.flags: %d\n", buf.flags);
-		printf("\tbuf.field: %d\n", buf.field);
-		printf("\tbuf.timestamp.tv_sec: %ld\n", (long) buf.timestamp.tv_sec);
-		printf("\tbuf.timestamp.tv_usec: %ld\n", (long) buf.timestamp.tv_usec);
-		printf("\tbuf.timecode.type: %d\n", buf.timecode.type);
-		printf("\tbuf.timecode.flags: %d\n", buf.timecode.flags);
-		printf("\tbuf.timecode.frames: %d\n", buf.timecode.frames);
-		printf("\tbuf.timecode.seconds: %d\n", buf.timecode.seconds);
-		printf("\tbuf.timecode.minutes: %d\n", buf.timecode.minutes);
-		printf("\tbuf.timecode.hours: %d\n", buf.timecode.hours);
-		printf("\tbuf.timecode.userbits: %d,%d,%d,%d\n",
-				buf.timecode.userbits[0],
-				buf.timecode.userbits[1],
-				buf.timecode.userbits[2],
-				buf.timecode.userbits[3]);
-		printf("\tbuf.sequence: %d\n", buf.sequence);
-		printf("\tbuf.memory: %d\n", buf.memory);
-		printf("\tbuf.m.offset: %d\n", buf.m.offset);
-		printf("\tbuf.length: %d\n", buf.length);
-		printf("\tbuf.input: %d\n", buf.input);
-		printf("\n");
+	for (int i = 0; i < ctx->n_buffers; ++i) {
 
-		buffers[n_buffers].length = buf.length;
-		buffers[n_buffers].start =
-				mmap(NULL /* start anywhere */,
-						buf.length,
-						PROT_READ | PROT_WRITE /* required */,
-						MAP_SHARED /* recommended */,
-						fd, buf.m.offset);
+		struct v4l2_buffer buf;
+		memset(&buf,0,sizeof(buf));
 
-		if (MAP_FAILED == buffers[n_buffers].start)
-			errno_exit("mmap");
+		buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+		buf.memory = V4L2_MEMORY_MMAP;
+		buf.index = i;
+
+		camera_xioctl(ctx->fd, VIDIOC_QBUF, &buf,"VIDIOC_QBUF");
 	}
 
 	/////////////////////////////////////////////////////////////////////
 	////////////---------------- START CAPTURE
 
-	unsigned int i;
-	enum v4l2_buf_type type;
-	int err;
+	enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+	camera_xioctl(ctx->fd, VIDIOC_STREAMON, &type,"VIDIOC_STREAMON");
+}
 
-	for (i = 0; i < n_buffers; ++i) {
+int camera_loop_check(camera_context_t* ctx){
+
+		fd_set fds;
+		struct timeval tv;
+		int r;
+		FD_ZERO(&fds);
+		FD_SET(ctx->fd, &fds);
+		/* Timeout. */
+		tv.tv_sec = 2;
+		tv.tv_usec = 0;
+
+		r = select(ctx->fd + 1, &fds, NULL, NULL, &tv);
+
+		if (-1 == r) {
+			return -1;
+		}
+
+		if (0 == r) {
+			return 0;
+		}
+		return 1;
+}
+
+void camera_loop_frame(camera_context_t* ctx){
+
+		///////////////////////////////////////////////////
+		////////////////////////////---------- DEQUEUE
 		struct v4l2_buffer buf;
-
-		printf("\ti: %d\n", i);
-
-		CLEAR(buf);
+		memset(&buf,0,sizeof(buf));
 		buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 		buf.memory = V4L2_MEMORY_MMAP;
-		buf.index = i;
-
-		printf("\tbuf.index: %d\n", buf.index);
-
-		err == xioctl(fd, VIDIOC_QBUF, &buf);
-		printf("\terr: %d\n", err);
-
-		if (-1 == err)
-			errno_exit("VIDIOC_QBUF");
-
-		printf("\tbuffer queued!\n");
-	}
-
-	printf("Before STREAMON\n");
-	type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-	if (-1 == xioctl(fd, VIDIOC_STREAMON, &type))
-		errno_exit("VIDIOC_STREAMON");
-	printf("After STREAMON\n");
-
-	//////////////////////////////////////////////////////////////
-
-
-	while (1) {
-
-		for (;;) {
-			fd_set fds;
-			struct timeval tv;
-			int r;
-
-			FD_ZERO(&fds);
-			FD_SET(fd, &fds);
-
-			/* Timeout. */
-			tv.tv_sec = 2;
-			tv.tv_usec = 0;
-
-			r = select(fd + 1, &fds, NULL, NULL, &tv);
-
-			if (-1 == r) {
-				if (EINTR == errno)
-					continue;
-				errno_exit("select");
-			}
-
-			if (0 == r) {
-				fprintf(stderr, "select timeout\n");
-				//exit(EXIT_FAILURE);
-				continue;
-			}
-
-			if (read_frame(fd,buffers,n_buffers))
-				break;
-			/* EAGAIN - continue select loop. */
+		if(camera_xioctl(ctx->fd, VIDIOC_DQBUF, &buf,"VIDIOC_DQBUF")!=-1){
+			////////////////////////////////////////////////--- USE
+			camera_process_image(ctx->buffers[buf.index].start, buf.bytesused);
+			//////////////////////////////////////////////----RE-ENQUEUE
+			camera_xioctl(ctx->fd, VIDIOC_QBUF, &buf,"VIDIOC_QBUF");
 		}
-	}
+
+}
+
+
+
+void camera_close(camera_context_t* ctx){
 
 	////////////////////////////////////////////////////////////////////////
 	//////////////////////////-------- STOP CAPTURE
 
-	type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-	if (-1 == xioctl(fd, VIDIOC_STREAMOFF, &type))
-		errno_exit("VIDIOC_STREAMOFF");
+	enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+	camera_xioctl(ctx->fd, VIDIOC_STREAMOFF, &type,"VIDIOC_STREAMOFF");
 
 	////////////////////////////////////////////////////////////////////////
-	//////////////////////////-------- UNINIT DEVICE
+	//////////////////////////-------- deinit mmap
 
-	for (i = 0; i < n_buffers; ++i)
-		if (-1 == munmap(buffers[i].start, buffers[i].length))
-			errno_exit("munmap");
-
-	free(buffers);
+	for (int i = 0; i < ctx->n_buffers; ++i){
+		munmap(ctx->buffers[i].start, ctx->buffers[i].length);
+	}
+	free(ctx->buffers);
 
 	////////////////////////////////////////////////////////////////////////
 	//////////////////////////-------- CLOSE DEVICE
 
-	if (-1 == close(fd))
-		errno_exit("close");
-
+	close(ctx->fd);
 }
 
-void camera_horizontal(void){
-	camera_service("/dev/video0");
+void cameras(void){
+
+
+	camera_context_t ctx_h;
+	ctx_h.dev_name = "/dev/video0";
+	ctx_h.width=640;
+	ctx_h.height=480;
+
+	camera_context_t ctx_v;
+	ctx_v.dev_name = "/dev/video1";
+	ctx_v.width=176;
+	ctx_v.height=144;
+
+	while(global_run_foverer){
+
+		camera_init(&ctx_h);
+		camera_loop_frame(&ctx_h);
+		camera_close(&ctx_h);
+
+		camera_init(&ctx_v);
+		camera_loop_frame(&ctx_v);
+		camera_close(&ctx_v);
+	}
 }
-void camera_vertical(void){
-	camera_service("/dev/video1");
-}
+
+
+
 
 
 
@@ -811,7 +704,7 @@ void thread_navboard_read_raw(void)
 	}
 
 	printf("navboard reader working\r\n");
-	while(1){
+	while(global_run_foverer){
 		//read
 		boost::asio::read(port, boost::asio::buffer(&c,1));
 		//put in circular buffer
@@ -940,7 +833,7 @@ void navboard_calibration(navboard_calibration_t* calibration){
 	accumulator_set<double, stats<tag::median(with_p_square_quantile) > > gyro_raw_z;
 
 	int calibration_samples=0;
-	for(;;){
+	while(global_run_foverer){
 		if(navboard_queue.pop(packet)){
 			/////////////////////////////////////////////////////////
 			acc_raw_x(packet.acc_x);
@@ -1030,7 +923,7 @@ void thread_navboard_decoder(void){
 	fusion.height=24;
 
 	printf("navboard working!\r\n");
-	for(;;){
+	while(global_run_foverer){
 		if(navboard_queue.pop(packet)){
 			///////////////////////////////////////////////////////////////
 			tick_back = tick_now;
@@ -1045,11 +938,11 @@ void thread_navboard_decoder(void){
 	}
 }
 
-void thread_stabilizer(void){
+void navboard_show(void){
 
 	navboard_fusion_t fusion;
 
-	for(;;){
+	while(global_run_foverer){
 		if(fusion_queue.pop(fusion)){
 			printf("dt=%.6f seq=%.0f a(%.2f|%.2f) g(%.2f|%.2f|%.2f) gi(%.2f|%.2f|%.2f) f(%.2f|%.2f|%.2f) h=%.2f\r\n",
 					fusion.dt,
@@ -1159,7 +1052,7 @@ void drone_motors(void){
 
 	printf("motors ready, wait for commands\r\n");
 
-	for(;;){
+	while(global_run_foverer){
 		if(motor_speed_queue.pop(speeds_pwm)){
 			//clamp
 			speeds_pwm.front_left =constraint_s16(speeds_pwm.front_left,pwm_min,pwm_max);
@@ -1194,6 +1087,7 @@ void drone_motors(void){
 		printf("]\r\n");
 		 */
 	}
+
 }
 
 void motor_test(void){
@@ -1203,7 +1097,7 @@ void motor_test(void){
 	uint16_t test_speed = 15;
 
 	uint32_t round=0;
-	for(;;){
+	while(global_run_foverer){
 
 		printf("-------------- ROUND %d ---------------- \r\n",round);
 		round++;
@@ -1255,6 +1149,53 @@ void motor_stop(void){
 
 
 
+using boost::asio::ip::tcp;
+
+
+void session(boost::shared_ptr<tcp::socket> sock)
+{
+	try
+	{
+		for (;;)
+		{
+			char data[1024];
+			boost::system::error_code error;
+			size_t length = sock->read_some(boost::asio::buffer(data), error);
+
+			if (error == boost::asio::error::eof){
+				// Connection closed cleanly by peer.
+				printf("connection drop eof\r\n");
+				break;
+			}
+			else if (error){
+				// Some other error.
+				throw boost::system::system_error(error);
+			}
+			data[length]=0;
+			printf("msg=%s\n",data);
+			boost::asio::write(*sock, boost::asio::buffer(data, length));
+		}
+
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << "Exception in thread: " << e.what() << "\n";
+	}
+}
+
+void drone_chat_server(void){
+
+	boost::asio::io_service io_service;
+	tcp::acceptor a(io_service, tcp::endpoint(tcp::v4(), 3000));
+	while(global_run_foverer)
+	{
+		boost::shared_ptr<tcp::socket> sock(new tcp::socket(io_service));
+		a.accept(*sock);
+		boost::thread t(boost::bind(session, sock));
+	}
+}
+
+
 void drone_console_pilot(void){
 
 	printf("build %s %s\r\n",__DATE__,__TIME__);
@@ -1303,28 +1244,28 @@ void drone_console_pilot(void){
 		if(c=='m') height_speed-=1;
 
 		if(c==' '){
+			//
 			height_speed=0;
 			pitch_speed=0;
 			roll_speed=0;
 			yaw_speed=0;
+		} else {
+			//clamp
+			height_speed=constraint_s16(height_speed,      10  ,  511  );
+			pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
+			roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
+			yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
 		}
 
-		//clamp
-		height_speed=constraint_s16(height_speed,       0  ,  511  );
-		pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
-		roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
-		yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
-
-		printf(" > %d %d %d %d\r\n",height_speed,pitch_speed,roll_speed,yaw_speed);
-
 		//mix table
-		speeds_user.front_left  = height_speed -pitch_speed + roll_speed - yaw_speed;
-		speeds_user.front_right = height_speed -pitch_speed - roll_speed + yaw_speed;
-		speeds_user.rear_left   = height_speed +pitch_speed + roll_speed + yaw_speed;
-		speeds_user.rear_right  = height_speed +pitch_speed - roll_speed - yaw_speed;
-
+		speeds_user.front_left  = height_speed +constraint_s16((-pitch_speed + roll_speed - yaw_speed),0,511);
+		speeds_user.front_right = height_speed +constraint_s16((-pitch_speed - roll_speed + yaw_speed),0,511);
+		speeds_user.rear_left   = height_speed +constraint_s16((+pitch_speed + roll_speed + yaw_speed),0,511);
+		speeds_user.rear_right  = height_speed +constraint_s16((+pitch_speed - roll_speed - yaw_speed),0,511);
 		//send to motors
 		motor_speed_queue.push(speeds_user);
+
+		printf(" > %d %d %d %d\r\n",height_speed,pitch_speed,roll_speed,yaw_speed);
 
 	}
 
@@ -1352,46 +1293,53 @@ plog drop: thread stack size : default 32768, minimal 16384, (system default 838
 plog drop: disable smp
 
  */
-void murix_drone_start(void){
 
-	boost::thread::attributes attrs;
-	attrs.set_stack_size(4096*10);
-	//boost::thread th(attrs, find_the_question, 42);
 
-	//threads group
-	boost::thread_group ardrone_threads;
 
-	//create threads
-	ardrone_threads.create_thread(thread_navboard_read_raw);
-	ardrone_threads.create_thread(thread_navboard_decoder);
-	ardrone_threads.create_thread(thread_vbat);
-	//ardrone_threads.create_thread(vbat_show);
-	//ardrone_threads.create_thread(camera_horizontal);
-	//ardrone_threads.create_thread(camera_vertical);
-	//ardrone_threads.create_thread(thread_stabilizer);
-	ardrone_threads.create_thread(drone_motors);
-	//ardrone_threads.create_thread(motor_test);
-	ardrone_threads.create_thread(drone_console_pilot);
 
-	printf("wait all threads foverer\r\n");
-	//wait all threads
-	ardrone_threads.join_all();
-}
 
-}
 
 
 int main(int argc, char *argv[]) {
 
-	murix_utils::singleton(argv[0]);
-
+	//
 	system("killall -9 program.elf");
 	system("sysctl -w kernel.panic=0");
 	system("sysctl -w kernel.panic_on_oops=0");
 
-	//murix_utils::daemonize();
+	//
+	murix_utils::singleton(argv[0]);
 
-	murix_ardrone::murix_drone_start();
+	//
+	signal(SIGINT, ctrlchandler);
+	signal(SIGTERM, killhandler);
+
+	//
+	boost::thread_group ardrone_threads;
+
+	//navboard
+	/*
+	ardrone_threads.create_thread(thread_navboard_read_raw);
+	ardrone_threads.create_thread(thread_navboard_decoder);
+	ardrone_threads.create_thread(navboard_show);
+	 */
+	//vbat
+	//ardrone_threads.create_thread(thread_vbat);
+	//ardrone_threads.create_thread(vbat_show);
+
+	//motors
+	//	ardrone_threads.create_thread(drone_motors);
+	//ardrone_threads.create_thread(motor_test);
+	//ardrone_threads.create_thread(drone_console_pilot);
+
+	//network
+	//ardrone_threads.create_thread(drone_chat_server);
+
+	//cameras
+	ardrone_threads.create_thread(cameras);
+
+	ardrone_threads.join_all();
+	printf("all threads clean exit! :)\r\n");
 
 	return 0;
 }
