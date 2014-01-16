@@ -2,7 +2,7 @@
 using SlimDX;
 using SlimDX.XInput;
 
-namespace OpenFlight
+namespace murix_utils
 {
     public class Gamepad_State_SlimDX
     {

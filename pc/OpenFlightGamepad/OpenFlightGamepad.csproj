@@ -8,7 +8,7 @@
     <ProjectGuid>{834C7DDD-0E59-43E0-A540-409434C3E0E1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenFlight</RootNamespace>
+    <RootNamespace>murix_utils</RootNamespace>
     <AssemblyName>OpenFlightGamepad</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

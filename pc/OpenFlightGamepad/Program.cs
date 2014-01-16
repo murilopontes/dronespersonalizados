@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace OpenFlight
+namespace murix_utils
 {
     static class Program
     {

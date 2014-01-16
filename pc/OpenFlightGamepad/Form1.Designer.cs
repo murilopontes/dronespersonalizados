@@ -1,4 +1,4 @@
-﻿namespace OpenFlight
+﻿namespace murix_utils
 {
     partial class Form1
     {

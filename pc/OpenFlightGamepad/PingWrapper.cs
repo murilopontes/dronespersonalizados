@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OpenFlight
+namespace murix_utils
 {
     class Ping_Monitor
     {

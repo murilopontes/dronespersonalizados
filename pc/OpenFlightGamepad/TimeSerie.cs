@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace OpenFlight
+namespace murix_utils
 {
     class TimeSerie : Series
     {

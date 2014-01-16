@@ -14,7 +14,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace OpenFlight
+namespace murix_utils
 {
     public partial class Form1 : Form
     {
