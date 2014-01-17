@@ -37,6 +37,9 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.horizonInstrumentControl1 = new AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl();
+            this.backgroundWorker_angle = new System.ComponentModel.BackgroundWorker();
+            this.attitudeIndicatorInstrumentControl1 = new AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +56,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(675, 241);
+            this.chart1.Size = new System.Drawing.Size(459, 241);
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
             title1.Name = "Title1";
@@ -71,14 +74,38 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 259);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(675, 160);
+            this.dataGridView1.Size = new System.Drawing.Size(561, 160);
             this.dataGridView1.TabIndex = 2;
+            // 
+            // horizonInstrumentControl1
+            // 
+            this.horizonInstrumentControl1.Location = new System.Drawing.Point(495, 12);
+            this.horizonInstrumentControl1.Name = "horizonInstrumentControl1";
+            this.horizonInstrumentControl1.Size = new System.Drawing.Size(131, 130);
+            this.horizonInstrumentControl1.TabIndex = 4;
+            this.horizonInstrumentControl1.Text = "horizonInstrumentControl1";
+            // 
+            // backgroundWorker_angle
+            // 
+            this.backgroundWorker_angle.WorkerReportsProgress = true;
+            this.backgroundWorker_angle.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_angle_DoWork);
+            this.backgroundWorker_angle.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_angle_ProgressChanged);
+            // 
+            // attitudeIndicatorInstrumentControl1
+            // 
+            this.attitudeIndicatorInstrumentControl1.Location = new System.Drawing.Point(633, 12);
+            this.attitudeIndicatorInstrumentControl1.Name = "attitudeIndicatorInstrumentControl1";
+            this.attitudeIndicatorInstrumentControl1.Size = new System.Drawing.Size(131, 130);
+            this.attitudeIndicatorInstrumentControl1.TabIndex = 5;
+            this.attitudeIndicatorInstrumentControl1.Text = "attitudeIndicatorInstrumentControl1";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 431);
+            this.ClientSize = new System.Drawing.Size(776, 431);
+            this.Controls.Add(this.attitudeIndicatorInstrumentControl1);
+            this.Controls.Add(this.horizonInstrumentControl1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.chart1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -86,6 +113,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Drone Connect";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -98,6 +126,9 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl horizonInstrumentControl1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker_angle;
+        private AvionicsInstrumentControlDemo.AttitudeIndicatorInstrumentControl attitudeIndicatorInstrumentControl1;
     }
 }
 

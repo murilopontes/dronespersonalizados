@@ -35,6 +35,7 @@
     <ApplicationIcon>icon_15208.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -54,6 +55,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gamepad_State_SlimDX.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -82,6 +84,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AvionicsInstrumentControlDemo\AvionicsInstrumentControlDemo.csproj">
+      <Project>{1d3163e6-dc65-4595-9d51-4fd9174f2f61}</Project>
+      <Name>AvionicsInstrumentControlDemo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleWifi\SimpleWifi.csproj">
       <Project>{6aa425c9-ea6a-4b01-aaed-5ff122e8b663}</Project>
       <Name>SimpleWifi</Name>

@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1D3163E6-DC65-4595-9D51-4FD9174F2F61}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AvionicsInstrumentControlDemo</RootNamespace>
+    <AssemblyName>AvionicsInstrumentControlDemo</AssemblyName>
+    <ApplicationIcon>AvionicsInstrumentIco.ico</ApplicationIcon>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AvionicsInstrumentsControls\AirSpeedIndicatorInstrumentControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AltimeterInstrumentControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AvionicsInstrumentsControlsRessources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AvionicsInstrumentsControlsRessources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\HeadingIndicatorInstrumentControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\AttitudeIndicatorInstrumentControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\InstrumentControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\TurnCoordinatorInstrumentControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AvionicsInstrumentsControls\VerticalSpeedIndicatorInstrumentControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DemoWinow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DemoWinow.Designer.cs">
+      <DependentUpon>DemoWinow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AvionicsInstrumentsControls\AvionicsInstrumentsControlsRessources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AvionicsInstrumentsControlsRessources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DemoWinow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DemoWinow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TurnCoordinatorMarks.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AirSpeedIndicator_Background.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AirSpeedNeedle.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Altimeter_Background.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bandeau_Dérouleur.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HeadingIndicator_Aircraft.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HeadingIndicator_Background.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HeadingWeel.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Horizon_Background.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Horizon_GroundSky.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Indicator_Background.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LongNeedleAltimeter.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Maquette_Avion.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SmallNeedleAltimeter.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TurnCoordinator_Background.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TurnCoordinatorAircraft.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TurnCoordinatorBall.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\VerticalSpeedNeedle.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\VerticalSpeedIndicator_Background.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AvionicsInstrumentIco.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
