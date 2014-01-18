@@ -16,6 +16,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <vector>
+#include <algorithm>
 
 // Camera library
 #include <sys/stat.h>
@@ -29,6 +31,8 @@
 
 //
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
+#include <boost/random.hpp>
 
 //
 #include <boost/shared_ptr.hpp>
@@ -54,6 +58,7 @@
 #include <boost/accumulators/statistics/mean.hpp>
 #include <boost/accumulators/statistics/moment.hpp>
 #include <boost/accumulators/statistics/median.hpp>
+#include <boost/accumulators/statistics/variance.hpp>
 
 //
 #include <boost/date_time/gregorian/gregorian.hpp>
@@ -110,104 +115,127 @@ long nanos(void){
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
+double constraint_double(double value,double min,double max){
+	double out=value;
+	if(out<min)out=min;
+	if(out>max)out=max;
+	return out;
+}
 
+int16_t constraint_s16(int16_t value,int16_t min,int16_t max){
+	int16_t out=value;
+	if(out<min)out=min;
+	if(out>max)out=max;
+	return out;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 
 class PID {
-public:
-	/*working variables*/
+
+private:
+
+	//timers
+	boost::posix_time::ptime now;
 	boost::posix_time::ptime lastTime;
+	boost::posix_time::time_duration tick_diff;
+	double timeChange;
+
+	//errors
+	double lastErr, errSum, error,dErr;
+
+public:
+
+	//process variables
 	double Input, Output, Setpoint;
-	double errSum, lastErr;
+
+	//gains
 	double kp, ki, kd;
 
-	//
-	double autotune_ku;
-	double autotune_pu;
-	double autotune_input_back;
-	double autotune_input_oscillation;
+	//windup guards
+	double windup_min;
+	double windup_max;
+
+	//terms
+	double pterm;
+	double iterm;
+	double dterm;
 
 	PID(){
-		//
+
+		//process variables
 		Input=0;
 		Output=0;
 		Setpoint=0;
-		//
+
+		//gains
+		kp=1;
+		ki=1;
+		kd=1;
+
+		//windup guards
+		windup_min=0;
+		windup_max=0;
+
+		//timers
 		lastTime = boost::posix_time::microsec_clock::local_time();
-		errSum=0;
+		now = boost::posix_time::microsec_clock::local_time();
+		tick_diff = now - lastTime;
+		timeChange=tick_diff.total_microseconds() / 1000000.0f;
+
+		//errors
 		lastErr=0;
-		//
-		kp=0;
-		ki=0;
-		kd=0;
-		//
-		autotune_ku=0;
-		autotune_pu=0;
-		autotune_input_back=Input;
-	}
+		errSum=0;
+		error=0;
+		dErr=0;
 
-
-
-	void online_autotune(){
-
-		autotune_input_oscillation=Input-autotune_input_back;
-
-		//oscillation is not sufficient
-		if(abs(autotune_input_oscillation)<1){
-			//increase ku
-			printf("ku=%.2f\r\n",autotune_ku);
-			autotune_ku+=1;
-		}
-		//oscillation is ok
-		else {
-			//calcute tunning
-			kp = 0.6*autotune_ku;
-			ki = 2*kp/autotune_pu;
-			kd = kp*autotune_pu/8.0f;
-			printf("kp=%.2f ki=%.2f kd=%.2f\r\n",kp,ki,kd);
-		}
+		//terms
+		pterm=0;
+		iterm=0;
+		dterm=0;
 
 	}
 
-	void Compute(double input_now)
+	void Compute()
 	{
-		//
-		autotune_input_back = Input;
-		Input = input_now;
-		online_autotune();
-
-
 		/*How long since we last calculated*/
-		boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
-		boost::posix_time::time_duration tick_diff = now - lastTime;
-		double timeChange = tick_diff.total_microseconds() / 1000000.0f;
+		now = boost::posix_time::microsec_clock::local_time();
+		tick_diff = now - lastTime;
+		timeChange = tick_diff.total_microseconds() / 1000000.0f;
 
 		/*Compute all the working error variables*/
-		double error = Setpoint - Input;
+		error = Setpoint - Input;
 		errSum += (error * timeChange);
-		double dErr = (error - lastErr) / timeChange;
+		dErr = (error - lastErr) / timeChange;
+
+		/* windup guard */
+		errSum = constraint_double(errSum,windup_min,windup_max);
 
 		/*Compute PID Output*/
-		Output = kp * error + ki * errSum + kd * dErr;
+		pterm= kp * error;
+		iterm= ki * errSum;
+		dterm= kd * dErr;
+
+		Output = pterm + iterm + dterm;
 
 		/*Remember some variables for next time*/
 		lastErr = error;
 		lastTime = now;
 	}
 
-	/*
-	void SetTunings(double Kp, double Ki, double Kd)
-	{
-		kp = Kp;
-		ki = Ki;
-		kd = Kd;
-	}
-	 */
+
+
+
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -234,9 +262,6 @@ public:
 	float vdd3_setpoint;
 	float vdd4_setpoint;
 } ;
-
-
-
 
 
 float vbat_get(unsigned char channel,int fd)
@@ -806,19 +831,7 @@ void thread_navboard_read_raw(void)
 }
 
 
-double constraint_double(double value,double min,double max){
-	double out=value;
-	if(out<min)out=min;
-	if(out>max)out=max;
-	return out;
-}
 
-int16_t constraint_s16(int16_t value,int16_t min,int16_t max){
-	int16_t out=value;
-	if(out<min)out=min;
-	if(out>max)out=max;
-	return out;
-}
 
 void navboard_sensor_fusion(navboard_packet_t* packet,navboard_fusion_t* fusion,double dt,navboard_calibration_t* calibration){
 
@@ -1474,77 +1487,6 @@ void joystick_receive_udp_server(void){
 
 
 
-void pilot_using_joystick_only(void){
-
-	//
-	int16_t height_speed=0;
-	int16_t pitch_speed=0;
-	int16_t roll_speed=0;
-	int16_t yaw_speed=0;
-
-	//
-	motor_set_speed_t speeds_user;
-	speeds_user.front_left=0;
-	speeds_user.front_right=0;
-	speeds_user.rear_left=0;
-	speeds_user.rear_right=0;
-
-	int takeoff=0;
-
-	//
-	drone_rc_command cmd;
-	while(global_run_foverer){
-		boost::this_thread::sleep(boost::posix_time::milliseconds(16));
-
-		cmd = atomic_cmd;
-
-			if(cmd.takeoff){
-				takeoff=1;
-				printf("takeoff\r\n");
-			}
-
-			if(cmd.emergency){
-				printf("emergency\r\n");
-				//
-				height_speed=0;
-				pitch_speed=0;
-				roll_speed=0;
-				yaw_speed=0;
-				takeoff=0;
-			}
-
-
-			if(takeoff){
-				//
-				pitch_speed=constraint_s16(cmd.pitch_speed,-200,200);
-				roll_speed=constraint_s16(cmd.roll_speed,-200,200);
-				yaw_speed=constraint_s16(cmd.yaw_speed,-1,1);
-				height_speed+=constraint_s16(cmd.height_speed,-3,3);
-
-				//clamp
-				height_speed=constraint_s16(height_speed,      50  ,  511  );
-				pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
-				roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
-				yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
-			}
-
-
-
-			//mix table
-			speeds_user.front_left  = height_speed +constraint_s16((-pitch_speed + roll_speed - yaw_speed),0,511);
-			speeds_user.front_right = height_speed +constraint_s16((-pitch_speed - roll_speed + yaw_speed),0,511);
-			speeds_user.rear_left   = height_speed +constraint_s16((+pitch_speed + roll_speed + yaw_speed),0,511);
-			speeds_user.rear_right  = height_speed +constraint_s16((+pitch_speed - roll_speed - yaw_speed),0,511);
-			//send to motors
-
-
-			atomic_motor_speed=speeds_user;
-			printf("udp pilot > %d %d %d %d\r\n",height_speed,pitch_speed,roll_speed,yaw_speed);
-
-
-
-	}
-}
 
 
 void pilot_using_keyboard_only(void){
@@ -1626,14 +1568,9 @@ void pilot_using_keyboard_only(void){
 }
 
 
-void pilot_using_joystick_with_stabilizer(void){
 
-	navboard_fusion_t fusion;
 
-	//
-	while(!fusion_ready || !motors_ready){
-		boost::this_thread::sleep(boost::posix_time::milliseconds(16));
-	}
+void pilot_using_joystick_only(void){
 
 	//
 	int16_t height_speed=0;
@@ -1648,27 +1585,45 @@ void pilot_using_joystick_with_stabilizer(void){
 	speeds_user.rear_left=0;
 	speeds_user.rear_right=0;
 
-	double roll_error = 0;
+	int takeoff=0;
 
+	//
+	drone_rc_command cmd;
 	while(global_run_foverer){
 		boost::this_thread::sleep(boost::posix_time::milliseconds(16));
 
-		fusion = atomic_fusion;
+		cmd = atomic_cmd;
 
-		roll_error = fusion.fusion_roll - 0;
-
-		if(roll_error>1){
-			roll_speed-= 1;
-		}
-		if(roll_error<1){
-			roll_speed+= 1;
+		if(cmd.takeoff){
+			takeoff=1;
+			printf("takeoff\r\n");
 		}
 
-		//clamp
-		height_speed=constraint_s16(height_speed,      50  ,  511  );
-		pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
-		roll_speed  =constraint_s16(roll_speed  ,    -190  ,  190  );
-		yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
+		if(cmd.emergency){
+			printf("emergency\r\n");
+			//
+			height_speed=0;
+			pitch_speed=0;
+			roll_speed=0;
+			yaw_speed=0;
+			takeoff=0;
+		}
+
+
+		if(takeoff){
+			//
+			pitch_speed=constraint_s16(cmd.pitch_speed,-200,200);
+			roll_speed=constraint_s16(cmd.roll_speed,-200,200);
+			yaw_speed=constraint_s16(cmd.yaw_speed,-1,1);
+			height_speed+=constraint_s16(cmd.height_speed,-3,3);
+
+			//clamp
+			height_speed=constraint_s16(height_speed,      50  ,  511  );
+			pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
+			roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
+			yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
+		}
+
 
 
 		//mix table
@@ -1676,11 +1631,107 @@ void pilot_using_joystick_with_stabilizer(void){
 		speeds_user.front_right = height_speed +constraint_s16((-pitch_speed - roll_speed + yaw_speed),0,511);
 		speeds_user.rear_left   = height_speed +constraint_s16((+pitch_speed + roll_speed + yaw_speed),0,511);
 		speeds_user.rear_right  = height_speed +constraint_s16((+pitch_speed - roll_speed - yaw_speed),0,511);
-
 		//send to motors
-		atomic_motor_speed = speeds_user;
 
-		printf("navboard pilot > %d %d %d %d (%f)\r\n",height_speed,pitch_speed,roll_speed,yaw_speed,roll_error);
+
+		atomic_motor_speed=speeds_user;
+		printf("udp pilot > %d %d %d %d\r\n",height_speed,pitch_speed,roll_speed,yaw_speed);
+
+
+
+	}
+}
+
+
+void pilot_using_joystick_with_stabilizer(void){
+
+	//
+	while(!fusion_ready || !motors_ready){
+		boost::this_thread::sleep(boost::posix_time::milliseconds(16));
+	}
+
+
+	//
+	int16_t height_speed=0;
+	int16_t pitch_speed=0;
+	int16_t roll_speed=0;
+	int16_t yaw_speed=0;
+
+	//
+	motor_set_speed_t speeds_user;
+	speeds_user.front_left=0;
+	speeds_user.front_right=0;
+	speeds_user.rear_left=0;
+	speeds_user.rear_right=0;
+
+	int takeoff=0;
+
+	//
+	drone_rc_command cmd;
+	navboard_fusion_t fusion;
+
+	PID pid_roll;
+	pid_roll.Setpoint=0;
+	pid_roll.windup_min=-180;
+	pid_roll.windup_max=+180;
+
+	pid_roll.kp=0.1;
+	pid_roll.ki=0.001;
+	pid_roll.kd=0.01;
+
+
+	while(global_run_foverer){
+		boost::this_thread::sleep(boost::posix_time::milliseconds(16));
+
+		cmd = atomic_cmd;
+		fusion = atomic_fusion;
+
+		if(cmd.takeoff){
+			takeoff=1;
+			printf("takeoff\r\n");
+		}
+
+		if(cmd.emergency){
+			printf("emergency\r\n");
+			//
+			height_speed=0;
+			pitch_speed=0;
+			roll_speed=0;
+			yaw_speed=0;
+			takeoff=0;
+		}
+
+
+		if(takeoff){
+			pid_roll.Input = fusion.fusion_roll;
+			pid_roll.Compute();
+
+			//
+			pitch_speed=constraint_s16(cmd.pitch_speed,-200,200);
+			roll_speed=constraint_s16(cmd.roll_speed,-200,200)+pid_roll.Output;
+			yaw_speed=constraint_s16(cmd.yaw_speed,-1,1);
+			height_speed+=constraint_s16(cmd.height_speed,-3,3);
+
+			//clamp
+			height_speed=constraint_s16(height_speed,      50  ,  511  );
+			pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
+			roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
+			yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
+		}
+
+
+
+		//mix table
+		speeds_user.front_left  = height_speed +constraint_s16((-pitch_speed + roll_speed - yaw_speed),0,511);
+		speeds_user.front_right = height_speed +constraint_s16((-pitch_speed - roll_speed + yaw_speed),0,511);
+		speeds_user.rear_left   = height_speed +constraint_s16((+pitch_speed + roll_speed + yaw_speed),0,511);
+		speeds_user.rear_right  = height_speed +constraint_s16((+pitch_speed - roll_speed - yaw_speed),0,511);
+		//send to motors
+
+
+		atomic_motor_speed=speeds_user;
+		printf("stable pilot > %d %d %d %d\r\n",height_speed,pitch_speed,roll_speed,yaw_speed);
+
 
 
 	}
@@ -1745,8 +1796,8 @@ int main(int argc, char *argv[]) {
 
 	////----------------- Pilots -----------------------------------
 	//ardrone_threads.create_thread(pilot_using_keyboard_only);
-	ardrone_threads.create_thread(pilot_using_joystick_only);
-	//ardrone_threads.create_thread(pilot_using_joystick_with_stabilizer);
+	//ardrone_threads.create_thread(pilot_using_joystick_only);
+	ardrone_threads.create_thread(pilot_using_joystick_with_stabilizer);
 
 
 
