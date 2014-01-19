@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telnet", "telnet\Telnet\Tel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "telnet\TestClient\TestClient.csproj", "{03006024-1074-4541-8470-FC5649D91805}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "multiwii_ardrone_vs", "multiwii_ardrone_vs\multiwii_ardrone_vs.vcxproj", "{503B259B-44A5-4F71-8BCB-CF73A6ED146F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneUdpTestTool", "DroneUdpTestTool\DroneUdpTestTool.csproj", "{EAE23909-C873-454F-81FE-01E725F58C90}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneTcpTestTool", "DroneTcpTestTool\DroneTcpTestTool.csproj", "{E5EB3E1E-78C4-4740-997E-BDD3BBEEBE8C}"
@@ -30,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneUdpSendJoystick", "DroneUdpSendJoystick\DroneUdpSendJoystick.csproj", "{45B8F3C0-F74A-4E7C-BAA2-9571CE137A4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvionicsInstrumentControlDemo", "AvionicsInstrumentControlDemo\AvionicsInstrumentControlDemo.csproj", "{1D3163E6-DC65-4595-9D51-4FD9174F2F61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneTelnetCmd", "DroneTelnetCmd\DroneTelnetCmd.csproj", "{8AAA2C1E-5681-43D4-8758-5666AC32772C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,20 +153,6 @@ Global
 		{03006024-1074-4541-8470-FC5649D91805}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{03006024-1074-4541-8470-FC5649D91805}.Release|Win32.ActiveCfg = Release|Any CPU
 		{03006024-1074-4541-8470-FC5649D91805}.Release|x86.ActiveCfg = Release|Any CPU
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Debug|Win32.Build.0 = Debug|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Debug|x86.ActiveCfg = Debug|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Debug|x86.Build.0 = Debug|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Release|Any CPU.ActiveCfg = Release|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Release|Win32.ActiveCfg = Release|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Release|Win32.Build.0 = Release|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Release|x86.ActiveCfg = Release|Win32
-		{503B259B-44A5-4F71-8BCB-CF73A6ED146F}.Release|x86.Build.0 = Release|Win32
 		{EAE23909-C873-454F-81FE-01E725F58C90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EAE23909-C873-454F-81FE-01E725F58C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAE23909-C873-454F-81FE-01E725F58C90}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -215,6 +201,18 @@ Global
 		{1D3163E6-DC65-4595-9D51-4FD9174F2F61}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1D3163E6-DC65-4595-9D51-4FD9174F2F61}.Release|Win32.ActiveCfg = Release|Any CPU
 		{1D3163E6-DC65-4595-9D51-4FD9174F2F61}.Release|x86.ActiveCfg = Release|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Release|Win32.ActiveCfg = Release|Any CPU
+		{8AAA2C1E-5681-43D4-8758-5666AC32772C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
