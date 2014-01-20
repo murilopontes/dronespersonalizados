@@ -10,15 +10,22 @@
 
 #include "murix_cpp_headers.h"
 
-//val=0 -> set gpio output lo
-//val=1 -> set gpio output hi
-//val=-1 -> set gpio as input (output hi-Z)
-int gpio_set(int nr,int val)
+int gpio_set(int nr,gpio_action val)
 {
-	//printf("gpio_set %d = %d\r\n",nr,val);
+
 	char cmdline[200];
-	if(val<0) sprintf(cmdline,"/usr/sbin/gpio %d -d i",nr);
-	else if(val>0) sprintf(cmdline,"/usr/sbin/gpio %d -d ho 1",nr);
-	else sprintf(cmdline,"/usr/sbin/gpio %d -d ho 0",nr);
+
+	switch(val){
+	case GPIO_IN:
+		sprintf(cmdline,"/usr/sbin/gpio %d -d i",nr);
+		break;
+	case GPIO_OUT_1:
+		sprintf(cmdline,"/usr/sbin/gpio %d -d ho 1",nr);
+		break;
+	case GPIO_OUT_0:
+		sprintf(cmdline,"/usr/sbin/gpio %d -d ho 0",nr);
+		break;
+	}
 	return system(cmdline);
+
 }

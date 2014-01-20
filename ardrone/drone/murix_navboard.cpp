@@ -71,7 +71,7 @@ void navboard_read_raw(void)
 	p_navboard16 = (uint16_t*)& navboard8;
 
 	//set /MCLR pin -> reset navboard
-	gpio_set(132,1);
+	gpio_set(132,GPIO_OUT_1);
 
 	//start acquisition
 	uint8_t cmd=0x01;

@@ -124,7 +124,7 @@ void vbat_thread_udp_json_server(void){
 	///---------------------------
 	while(!atomic_vbat_ready){
 		printf("vbat_thread_udp_json_server wait atomic_vbat_ready\r\n");
-		boost::this_thread::sleep(boost::posix_time::milliseconds(34)); // 1 / 30Hz = 33,33ms
+		boost::this_thread::sleep(boost::posix_time::milliseconds(1000));
 	}
 
 

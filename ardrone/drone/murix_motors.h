@@ -14,7 +14,8 @@
 class motor_speed_t {
 public:
 	motor_speed_t();
-	void clamp();
+	void clamp(int pwm_max);
+	void print();
 	int16_t front_left;
 	int16_t front_right;
 	int16_t rear_left;

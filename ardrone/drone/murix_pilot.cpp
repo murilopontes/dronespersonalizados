@@ -78,7 +78,7 @@ void pilot_using_keyboard_only(void){
 			yaw_speed=0;
 		} else {
 			//clamp
-			height_speed=constraint_s16(height_speed,      10  ,  511  );
+			height_speed=constraint_s16(height_speed,     100  ,  511  );
 			pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
 			roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
 			yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
@@ -152,7 +152,7 @@ void pilot_using_joystick_only(void){
 			height_speed=constraint_s16(cmd.height_speed,-511,511);
 
 			//clamp for safety
-			height_speed=constraint_s16(height_speed,      50  ,  511  );
+			height_speed=constraint_s16(height_speed,     100  ,  511  );
 			pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
 			roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
 			yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
@@ -167,14 +167,12 @@ void pilot_using_joystick_only(void){
 		speeds_user.rear_right  = height_speed +constraint_s16((+pitch_speed - roll_speed - yaw_speed),0,511);
 
 		//clamp
-		speeds_user.clamp();
+		speeds_user.clamp(511);
 
 		//send to motors
 		atomic_motor_speed=speeds_user;
 
 		//printf("udp pilot > %d %d %d %d\r\n",height_speed,pitch_speed,roll_speed,yaw_speed);
-
-
 
 	}
 }

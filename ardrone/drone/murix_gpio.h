@@ -9,10 +9,14 @@
 #define MURIX_GPIO_H_
 
 
-//val=0 -> set gpio output lo
-//val=1 -> set gpio output hi
-//val=-1 -> set gpio as input (output hi-Z)
-int gpio_set(int nr,int val);
+
+enum gpio_action {
+	GPIO_OUT_0,
+	GPIO_OUT_1,
+	GPIO_IN
+};
+
+int gpio_set(int nr,gpio_action val);
 
 
 #endif /* MURIX_GPIO_H_ */
