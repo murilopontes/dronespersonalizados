@@ -19,7 +19,7 @@ namespace DroneUdpTestTool
             UdpClient udpClient = new UdpClient();
             try
             {
-                udpClient.Connect("192.168.1.1", 3000);
+                udpClient.Connect("192.168.1.1", 4000);
 
                 int tx_count = 0;
                 int rx_count = 0;
@@ -50,6 +50,7 @@ namespace DroneUdpTestTool
             {
                 Console.WriteLine(e.ToString());
             }
+            Console.ReadKey();
         }
     }
 }

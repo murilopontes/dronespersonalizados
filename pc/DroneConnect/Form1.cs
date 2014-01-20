@@ -17,6 +17,9 @@ using System.Net;
 using murix_utils;
 using AvionicsInstrumentControlDemo;
 using System.Globalization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace DroneConnect
 {
@@ -149,54 +152,74 @@ namespace DroneConnect
     
         }
 
+        string udp_send_recv(int port,string cmd,int timeout_ms) {
+            string returnData = "";
+
+            try
+            {
+                //
+                UdpClient udpClient = new UdpClient();
+                udpClient.Connect("192.168.1.1", port);
+
+                //
+                Byte[] sendBytes = Encoding.ASCII.GetBytes(cmd);
+                udpClient.Send(sendBytes, sendBytes.Length);
+
+                //
+                DateTime start = DateTime.Now;
+                while (true)
+                {
+                    //
+                    TimeSpan timeItTook = DateTime.Now - start;
+
+                    //exit by timeout
+                    if (timeItTook.Milliseconds > timeout_ms)
+                    {
+                        break;
+                    }
+
+                    //exit by receive data
+                    if (udpClient.Available > 0)
+                    {
+                        IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
+                        Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
+                        returnData = Encoding.ASCII.GetString(receiveBytes);
+                    }
+                }
+            }
+            catch (Exception ex) { 
+            
+            }
+            return returnData;
+        }
 
         private void backgroundWorker_navboard_DoWork(object sender, DoWorkEventArgs e)
         {
             //
             while (true)
             {
-
                 //
                 try
                 {
-                    UdpClient udpClient = new UdpClient();
-                    udpClient.Connect("192.168.1.1", 4000);
-                    string cmd = "get";
-                    Byte[] sendBytes = Encoding.ASCII.GetBytes(cmd);
-                    udpClient.Send(sendBytes, sendBytes.Length);
-                    DateTime start = DateTime.Now;
-                    while (true)
-                    {
-                        TimeSpan timeItTook = DateTime.Now - start;
-                        if (timeItTook.Milliseconds > 17) //1s/60Hz=16.66ms
-                        {
-                            break;
-                        }
-                        if (udpClient.Available > 0)
-                        {
-                            IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                            Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
-                            string returnData = Encoding.ASCII.GetString(receiveBytes);
-                            string[] aa = returnData.Split('|');
-                            if (aa.Length >= 7) {
+                    //
+                    Thread.Sleep(33);
+
+                    ///////////////////////////////////////////////////////////////////////////////////////////
+                    string json_vbat = udp_send_recv(4000, "get", 33);
+                    JsonSerializer serializer = new JsonSerializer();
+                    var o = (JObject)serializer.Deserialize(new JsonTextReader(new StringReader(json_vbat)));
+                    vbat = (double) o["vbat"];
+                    //////////////////////////////////////////////////////////////////////////////////////////
 
                                 angle_pitch = double.Parse(aa[0], CultureInfo.InvariantCulture);
                                 angle_roll = double.Parse(aa[1], CultureInfo.InvariantCulture);
                                 angle_yaw = double.Parse(aa[2], CultureInfo.InvariantCulture);
-
                                 speed_pitch = double.Parse(aa[3], CultureInfo.InvariantCulture);
                                 speed_roll = double.Parse(aa[4], CultureInfo.InvariantCulture);
                                 speed_yaw = double.Parse(aa[5], CultureInfo.InvariantCulture);
 
-                                vbat = double.Parse(aa[6], CultureInfo.InvariantCulture);
 
                                 this.backgroundWorker_navboard.ReportProgress(1);
-                            }
-                            break;
-                        }
-                        Thread.Sleep(1);
-                    }
-                    udpClient.Close();
                 }
                 catch (Exception ex) { 
                 

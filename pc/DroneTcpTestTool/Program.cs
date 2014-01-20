@@ -14,7 +14,7 @@ namespace DroneTcpTestTool
             try
             {
                 
-                TcpClient client = new TcpClient("192.168.1.1", 3000);
+                TcpClient client = new TcpClient("192.168.1.1", 4000);
                 client.SendTimeout = 50;
                 client.ReceiveTimeout = 50;
 
