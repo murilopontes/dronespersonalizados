@@ -118,6 +118,11 @@ namespace DroneConnect
 
         Series s_vbat = new Series("vbat");
 
+        Series s_front_left = new Series("front_left");
+        Series s_front_right = new Series("front_right");
+        Series s_rear_left = new Series("rear_left");
+        Series s_rear_right = new Series("rear_right");
+
 
         double angle_pitch = 0.0;
         double angle_roll = 0.0;
@@ -128,8 +133,23 @@ namespace DroneConnect
         double speed_yaw = 0.0;
 
         double vbat = 0.0;
+        double front_left = 0.0;
+        double front_right = 0.0;
+        double rear_left = 0.0;
+        double rear_right = 0.0;
 
         private void navboard_init() {
+
+            s_front_left.ChartType = SeriesChartType.FastLine;
+            s_front_right.ChartType = SeriesChartType.FastLine;
+            s_rear_left.ChartType = SeriesChartType.FastLine;
+            s_rear_right.ChartType = SeriesChartType.FastLine;
+
+            this.chart_motors.Series.Add(s_front_left);
+            this.chart_motors.Series.Add(s_front_right);
+            this.chart_motors.Series.Add(s_rear_left);
+            this.chart_motors.Series.Add(s_rear_right);
+
             s_angle_pitch.ChartType = SeriesChartType.FastLine;
             s_angle_roll.ChartType = SeriesChartType.FastLine;
             s_angle_yaw.ChartType = SeriesChartType.FastLine;
@@ -206,13 +226,19 @@ namespace DroneConnect
 
                     ///////////////////////////////////////////////////////////////////////////////////////////
                     string json_vbat = udp_send_recv(4000, "get", 33);
-                    var o = (JObject)JsonConvert.DeserializeObject(json_vbat);
-
-                    vbat = (double) o["vbat"];
-
+                    var o_vbat = (JObject)JsonConvert.DeserializeObject(json_vbat);
+                    vbat = (double) o_vbat["vbat"];
 
                     //////////////////////////////////////////////////////////////////////////////////////////
+                    string json_motors = udp_send_recv(6000, "get", 33);
+                    //Console.WriteLine(json_motors);
+                    var o_motors = (JObject)JsonConvert.DeserializeObject(json_motors);
+                    front_left  = (double)o_motors["front_left"];
+                    front_right = (double)o_motors["front_right"];
+                    rear_left   = (double)o_motors["rear_left"];
+                    rear_right  = (double)o_motors["rear_right"];
 
+                    //////////////////////////////////////////////////////////////////////////////////////////
                     /*
                                 angle_pitch = double.Parse(aa[0], CultureInfo.InvariantCulture);
                                 angle_roll = double.Parse(aa[1], CultureInfo.InvariantCulture);
@@ -256,9 +282,18 @@ namespace DroneConnect
             while (s_vbat.Points.Count > max) s_vbat.Points.RemoveAt(0);
             s_vbat.Points.AddY(vbat);
 
+
+
+            while (s_front_left.Points.Count > max) s_front_left.Points.RemoveAt(0); s_front_left.Points.AddY(front_left);
+            while (s_front_right.Points.Count > max) s_front_right.Points.RemoveAt(0); s_front_right.Points.AddY(front_right);
+            while (s_rear_left.Points.Count > max) s_rear_left.Points.RemoveAt(0); s_rear_left.Points.AddY(rear_left);
+            while (s_rear_right.Points.Count > max) s_rear_right.Points.RemoveAt(0); s_rear_right.Points.AddY(rear_right);
+
+
             chart_angle.ChartAreas[0].RecalculateAxesScale();
             chart_rate.ChartAreas[0].RecalculateAxesScale();
             chart_vbat.ChartAreas[0].RecalculateAxesScale();
+            chart_motors.ChartAreas[0].RecalculateAxesScale();
         }
 
         #endregion
@@ -297,8 +332,6 @@ namespace DroneConnect
                     else js.takeoff = 0;
 
                     string json = JsonConvert.SerializeObject(js);
-                    //Console.WriteLine(json);
-                    //json = "dqlwkdlskkdladlkasdkas";
 
                     UdpClient udpClient = new UdpClient();
                     udpClient.Connect("192.168.1.1", 3000);
@@ -315,15 +348,6 @@ namespace DroneConnect
             }
         }
 
-        private void backgroundWorker_joystick_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-
-        }
-
-        private void backgroundWorker_joystick_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-
-        }
 
 
         #endregion
@@ -333,11 +357,11 @@ namespace DroneConnect
         Series ping_rtt_ms = new Series("ping RTT (ms)");
 
         private void ping_monitor_init() {
-            chart1.ChartAreas[0].AxisY.Title = "rtt(ms)";
-            chart1.ChartAreas[0].AxisX.Title = "packet number";
-            chart1.Series.Clear();
+            chart_ping.ChartAreas[0].AxisY.Title = "rtt(ms)";
+            chart_ping.ChartAreas[0].AxisX.Title = "packet number";
+            chart_ping.Series.Clear();
             ping_rtt_ms.ChartType = SeriesChartType.Line;
-            chart1.Series.Add(ping_rtt_ms);
+            chart_ping.Series.Add(ping_rtt_ms);
         }
 
         int ping_timeout = 50;
@@ -372,9 +396,9 @@ namespace DroneConnect
         {
             while (ping_rtt_ms.Points.Count > 10) ping_rtt_ms.Points.RemoveAt(0);
 
-            chart1.ChartAreas[0].AxisY.Maximum = ping_timeout;
-            chart1.ChartAreas[0].AxisY.Minimum = 0;
-            chart1.ChartAreas[0].RecalculateAxesScale();
+            chart_ping.ChartAreas[0].AxisY.Maximum = ping_timeout;
+            chart_ping.ChartAreas[0].AxisY.Minimum = 0;
+            chart_ping.ChartAreas[0].RecalculateAxesScale();
             ping_rtt_ms.Points.AddY(ping_rtt);
         }
 
