@@ -42,9 +42,9 @@ int main(int argc, char *argv[]) {
 	//
 	singleton(argv[0]);
 	//
-	signal(SIGINT,  handler_int);
-	signal(SIGTERM, handler_term);
-	signal(SIGABRT, handler_abrt);
+	//signal(SIGINT,  handler_int);
+	//signal(SIGTERM, handler_term);
+	//signal(SIGABRT, handler_abrt);
 	//
 	boost::thread_group ardrone_threads;
 
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
 
 	////----------------- Pilots -----------------------------------
 	//ardrone_threads.create_thread(pilot_using_keyboard_only);
-	//ardrone_threads.create_thread(pilot_using_joystick_only);
+	ardrone_threads.create_thread(pilot_using_joystick_only);
 	//ardrone_threads.create_thread(pilot_using_joystick_with_stabilizer);
 
 	printf("---------------- BUILD %s %s ------------\r\n",__DATE__,__TIME__);

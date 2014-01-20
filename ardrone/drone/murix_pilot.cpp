@@ -145,13 +145,13 @@ void pilot_using_joystick_only(void){
 
 
 		if(takeoff){
-			//
-			pitch_speed=constraint_s16(cmd.pitch_speed,-200,200);
-			roll_speed=constraint_s16(cmd.roll_speed,-200,200);
-			yaw_speed=constraint_s16(cmd.yaw_speed,-1,1);
-			height_speed+=constraint_s16(cmd.height_speed,-3,3);
+			//clam from joystick
+			pitch_speed=constraint_s16(cmd.pitch_speed,-511,511);
+			roll_speed=constraint_s16(cmd.roll_speed,-511,511);
+			yaw_speed=constraint_s16(cmd.yaw_speed,-511,511);
+			height_speed=constraint_s16(cmd.height_speed,-511,511);
 
-			//clamp
+			//clamp for safety
 			height_speed=constraint_s16(height_speed,      50  ,  511  );
 			pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
 			roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
@@ -165,11 +165,14 @@ void pilot_using_joystick_only(void){
 		speeds_user.front_right = height_speed +constraint_s16((-pitch_speed - roll_speed + yaw_speed),0,511);
 		speeds_user.rear_left   = height_speed +constraint_s16((+pitch_speed + roll_speed + yaw_speed),0,511);
 		speeds_user.rear_right  = height_speed +constraint_s16((+pitch_speed - roll_speed - yaw_speed),0,511);
+
+		//clamp
+		speeds_user.clamp();
+
 		//send to motors
-
-
 		atomic_motor_speed=speeds_user;
-		printf("udp pilot > %d %d %d %d\r\n",height_speed,pitch_speed,roll_speed,yaw_speed);
+
+		//printf("udp pilot > %d %d %d %d\r\n",height_speed,pitch_speed,roll_speed,yaw_speed);
 
 
 

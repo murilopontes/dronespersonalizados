@@ -294,6 +294,10 @@ namespace DroneConnect
             chart_rate.ChartAreas[0].RecalculateAxesScale();
             chart_vbat.ChartAreas[0].RecalculateAxesScale();
             chart_motors.ChartAreas[0].RecalculateAxesScale();
+
+
+            chart_vbat.ChartAreas[0].AxisY.IsStartedFromZero = false;
+            chart_motors.ChartAreas[0].AxisY.IsStartedFromZero = false;
         }
 
         #endregion
@@ -320,10 +324,10 @@ namespace DroneConnect
                     joy.Update();
 
                     joystick js = new joystick();
-                    js.pitch    = (Int16)(joy.LeftStick.Position.Y * 180);
-                    js.roll     = (Int16)(joy.LeftStick.Position.X * 180);
-                    js.throttle = (Int16)(joy.RightStick.Position.Y * 5);
-                    js.yaw      = (Int16)(joy.RightStick.Position.X * 180);
+                    js.pitch    = (Int16)(joy.LeftStick.Position.Y * 511);
+                    js.roll     = (Int16)(joy.LeftStick.Position.X * 511);
+                    js.throttle = (Int16)(joy.RightStick.Position.Y * 511);
+                    js.yaw      = (Int16)(joy.RightStick.Position.X * 511);
 
                     if (joy.B || joy.RightTrigger > 0.5) js.emergency = 1;
                     else js.emergency = 0;

@@ -16,11 +16,18 @@
 
 
 motor_speed_t::motor_speed_t(){
-		front_left=0;
-		front_right=0;
-		rear_left=0;
-		rear_right=0;
-	}
+	front_left=0;
+	front_right=0;
+	rear_left=0;
+	rear_right=0;
+}
+
+void motor_speed_t::clamp(){
+	front_left  = constraint_s16(front_left,0,511);
+	front_right = constraint_s16(front_right,0,511);
+	rear_left   = constraint_s16(rear_left,0,511);
+	rear_right  = constraint_s16(rear_right,0,511);
+}
 
 
 boost::atomic<motor_speed_t>     atomic_motor_speed;
@@ -44,6 +51,7 @@ void motors_thread_server(void){
 	//
 	motor_cmd_init:
 	printf("motors init!\r\n");
+	boost::this_thread::sleep(boost::posix_time::milliseconds(250));
 
 	//reset IRQ flipflop - on error 106 read 1, this code resets 106 to 0
 	gpio_set(106,-1);
@@ -71,7 +79,6 @@ void motors_thread_server(void){
 		if(reply[0]!=0xe0 || reply[1]!=0x00)
 		{
 			printf("motors init error motor=%d cmd=0x%02x reply=0x%02x\n",m+1,(int)reply[0],(int)reply[1]);
-			boost::this_thread::sleep(boost::posix_time::milliseconds(50));
 			goto motor_cmd_init;
 		}
 
@@ -105,21 +112,16 @@ void motors_thread_server(void){
 	const uint16_t pwm_min=0x00;
 	const uint16_t pwm_max=0x1ff;
 
-	//initialize motors speeds
-	motor_speed_t speeds_pwm;
-	speeds_pwm.front_left=0;
-	speeds_pwm.front_right=0;
-	speeds_pwm.rear_left=0;
-	speeds_pwm.rear_right=0;
-
-	atomic_motor_speed = speeds_pwm;
 
 
 	printf("motors ready, wait for commands\r\n");
 
-	while(true){
+	atomic_motors_ready = true;
 
-		speeds_pwm = atomic_motor_speed;
+	while(true){
+		boost::this_thread::sleep(boost::posix_time::milliseconds(5));
+
+		motor_speed_t speeds_pwm = atomic_motor_speed;
 
 		//clamp
 		speeds_pwm.front_left =constraint_s16(speeds_pwm.front_left,pwm_min,pwm_max);
@@ -143,19 +145,9 @@ void motors_thread_server(void){
 		cmd[4] = ((pwm[3]&pwm_max)<<1);
 		//
 		boost::asio::write(port, boost::asio::buffer(&cmd, 5));
-		//boost::this_thread::sleep(boost::posix_time::milliseconds(50));
 		boost::system::error_code error;
-		//int ret =
 		port.read_some(boost::asio::buffer(reply,sizeof(reply)), error);
 
-		atomic_motors_ready=true;
-		/*
-		printf("ret=%d [",ret);
-		for(int i=0;i<ret;i++){
-			printf("%02x",reply[i]);
-		}
-		printf("]\r\n");
-		 */
 	}
 
 }
@@ -169,7 +161,7 @@ void motors_thread_udp_json_status_server(void){
 	///////////////////////////////////////
 	while(!atomic_motors_ready){
 		printf("motors_thread_udp_json_status_server wait atomic_motors_ready\r\n");
-		boost::this_thread::sleep(boost::posix_time::milliseconds(34)); // 1 / 30Hz = 33,33ms
+		boost::this_thread::sleep(boost::posix_time::milliseconds(1000)); // 1 / 30Hz = 33,33ms
 	}
 
 
@@ -197,7 +189,7 @@ void motors_thread_udp_json_status_server(void){
 
 		////////////////////////////////////////////////////////////
 		std::stringstream ss;
-	    boost::property_tree::json_parser::write_json(ss, pt);
+		boost::property_tree::json_parser::write_json(ss, pt);
 		sock.send_to(boost::asio::buffer(ss.str().c_str(), ss.str().length()), sender_endpoint);
 		///////////////////////////////////////////////////////////////
 
