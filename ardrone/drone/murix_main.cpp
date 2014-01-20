@@ -1,4 +1,9 @@
-
+/*
+ * murix_main.cpp
+ *
+ *  Created on: 02/12/2013
+ *      Author: mpontes
+ */
 
 
 #include "murix_cpp_headers.h"
@@ -18,7 +23,8 @@
 #include "murix_arduino.h"
 #include "murix_vbat.h"
 #include "murix_http_server.h"
-
+#include "murix_pid.h"
+#include "murix_constraint.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -44,19 +50,7 @@ void killhandler(int) {
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-double constraint_double(double value,double min,double max){
-	double out=value;
-	if(out<min)out=min;
-	if(out>max)out=max;
-	return out;
-}
 
-int16_t constraint_s16(int16_t value,int16_t min,int16_t max){
-	int16_t out=value;
-	if(out<min)out=min;
-	if(out>max)out=max;
-	return out;
-}
 
 double radian2degree(double radian){
 	return radian * (180.0f / M_PI);
@@ -66,102 +60,7 @@ double radian2degree(double radian){
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-class PID {
 
-private:
-
-	//timers
-	boost::posix_time::ptime now;
-	boost::posix_time::ptime lastTime;
-	boost::posix_time::time_duration tick_diff;
-	double timeChange;
-
-	//errors
-	double lastErr, errSum, error,dErr;
-
-public:
-
-	//process variables
-	double Input, Output, Setpoint;
-
-	//gains
-	double kp, ki, kd;
-
-	//windup guards
-	double windup_min;
-	double windup_max;
-
-	//terms
-	double pterm;
-	double iterm;
-	double dterm;
-
-	PID(){
-
-		//process variables
-		Input=0;
-		Output=0;
-		Setpoint=0;
-
-		//gains
-		kp=1;
-		ki=1;
-		kd=1;
-
-		//windup guards
-		windup_min=0;
-		windup_max=0;
-
-		//timers
-		lastTime = boost::posix_time::microsec_clock::local_time();
-		now = boost::posix_time::microsec_clock::local_time();
-		tick_diff = now - lastTime;
-		timeChange=tick_diff.total_microseconds() / 1000000.0f;
-
-		//errors
-		lastErr=0;
-		errSum=0;
-		error=0;
-		dErr=0;
-
-		//terms
-		pterm=0;
-		iterm=0;
-		dterm=0;
-
-	}
-
-	void Compute()
-	{
-		/*How long since we last calculated*/
-		now = boost::posix_time::microsec_clock::local_time();
-		tick_diff = now - lastTime;
-		timeChange = tick_diff.total_microseconds() / 1000000.0f;
-
-		/*Compute all the working error variables*/
-		error = Setpoint - Input;
-		errSum += (error * timeChange);
-		dErr = (error - lastErr) / timeChange;
-
-		/* windup guard */
-		errSum = constraint_double(errSum,windup_min,windup_max);
-
-		/*Compute PID Output*/
-		pterm= kp * error;
-		iterm= ki * errSum;
-		dterm= kd * dErr;
-
-		Output = pterm + iterm + dterm;
-
-		/*Remember some variables for next time*/
-		lastErr = error;
-		lastTime = now;
-	}
-
-
-
-
-};
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
