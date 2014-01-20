@@ -145,6 +145,17 @@ void vbat_thread_udp_json_server(void){
 
 		boost::property_tree::ptree pt;
 		pt.put("vbat",vbat.vbat);
+		pt.put("vdd0",vbat.vdd0);
+		pt.put("vdd1",vbat.vdd1);
+		pt.put("vdd2",vbat.vdd2);
+		pt.put("vdd3",vbat.vdd3);
+		pt.put("vdd4",vbat.vdd4);
+		pt.put("vdd0_setpoint",vbat.vdd0_setpoint);
+		pt.put("vdd1_setpoint",vbat.vdd1_setpoint);
+		pt.put("vdd2_setpoint",vbat.vdd2_setpoint);
+		pt.put("vdd3_setpoint",vbat.vdd3_setpoint);
+		pt.put("vdd4_setpoint",vbat.vdd4_setpoint);
+
 		std::stringstream ss;
 	    boost::property_tree::json_parser::write_json(ss, pt);
 

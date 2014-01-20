@@ -26,6 +26,25 @@ namespace DroneConnect
     public partial class Form1 : Form
     {
 
+
+        public class murix_series : Series
+        {
+
+            double circular_count = 0;
+            public murix_series(string name)
+                : base(name)
+            {
+                this.ChartType = SeriesChartType.FastLine;
+            }
+            public void circular_append_y(double value, int max_items)
+            {
+                while (this.Points.Count > max_items) this.Points.RemoveAt(0);
+                this.Points.AddXY(circular_count, value);
+                circular_count++;
+            }
+        }
+
+
         #region main window
 
         public Form1()
@@ -108,68 +127,64 @@ namespace DroneConnect
 
         #region instrumentation
 
-        Series s_angle_pitch = new Series("angle pitch");
-        Series s_angle_roll = new Series("angle roll");
-        Series s_angle_yaw = new Series("angle yaw");
+        murix_series s_angle_pitch = new murix_series("angle pitch");
+        murix_series s_angle_roll = new murix_series("angle roll");
+        murix_series s_angle_yaw = new murix_series("angle yaw");
 
-        Series s_speed_pitch = new Series("speed pitch");
-        Series s_speed_roll = new Series("speed roll");
-        Series s_speed_yaw = new Series("speed yaw");
+        murix_series s_speed_pitch = new murix_series("speed pitch");
+        murix_series s_speed_roll = new murix_series("speed roll");
+        murix_series s_speed_yaw = new murix_series("speed yaw");
 
-        Series s_vbat = new Series("vbat");
+        murix_series s_vbat = new murix_series("vbat");
 
-        Series s_front_left = new Series("front_left");
-        Series s_front_right = new Series("front_right");
-        Series s_rear_left = new Series("rear_left");
-        Series s_rear_right = new Series("rear_right");
+        murix_series s_vdd0 = new murix_series("vdd0");
+        murix_series s_vdd1 = new murix_series("vdd1");
+        murix_series s_vdd2 = new murix_series("vdd2");
+        murix_series s_vdd3 = new murix_series("vdd3");
+        murix_series s_vdd4 = new murix_series("vdd4");
 
+        murix_series s_vdd0_setpoint = new murix_series("vdd0_setpoint");
+        murix_series s_vdd1_setpoint = new murix_series("vdd1_setpoint");
+        murix_series s_vdd2_setpoint = new murix_series("vdd2_setpoint");
+        murix_series s_vdd3_setpoint = new murix_series("vdd3_setpoint");
+        murix_series s_vdd4_setpoint = new murix_series("vdd4_setpoint");
 
-        double angle_pitch = 0.0;
-        double angle_roll = 0.0;
-        double angle_yaw = 0.0;
+        murix_series s_front_left = new murix_series("front_left");
+        murix_series s_front_right = new murix_series("front_right");
+        murix_series s_rear_left = new murix_series("rear_left");
+        murix_series s_rear_right = new murix_series("rear_right");
 
-        double speed_pitch = 0.0;
-        double speed_roll = 0.0;
-        double speed_yaw = 0.0;
-
-        double vbat = 0.0;
-        double front_left = 0.0;
-        double front_right = 0.0;
-        double rear_left = 0.0;
-        double rear_right = 0.0;
+            
 
         private void navboard_init() {
-
-            s_front_left.ChartType = SeriesChartType.FastLine;
-            s_front_right.ChartType = SeriesChartType.FastLine;
-            s_rear_left.ChartType = SeriesChartType.FastLine;
-            s_rear_right.ChartType = SeriesChartType.FastLine;
-
+            
             this.chart_motors.Series.Add(s_front_left);
             this.chart_motors.Series.Add(s_front_right);
             this.chart_motors.Series.Add(s_rear_left);
             this.chart_motors.Series.Add(s_rear_right);
 
-            s_angle_pitch.ChartType = SeriesChartType.FastLine;
-            s_angle_roll.ChartType = SeriesChartType.FastLine;
-            s_angle_yaw.ChartType = SeriesChartType.FastLine;
-
             this.chart_angle.Series.Add(s_angle_pitch);
             this.chart_angle.Series.Add(s_angle_roll);
             this.chart_angle.Series.Add(s_angle_yaw);
-
-            s_speed_pitch.ChartType = SeriesChartType.FastLine;
-            s_speed_roll.ChartType = SeriesChartType.FastLine;
-            s_speed_yaw.ChartType = SeriesChartType.FastLine;
 
             this.chart_rate.Series.Add(s_speed_pitch);
             this.chart_rate.Series.Add(s_speed_roll);
             this.chart_rate.Series.Add(s_speed_yaw);
 
-            s_vbat.ChartType = SeriesChartType.FastLine;
             this.chart_vbat.Series.Add(s_vbat);
 
-    
+            this.chart_vbat.Series.Add(s_vdd0);
+            this.chart_vbat.Series.Add(s_vdd1);
+            this.chart_vbat.Series.Add(s_vdd2);
+            this.chart_vbat.Series.Add(s_vdd3);
+            this.chart_vbat.Series.Add(s_vdd4);
+
+            this.chart_vbat.Series.Add(s_vdd0_setpoint);
+            this.chart_vbat.Series.Add(s_vdd1_setpoint);
+            this.chart_vbat.Series.Add(s_vdd2_setpoint);
+            this.chart_vbat.Series.Add(s_vdd3_setpoint);
+            this.chart_vbat.Series.Add(s_vdd4_setpoint);
+
         }
 
         string udp_send_recv(int port,string cmd,int timeout_ms) {
@@ -213,6 +228,9 @@ namespace DroneConnect
             return returnData;
         }
 
+        string json_vbat = "";
+        string json_motors = "";
+
         private void backgroundWorker_navboard_DoWork(object sender, DoWorkEventArgs e)
         {
             //
@@ -225,30 +243,11 @@ namespace DroneConnect
                     Thread.Sleep(33);
 
                     ///////////////////////////////////////////////////////////////////////////////////////////
-                    string json_vbat = udp_send_recv(4000, "get", 33);
-                    var o_vbat = (JObject)JsonConvert.DeserializeObject(json_vbat);
-                    vbat = (double) o_vbat["vbat"];
-
+                    json_vbat = udp_send_recv(4000, "get", 100);
+                    json_motors = udp_send_recv(6000, "get", 100);
                     //////////////////////////////////////////////////////////////////////////////////////////
-                    string json_motors = udp_send_recv(6000, "get", 33);
-                    //Console.WriteLine(json_motors);
-                    var o_motors = (JObject)JsonConvert.DeserializeObject(json_motors);
-                    front_left  = (double)o_motors["front_left"];
-                    front_right = (double)o_motors["front_right"];
-                    rear_left   = (double)o_motors["rear_left"];
-                    rear_right  = (double)o_motors["rear_right"];
-
                     //////////////////////////////////////////////////////////////////////////////////////////
-                    /*
-                                angle_pitch = double.Parse(aa[0], CultureInfo.InvariantCulture);
-                                angle_roll = double.Parse(aa[1], CultureInfo.InvariantCulture);
-                                angle_yaw = double.Parse(aa[2], CultureInfo.InvariantCulture);
-                                speed_pitch = double.Parse(aa[3], CultureInfo.InvariantCulture);
-                                speed_roll = double.Parse(aa[4], CultureInfo.InvariantCulture);
-                                speed_yaw = double.Parse(aa[5], CultureInfo.InvariantCulture);
-                    */
-
-                                this.backgroundWorker_navboard.ReportProgress(1);
+                    this.backgroundWorker_navboard.ReportProgress(1);
                 }
                 catch (Exception ex) {
                     Console.WriteLine(ex.ToString());
@@ -259,45 +258,59 @@ namespace DroneConnect
 
         private void backgroundWorker_navboard_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            this.horizonInstrumentControl1.SetAttitudeIndicatorParameters(angle_pitch, angle_roll);
-            this.attitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(0, -angle_yaw);
+            try
+            {
+                //this.horizonInstrumentControl1.SetAttitudeIndicatorParameters(angle_pitch, angle_roll);
+                //this.attitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(0, -angle_yaw);
 
-            int max = 30*30;
+                int max = 30 * 30;
 
-            while (s_angle_pitch.Points.Count > max) s_angle_pitch.Points.RemoveAt(0);
-            while (s_speed_pitch.Points.Count > max) s_speed_pitch.Points.RemoveAt(0);
-            s_angle_pitch.Points.AddY(angle_pitch);
-            s_speed_pitch.Points.AddY(speed_pitch);
+                //
+                //s_angle_pitch.circular_append_y(angle_pitch,max);
+                //s_angle_roll.circular_append_y(angle_roll, max);
+                //s_angle_yaw.circular_append_y(angle_yaw, max);
 
-            while (s_angle_roll.Points.Count > max) s_angle_roll.Points.RemoveAt(0);
-            while (s_speed_roll.Points.Count > max) s_speed_roll.Points.RemoveAt(0);
-            s_angle_roll.Points.AddY(angle_roll);
-            s_speed_roll.Points.AddY(speed_roll);
+                //
+                //s_speed_pitch.circular_append_y(speed_pitch, max);
+                //s_speed_roll.circular_append_y(speed_roll, max);
+                //s_speed_yaw.circular_append_y(speed_yaw, max);
 
-            while (s_angle_yaw.Points.Count > max) s_angle_yaw.Points.RemoveAt(0);
-            while (s_speed_yaw.Points.Count > max) s_speed_yaw.Points.RemoveAt(0);
-            s_angle_yaw.Points.AddY(angle_yaw);
-            s_speed_yaw.Points.AddY(speed_yaw);
+                //
+                var o_vbat = (JObject)JsonConvert.DeserializeObject(json_vbat);
+                s_vbat.circular_append_y((double)o_vbat["vbat"], max);
 
-            while (s_vbat.Points.Count > max) s_vbat.Points.RemoveAt(0);
-            s_vbat.Points.AddY(vbat);
+                s_vdd0.circular_append_y((double)o_vbat["vdd0"], max);
+                s_vdd1.circular_append_y((double)o_vbat["vdd1"], max);
+                s_vdd2.circular_append_y((double)o_vbat["vdd2"], max);
+                s_vdd3.circular_append_y((double)o_vbat["vdd3"], max);
+                s_vdd4.circular_append_y((double)o_vbat["vdd4"], max);
+
+                s_vdd0_setpoint.circular_append_y((double)o_vbat["vdd0_setpoint"], max);
+                s_vdd1_setpoint.circular_append_y((double)o_vbat["vdd1_setpoint"], max);
+                s_vdd2_setpoint.circular_append_y((double)o_vbat["vdd2_setpoint"], max);
+                s_vdd3_setpoint.circular_append_y((double)o_vbat["vdd3_setpoint"], max);
+                s_vdd4_setpoint.circular_append_y((double)o_vbat["vdd4_setpoint"], max);
+
+                var o_motors = (JObject)JsonConvert.DeserializeObject(json_motors);
+                s_front_left.circular_append_y((double)o_motors["front_left"], max);
+                s_front_right.circular_append_y((double)o_motors["front_right"], max);
+                s_rear_left.circular_append_y((double)o_motors["rear_left"], max);
+                s_rear_right.circular_append_y((double)o_motors["rear_right"], max);
 
 
+                //
+                chart_angle.ChartAreas[0].RecalculateAxesScale();
+                chart_rate.ChartAreas[0].RecalculateAxesScale();
+                chart_vbat.ChartAreas[0].RecalculateAxesScale();
+                chart_motors.ChartAreas[0].RecalculateAxesScale();
 
-            while (s_front_left.Points.Count > max) s_front_left.Points.RemoveAt(0); s_front_left.Points.AddY(front_left);
-            while (s_front_right.Points.Count > max) s_front_right.Points.RemoveAt(0); s_front_right.Points.AddY(front_right);
-            while (s_rear_left.Points.Count > max) s_rear_left.Points.RemoveAt(0); s_rear_left.Points.AddY(rear_left);
-            while (s_rear_right.Points.Count > max) s_rear_right.Points.RemoveAt(0); s_rear_right.Points.AddY(rear_right);
-
-
-            chart_angle.ChartAreas[0].RecalculateAxesScale();
-            chart_rate.ChartAreas[0].RecalculateAxesScale();
-            chart_vbat.ChartAreas[0].RecalculateAxesScale();
-            chart_motors.ChartAreas[0].RecalculateAxesScale();
-
-
-            chart_vbat.ChartAreas[0].AxisY.IsStartedFromZero = false;
-            chart_motors.ChartAreas[0].AxisY.IsStartedFromZero = false;
+                //
+                chart_vbat.ChartAreas[0].AxisY.IsStartedFromZero = false;
+                chart_motors.ChartAreas[0].AxisY.IsStartedFromZero = false;
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex);
+            }
         }
 
         #endregion
@@ -358,13 +371,10 @@ namespace DroneConnect
 
         #region ping monitor
 
-        Series ping_rtt_ms = new Series("ping RTT (ms)");
+
+        murix_series ping_rtt_ms = new murix_series("ping RTT (ms)");
 
         private void ping_monitor_init() {
-            chart_ping.ChartAreas[0].AxisY.Title = "rtt(ms)";
-            chart_ping.ChartAreas[0].AxisX.Title = "packet number";
-            chart_ping.Series.Clear();
-            ping_rtt_ms.ChartType = SeriesChartType.Line;
             chart_ping.Series.Add(ping_rtt_ms);
         }
 
@@ -398,12 +408,11 @@ namespace DroneConnect
 
         private void backgroundWorker_ping_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            while (ping_rtt_ms.Points.Count > 10) ping_rtt_ms.Points.RemoveAt(0);
+            ping_rtt_ms.circular_append_y(ping_rtt, 50);
 
             chart_ping.ChartAreas[0].AxisY.Maximum = ping_timeout;
             chart_ping.ChartAreas[0].AxisY.Minimum = 0;
             chart_ping.ChartAreas[0].RecalculateAxesScale();
-            ping_rtt_ms.Points.AddY(ping_rtt);
         }
 
         #endregion

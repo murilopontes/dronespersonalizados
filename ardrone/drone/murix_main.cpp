@@ -63,11 +63,9 @@ int main(int argc, char *argv[]) {
 	ardrone_threads.create_thread(motors_thread_udp_json_status_server);
 
 	////--------------- navboard --------------------------------
-	//ardrone_threads.create_thread(navboard_read_raw);
-	//ardrone_threads.create_thread(navboard_consumer_raw_procude_fusion);
-	//ardrone_threads.create_thread(navboard_consumer_raw_procude_fusion);
-	//ardrone_threads.create_thread(navboard_consumer_show_in_console);
-	//ardrone_threads.create_thread(navboard_and_motors_and_vbat_udp_server);
+	ardrone_threads.create_thread(navboard_read_raw);
+	ardrone_threads.create_thread(navboard_consumer_raw_procude_fusion);
+	ardrone_threads.create_thread(navboard_and_motors_and_vbat_udp_server);
 
 	////----------------- Pilots -----------------------------------
 	//ardrone_threads.create_thread(pilot_using_keyboard_only);
