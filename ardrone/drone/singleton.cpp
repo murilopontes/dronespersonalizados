@@ -8,24 +8,12 @@
 
 #include "singleton.h"
 
-//posix API
-#include <unistd.h>
+#include "all_cpp_headers.h"
+#include "all_boost_headers.h"
 
-//posix threads
-#include <pthread.h>
-
-//file control options
-#include <fcntl.h>
-
-//terminal I/O interfaces
-#include <termios.h>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 //
-void murix_utils::singleton(char* program_name) {
+void singleton(char* program_name) {
 
 
     //strip program_name from complete path

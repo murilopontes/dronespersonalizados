@@ -37,6 +37,7 @@
 									<listOptionValue builtIn="false" value="&quot;C:\arm-gcc\arm-none-linux-gnueabi\include\c++\4.3.3&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;C:\arm-gcc\arm-none-linux-gnueabi\libc\usr\include&quot;"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.other.other.1445447232" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1591749831" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.595033377" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>

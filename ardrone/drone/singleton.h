@@ -9,11 +9,11 @@
 #define SINGLETON_H_
 
 
-namespace murix_utils {
+
 
 void singleton(char* program_name);
 
-}
+
 
 
 #endif /* SINGLETON_H_ */
