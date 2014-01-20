@@ -25,6 +25,7 @@
 #include "murix_http_server.h"
 #include "murix_pid.h"
 #include "murix_constraint.h"
+#include "murix_gpio.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -66,18 +67,7 @@ double radian2degree(double radian){
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-//val=0 -> set gpio output lo
-//val=1 -> set gpio output hi
-//val=-1 -> set gpio as input (output hi-Z)
-int gpio_set(int nr,int val)
-{
-	//printf("gpio_set %d = %d\r\n",nr,val);
-	char cmdline[200];
-	if(val<0) sprintf(cmdline,"/usr/sbin/gpio %d -d i",nr);
-	else if(val>0) sprintf(cmdline,"/usr/sbin/gpio %d -d ho 1",nr);
-	else sprintf(cmdline,"/usr/sbin/gpio %d -d ho 0",nr);
-	return system(cmdline);
-}
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
