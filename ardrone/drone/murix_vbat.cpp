@@ -13,8 +13,6 @@
 // i2c library
 #include "i2c-dev.h"
 
-// json
-#include "json.h"
 
 
 
@@ -121,7 +119,7 @@ void vbat_thread_generator(void){
 void vbat_thread_udp_json_server(void){
 
 	vbat_t vbat;
-	json::Object obj;
+
 
 	///---------------------------
 	while(!atomic_vbat_ready){
@@ -142,109 +140,18 @@ void vbat_thread_udp_json_server(void){
 		data[length]=0;
 
 		vbat = atomic_vbat_stats;
-		obj.Clear();
-		obj["vdd0_setpoint"] = vbat.vdd0_setpoint;
-		obj["vdd1_setpoint"] = vbat.vdd1_setpoint;
-		obj["vdd2_setpoint"] = vbat.vdd2_setpoint;
-		obj["vdd3_setpoint"] = vbat.vdd3_setpoint;
-		obj["vdd4_setpoint"] = vbat.vdd4_setpoint;
-		obj["vdd0"] = vbat.vdd0;
-		obj["vdd1"] = vbat.vdd1;
-		obj["vdd2"] = vbat.vdd2;
-		obj["vdd3"] = vbat.vdd3;
-		obj["vdd4"] = vbat.vdd4;
-		obj["vbat"] = vbat.vbat;
-		std::string str = json::Serialize(obj);
 
-		sock.send_to(boost::asio::buffer(str.c_str(), str.length()), sender_endpoint);
+
+
+		boost::property_tree::ptree pt;
+		pt.put("vbat",vbat.vbat);
+		std::stringstream ss;
+	    boost::property_tree::json_parser::write_json(ss, pt);
+
+		sock.send_to(boost::asio::buffer(ss.str().c_str(), ss.str().length()), sender_endpoint);
 
 	}
-
-
 
 }
 
-
-
-
-void vbat_thread_tcp_json_server_session(boost::shared_ptr<boost::asio::ip::tcp::socket> sock)
-{
-	const static char http_html_hdr2[] = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
-	const static char http_html_hdr[] = "HTTP/1.1 200 OK\r\nContent-type: application/json\r\n\r\n";
-
-	try
-	{
-		vbat_t vbat;
-		json::Object obj;
-
-		for (;;)
-		{
-			char data[1024];
-			boost::system::error_code error;
-			size_t length = sock->read_some(boost::asio::buffer(data), error);
-
-			if (error == boost::asio::error::eof){
-				// Connection closed cleanly by peer.
-				printf("connection drop eof\r\n");
-				break;
-			}
-			else if (error){
-				// Some other error.
-				throw boost::system::system_error(error);
-			}
-
-			///////////////////////////////////////////////////////////
-
-			//data[length]=0;
-			//printf("[[[%s]]]\r\n",data);
-
-			///////////////////////////////////////////////////////////
-
-			vbat = atomic_vbat_stats;
-			obj.Clear();
-			obj["vdd0_setpoint"] = vbat.vdd0_setpoint;
-			obj["vdd1_setpoint"] = vbat.vdd1_setpoint;
-			obj["vdd2_setpoint"] = vbat.vdd2_setpoint;
-			obj["vdd3_setpoint"] = vbat.vdd3_setpoint;
-			obj["vdd4_setpoint"] = vbat.vdd4_setpoint;
-			obj["vdd0"] = vbat.vdd0;
-			obj["vdd1"] = vbat.vdd1;
-			obj["vdd2"] = vbat.vdd2;
-			obj["vdd3"] = vbat.vdd3;
-			obj["vdd4"] = vbat.vdd4;
-			obj["vbat"] = vbat.vbat;
-			std::string str = json::Serialize(obj);
-
-			//////////////////////////////////////////////////////////
-			boost::asio::write(*sock, boost::asio::buffer(http_html_hdr,sizeof(http_html_hdr)-1));
-			boost::asio::write(*sock, boost::asio::buffer(str.c_str(), str.length()));
-			(*sock).close();
-			break;
-
-		}
-
-	}
-	catch (std::exception& e)
-	{
-		std::cerr << "Exception in thread: " << e.what() << "\n";
-	}
-}
-
-void vbat_thread_tcp_json_server(void){
-
-	///---------------------------
-	while(!atomic_vbat_ready){
-		printf("vbat_thread_tcp_json_server wait atomic_vbat_ready\r\n");
-		boost::this_thread::sleep(boost::posix_time::milliseconds(34)); // 1 / 30Hz = 33,33ms
-	}
-
-	boost::asio::io_service io_service;
-	boost::asio::ip::tcp::acceptor a(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 4000));
-	while(true)
-	{
-		boost::shared_ptr<boost::asio::ip::tcp::socket> sock(new boost::asio::ip::tcp::socket(io_service));
-		a.accept(*sock);
-		boost::thread t(boost::bind(vbat_thread_tcp_json_server_session, sock));
-	}
-}
 

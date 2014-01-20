@@ -29,7 +29,6 @@ extern boost::atomic<vbat_t> atomic_vbat_stats;
 extern boost::atomic<bool> atomic_vbat_ready;
 
 void vbat_thread_udp_json_server(void);
-void vbat_thread_tcp_json_server(void);
 void vbat_thread_generator(void);
 
 

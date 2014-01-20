@@ -26,6 +26,7 @@
 #include "murix_pid.h"
 #include "murix_constraint.h"
 #include "murix_gpio.h"
+#include "murix_joystick.h"
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -34,24 +35,23 @@
 
 int global_run_foverer=1;
 
-void ctrlchandler(int) {
-	printf("ctrlchandler\r\n");
-	global_run_foverer=0;
-}
-void killhandler(int) {
-	printf("killhandler\r\n");
+void handler_abrt(int) {
+	printf("handler_abrt\r\n");
 	global_run_foverer=0;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
+void handler_int(int) {
+	printf("handler_int\r\n");
+	global_run_foverer=0;
+}
+void handler_term(int) {
+	printf("handler_term\r\n");
+	global_run_foverer=0;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 double radian2degree(double radian){
 	return radian * (180.0f / M_PI);
@@ -62,32 +62,6 @@ double radian2degree(double radian){
 //////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
 
 
 
@@ -664,52 +638,6 @@ void navboard_consumer_show_in_console(void){
 	}
 }
 
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////
-
-void drone_tcp_session(boost::shared_ptr<boost::asio::ip::tcp::socket> sock)
-{
-	try
-	{
-		for (;;)
-		{
-			char data[1024];
-			boost::system::error_code error;
-			size_t length = sock->read_some(boost::asio::buffer(data), error);
-
-			if (error == boost::asio::error::eof){
-				// Connection closed cleanly by peer.
-				printf("connection drop eof\r\n");
-				break;
-			}
-			else if (error){
-				// Some other error.
-				throw boost::system::system_error(error);
-			}
-			data[length]=0;
-			printf("tcp msg=%s\n",data);
-			boost::asio::write(*sock, boost::asio::buffer(data, length));
-		}
-
-	}
-	catch (std::exception& e)
-	{
-		std::cerr << "Exception in thread: " << e.what() << "\n";
-	}
-}
-void drone_tcp_server(void){
-	boost::asio::io_service io_service;
-	boost::asio::ip::tcp::acceptor a(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), 3000));
-	while(global_run_foverer)
-	{
-		boost::shared_ptr<boost::asio::ip::tcp::socket> sock(new boost::asio::ip::tcp::socket(io_service));
-		a.accept(*sock);
-		boost::thread t(boost::bind(drone_tcp_session, sock));
-	}
-}
 
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
@@ -718,83 +646,6 @@ void drone_tcp_server(void){
 /////////////////////////////////////////////////////////////////////////
 
 
-class joystick_cmd_t {
-public:
-
-	joystick_cmd_t(){
-		height_speed=0;
-		pitch_speed=0;
-		roll_speed=0;
-		yaw_speed=0;
-		emergency=0;
-		takeoff=0;
-	}
-
-	int16_t emergency;
-	int16_t takeoff;
-
-	int16_t height_speed;
-	int16_t pitch_speed;
-	int16_t roll_speed;
-	int16_t yaw_speed;
-
-};
-
-boost::atomic<joystick_cmd_t> atomic_joystick_cmd;
-
-
-void joystick_receive_udp_parser(char* string){
-
-	const char delimiters[] = "|";
-	char *running;
-	char *token;
-
-	running = string;
-
-	joystick_cmd_t cmd;
-
-	int i=0;
-	while(true){
-		token = strsep (&running, delimiters);    /* token => "words" */
-		if(token==NULL) break;
-		//printf("token[%d]=%s len=%d\r\n",i,token,strlen(token));
-
-		if(i==0) cmd.height_speed=atoi(token);
-		if(i==1) cmd.pitch_speed=atoi(token);
-		if(i==2) cmd.roll_speed=atoi(token);
-		if(i==3) cmd.yaw_speed=atoi(token);
-		if(i==4) cmd.takeoff=atoi(token);
-		if(i==5) cmd.emergency=atoi(token);
-		i++;
-	}
-
-	atomic_joystick_cmd = cmd;
-}
-
-
-void joystick_receive_udp_server(void){
-
-	uint32_t count=0;
-	enum { max_length = 1024 };
-	char data[max_length];
-
-	boost::asio::io_service io_service;
-	boost::asio::ip::udp::socket sock(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), 3000));
-	while(global_run_foverer)
-	{
-
-		boost::asio::ip::udp::endpoint sender_endpoint;
-		size_t length = sock.receive_from(boost::asio::buffer(data, max_length), sender_endpoint);
-		data[length]=0;
-		count++;
-
-		//printf("udp [%d] msg=%s\n",count,data);
-		joystick_receive_udp_parser(data);
-
-		sock.send_to(boost::asio::buffer(data, length), sender_endpoint);
-	}
-
-}
 
 /////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////
@@ -1150,24 +1001,23 @@ int main(int argc, char *argv[]) {
 	singleton(argv[0]);
 
 	//
-	//signal(SIGINT, ctrlchandler);
-	//signal(SIGTERM, killhandler);
+	signal(SIGINT,  handler_int);
+	signal(SIGTERM, handler_term);
+	signal(SIGABRT, handler_abrt);
+
 
 	//
 	boost::thread_group ardrone_threads;
 
-	////------------- http ------------------------
+	////------------- http and cameras --------------------
 	ardrone_threads.create_thread(http_thread_server);
 
 	////-------------- vbat ----------------------
 	ardrone_threads.create_thread(vbat_thread_generator);
 	ardrone_threads.create_thread(vbat_thread_udp_json_server);
-	ardrone_threads.create_thread(vbat_thread_tcp_json_server);
 
-	////------------- cameras ----------------------
-	//ardrone_threads.create_thread(camera_v);
-	//ardrone_threads.create_thread(camera_h);
-
+	////---------------- joystick -------------------------------
+	ardrone_threads.create_thread(joystick_thread_udp_json_server);
 
 
 	////--------------- navboard --------------------------------
@@ -1175,15 +1025,12 @@ int main(int argc, char *argv[]) {
 	//ardrone_threads.create_thread(navboard_consumer_raw_procude_fusion);
 	//ardrone_threads.create_thread(navboard_consumer_raw_procude_fusion);
 	//ardrone_threads.create_thread(navboard_consumer_show_in_console);
+	//ardrone_threads.create_thread(navboard_and_motors_and_vbat_udp_server);
 
 	////--------------- motors ----------------------------------
 	//ardrone_threads.create_thread(motors_cmd_consumer);
 	//ardrone_threads.create_thread(motor_test);
 
-	////---------------- UDP network -------------------------------
-	//ardrone_threads.create_thread(drone_tcp_server);
-	//ardrone_threads.create_thread(joystick_receive_udp_server);
-	//ardrone_threads.create_thread(navboard_and_motors_and_vbat_udp_server);
 
 	////----------------- Pilots -----------------------------------
 	//ardrone_threads.create_thread(pilot_using_keyboard_only);

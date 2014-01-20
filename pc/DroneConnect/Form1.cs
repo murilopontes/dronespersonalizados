@@ -90,7 +90,7 @@ namespace DroneConnect
                 }
                 catch (Exception ex)
                 {
-
+                    Console.WriteLine(ex.ToString());
                 }
                 Thread.Sleep(500);
             }
@@ -187,8 +187,8 @@ namespace DroneConnect
                     }
                 }
             }
-            catch (Exception ex) { 
-            
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
             }
             return returnData;
         }
@@ -206,23 +206,26 @@ namespace DroneConnect
 
                     ///////////////////////////////////////////////////////////////////////////////////////////
                     string json_vbat = udp_send_recv(4000, "get", 33);
-                    JsonSerializer serializer = new JsonSerializer();
-                    var o = (JObject)serializer.Deserialize(new JsonTextReader(new StringReader(json_vbat)));
+                    var o = (JObject)JsonConvert.DeserializeObject(json_vbat);
+
                     vbat = (double) o["vbat"];
+
+
                     //////////////////////////////////////////////////////////////////////////////////////////
 
+                    /*
                                 angle_pitch = double.Parse(aa[0], CultureInfo.InvariantCulture);
                                 angle_roll = double.Parse(aa[1], CultureInfo.InvariantCulture);
                                 angle_yaw = double.Parse(aa[2], CultureInfo.InvariantCulture);
                                 speed_pitch = double.Parse(aa[3], CultureInfo.InvariantCulture);
                                 speed_roll = double.Parse(aa[4], CultureInfo.InvariantCulture);
                                 speed_yaw = double.Parse(aa[5], CultureInfo.InvariantCulture);
-
+                    */
 
                                 this.backgroundWorker_navboard.ReportProgress(1);
                 }
-                catch (Exception ex) { 
-                
+                catch (Exception ex) {
+                    Console.WriteLine(ex.ToString());
                 }
                 Thread.Sleep(33);
             }
@@ -263,39 +266,52 @@ namespace DroneConnect
 
         #region joystick
 
+        class joystick {
+            public Int16 pitch;
+            public Int16 roll;
+            public Int16 throttle;
+            public Int16 yaw;
+            public Int16 emergency;
+            public Int16 takeoff;
+        }
 
         private void backgroundWorker_joystick_DoWork(object sender, DoWorkEventArgs e)
         {
             while (true) {
-
+                Thread.Sleep(10);
                 try
                 {
                     Gamepad_State_SlimDX joy = new Gamepad_State_SlimDX(SlimDX.XInput.UserIndex.One);
                     joy.Update();
-                    Int16 pitch_now = (Int16)(joy.LeftStick.Position.Y * 90);
-                    Int16 roll_now = (Int16)(joy.LeftStick.Position.X * 180);
-                    Int16 yaw_now = (Int16)(joy.RightStick.Position.X * 180);
-                    Int16 throttle_now = (Int16)(joy.RightStick.Position.Y * 5);
-                    Int16 emergency = 0;
-                    if (joy.B || joy.RightTrigger > 0.5) emergency = 1;
-                    Int16 takeoff = 0;
-                    if (joy.A) takeoff = 1;
 
-                    string cmd = throttle_now + "|" + pitch_now + "|" + roll_now + "|" + yaw_now + "|" + takeoff + "|" + emergency + "|";
+                    joystick js = new joystick();
+                    js.pitch    = (Int16)(joy.LeftStick.Position.Y * 180);
+                    js.roll     = (Int16)(joy.LeftStick.Position.X * 180);
+                    js.throttle = (Int16)(joy.RightStick.Position.Y * 5);
+                    js.yaw      = (Int16)(joy.RightStick.Position.X * 180);
 
+                    if (joy.B || joy.RightTrigger > 0.5) js.emergency = 1;
+                    else js.emergency = 0;
+
+                    if (joy.A) js.takeoff = 1;
+                    else js.takeoff = 0;
+
+                    string json = JsonConvert.SerializeObject(js);
+                    //Console.WriteLine(json);
+                    //json = "dqlwkdlskkdladlkasdkas";
 
                     UdpClient udpClient = new UdpClient();
                     udpClient.Connect("192.168.1.1", 3000);
-                    Byte[] sendBytes = Encoding.ASCII.GetBytes(cmd);
+                    Byte[] sendBytes = Encoding.ASCII.GetBytes(json);
                     udpClient.Send(sendBytes, sendBytes.Length);
                     udpClient.Close();
                 }
                 catch (Exception ex)
                 {
-
+                    Console.WriteLine(ex.ToString());
                 }
 
-                Thread.Sleep(10);
+                
             }
         }
 
@@ -344,8 +360,8 @@ namespace DroneConnect
                     backgroundWorker_ping.ReportProgress(1);
                     Thread.Sleep(250);
                 }
-                catch (Exception ex) { 
-                
+                catch (Exception ex) {
+                    Console.WriteLine(ex.ToString());
                 }
             }
 

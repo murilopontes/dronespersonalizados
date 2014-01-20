@@ -28,6 +28,8 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
-
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 
 #endif /* ALL_BOOST_HEADERS_H_ */
