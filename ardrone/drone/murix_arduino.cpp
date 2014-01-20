@@ -6,10 +6,10 @@
  */
 
 
-#include "arduino.h"
+#include "murix_arduino.h"
 
-#include "all_cpp_headers.h"
-#include "all_boost_headers.h"
+#include "murix_cpp_headers.h"
+#include "murix_boost_headers.h"
 
 long millis(void){
 	boost::posix_time::ptime tick_back(boost::gregorian::date(1970,boost::gregorian::Jan,1));

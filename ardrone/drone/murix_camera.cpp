@@ -6,10 +6,10 @@
  */
 
 
-#include "camera.h"
+#include "murix_camera.h"
 
-#include "all_boost_headers.h"
-#include "all_cpp_headers.h"
+#include "murix_boost_headers.h"
+#include "murix_cpp_headers.h"
 
 
 //mmap, munmap - map or unmap files or devices into memory

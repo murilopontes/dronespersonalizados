@@ -5,10 +5,10 @@
  *      Author: mpontes
  */
 
-#include "vbat.h"
+#include "murix_vbat.h"
 
-#include "all_cpp_headers.h"
-#include "all_boost_headers.h"
+#include "murix_cpp_headers.h"
+#include "murix_boost_headers.h"
 
 // i2c library
 #include "i2c-dev.h"

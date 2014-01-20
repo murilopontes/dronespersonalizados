@@ -5,10 +5,10 @@
  *      Author: mpontes
  */
 
-#include "daemonize.h"
+#include "murix_daemonize.h"
 
-#include "all_boost_headers.h"
-#include "all_cpp_headers.h"
+#include "murix_boost_headers.h"
+#include "murix_cpp_headers.h"
 
 
 

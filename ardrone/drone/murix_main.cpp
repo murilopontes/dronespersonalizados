@@ -1,8 +1,8 @@
 
 
 
-#include "all_cpp_headers.h"
-#include "all_boost_headers.h"
+#include "murix_cpp_headers.h"
+#include "murix_boost_headers.h"
 
 
 //POSIX
@@ -12,12 +12,12 @@
 
 
 //
-#include "singleton.h"
-#include "daemonize.h"
-#include "camera.h"
-#include "arduino.h"
-#include "vbat.h"
-#include "http_server.h"
+#include "murix_singleton.h"
+#include "murix_daemonize.h"
+#include "murix_camera.h"
+#include "murix_arduino.h"
+#include "murix_vbat.h"
+#include "murix_http_server.h"
 
 
 

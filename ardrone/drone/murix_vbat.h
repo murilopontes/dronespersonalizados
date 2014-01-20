@@ -8,7 +8,7 @@
 #ifndef VBAT_H_
 #define VBAT_H_
 
-#include "all_boost_headers.h"
+#include "murix_boost_headers.h"
 
 class vbat_t {
 public:
