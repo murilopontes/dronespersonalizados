@@ -160,5 +160,54 @@ void motors_thread_server(void){
 
 }
 
+void motors_thread_udp_json_status_server(void){
+
+
+	motor_speed_t speeds;
+
+
+	///////////////////////////////////////
+	while(!atomic_motors_ready){
+		printf("motors_thread_udp_json_status_server wait atomic_motors_ready\r\n");
+		boost::this_thread::sleep(boost::posix_time::milliseconds(34)); // 1 / 30Hz = 33,33ms
+	}
+
+
+	////////////////////////////////////
+	enum { max_length = 1024 };
+	char data[max_length];
+	boost::asio::io_service io_service;
+	boost::asio::ip::udp::socket sock(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), 6000));
+	/////////////////////////////////////
+
+	while(true){
+
+		/////////////////////////////////////////////////////////////////////
+		boost::asio::ip::udp::endpoint sender_endpoint;
+		size_t length = sock.receive_from(boost::asio::buffer(data, max_length), sender_endpoint);
+		data[length]=0;
+		////////////////////////////////////////////////////////
+
+		speeds = atomic_motor_speed;
+		boost::property_tree::ptree pt;
+		pt.put("front_left",speeds.front_left);
+		pt.put("front_right",speeds.front_right);
+		pt.put("rear_left",speeds.rear_left);
+		pt.put("rear_right",speeds.rear_right);
+
+		////////////////////////////////////////////////////////////
+		std::stringstream ss;
+	    boost::property_tree::json_parser::write_json(ss, pt);
+		sock.send_to(boost::asio::buffer(ss.str().c_str(), ss.str().length()), sender_endpoint);
+		///////////////////////////////////////////////////////////////
+
+	}
+
+
+
+}
+
+
+
 
 

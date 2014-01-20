@@ -24,5 +24,6 @@ extern boost::atomic<motor_speed_t> atomic_motor_speed;
 extern boost::atomic<bool>          atomic_motors_ready;
 
 void motors_thread_server(void);
+void motors_thread_udp_json_status_server(void);
 
 #endif /* MURIX_MOTORS_H_ */

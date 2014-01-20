@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
 
 	////--------------- motors ----------------------------------
 	ardrone_threads.create_thread(motors_thread_server);
-
+	ardrone_threads.create_thread(motors_thread_udp_json_status_server);
 
 	////--------------- navboard --------------------------------
 	//ardrone_threads.create_thread(navboard_read_raw);
