@@ -34,12 +34,12 @@ namespace DroneConnect
             public murix_series(string name)
                 : base(name)
             {
-                this.ChartType = SeriesChartType.FastLine;
+                this.ChartType = SeriesChartType.Line;
             }
             public void circular_append_y(double value, int max_items)
             {
                 while (this.Points.Count > max_items) this.Points.RemoveAt(0);
-                this.Points.AddXY(circular_count, value);
+                this.Points.AddY( value);
                 circular_count++;
             }
         }
@@ -127,6 +127,20 @@ namespace DroneConnect
 
         #region instrumentation
 
+
+    
+
+         murix_series s_raw_ac_x = new murix_series("raw_ac_x");
+         murix_series s_raw_ac_y = new murix_series("raw_ac_y");
+         murix_series s_raw_ac_z = new murix_series("raw_ac_z");
+
+         murix_series s_raw_gy_x = new murix_series("raw_gy_x");
+         murix_series s_raw_gy_y = new murix_series("raw_gy_y");
+         murix_series s_raw_gy_z = new murix_series("raw_gy_z");
+
+         murix_series s_us_echo = new murix_series("raw_us_echo");
+
+
         murix_series s_angle_pitch = new murix_series("angle pitch");
         murix_series s_angle_roll = new murix_series("angle roll");
         murix_series s_angle_yaw = new murix_series("angle yaw");
@@ -157,6 +171,18 @@ namespace DroneConnect
             
 
         private void navboard_init() {
+
+
+            this.chart_raw_accel.Series.Add(s_raw_ac_x);
+            this.chart_raw_accel.Series.Add(s_raw_ac_y);
+            this.chart_raw_accel_z.Series.Add(s_raw_ac_z);
+
+            this.chart_raw_gyro.Series.Add(s_raw_gy_x);
+            this.chart_raw_gyro.Series.Add(s_raw_gy_y);
+            this.chart_raw_gyro.Series.Add(s_raw_gy_z);
+
+            this.chart_raw_echo.Series.Add(s_us_echo);
+
             
             this.chart_motors.Series.Add(s_front_left);
             this.chart_motors.Series.Add(s_front_right);
@@ -230,6 +256,7 @@ namespace DroneConnect
 
         string json_vbat = "";
         string json_motors = "";
+        string json_navboard = "";
 
         private void backgroundWorker_navboard_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -244,6 +271,7 @@ namespace DroneConnect
 
                     ///////////////////////////////////////////////////////////////////////////////////////////
                     json_vbat = udp_send_recv(4000, "get", 100);
+                    json_navboard = udp_send_recv(5000, "get", 100);
                     json_motors = udp_send_recv(6000, "get", 100);
                     //////////////////////////////////////////////////////////////////////////////////////////
                     //////////////////////////////////////////////////////////////////////////////////////////
@@ -263,40 +291,47 @@ namespace DroneConnect
                 //this.horizonInstrumentControl1.SetAttitudeIndicatorParameters(angle_pitch, angle_roll);
                 //this.attitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(0, -angle_yaw);
 
-                int max = 30 * 30;
+                int max = 100;
 
-                //
-                //s_angle_pitch.circular_append_y(angle_pitch,max);
-                //s_angle_roll.circular_append_y(angle_roll, max);
-                //s_angle_yaw.circular_append_y(angle_yaw, max);
+                if (json_navboard.Length > 0)
+                {
+                    var o_navboard = (JObject)JsonConvert.DeserializeObject(json_navboard);
 
-                //
-                //s_speed_pitch.circular_append_y(speed_pitch, max);
-                //s_speed_roll.circular_append_y(speed_roll, max);
-                //s_speed_yaw.circular_append_y(speed_yaw, max);
+                    s_raw_ac_x.circular_append_y((double)o_navboard["raw_ac_x"], max);
+                    s_raw_ac_y.circular_append_y((double)o_navboard["raw_ac_y"], max);
+                    s_raw_ac_z.circular_append_y((double)o_navboard["raw_ac_z"], max);
 
-                //
-                var o_vbat = (JObject)JsonConvert.DeserializeObject(json_vbat);
-                s_vbat.circular_append_y((double)o_vbat["vbat"], max);
+                    s_raw_gy_x.circular_append_y((double)o_navboard["raw_gy_x"], max);
+                    s_raw_gy_y.circular_append_y((double)o_navboard["raw_gy_y"], max);
+                    s_raw_gy_z.circular_append_y((double)o_navboard["raw_gy_z"], max);
 
-                s_vdd0.circular_append_y((double)o_vbat["vdd0"], max);
-                s_vdd1.circular_append_y((double)o_vbat["vdd1"], max);
-                s_vdd2.circular_append_y((double)o_vbat["vdd2"], max);
-                s_vdd3.circular_append_y((double)o_vbat["vdd3"], max);
-                s_vdd4.circular_append_y((double)o_vbat["vdd4"], max);
+                    s_us_echo.circular_append_y((double)o_navboard["raw_us_echo"], max);
+                }
 
-                s_vdd0_setpoint.circular_append_y((double)o_vbat["vdd0_setpoint"], max);
-                s_vdd1_setpoint.circular_append_y((double)o_vbat["vdd1_setpoint"], max);
-                s_vdd2_setpoint.circular_append_y((double)o_vbat["vdd2_setpoint"], max);
-                s_vdd3_setpoint.circular_append_y((double)o_vbat["vdd3_setpoint"], max);
-                s_vdd4_setpoint.circular_append_y((double)o_vbat["vdd4_setpoint"], max);
+                if (json_vbat.Length > 0)
+                {
+                    var o_vbat = (JObject)JsonConvert.DeserializeObject(json_vbat);
+                    s_vbat.circular_append_y((double)o_vbat["vbat"], max);
+                    s_vdd0.circular_append_y((double)o_vbat["vdd0"], max);
+                    s_vdd1.circular_append_y((double)o_vbat["vdd1"], max);
+                    s_vdd2.circular_append_y((double)o_vbat["vdd2"], max);
+                    s_vdd3.circular_append_y((double)o_vbat["vdd3"], max);
+                    s_vdd4.circular_append_y((double)o_vbat["vdd4"], max);
+                    s_vdd0_setpoint.circular_append_y((double)o_vbat["vdd0_setpoint"], max);
+                    s_vdd1_setpoint.circular_append_y((double)o_vbat["vdd1_setpoint"], max);
+                    s_vdd2_setpoint.circular_append_y((double)o_vbat["vdd2_setpoint"], max);
+                    s_vdd3_setpoint.circular_append_y((double)o_vbat["vdd3_setpoint"], max);
+                    s_vdd4_setpoint.circular_append_y((double)o_vbat["vdd4_setpoint"], max);
+                }
 
-                var o_motors = (JObject)JsonConvert.DeserializeObject(json_motors);
-                s_front_left.circular_append_y((double)o_motors["front_left"], max);
-                s_front_right.circular_append_y((double)o_motors["front_right"], max);
-                s_rear_left.circular_append_y((double)o_motors["rear_left"], max);
-                s_rear_right.circular_append_y((double)o_motors["rear_right"], max);
-
+                if (json_motors.Length > 0)
+                {
+                    var o_motors = (JObject)JsonConvert.DeserializeObject(json_motors);
+                    s_front_left.circular_append_y((double)o_motors["front_left"], max);
+                    s_front_right.circular_append_y((double)o_motors["front_right"], max);
+                    s_rear_left.circular_append_y((double)o_motors["rear_left"], max);
+                    s_rear_right.circular_append_y((double)o_motors["rear_right"], max);
+                }
 
                 //
                 chart_angle.ChartAreas[0].RecalculateAxesScale();
@@ -304,7 +339,18 @@ namespace DroneConnect
                 chart_vbat.ChartAreas[0].RecalculateAxesScale();
                 chart_motors.ChartAreas[0].RecalculateAxesScale();
 
+                chart_raw_echo.ChartAreas[0].RecalculateAxesScale();
+                chart_raw_accel.ChartAreas[0].RecalculateAxesScale();
+                chart_raw_accel_z.ChartAreas[0].RecalculateAxesScale();
+                chart_raw_gyro.ChartAreas[0].RecalculateAxesScale();
+
                 //
+                chart_raw_accel.ChartAreas[0].AxisY.IsStartedFromZero = false;
+                chart_raw_accel_z.ChartAreas[0].AxisY.IsStartedFromZero = false;
+                chart_raw_gyro.ChartAreas[0].AxisY.IsStartedFromZero = false;
+                chart_raw_echo.ChartAreas[0].AxisY.IsStartedFromZero = false;
+
+
                 chart_vbat.ChartAreas[0].AxisY.IsStartedFromZero = false;
                 chart_motors.ChartAreas[0].AxisY.IsStartedFromZero = false;
             }
@@ -416,6 +462,8 @@ namespace DroneConnect
         }
 
         #endregion
+
+   
 
 
 

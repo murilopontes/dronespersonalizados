@@ -66,13 +66,13 @@ typedef struct
 
 class navboard_raw_calibration_t {
 public:
-	double acc_x_offset;
-	double acc_y_offset;
-	double acc_z_offset;
-	double gyro_x_offset;
-	double gyro_y_offset;
-	double gyro_z_offset;
-	double gyro_gain;
+	double raw_acc_x_offset;
+	double raw_acc_y_offset;
+	double raw_acc_z_offset;
+	double raw_gyro_x_offset;
+	double raw_gyro_y_offset;
+	double raw_gyro_z_offset;
+	double raw_gyro_gain;
 
 	navboard_raw_calibration_t();
 } ;

@@ -142,7 +142,6 @@ void vbat_thread_udp_json_server(void){
 		vbat = atomic_vbat_stats;
 
 
-
 		boost::property_tree::ptree pt;
 		pt.put("vbat",vbat.vbat);
 		pt.put("vdd0",vbat.vdd0);

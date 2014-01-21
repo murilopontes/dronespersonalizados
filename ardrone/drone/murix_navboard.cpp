@@ -35,15 +35,17 @@ double radian2degree(double radian){
 
 navboard_raw_calibration_t::navboard_raw_calibration_t(){
 
-	acc_x_offset=2060; // 1000 samples average in ground
-	acc_y_offset=1963; // 1000 samples average in ground
-	acc_z_offset=2041; // 1000 samples average in wall
+	// range 0-4000 -> ~ -2g - +2g
+	raw_acc_x_offset=2050; // 1000 samples average in ground
+	raw_acc_y_offset=1990; // 1000 samples average in ground
+	raw_acc_z_offset=2070; // 1000 samples average in wall
 
-	gyro_x_offset=1659; // 1000 samples average in ground
-	gyro_y_offset=1664; // 1000 samples average in ground
-	gyro_z_offset=1662; // 1000 samples average in ground
+	// range 0-3320
+	raw_gyro_x_offset=1661.0;
+	raw_gyro_y_offset=1660.0;
+	raw_gyro_z_offset=1663.5;
 
-	gyro_gain = (180.0f / M_PI) / 10.0f;
+	raw_gyro_gain = (180.0f / M_PI) / 10.0f;
 }
 
 //////////////////////////////////////////////////////////////
@@ -101,14 +103,14 @@ void navboard_fusion_t::Compute(navboard_raw_calibration_t calib,double dt){
 	this->seq = this->pkt_raw->seq;
 
 	//offset and scale
-	this->acc_x= (this->pkt_raw->acc_x - calib.acc_x_offset);
-	this->acc_y= (this->pkt_raw->acc_y - calib.acc_y_offset);
-	this->acc_z= (this->pkt_raw->acc_z - calib.acc_z_offset);
+	this->acc_x= (this->pkt_raw->acc_x - calib.raw_acc_x_offset);
+	this->acc_y= (this->pkt_raw->acc_y - calib.raw_acc_y_offset);
+	this->acc_z= (this->pkt_raw->acc_z - calib.raw_acc_z_offset);
 
 	//
-	this->gyro_x = (this->pkt_raw->gyro_x - calib.gyro_x_offset)/calib.gyro_gain;
-	this->gyro_y = (this->pkt_raw->gyro_y - calib.gyro_y_offset)/calib.gyro_gain;
-	this->gyro_z = (this->pkt_raw->gyro_z - calib.gyro_z_offset)/calib.gyro_gain;
+	this->gyro_x = (this->pkt_raw->gyro_x - calib.raw_gyro_x_offset)/calib.raw_gyro_gain;
+	this->gyro_y = (this->pkt_raw->gyro_y - calib.raw_gyro_y_offset)/calib.raw_gyro_gain;
+	this->gyro_z = (this->pkt_raw->gyro_z - calib.raw_gyro_z_offset)/calib.raw_gyro_gain;
 
 	///////////////////////////////////////////////////////////////////////////////////
 
@@ -148,13 +150,16 @@ void navboard_fusion_t::Compute(navboard_raw_calibration_t calib,double dt){
 
 	/////////////////////////////////////////////////////////////////////////////
 
-	this->height= this->pkt_raw->us_echo & 0x7FFF;
+	// 1cm = 37.0f
 
-	/*
-	if(this->pkt_raw->us_echo / 37.5f < 650){
-		this->height=this->pkt_raw->us_echo / 37.5f;
+	if(this->pkt_raw->us_echo / 37.0f < (300.0f) ){
+		//if distance less than 300cm
+		this->height=this->pkt_raw->us_echo / 37.0f;
+	} else {
+		//
+		this->height=-1;
 	}
-	*/
+
 
 }
 
@@ -182,7 +187,9 @@ void navboard_generator(void)
 	boost::circular_buffer<uint8_t> cb(navboard_size);
 
 	//set /MCLR pin -> reset navboard
+	gpio_set(132,GPIO_OUT_0);
 	gpio_set(132,GPIO_OUT_1);
+
 
 	//start acquisition
 	uint8_t cmd=0x01;
@@ -203,9 +210,6 @@ void navboard_generator(void)
 	//
 	tick_back = boost::posix_time::microsec_clock::local_time();
 	tick_now = boost::posix_time::microsec_clock::local_time();
-
-	navboard_fusion_ready=true;
-
 	//
 	printf("navboard reader working\r\n");
 	while(true){
@@ -216,8 +220,7 @@ void navboard_generator(void)
 		//buffer is full
 		if(cb.size()==navboard_size){
 			//header of buffer is navboard signature
-			if(cb[0]==navboard_size && cb[1]==0x0 && cb[31]==0x0 && cb[30]==0x1
-			){
+			if(cb[0]==navboard_size && cb[1]==0x0 && cb[31]==0x0 && cb[30]==0x1){
 				////////////////////////////////////////////////////////////////
 				tick_back = tick_now;
 				tick_now = boost::posix_time::microsec_clock::local_time();
@@ -229,13 +232,11 @@ void navboard_generator(void)
 					fusion.navboard_raw[i]=cb[i];
 				}
 				////////////////////////////////////////////////////////////////
-				navboard_raw_calibration_t calib;// = atomic_navboard_raw_calibration;
+				navboard_raw_calibration_t calib = atomic_navboard_raw_calibration;
 				fusion.Compute(calib,dt);
 				////////////////////////////////////////////////////////////////
-				//atomic_navboard_fusion=fusion;
-				boost::this_thread::sleep(boost::posix_time::milliseconds(1));
-
-
+				atomic_navboard_fusion=fusion;
+				navboard_fusion_ready=true;
 			}
 		}
 	}
@@ -274,22 +275,26 @@ void navboard_udp_json_server(void){
 		/////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////
 
-		navboard_fusion_t fusion;
 		navboard_raw_calibration_t calib;
-		fusion = atomic_navboard_fusion;
 		calib = atomic_navboard_raw_calibration;
 
 
-		boost::property_tree::ptree pt;
 
+		/////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////
+
+
+		navboard_fusion_t fusion;
+		fusion = atomic_navboard_fusion;
+		boost::property_tree::ptree pt;
 		//raw data for help calibration
 		pt.put("raw_ac_x",fusion.pkt_raw->acc_x);
-		pt.put("raw_ac_x",fusion.pkt_raw->acc_y);
+		pt.put("raw_ac_y",fusion.pkt_raw->acc_y);
 		pt.put("raw_ac_z",fusion.pkt_raw->acc_z);
 		pt.put("raw_gy_x",fusion.pkt_raw->gyro_x);
 		pt.put("raw_gy_y",fusion.pkt_raw->gyro_y);
 		pt.put("raw_gy_z",fusion.pkt_raw->gyro_z);
-		pt.put("raw_echo",fusion.pkt_raw->us_echo);
+		pt.put("raw_us_echo",fusion.pkt_raw->us_echo);
 
 
 		std::stringstream ss;
