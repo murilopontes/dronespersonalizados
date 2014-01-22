@@ -46,18 +46,18 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend15 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend15 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.chart_ping = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -76,16 +76,19 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.chart_dt = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart_height = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart_angles_z = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart_angles_y = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart_angles_x = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.button_set_calib = new System.Windows.Forms.Button();
             this.button_get_calib = new System.Windows.Forms.Button();
             this.textBox_calib = new System.Windows.Forms.TextBox();
             this.chart_acc_z = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.chart_angles_x = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart_angles_y = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart_angles_z = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart_height = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart_dt = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart_ping)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_acc)).BeginInit();
@@ -99,13 +102,15 @@
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_dt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_height)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_z)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_y)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_x)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_acc_z)).BeginInit();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_x)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_y)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_z)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_height)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_dt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // chart_ping
@@ -264,11 +269,14 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.pictureBox2);
+            this.tabPage3.Controls.Add(this.button1);
+            this.tabPage3.Controls.Add(this.pictureBox1);
             this.tabPage3.Controls.Add(this.dataGridView1);
             this.tabPage3.Controls.Add(this.chart_ping);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(981, 650);
+            this.tabPage3.Size = new System.Drawing.Size(1177, 755);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "WiFi";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -295,6 +303,66 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Navboard Fusion + Vbat + Motors";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // chart_dt
+            // 
+            this.chart_dt.BackColor = System.Drawing.Color.Silver;
+            chartArea10.Name = "ChartArea1";
+            this.chart_dt.ChartAreas.Add(chartArea10);
+            legend10.Name = "Legend1";
+            this.chart_dt.Legends.Add(legend10);
+            this.chart_dt.Location = new System.Drawing.Point(410, 542);
+            this.chart_dt.Name = "chart_dt";
+            this.chart_dt.Size = new System.Drawing.Size(324, 139);
+            this.chart_dt.TabIndex = 18;
+            // 
+            // chart_height
+            // 
+            this.chart_height.BackColor = System.Drawing.Color.Silver;
+            chartArea11.Name = "ChartArea1";
+            this.chart_height.ChartAreas.Add(chartArea11);
+            legend11.Name = "Legend1";
+            this.chart_height.Legends.Add(legend11);
+            this.chart_height.Location = new System.Drawing.Point(740, 542);
+            this.chart_height.Name = "chart_height";
+            this.chart_height.Size = new System.Drawing.Size(324, 139);
+            this.chart_height.TabIndex = 17;
+            // 
+            // chart_angles_z
+            // 
+            this.chart_angles_z.BackColor = System.Drawing.Color.Silver;
+            chartArea12.Name = "ChartArea1";
+            this.chart_angles_z.ChartAreas.Add(chartArea12);
+            legend12.Name = "Legend1";
+            this.chart_angles_z.Legends.Add(legend12);
+            this.chart_angles_z.Location = new System.Drawing.Point(740, 363);
+            this.chart_angles_z.Name = "chart_angles_z";
+            this.chart_angles_z.Size = new System.Drawing.Size(324, 173);
+            this.chart_angles_z.TabIndex = 16;
+            // 
+            // chart_angles_y
+            // 
+            this.chart_angles_y.BackColor = System.Drawing.Color.Silver;
+            chartArea13.Name = "ChartArea1";
+            this.chart_angles_y.ChartAreas.Add(chartArea13);
+            legend13.Name = "Legend1";
+            this.chart_angles_y.Legends.Add(legend13);
+            this.chart_angles_y.Location = new System.Drawing.Point(740, 186);
+            this.chart_angles_y.Name = "chart_angles_y";
+            this.chart_angles_y.Size = new System.Drawing.Size(324, 173);
+            this.chart_angles_y.TabIndex = 15;
+            // 
+            // chart_angles_x
+            // 
+            this.chart_angles_x.BackColor = System.Drawing.Color.Silver;
+            chartArea14.Name = "ChartArea1";
+            this.chart_angles_x.ChartAreas.Add(chartArea14);
+            legend14.Name = "Legend1";
+            this.chart_angles_x.Legends.Add(legend14);
+            this.chart_angles_x.Location = new System.Drawing.Point(740, 9);
+            this.chart_angles_x.Name = "chart_angles_x";
+            this.chart_angles_x.Size = new System.Drawing.Size(324, 173);
+            this.chart_angles_x.TabIndex = 14;
             // 
             // button_set_calib
             // 
@@ -345,70 +413,40 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(981, 650);
+            this.tabPage1.Size = new System.Drawing.Size(1177, 755);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Navboard RAW";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // chart_angles_x
+            // pictureBox1
             // 
-            this.chart_angles_x.BackColor = System.Drawing.Color.Silver;
-            chartArea14.Name = "ChartArea1";
-            this.chart_angles_x.ChartAreas.Add(chartArea14);
-            legend14.Name = "Legend1";
-            this.chart_angles_x.Legends.Add(legend14);
-            this.chart_angles_x.Location = new System.Drawing.Point(740, 9);
-            this.chart_angles_x.Name = "chart_angles_x";
-            this.chart_angles_x.Size = new System.Drawing.Size(324, 173);
-            this.chart_angles_x.TabIndex = 14;
+            this.pictureBox1.BackColor = System.Drawing.Color.Silver;
+            this.pictureBox1.Location = new System.Drawing.Point(588, 23);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(256, 254);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
             // 
-            // chart_angles_y
+            // button1
             // 
-            this.chart_angles_y.BackColor = System.Drawing.Color.Silver;
-            chartArea13.Name = "ChartArea1";
-            this.chart_angles_y.ChartAreas.Add(chartArea13);
-            legend13.Name = "Legend1";
-            this.chart_angles_y.Legends.Add(legend13);
-            this.chart_angles_y.Location = new System.Drawing.Point(740, 186);
-            this.chart_angles_y.Name = "chart_angles_y";
-            this.chart_angles_y.Size = new System.Drawing.Size(324, 173);
-            this.chart_angles_y.TabIndex = 15;
+            this.button1.Location = new System.Drawing.Point(814, 283);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "camera test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // chart_angles_z
+            // pictureBox2
             // 
-            this.chart_angles_z.BackColor = System.Drawing.Color.Silver;
-            chartArea12.Name = "ChartArea1";
-            this.chart_angles_z.ChartAreas.Add(chartArea12);
-            legend12.Name = "Legend1";
-            this.chart_angles_z.Legends.Add(legend12);
-            this.chart_angles_z.Location = new System.Drawing.Point(740, 363);
-            this.chart_angles_z.Name = "chart_angles_z";
-            this.chart_angles_z.Size = new System.Drawing.Size(324, 173);
-            this.chart_angles_z.TabIndex = 16;
-            // 
-            // chart_height
-            // 
-            this.chart_height.BackColor = System.Drawing.Color.Silver;
-            chartArea11.Name = "ChartArea1";
-            this.chart_height.ChartAreas.Add(chartArea11);
-            legend11.Name = "Legend1";
-            this.chart_height.Legends.Add(legend11);
-            this.chart_height.Location = new System.Drawing.Point(740, 542);
-            this.chart_height.Name = "chart_height";
-            this.chart_height.Size = new System.Drawing.Size(324, 139);
-            this.chart_height.TabIndex = 17;
-            // 
-            // chart_dt
-            // 
-            this.chart_dt.BackColor = System.Drawing.Color.Silver;
-            chartArea10.Name = "ChartArea1";
-            this.chart_dt.ChartAreas.Add(chartArea10);
-            legend10.Name = "Legend1";
-            this.chart_dt.Legends.Add(legend10);
-            this.chart_dt.Location = new System.Drawing.Point(410, 542);
-            this.chart_dt.Name = "chart_dt";
-            this.chart_dt.Size = new System.Drawing.Size(324, 139);
-            this.chart_dt.TabIndex = 18;
+            this.pictureBox2.BackColor = System.Drawing.Color.Silver;
+            this.pictureBox2.Location = new System.Drawing.Point(850, 23);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(256, 254);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
             // 
             // Form1
             // 
@@ -437,13 +475,15 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_dt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_height)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_z)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_y)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_x)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_acc_z)).EndInit();
             this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_x)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_y)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_angles_z)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_height)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_dt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -477,6 +517,9 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_angles_y;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_dt;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart_height;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

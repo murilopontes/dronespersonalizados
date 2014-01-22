@@ -532,6 +532,17 @@ namespace DroneConnect
             udp_send_recv(11000, calib_txt, 1000);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            WebClient wc = new WebClient();
+            MemoryStream stream = new MemoryStream(wc.DownloadData("http://192.168.1.1/vertical.bmp"));
+            pictureBox1.Image = new Bitmap(stream);
+            MemoryStream stream2 = new MemoryStream(wc.DownloadData("http://192.168.1.1/horizontal.bmp"));
+            pictureBox2.Image = new Bitmap(stream2);
+
+
+        }
+
    
 
 
