@@ -65,6 +65,9 @@ int main(int argc, char *argv[]) {
 	////--------------- navboard --------------------------------
 	ardrone_threads.create_thread(navboard_generator);
 	ardrone_threads.create_thread(navboard_udp_json_server);
+	ardrone_threads.create_thread(navboard_get_calib_udp_json_server);
+	ardrone_threads.create_thread(navboard_set_calib_udp_json_server);
+
 
 	////----------------- Pilots -----------------------------------
 	//ardrone_threads.create_thread(pilot_using_keyboard_only);

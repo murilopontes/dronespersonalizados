@@ -24,15 +24,15 @@ typedef struct
 	uint16_t acc_z;
 
 	//Invensense IDG-500 max=+-500 - 2mV g/s  / +-110 - 9.1mV g/s
-	uint16_t gyro_x;
-	uint16_t gyro_y;
+	uint16_t gyro_500_y;
+	uint16_t gyro_500_x;
 
 	//Epson XV-3500CB max=100 degrees/s ---- 0.67 mV/(degree/s)
 	uint16_t gyro_z;
 
 	//Invensense IDG-500
-	uint16_t gyro_110_x;
 	uint16_t gyro_110_y;
+	uint16_t gyro_110_x;
 
 	//BMA150 (120=25C, 143=48C, offset=-95)
 	uint16_t acc_temp;
@@ -66,13 +66,21 @@ typedef struct
 
 class navboard_raw_calibration_t {
 public:
+
 	double raw_acc_x_offset;
 	double raw_acc_y_offset;
 	double raw_acc_z_offset;
+	double raw_acc_gain;
+
 	double raw_gyro_x_offset;
 	double raw_gyro_y_offset;
 	double raw_gyro_z_offset;
-	double raw_gyro_gain;
+	double raw_gyro_gain_x;
+	double raw_gyro_gain_y;
+	double raw_gyro_gain_z;
+
+	double acc_pitch_offset;
+	double acc_roll_offset;
 
 	navboard_raw_calibration_t();
 } ;
@@ -124,5 +132,7 @@ extern boost::atomic<bool> navboard_fusion_ready;
 
 void navboard_generator(void);
 void navboard_udp_json_server(void);
+void navboard_get_calib_udp_json_server(void);
+void navboard_set_calib_udp_json_server(void);
 
 #endif /* MURIX_NAVBOARD_H_ */

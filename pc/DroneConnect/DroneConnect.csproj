@@ -85,10 +85,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AvionicsInstrumentControlDemo\AvionicsInstrumentControlDemo.csproj">
-      <Project>{1d3163e6-dc65-4595-9d51-4fd9174f2f61}</Project>
-      <Name>AvionicsInstrumentControlDemo</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SimpleWifi\SimpleWifi.csproj">
       <Project>{6aa425c9-ea6a-4b01-aaed-5ff122e8b663}</Project>
       <Name>SimpleWifi</Name>
