@@ -185,20 +185,31 @@ void camera_close(camera_context_t* ctx){
 	close(ctx->fd);
 }
 
+
+void camera_photo(camera_context_t* ctx){
+	camera_init(ctx);
+	camera_loop_frame(ctx);
+	camera_close(ctx);
+}
+
+
+uint8_t photo_h[614400];
+
 camera_context_t camera_h(void){
+
 	camera_context_t ctx_h;
 	ctx_h.dev_name = (char*)"/dev/video0";
 	ctx_h.width=640;
 	ctx_h.height=480;
-	ctx_h.buf = new uint8_t[614400];
+	ctx_h.buf = photo_h;
 	ctx_h.img_size=614400;
 
-	camera_init(&ctx_h);
-	camera_loop_frame(&ctx_h);
-	camera_close(&ctx_h);
+	camera_photo(&ctx_h);
 
 	return ctx_h;
 }
+
+uint8_t photo_v[50688];
 
 camera_context_t camera_v(void){
 
@@ -206,12 +217,10 @@ camera_context_t camera_v(void){
 	ctx_v.dev_name = (char*)"/dev/video1";
 	ctx_v.width=176;
 	ctx_v.height=144;
-	ctx_v.buf = new uint8_t[50688];
+	ctx_v.buf = photo_v;
 	ctx_v.img_size=50688;
 
-	camera_init(&ctx_v);
-	camera_loop_frame(&ctx_v);
-	camera_close(&ctx_v);
+	camera_photo(&ctx_v);
 
 	return ctx_v;
 }

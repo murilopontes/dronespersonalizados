@@ -9,6 +9,7 @@
 #define ALL_BOOST_HEADERS_H_
 
 #include <boost/bind.hpp>
+#include <boost/exception/all.hpp>
 #include <boost/foreach.hpp>
 #include <boost/random.hpp>
 #include <boost/shared_ptr.hpp>

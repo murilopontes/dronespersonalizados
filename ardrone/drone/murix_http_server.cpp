@@ -209,7 +209,7 @@ void http_thread_server_session(boost::shared_ptr<boost::asio::ip::tcp::socket> 
 
 				camera_context_t ctx = camera_v();
 				libbmp24::Bitmap bmp = ConvertYUV2RGB(ctx.buf,ctx.width,ctx.height);
-				free(ctx.buf);
+
 
 				std::stringstream os;
 				bmp.serialize(os);
@@ -225,7 +225,7 @@ void http_thread_server_session(boost::shared_ptr<boost::asio::ip::tcp::socket> 
 
 				camera_context_t ctx = camera_h();
 				libbmp24::Bitmap bmp = ConvertYUV2RGB(ctx.buf,ctx.width,ctx.height);
-				free(ctx.buf);
+
 
 				std::stringstream os;
 				bmp.serialize(os);
@@ -262,6 +262,7 @@ void http_thread_server(void){
 	{
 		boost::shared_ptr<boost::asio::ip::tcp::socket> sock(new boost::asio::ip::tcp::socket(io_service));
 		a.accept(*sock);
-		boost::thread t(boost::bind(http_thread_server_session, sock));
+		http_thread_server_session(sock);
+		//boost::thread t(boost::bind(http_thread_server_session, sock));
 	}
 }
