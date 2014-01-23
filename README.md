@@ -7,8 +7,8 @@ Should be installed alongside of latest official firmware.
 
 Tested with firmware version 1.11.5 updated using AR.Freeflight v2.4.10
 
-Install
--------
+Project Install
+===============
 
 The install is simple. 
 Copy "drone" firmware using your favorite ftp tool to ardrone.
@@ -25,6 +25,8 @@ A = take off
 B = emergency
 ```
 
+Project Status
+==============
 
 Drone Connect status
 ---------------------
@@ -58,7 +60,8 @@ Firmware status
 * [not working] Stabilized pilot with PID controllers via Joystick json server
 
 
-
+Project Build Instructions
+==========================
 
 Drone Connect (Windows application)
 -----------------------------------
@@ -113,7 +116,7 @@ C:\boost_1_55_0>b2 toolset=gcc-arm target-os=linux link=static threadapi=pthread
 ```
 
 Boost build summary
------------------------------------------------------------------
+-------------------
 
 * Boost 1.55 fail, but needed features for project still working
 
