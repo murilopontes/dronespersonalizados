@@ -14,11 +14,23 @@ Open source implementation of Ardrone V1
 * [not working] PID auto tunning
 
 -Firmware status:
-* [working] Navboard (accelerometer, gyroscope, ultrasonic)
-* [working] Motors
+* [working] http server - static page and cameras
 * [working] Cameras: Horizontal and vertical
 * [not working] H264 video compress hardware (/dev/p264)
- 
+* [not working] http joystick/control page 
+* [working] voltage monitor sensor
+* [working] voltage monitor json server
+* [working] joystick json receive server
+* [working] Motors PWM terminal
+* [working] Motors PWM monitor json server
+* [working] Navboard RAW (accelerometer, gyroscope, ultrasonic) 
+* [working] Navboard Sensors Fusion
+* [working] Navboard Calibration json server
+* [working] Direct Drive / Pilot Motors via Telnet
+* [working] Direct Drive / Pilot Motors via Joystick json server
+* [not working] Stabilized pilot with PID controllers via Joystick json server
+
+
 
 
 Drone Connect (Windows application)
