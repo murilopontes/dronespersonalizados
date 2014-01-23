@@ -2,7 +2,9 @@ Open source implementation of Ardrone V1
 ===========================================
 
 This project not modify any file of official firmware.
+
 Should be installed alongside of latest official firmware.
+
 Tested with firmware version 1.11.5 updated using AR.Freeflight v2.4.10
 
 Install
