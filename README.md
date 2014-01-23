@@ -115,6 +115,18 @@ C:\boost_1_55_0>bootstrap
 C:\boost_1_55_0>b2 toolset=gcc-arm target-os=linux link=static threadapi=pthread -j8
 ```
 
+9) Install JDK
+
+10) Eclipse J2EE 
+
+11) Eclipse CDT
+
+12) Import Eclipse Workspace
+
+13) Eclipse Build firmware
+
+
+
 Boost build summary
 -------------------
 
