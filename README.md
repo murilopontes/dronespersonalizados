@@ -1,6 +1,29 @@
 Open source implementation of Ardrone V1
 ===========================================
--Drone Connect status:
+
+This firmware is not destrutive and do not modify system.
+
+Install
+-------
+
+The install is simple. 
+Copy "drone" firmware using your favorite ftp tool to ardrone.
+Open ardrone telnet, and type:
+```sh
+/data/video/drone
+```
+Now, open Drone Connect Windows aplication and use one Xbox 360 joystick to pilot the drone.
+
+```sh
+Analog Stick Left = pitch, roll
+Analog Stick Right = yaw, height
+A = take off
+B = emergency
+```
+
+
+Drone Connect status
+---------------------
 * [working] Wifi automatic connect
 * [working] Ping monitor 
 * [working] Xbox 360 Joystick
@@ -12,7 +35,8 @@ Open source implementation of Ardrone V1
 * [working] Motors PWM monitor
 * [not working] PID auto tunning
 
--Firmware status:
+Firmware status
+----------------
 * [working] http server - static page and cameras
 * [working] Cameras: Horizontal and vertical
 * [not working] H264 video compress hardware (/dev/p264)
@@ -36,6 +60,7 @@ Drone Connect (Windows application)
 -----------------------------------
 
 1) Install Visual Studio Express 2013 for Windows Desktop
+
 http://www.visualstudio.com/downloads/download-visual-studio-vs
 
 2) Open solution (pc\openfight-apps.sln), select DroneConnect project as startup project
@@ -53,14 +78,16 @@ Drone Firmware
 --------------------------------------
 
 1) Install Visual Studio Express 2013 for Windows Desktop
+
 http://www.visualstudio.com/downloads/download-visual-studio-vs
 
 2) install  Sourcery G++ Lite 2009q1-203 in c:/arm-gcc
+
 https://sourcery.mentor.com/GNUToolchain/release858?lite=arm
 https://sourcery.mentor.com/GNUToolchain/package4574/public/arm-none-linux-gnueabi/arm-2009q1-203-arm-none-linux-gnueabi.exe
 
-3) create boost user config
-~/user-config.jam
+3) create boost user config in your directory (~/user-config.jam) with follow content
+
 using gcc : arm : "C:/arm-gcc/bin/arm-none-linux-gnueabi-g++" ;
 
 4) extract boost-x.xx.7z in c:\
@@ -70,10 +97,16 @@ using gcc : arm : "C:/arm-gcc/bin/arm-none-linux-gnueabi-g++" ;
 6) cd c:\boost-x.xx
 
 7) bootstrap boost build system
-bootstrap
+
+```sh
+C:\boost_1_55_0>bootstrap
+```
 
 8) build all required boost libraries
-b2 toolset=gcc-arm target-os=linux link=static threadapi=pthread -j8
+
+```sh
+C:\boost_1_55_0>b2 toolset=gcc-arm target-os=linux link=static threadapi=pthread -j8
+```
 
 Boost build summary
 -----------------------------------------------------------------
