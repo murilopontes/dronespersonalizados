@@ -1,4 +1,3 @@
-
 Open source implementation of Ardrone V1
 ===========================================
 -Drone Connect status:
@@ -81,7 +80,7 @@ Boost build summary
 
 * Boost 1.55 fail, but needed features for project still working
 
-Boost 1.55 -> arm-2009q1-203-arm-none-linux-gnueabi crash
+Boost 1.55 -> arm-2009q1-203-arm-none-linux-gnueabi  crash 
 
 ```sh
 ...failed updating 13 targets...
@@ -89,23 +88,32 @@ Boost 1.55 -> arm-2009q1-203-arm-none-linux-gnueabi crash
 ...updated 588 targets...
 ```
 
-Boost 1.54 -> arm-2009q1-203-arm-none-linux-gnueabi crash
-> ...failed updating 12 targets...
-> ...skipped 9 targets...
-> ...updated 592 targets...
+Boost 1.54 -> arm-2009q1-203-arm-none-linux-gnueabi  crash
 
-Boost 1.53 -> arm-2009q1-203-arm-none-linux-gnueabi crash
-> ...failed updating 2 targets...
-> ...skipped 3 targets...
-> ...updated 540 targets...
+```sh
+...failed updating 12 targets...
+...skipped 9 targets...
+...updated 592 targets...
+```
+
+Boost 1.53 -> arm-2009q1-203-arm-none-linux-gnueabi  crash 
+
+```sh
+...failed updating 2 targets...
+...skipped 3 targets...
+...updated 540 targets...
+```
 
 Boost 1.52 -> arm-2009q1-203-arm-none-linux-gnueabi OK!
-> ...updated 527 targets...
-> The Boost C++ Libraries were successfully built!
-> The following directory should be added to compiler include paths:
->     C:/boost_1_52_0
-> The following directory should be added to linker library paths:
- >    C:\boost_1_52_0\stage\lib
+
+```sh
+...updated 527 targets...
+The Boost C++ Libraries were successfully built!
+The following directory should be added to compiler include paths:
+    C:/boost_1_52_0
+The following directory should be added to linker library paths:
+    C:\boost_1_52_0\stage\lib
+```
 
 
 
