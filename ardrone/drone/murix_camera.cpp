@@ -117,6 +117,7 @@ void camera_init(camera_context_t* ctx){
 	camera_xioctl(ctx->fd, VIDIOC_STREAMON, &type,"VIDIOC_STREAMON");
 }
 
+/*
 int camera_loop_check(camera_context_t* ctx){
 
 	fd_set fds;
@@ -124,7 +125,8 @@ int camera_loop_check(camera_context_t* ctx){
 	int r;
 	FD_ZERO(&fds);
 	FD_SET(ctx->fd, &fds);
-	/* Timeout. */
+
+	// Timeout
 	tv.tv_sec = 2;
 	tv.tv_usec = 0;
 
@@ -139,6 +141,7 @@ int camera_loop_check(camera_context_t* ctx){
 	}
 	return 1;
 }
+*/
 
 void camera_process_image(camera_context_t* ctx,const void *p, int size)
 {
@@ -149,19 +152,23 @@ void camera_process_image(camera_context_t* ctx,const void *p, int size)
 void camera_loop_frame(camera_context_t* ctx){
 
 	///////////////////////////////////////////////////
-	////////////////////////////---------- DEQUEUE
 	struct v4l2_buffer buf;
 	memset(&buf,0,sizeof(buf));
 	buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 	buf.memory = V4L2_MEMORY_MMAP;
+
+	////////////////////////////---------- DEQUEUE
 	if(camera_xioctl(ctx->fd, VIDIOC_DQBUF, &buf,"VIDIOC_DQBUF")!=-1){
-		////////////////////////////////////////////////--- USE
+
+		///////////////////////--- USE
 		camera_process_image(ctx,ctx->buffers[buf.index].start, buf.bytesused);
-		//////////////////////////////////////////////----RE-ENQUEUE
+
+		///////////////////////----RE-ENQUEUE
 		camera_xioctl(ctx->fd, VIDIOC_QBUF, &buf,"VIDIOC_QBUF");
 	}
 
 }
+
 
 void camera_close(camera_context_t* ctx){
 
