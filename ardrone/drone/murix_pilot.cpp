@@ -205,20 +205,21 @@ void pilot_using_joystick_with_stabilizer(void){
 	joystick_cmd_t cmd;
 	navboard_fusion_t fusion;
 
+
 	////////////////////////////////////////////////////
 
 	PID pid_angle_pitch;
 	pid_angle_pitch.Setpoint=0;
-	pid_angle_pitch.windup_min=-90;
-	pid_angle_pitch.windup_max=+90;
+	pid_angle_pitch.windup_min=-180;
+	pid_angle_pitch.windup_max=+180;
 	pid_angle_pitch.kp=0.0;
 	pid_angle_pitch.ki=0.0;
 	pid_angle_pitch.kd=0.0;
 
 	PID pid_rate_pitch;
 	pid_rate_pitch.Setpoint=0;
-	pid_rate_pitch.windup_min=-250;
-	pid_rate_pitch.windup_max=+250;
+	pid_rate_pitch.windup_min=-110;
+	pid_rate_pitch.windup_max=+110;
 	pid_rate_pitch.kp=0.0;
 	pid_rate_pitch.ki=0.0;
 	pid_rate_pitch.kd=0.0;
@@ -235,8 +236,8 @@ void pilot_using_joystick_with_stabilizer(void){
 
 	PID pid_rate_roll;
 	pid_rate_roll.Setpoint=0;
-	pid_rate_roll.windup_min=-250;
-	pid_rate_roll.windup_max=+250;
+	pid_rate_roll.windup_min=-110;
+	pid_rate_roll.windup_max=+110;
 	pid_rate_roll.kp=0.0;
 	pid_rate_roll.ki=0.0;
 	pid_rate_roll.kd=0.0;
@@ -253,8 +254,8 @@ void pilot_using_joystick_with_stabilizer(void){
 
 	PID pid_rate_yaw;
 	pid_rate_yaw.Setpoint=0;
-	pid_rate_yaw.windup_min=-250;
-	pid_rate_yaw.windup_max=+250;
+	pid_rate_yaw.windup_min=-110;
+	pid_rate_yaw.windup_max=+110;
 	pid_rate_yaw.kp=0.0;
 	pid_rate_yaw.ki=0.0;
 	pid_rate_yaw.kd=0.0;
