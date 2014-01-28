@@ -71,8 +71,8 @@ int main(int argc, char *argv[]) {
 
 	////----------------- Pilots -----------------------------------
 	//ardrone_threads.create_thread(pilot_using_keyboard_only);
-	ardrone_threads.create_thread(pilot_using_joystick_only);
-	//ardrone_threads.create_thread(pilot_using_joystick_with_stabilizer);
+	//ardrone_threads.create_thread(pilot_using_joystick_only);
+	ardrone_threads.create_thread(pilot_using_joystick_with_stabilizer);
 
 	printf("---------------- BUILD %s %s ------------\r\n",__DATE__,__TIME__);
 

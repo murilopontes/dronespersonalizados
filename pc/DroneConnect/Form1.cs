@@ -433,10 +433,10 @@ namespace DroneConnect
                     joy.Update();
 
                     joystick js = new joystick();
-                    js.pitch    = (Int16)(joy.LeftStick.Position.Y * 511);
-                    js.roll     = (Int16)(joy.LeftStick.Position.X * 511);
-                    js.throttle = (Int16)(joy.RightStick.Position.Y * 511);
-                    js.yaw      = (Int16)(joy.RightStick.Position.X * 511);
+                    js.pitch = (Int16)(joy.LeftStick.Position.Y * 250);
+                    js.roll     = (Int16)(joy.LeftStick.Position.X * 250);
+                    js.throttle = (Int16)(joy.RightStick.Position.Y * 10);
+                    js.yaw = (Int16)(joy.RightStick.Position.X * 250);
 
                     if (joy.B || joy.RightTrigger > 0.5) js.emergency = 1;
                     else js.emergency = 0;

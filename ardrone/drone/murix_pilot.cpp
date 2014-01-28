@@ -43,7 +43,6 @@ void pilot_using_keyboard_only(void){
 
 	motor_speed_t speeds_user;
 	speeds_user.front_left=0;
-
 	speeds_user.front_right=0;
 	speeds_user.rear_left=0;
 	speeds_user.rear_right=0;
@@ -165,6 +164,8 @@ void pilot_using_joystick_only(void){
 		speeds_user.front_right = height_speed +constraint_s16((-pitch_speed - roll_speed + yaw_speed),0,511);
 		speeds_user.rear_left   = height_speed +constraint_s16((+pitch_speed + roll_speed + yaw_speed),0,511);
 		speeds_user.rear_right  = height_speed +constraint_s16((+pitch_speed - roll_speed - yaw_speed),0,511);
+
+
 
 		//clamp
 		speeds_user.clamp(511);
@@ -291,22 +292,32 @@ void pilot_using_joystick_with_stabilizer(void){
 			/////////////////////////////////////////////////////////
 
 			//PID1 - setpoint=joystick input=angle
-			pid_angle_pitch.Setpoint=cmd.pitch_speed;
-			pid_angle_pitch.Input = fusion.fusion_pitch;
+			pid_angle_pitch.kp = 2.5;
+			pid_angle_pitch.Setpoint = constraint_s16(cmd.pitch_speed,-60,60);
+			pid_angle_pitch.Input = fusion.acc_pitch;
 			pid_angle_pitch.Compute();
+
+#define ROLL_MAX 250
+
 			//PID2 - setpoint=PID1.out input=gyro
-			pid_rate_pitch.Setpoint = pid_angle_pitch.Output;
+			pid_rate_pitch.kp = 2;
+			pid_rate_pitch.Setpoint = constraint_s16(pid_angle_pitch.Output,-ROLL_MAX,ROLL_MAX);
+			//pid_rate_pitch.Setpoint = constraint_s16(cmd.pitch_speed,-ROLL_MAX,ROLL_MAX);
 			pid_rate_pitch.Input = fusion.gyro_x;
 			pid_rate_pitch.Compute();
 
 			/////////////////////////////////////////////////////////
 
 			//PID1
-			pid_angle_roll.Setpoint=cmd.roll_speed;
-			pid_angle_roll.Input = fusion.fusion_roll;
+			pid_angle_roll.kp=2;
+			pid_angle_roll.Setpoint=constraint_s16(cmd.roll_speed,-30,30);
+			pid_angle_roll.Input = fusion.acc_roll;
 			pid_angle_roll.Compute();
 			//PID2
-			pid_rate_roll.Setpoint = pid_angle_roll.Output;
+
+			pid_rate_roll.kp = 2;
+			pid_rate_roll.Setpoint = constraint_s16(pid_angle_roll.Output,-ROLL_MAX,ROLL_MAX);
+			//pid_rate_roll.Setpoint = constraint_s16(cmd.roll_speed,-ROLL_MAX,ROLL_MAX);
 			pid_rate_roll.Input = fusion.gyro_y;
 			pid_rate_roll.Compute();
 
@@ -333,12 +344,12 @@ void pilot_using_joystick_with_stabilizer(void){
 			height_speed+=cmd.height_speed;
 
 			//clamp
-			height_speed=constraint_s16(height_speed,      50  ,  511  );
-			pitch_speed =constraint_s16(pitch_speed ,    -511  ,  511  );
-			roll_speed  =constraint_s16(roll_speed  ,    -511  ,  511  );
-			yaw_speed   =constraint_s16(yaw_speed   ,    -511  ,  511  );
-		}
+			height_speed=constraint_s16(height_speed,      50  ,  300  );
 
+			pitch_speed =constraint_s16(pitch_speed ,      -ROLL_MAX  ,  ROLL_MAX  );
+			roll_speed  =constraint_s16(roll_speed  ,      -ROLL_MAX  ,  ROLL_MAX  );
+			yaw_speed   =constraint_s16(yaw_speed   ,      -70  ,  70  );
+		}
 
 
 		//mix table
