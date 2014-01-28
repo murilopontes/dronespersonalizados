@@ -66,19 +66,21 @@ Project Build Instructions
 Drone Connect (Windows application)
 -----------------------------------
 
-1) Install Visual Studio Express 2013 for Windows Desktop
+* Install Visual Studio Express 2013 for Windows Desktop
 
 http://www.visualstudio.com/downloads/download-visual-studio-vs
 
-2) Open solution (pc\openfight-apps.sln), select DroneConnect project as startup project
+* Open solution (pc\openfight-apps.sln), select DroneConnect project as startup project
+* Install SlimDX via NuGet in Visual Studio
+* Install SlimDX SDK January 2012 (required by Axiom 3D RenderWindow)
 
-3) Install SlimDX via NuGet in Visual Studio
+https://slimdx.googlecode.com/files/SlimDX%20SDK%20%28January%202012%29.msi
 
-4) Install JSon.Net  via NuGet in Visual Studio
+* Install JSon.Net  via NuGet in Visual Studio
+* Install Axiom 3d Game Engine  via NuGet in Visual Studio
+* Build entire solution
+* Run DroneConnect 
 
-5) Build entire solution
-
-6) Run DroneConnect 
 
 
 Drone Firmware
