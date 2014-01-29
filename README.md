@@ -77,7 +77,17 @@ http://www.visualstudio.com/downloads/download-visual-studio-vs
 https://slimdx.googlecode.com/files/SlimDX%20SDK%20%28January%202012%29.msi
 
 * Install JSon.Net  via NuGet in Visual Studio
+
+* Install Visual Studio Express 2010 (required by XNA Game Studio 4.0)
+  http://download.microsoft.com/download/1/E/5/1E5F1C0A-0D5B-426A-A603-1798B951DDAE/VS2010Express1.iso
+
+* Install XNA Game Studio 4.0 (required by Axiom) 
+ http://www.microsoft.com/en-us/download/details.aspx?id=23714
+
+ 
 * Install Axiom 3d Game Engine  via NuGet in Visual Studio
+
+
 * Build entire solution
 * Run DroneConnect 
 
