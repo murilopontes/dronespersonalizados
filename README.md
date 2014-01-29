@@ -137,6 +137,11 @@ C:\boost_1_55_0>b2 toolset=gcc-arm target-os=linux link=static threadapi=pthread
 
 13) Eclipse Build firmware
 
+Tools
+-------------------
+
+Ogitor - the WYSIWYG scene editing environment for OGRE (www.ogre3d.org)
+https://bitbucket.org/jacmoe/ogitor/overview
 
 
 Boost build summary

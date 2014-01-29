@@ -76,6 +76,7 @@ namespace AxiomDX9Game2
             node.Pitch(30);
             node.Roll(30);
             node.Position += new Vector3(0, 50, 0);
+            node.Orientation = Quaternion.FromEulerAngles(0, 0, 0);
 
             Entity ent2 = _scene.CreateEntity("Penguin2", "penguin.mesh");
             //ent2.IsVisible = false;
@@ -85,7 +86,6 @@ namespace AxiomDX9Game2
             SceneNode node2 = _scene.RootSceneNode.CreateChildSceneNode("Penguin2", new Vector3(0, 0, 0));
             node2.AttachObject(ent2);
             node2.Position += new Vector3(-50, 25, -50);
-
 
             //create ground
             Plane plane = new Plane(Vector3.UnitY, 0);
