@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Mogre1.7.4</id>
+    <version>1.0.6</version>
+    <title>Mogre 1.7.4</title>
+    <authors>Max Barfuss</authors>
+    <owners>Max Barfuss</owners>
+    <licenseUrl>http://mogre.svn.sourceforge.net/viewvc/mogre/trunk/Mogre/License.html?revision=23</licenseUrl>
+    <projectUrl>http://www.ogre3d.org/tikiwiki/MOGRE</projectUrl>
+    <iconUrl>http://www.craftworkgames.com/mogre_builder_icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Installs Mogre with Terrain and Paging</description>
+    <summary>This is the Mogre 1.7.4 build which includes working Terrain and Paging. This package includes MogreNewt.</summary>
+    <releaseNotes>Modified build step to copy unmanaged dlls from the packages folder instead of content.</releaseNotes>
+    <copyright>GNU Library or Lesser General Public License (LGPL)</copyright>
+    <language>en-US</language>
+    <tags>Ogre Mogre 3D</tags>
+  </metadata>
+</package>

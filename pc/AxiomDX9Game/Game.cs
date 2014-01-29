@@ -7,6 +7,7 @@ using Axiom.Core;
 using Axiom.Graphics;
 using Axiom.Math;
 using Axiom.Input;
+using murix_utils;
 
 namespace AxiomDX9Game2
 {
@@ -49,6 +50,8 @@ namespace AxiomDX9Game2
 
         }
 
+        SceneNode node = null;
+
         public void CreateScene()
         {
 
@@ -63,10 +66,11 @@ namespace AxiomDX9Game2
 
             Entity ent = _scene.CreateEntity("Penguin", "penguin.mesh");
             ent.CastShadows = true;
-            SceneNode node = _scene.RootSceneNode.CreateChildSceneNode("PenguinNode");
+            
+            node = _scene.RootSceneNode.CreateChildSceneNode("PenguinNode");
             node.AttachObject(ent);
             node.Position += new Vector3(25, 0, 0);
-            node.Scale = new Vector3(0.5f, 0.5f, 0.5f);
+            //node.Scale = new Vector3(0.5f, 0.5f, 0.5f);
             //node2.ScaleBy(new Vector3(10, 10, 10));
             node.Yaw(180);
             node.Pitch(30);
@@ -107,13 +111,28 @@ namespace AxiomDX9Game2
 
 
         void HandleKeyboardInput(FrameEventArgs e) {
-            InputReader input = new InputReader();
-            input.Capture();
+            //InputReader input = new InputReader();
+            //input.Capture();
         }
 
-
+     
         public void OnRenderFrame(object s, FrameEventArgs e)
         {
+            Gamepad_State_SlimDX joy = new Gamepad_State_SlimDX(SlimDX.XInput.UserIndex.One);
+            joy.Update();
+
+            node.Pitch(joy.LeftStick.Position.Y);
+            node.Roll(joy.LeftStick.Position.X);
+            node.Yaw(joy.RightStick.Position.X);
+
+
+            node.Position += new Vector3(0, joy.RightStick.Position.Y, 0);
+
+            if (node.Position.y < 25)
+            {
+                node.Position = new Vector3(node.Position.x, 25, node.Position.z);
+            }
+
             HandleKeyboardInput(e);
 
         }
