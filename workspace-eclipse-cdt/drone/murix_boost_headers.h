@@ -33,4 +33,11 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
+#include <boost/math/quaternion.hpp>
+#include <boost/mpl/list.hpp>
+#include <boost/units/pow.hpp>
+#include <boost/units/quantity.hpp>
+#include <boost/units/io.hpp>
+
+
 #endif /* ALL_BOOST_HEADERS_H_ */
