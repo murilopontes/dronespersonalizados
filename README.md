@@ -143,6 +143,8 @@ Tools
 Ogitor - the WYSIWYG scene editing environment for OGRE (www.ogre3d.org)
 https://bitbucket.org/jacmoe/ogitor/overview
 
+Teraterm 4.80
+http://sourceforge.jp/projects/ttssh2/releases/
 
 Boost build summary
 -------------------
