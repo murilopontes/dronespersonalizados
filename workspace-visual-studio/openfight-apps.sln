@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
+# Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenFlightGamepad", "OpenFlightGamepad\OpenFlightGamepad.csproj", "{834C7DDD-0E59-43E0-A540-409434C3E0E1}"
@@ -36,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ssh", "telnet\Ssh\Ssh.csproj", "{A3CF5C83-93FC-4AB8-B73E-3627478433EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AxiomDX9Game", "AxiomDX9Game\AxiomDX9Game.csproj", "{1E2AEB19-3715-4069-A129-50277726D449}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPlotAccel", "SerialPlotAccel\SerialPlotAccel.csproj", "{2437BDA8-751B-42DF-8418-E149CD53B305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -257,6 +259,18 @@ Global
 		{1E2AEB19-3715-4069-A129-50277726D449}.Release|Win32.Build.0 = Release|x86
 		{1E2AEB19-3715-4069-A129-50277726D449}.Release|x86.ActiveCfg = Release|x86
 		{1E2AEB19-3715-4069-A129-50277726D449}.Release|x86.Build.0 = Release|x86
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Release|Win32.ActiveCfg = Release|Any CPU
+		{2437BDA8-751B-42DF-8418-E149CD53B305}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
