@@ -32,6 +32,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Axiom, Version=0.8.3376.12322, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Axiom.Platforms.OpenTK.0.8.3376.12322\lib\net35\Axiom.dll</HintPath>
+    </Reference>
+    <Reference Include="Axiom.Platforms.Win32">
+      <HintPath>..\packages\Axiom.Platforms.Win32.0.8.3376.12322\lib\net35\Axiom.Platforms.Win32.dll</HintPath>
+    </Reference>
+    <Reference Include="Axiom.Plugins.FreeImageCodecs">
+      <HintPath>..\packages\Axiom.Plugins.FreeImageCodecs.0.8.3376.12322\lib\net35\Axiom.Plugins.FreeImageCodecs.dll</HintPath>
+    </Reference>
+    <Reference Include="Axiom.RenderSystems.DirectX9">
+      <HintPath>..\packages\Axiom.RenderSystems.DirectX9.0.8.3376.12322\lib\net35\Axiom.RenderSystems.DirectX9.dll</HintPath>
+    </Reference>
+    <Reference Include="FreeImageNet">
+      <HintPath>..\packages\Axiom.Plugins.FreeImageCodecs.0.8.3376.12322\lib\net35\FreeImageNet.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Axiom.Framework.0.8.3376.12322\lib\net35\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
+      <HintPath>..\packages\SlimDX.4.0.13.44\lib\NET40\SlimDX.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -65,6 +88,22 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="media\Penguin.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\penguin.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\penguin.skeleton">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Rockwall.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\rockwall.tga">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -77,6 +116,43 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\packages\Axiom.0.8.3376.12322\native\x86\freetype6.dll">
+      <Link>freetype6.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Axiom.0.8.3376.12322\native\x86\zlib1.dll">
+      <Link>zlib1.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Axiom.Plugins.CgProgramManager.0.8.3376.12322\native\x86\cg.dll">
+      <Link>cg.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Axiom.Plugins.CgProgramManager.0.8.3376.12322\native\x86\Tao.Cg.dll">
+      <Link>Tao.Cg.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Axiom.Plugins.DevILCodecs.0.8.3376.12322\native\x86\devil.dll">
+      <Link>devil.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Axiom.Plugins.DevILCodecs.0.8.3376.12322\native\x86\ilu.dll">
+      <Link>ilu.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Axiom.Plugins.DevILCodecs.0.8.3376.12322\native\x86\ilut.dll">
+      <Link>ilut.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Axiom.Plugins.FreeImageCodecs.0.8.3376.12322\native\x86\freeimage.dll">
+      <Link>freeimage.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\penguin.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
