@@ -38,43 +38,50 @@ namespace SerialPlotAccel
 
 
 
+        private Root _engine;
+        private RenderWindow _window;
+        private SceneManager _scene;
+        private Camera _camera;
+        private System.Windows.Forms.Timer _timer_frame = new System.Windows.Forms.Timer();
+        SceneNode node = null;
+
+        void axiom_init() {
 
 
+            //
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US", false);
 
-        public void OnLoad()
-        {
+            //
+            _engine = new Root("Game.log");
+            _engine.RenderSystem = _engine.RenderSystems[0];
+            _engine.Initialize(false);
+
+            //
+            Axiom.Collections.NamedParameterList paramList = new Axiom.Collections.NamedParameterList();
+            paramList["externalWindowHandle"] = pictureBox1.Handle;
+            _window = _engine.CreateRenderWindow("RenderWindow", pictureBox1.Width, pictureBox1.Height, false, paramList);
+
+            //
             ResourceGroupManager.Instance.AddResourceLocation("media", "Folder", true);
 
+            //
             _scene = _engine.CreateSceneManager("DefaultSceneManager", "DefaultSM");
             _scene.ClearScene();
-
             //_scene = Root.Instance.CreateSceneManager(SceneType.ExteriorClose);
             //_scene.LoadWorldGeometry("Terrain.xml");
 
-
             _camera = _scene.CreateCamera("MainCamera");
-
-            //
             _camera.Position = new Vector3(0, 170, 300); // x=right/left from screen,y=bottom/up from screen,z=in/out from scren
             _camera.LookAt(Vector3.Zero);
-
-            //The clipping distance of a Camera specifies how close or far something can be before you no longer see it. 
             _camera.Near = 5;
-
-
             _camera.AutoAspectRatio = true;
 
+            //
             var vp = _window.AddViewport(_camera, 0, 0, 1.0f, 1.0f, 100);
             vp.BackgroundColor = ColorEx.CornflowerBlue;
-
             ResourceGroupManager.Instance.InitializeAllResourceGroups();
 
-        }
 
-        SceneNode node = null;
-
-        public void CreateScene()
-        {
 
             //shadows and ambient light
             _scene.AmbientLight = ColorEx.Black;
@@ -88,6 +95,7 @@ namespace SerialPlotAccel
             Entity ent = _scene.CreateEntity("Penguin", "penguin.mesh");
             ent.CastShadows = true;
 
+           
             node = _scene.RootSceneNode.CreateChildSceneNode("PenguinNode");
             node.AttachObject(ent);
             node.Position += new Vector3(25, 0, 0);
@@ -123,68 +131,28 @@ namespace SerialPlotAccel
             pointLight.Diffuse = ColorEx.White;
             pointLight.Specular = ColorEx.White;
 
+
+            _timer_frame.Interval = 30;
+            _timer_frame.Tick += _timer_frame_Tick;
+            _timer_frame.Start();
         }
 
-
-        public void OnUnload()
+        void _timer_frame_Tick(object sender, EventArgs e)
         {
+            //Tell Axiom to render a single frame
+            _engine.RenderOneFrame();
+
         }
 
-
-        void HandleKeyboardInput(FrameEventArgs e)
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //InputReader input = new InputReader();
-            //input.Capture();
+            this.serialPort1.Close();
+            Environment.Exit(0);
         }
-
-
-        public void OnRenderFrame(object s, FrameEventArgs e)
-        {
-            /*
-            Gamepad_State_SlimDX joy = new Gamepad_State_SlimDX(SlimDX.XInput.UserIndex.One);
-            joy.Update();
-
-            node.Pitch(joy.LeftStick.Position.Y);
-            node.Roll(joy.LeftStick.Position.X);
-            node.Yaw(joy.RightStick.Position.X);
-
-
-            node.Position += new Vector3(0, joy.RightStick.Position.Y, 0);
-
-            if (node.Position.y < 25)
-            {
-                node.Position = new Axiom.Math.Vector3(node.Position.x, 25, node.Position.z);
-            }
-
-            HandleKeyboardInput(e);
-            */
-        }
-
-
-        private Root _engine;
-        private RenderWindow _window;
-        private SceneManager _scene;
-        private Camera _camera;
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US", false);
-            
-            _engine = new Root("Game.log");
-            _engine.RenderSystem = _engine.RenderSystems[0];
-            
-            
-            _window = _engine.Initialize(true);
-            
-            /*
-            OnLoad();
-            CreateScene();
-            _engine.FrameRenderingQueued += OnRenderFrame;
-            _engine.StartRendering();
-            OnUnload();
-            */
-
-
+            axiom_init();
 
 
             sax.ChartType = SeriesChartType.Line;
@@ -216,7 +184,14 @@ namespace SerialPlotAccel
 
 
             this.serialPort1.PortName = "COM3";
-            this.serialPort1.Open();
+
+            try
+            {
+                this.serialPort1.Open();
+            }
+            catch (Exception ex) { 
+            
+            }
             //while (true) {
             //    Console.WriteLine(this.serialPort1.ReadExisting());
             //}
@@ -234,6 +209,7 @@ namespace SerialPlotAccel
         {
             try
             {
+
                 samples++;
                 
                 this.serialPort1.WriteLine("g");
@@ -292,6 +268,16 @@ namespace SerialPlotAccel
                         linear_position[0] += linear_speed[0];
                         linear_position[1] += linear_speed[1];
                         linear_position[2] += linear_speed[2];
+
+                        double limit_x = 50;
+                        if(linear_position[0]<-limit_x) linear_position[0] = -limit_x;
+                        if (linear_position[0] > limit_x) linear_position[0] = limit_x;
+
+                        if (linear_position[1] < 25) linear_position[1] = 25;
+                        if (linear_position[1] > limit_x) linear_position[1] = limit_x;
+
+                        if (linear_position[2] < -limit_x) linear_position[2] = -limit_x;
+                        if (linear_position[2] > limit_x) linear_position[2] = limit_x;
                     }
 
                     while (sax.Points.Count > 100) sax.Points.RemoveAt(0); sax.Points.AddY(linear_acceleration[0]);
@@ -306,7 +292,7 @@ namespace SerialPlotAccel
                     while (spy.Points.Count > 100) spy.Points.RemoveAt(0); spy.Points.AddY(linear_position[1]);
                     while (spz.Points.Count > 100) spz.Points.RemoveAt(0); spz.Points.AddY(linear_position[2]);
 
-
+                    node.Position = new Vector3(linear_position[0], linear_position[1], linear_position[2]);
 
                     chart_acc.ChartAreas[0].RecalculateAxesScale();
                     chart_speed.ChartAreas[0].RecalculateAxesScale();
@@ -325,10 +311,16 @@ namespace SerialPlotAccel
 
         }
 
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-  
 
+        int prevRotation = 0;
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            //Rotate the ogre mesh
+            node.Rotate(Axiom.Math.Vector3.UnitY, trackBar1.Value - prevRotation);
+            prevRotation = trackBar1.Value;
         }
+
+
+
     }
 }
