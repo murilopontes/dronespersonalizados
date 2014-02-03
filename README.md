@@ -1,18 +1,17 @@
 murix-uav-iot
 =============
 
-UAV + IOT + DIY
+Make DIY drones, UAVs and IOT devices fly
 
+Drone using Ar.Drone V1 (ARM926)
 
-Drone using Ar.Drone V1
+Drone using FRDM-KL25Z (ARM Cortex-M0 16k-RAM 128k-FLASH)
 
-Drone using FRDM-KL25Z 
+Drone using STM32VLDISCOVERY (ARM Cortex-M3 8k-RAM 128k-FLASH)
 
-Drone using STM32F100RB (STM32VLDISCOVERY)
+Drone using Stellaris Launchpad (ARM Cortex-M4 32k-RAM 512k-FLASH)
 
-Drone using Stellaris Launchpad
-
-Drone using Tiva C Series Launchpad
+Drone using Tiva C Series Launchpad (ARM Cortex-M4 32k-RAM 512k-FLASH)
 
 
 Sensors Breakout boards
