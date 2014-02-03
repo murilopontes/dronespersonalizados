@@ -213,9 +213,9 @@ namespace SerialPlotAccel
                 samples++;
                 
                 this.serialPort1.WriteLine("g");
-
                 this.serialPort1.ReadTimeout = 10;
-                string[] aa = this.serialPort1.ReadLine().Split('|');
+
+                string[] aa = this.serialPort1.ReadExisting().Split('|');
                 if (aa.Length >= 3)
                 {
                     double ax = double.Parse(aa[0], CultureInfo.InvariantCulture);
@@ -254,29 +254,38 @@ namespace SerialPlotAccel
 
                     if (samples > 30)
                     {
-                        //
+                        //integrate accel -> obtain speed
                         linear_speed[0] += linear_acceleration[0];
                         linear_speed[1] += linear_acceleration[1];
                         linear_speed[2] += linear_acceleration[2];
-                        //
+
+                        //clamp speed -> control integrate windup 
+                        int speed_limit = 80;
+                        if (linear_speed[0] < -speed_limit) linear_speed[0] = -speed_limit;
+                        if (linear_speed[0] > speed_limit) linear_speed[0] = speed_limit;
+                        if (linear_speed[1] < -speed_limit) linear_speed[1] = -speed_limit;
+                        if (linear_speed[1] > speed_limit) linear_speed[1] = speed_limit;
+                        if (linear_speed[2] < -speed_limit) linear_speed[2] = -speed_limit;
+                        if (linear_speed[2] > speed_limit) linear_speed[2] = speed_limit;
+
+                        //if not accel for long period -> assume no speed
                         int reset_speed = 10;
                         if (linear_acc_deadzone_count[0] > reset_speed) linear_speed[0] = 0;
                         if (linear_acc_deadzone_count[1] > reset_speed) linear_speed[1] = 0;
                         if (linear_acc_deadzone_count[2] > reset_speed) linear_speed[2] = 0;
 
-                        //
+                        //integrate speed -> obtain position
                         linear_position[0] += linear_speed[0];
                         linear_position[1] += linear_speed[1];
                         linear_position[2] += linear_speed[2];
 
-                        double limit_x = 50;
+                        //clamp position to 3d world box
+                        double limit_x = 80;
                         if(linear_position[0]<-limit_x) linear_position[0] = -limit_x;
                         if (linear_position[0] > limit_x) linear_position[0] = limit_x;
-
-                        if (linear_position[1] < 25) linear_position[1] = 25;
+                        if (linear_position[1] < -limit_x) linear_position[1] = -limit_x;
                         if (linear_position[1] > limit_x) linear_position[1] = limit_x;
-
-                        if (linear_position[2] < -limit_x) linear_position[2] = -limit_x;
+                        if (linear_position[2] < 25) linear_position[2] = 25;
                         if (linear_position[2] > limit_x) linear_position[2] = limit_x;
                     }
 
@@ -292,7 +301,7 @@ namespace SerialPlotAccel
                     while (spy.Points.Count > 100) spy.Points.RemoveAt(0); spy.Points.AddY(linear_position[1]);
                     while (spz.Points.Count > 100) spz.Points.RemoveAt(0); spz.Points.AddY(linear_position[2]);
 
-                    node.Position = new Vector3(linear_position[0], linear_position[1], linear_position[2]);
+                    node.Position = new Vector3(linear_position[1],linear_position[2],linear_position[0] );
 
                     chart_acc.ChartAreas[0].RecalculateAxesScale();
                     chart_speed.ChartAreas[0].RecalculateAxesScale();
