@@ -3,7 +3,7 @@ murix-uav-iot
 
 Make DIY drones, UAVs and IOT devices fly
 
-Drone using Ar.Drone V1 (ARM926)
+Drone using Ar.Drone V1 (ARM926 128M-RAM 128M-FLASH)
 
 Drone using FRDM-KL25Z (ARM Cortex-M0 16k-RAM 128k-FLASH)
 
