@@ -23,7 +23,7 @@ GY-273 (Magnetometer HMC5883L)
 
 GY-65 (Barometer BMP085)
 
-GY-521 (Accelerometer and Gyroscope MPU6050 - 16-bit)
+GY-521 (Accelerometer and Gyroscope MPU6050 - 6xADC-16bit)
 
 Frame
 =====
