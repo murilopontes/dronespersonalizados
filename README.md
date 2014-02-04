@@ -3,13 +3,17 @@ murix-uav-iot
 
 Make DIY drones, UAVs and IOT devices fly
 
-Drone using Ar.Drone V1 (ARM926 128M-RAM 128M-FLASH)
+Drone using Ar.Drone V1 
+* ARM926 128M-RAM 128M-FLASH
 
-Drone using FRDM-KL25Z (ARM Cortex-M0 16k-RAM 128k-FLASH)
+Drone using FRDM-KL25Z 
+* ARM Cortex-M0 16k-RAM 128k-FLASH
 
-Drone using STM32VLDISCOVERY (ARM Cortex-M3 8k-RAM 128k-FLASH)
+Drone using STM32VLDISCOVERY 
+* ARM Cortex-M3 8k-RAM 128k-FLASH
 
-Drone using Stellaris / Tiva C Series Launchpad (ARM Cortex-M4 32k-RAM 256k-FLASH 2k-eeprom 12xADC-12bit 16xPWM-16bit)
+Drone using Stellaris / Tiva C Series Launchpad
+* ARM Cortex-M4 32k-RAM 256k-FLASH 2k-eeprom 12xADC-12bit 16xPWM-16bit
 * ICDI JTAG Drivers - http://www.ti.com/tool/stellaris_icdi_drivers
 
 
