@@ -24,11 +24,11 @@ namespace AxiomDX9Game2
         {
             ResourceGroupManager.Instance.AddResourceLocation("media", "Folder", true);
 
-            _scene = _engine.CreateSceneManager("DefaultSceneManager", "DefaultSM");
-            _scene.ClearScene();
+            //_scene = _engine.CreateSceneManager("DefaultSceneManager", "DefaultSM");
+            //_scene.ClearScene();
 
-            //_scene = Root.Instance.CreateSceneManager(SceneType.ExteriorClose);
-            //_scene.LoadWorldGeometry("Terrain.xml");
+            _scene = Root.Instance.CreateSceneManager(SceneType.ExteriorClose);
+            _scene.LoadWorldGeometry("SampleOFS.xml");
 
 
             _camera = _scene.CreateCamera("MainCamera");

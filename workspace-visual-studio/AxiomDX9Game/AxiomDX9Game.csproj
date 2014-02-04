@@ -70,6 +70,114 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="media\Materials\additional.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\ball.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\Barrel.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\BlackAndWhite.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\BW.compositor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\crate.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\Dwarf.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\fence4.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\GrayScale.cg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\hang.bridge.01.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\highlander.house.01.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\ogre.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\rock.05.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\rock.07.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\skeltorch.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\ssao.cg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\ssao.compositor">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\ssao.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\StdQuad_vp.cg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\StdQuad_vp.glsl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\StdQuad_vp.program">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\tree.05.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\tree.07.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Materials\tree.09.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\ball.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\Barrel.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\crate.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\fence4.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\hang.bridge.01.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\highlanderhouse.01.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\rock.05.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\rock.07.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\skeltorch.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\tree.05.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\tree.07.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Models\tree.09.mesh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="media\Penguin.material">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -83,6 +191,273 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="media\rockwall.tga">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Scripts\TestUpdateScript1.as">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Scripts\TestUpdateScript2.as">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Scripts\TestUpdateScript3.as">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Scripts\TestUpdateScript4.as">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\plants\grass.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\plants\grass2.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\plants\plant1.material">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\terrain\Page_00000000.ogt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\terrain\Page_00000000.ogt.backup">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\city_0_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\city_1_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\city_2_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\city_3_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\city_4_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\city_5_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\city_6_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\desert_0_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\desert_1_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\desert_2_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\desert_3_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\desert_4_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\desert_5_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\desert_6_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\dirt_grayrocky_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\grass_0_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\grass_1_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\ice_0_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\ice_1_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\ice_2_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\ice_3_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\ice_4_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\ice_5_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\ice_6_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\ice_7_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\jungle_0_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\jungle_1_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\jungle_2_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\jungle_3_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\jungle_4_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\jungle_5_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\jungle_6_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\sand_1_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\volcano_0_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\volcano_1_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\volcano_2_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\volcano_4_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\volcano_5_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\volcano_6_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\diffusespecular\volcano_7_diffusespecular.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\city_0_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\city_1_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\city_2_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\city_3_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\city_4_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\city_5_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\city_6_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\desert_0_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\desert_1_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\desert_2_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\desert_3_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\desert_4_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\desert_5_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\desert_6_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\dirt_grayrocky_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\grass_0_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\grass_1_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\ice_0_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\ice_1_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\ice_2_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\ice_3_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\ice_4_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\ice_5_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\ice_6_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\ice_7_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\jungle_0_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\jungle_1_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\jungle_2_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\jungle_3_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\jungle_4_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\jungle_5_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\jungle_6_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\sand_1_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\volcano_0_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\volcano_1_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\volcano_2_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\volcano_4_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\volcano_5_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\volcano_6_normalheight.dds">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="media\Terrain\textures\normalheight\volcano_7_normalheight.dds">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -100,9 +475,105 @@
       <Link>freeimage.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="media\Materials\axe.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\ball.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\clouds.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\crate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\dwarf2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\fence4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\hang.bridge.01.boards.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\hang.bridge.01.pole.end.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\hang.bridge.01.pole.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\hang.bridge.01.ropes.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\hangbridgeline.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\highlander.house.01.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\ogre.tex.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\ogreahead.tex.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\random.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\rock.05.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\RustyBarrel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\TallTorch_Blue.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\tree.05.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\tree.07.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\tree.09.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Materials\white.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Models\model_license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Models\ogre.info.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Models\ogre_model_license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="media\penguin.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="media\SampleOFS.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Templates\CustomPropertySheet.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Terrain\plants\grass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Terrain\plants\grass2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Terrain\plants\plant1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="media\Terrain\terrain\Page_00000000_density.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="media\Temp\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
