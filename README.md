@@ -16,9 +16,15 @@ Drone using Stellaris / Tiva C Series Launchpad
 * ARM Cortex-M4 32k-RAM 256k-FLASH 2k-eeprom 12xADC-12bit 16xPWM-16bit
 * ICDI JTAG Drivers - http://www.ti.com/tool/stellaris_icdi_drivers
 * Install ICDI Windows 8
+
+> Run Windows cmd.exe as administrator
+
 > bcdedit -set loadoptions DISABLE_INTEGRITY_CHECKS
+
 > bcdedit -set TESTSIGNING ON
+
 > shutdown /r
+
 > Install ICDI without problems
 
 
