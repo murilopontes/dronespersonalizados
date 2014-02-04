@@ -17,13 +17,20 @@ Drone using Tiva C Series Launchpad (new branch of Stellaris Launchpad)
 Sensors Breakout boards
 =======================
 
-GY-GPS6MV1 (GPS Ublox NEO-6M)
+GY-GPS6MV1 (GPS)
+* Ublox NEO-6M
 
-GY-273 (Magnetometer HMC5883L)
+GY-273 (Magnetometer)
+* HMC5883L
 
-GY-65 (Barometer BMP085)
+GY-65 (Barometer)
+* BMP085
 
-GY-521 (Accelerometer and Gyroscope MPU6050 - 6xADC-16bit)
+GY-521 (Accelerometer and Gyroscope)
+* MPU6050
+* 1k FIFO
+* 6 x ADC 16 bits
+* "Digital Motion Processor" (DMP)
 
 Frame
 =====
