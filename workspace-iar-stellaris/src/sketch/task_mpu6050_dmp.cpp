@@ -913,6 +913,7 @@ void mpu6050_dmp_loop()
   // longer contain the lower byte.
   uint8_t swap;
   #define SWAP(x,y) swap = x; x = y; y = swap
+  #define CHANGE_ENDIAN(x) (x >> 8 | ((x & 0xFF) << 8))
 
   
   SWAP (accel_t_gyro.reg.x_accel_h, accel_t_gyro.reg.x_accel_l);
