@@ -38,6 +38,17 @@ uint8_t eeread(int addr) { return eeprom_read_byte((unsigned char *) addr); }
 // Initialize Teensy 3 eeprom
 void eeinit(void) { eeprom_initialize(); }
 #endif
+// Support Stellaris / Tiva C Series Launchpad
+#elif ( (defined(ARM_BUILD)) && (ARM_BUILD==4))
+void eeinit(void) {
+   
+}
+void eewrite(int addr, uint8_t value) { 
+  EEPROM.write(addr,value;
+}
+uint8_t eeread(int addr) { 
+  return EEPROM.read(addr);
+}
 #elif defined(ARM_BUILD)
 #if ARM_BUILD!=2
 // A little fake eeprom for ARM testing

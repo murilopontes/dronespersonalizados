@@ -891,8 +891,8 @@ void mpu6050_dmp_loop()
   accel_t_gyro_union accel_t_gyro;
 
 
-  Serial.println("");
-  Serial.println("MPU-6050");
+  //Serial.println("");
+  //Serial.println("MPU-6050");
 
   // Read the raw values.
   // Read 14 bytes at once, 
@@ -901,9 +901,11 @@ void mpu6050_dmp_loop()
   // there is no filter enabled, and the values
   // are not very stable.
   error = MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) &accel_t_gyro, sizeof(accel_t_gyro));
+  if(error){
   Serial.print("Read accel, temp and gyro, error = ");
   Serial.println(error,DEC);
-
+  return;
+  }
 
   // Swap all high and low bytes.
   // After this, the registers values are swapped, 
@@ -938,13 +940,13 @@ void mpu6050_dmp_loop()
   double ay=accel_t_gyro.value.y_accel / divisor_accel * 9.81;
   double az=accel_t_gyro.value.z_accel / divisor_accel * 9.81;
   
-  Serial.print("accel x,y,z: ");
+  Serial.print("acc{");
   Serial.print(ax, DEC);
-  Serial.print(", ");
+  Serial.print(",");
   Serial.print(ay, DEC);
-  Serial.print(", ");
+  Serial.print(",");
   Serial.print(az, DEC);
-  Serial.println("");
+  Serial.print("} ");
   
     analogWrite(  RED_LED,map((int)abs(ax)*3,0,11*3,0,15));
     analogWrite( BLUE_LED,map((int)abs(ay)*3,0,11*3,0,15));
@@ -986,18 +988,7 @@ void mpu6050_dmp_loop()
     ////////////////////////////////////////////////////////
   
 
-   // The temperature sensor is -40 to +85 degrees Celsius.
-  // It is a signed integer.
-  // According to the datasheet: 
-  //   340 per degrees Celsius, -512 at 35 degrees.
-  // At 0 degrees: -512 - (340 * 35) = -12412
 
-  Serial.print("temperature: ");
-  
-  //dT = ( (double) accel_t_gyro.value.temperature + 12412.0) / 340.0;
-  Serial.print(((accel_t_gyro.value.temperature+521.0)/340.0+35.0));
-  Serial.print(" degrees Celsius");
-  Serial.println("");
 
 
   // Print the raw gyro values.
@@ -1010,15 +1001,28 @@ void mpu6050_dmp_loop()
     case MPU6050_GYRO_RANGE_2000: divisor_gyro=939.7;break;
   }
   
-  Serial.print("gyro x,y,z : ");
+  Serial.print("gyro{");
   Serial.print(accel_t_gyro.value.x_gyro / divisor_gyro, DEC);
-  Serial.print(", ");
+  Serial.print(",");
   Serial.print(accel_t_gyro.value.y_gyro / divisor_gyro, DEC);
-  Serial.print(", ");
+  Serial.print(",");
   Serial.print(accel_t_gyro.value.z_gyro / divisor_gyro, DEC);
-  Serial.print(", ");
+  Serial.print(",");
+  Serial.print("} ");
+  
+  
+     // The temperature sensor is -40 to +85 degrees Celsius.
+  // It is a signed integer.
+  // According to the datasheet: 
+  //   340 per degrees Celsius, -512 at 35 degrees.
+  // At 0 degrees: -512 - (340 * 35) = -12412
+
+  Serial.print("temp{");
+  
+  //dT = ( (double) accel_t_gyro.value.temperature + 12412.0) / 340.0;
+  Serial.print(((accel_t_gyro.value.temperature+521.0)/340.0+35.0));
+  Serial.print("}");
   Serial.println("");
-  delay(100);
 }
 
 
@@ -1057,6 +1061,7 @@ extern "C" void task_mpu6050_dmp(void *pvParameters){
   int error;
   uint8_t c;
 
+  /*
   pinMode(RED_LED, OUTPUT); 
   pinMode(BLUE_LED, OUTPUT); 
   pinMode(GREEN_LED, OUTPUT); 
@@ -1096,7 +1101,7 @@ extern "C" void task_mpu6050_dmp(void *pvParameters){
   }
   
        while(1);
-     
+    */ 
   
   Serial.println("InvenSense MPU-6050");
   Serial.println("June 2012");
@@ -1135,24 +1140,24 @@ extern "C" void task_mpu6050_dmp(void *pvParameters){
   
   
   
-  MPU6050_setBW(MPU6050_BW_256);
+  //MPU6050_setBW(MPU6050_BW_256);
 //  MPU6050_setBW(MPU6050_BW_188);
 //  MPU6050_setBW(MPU6050_BW_98);
 //  MPU6050_setBW(MPU6050_BW_42);
  // MPU6050_setBW(MPU6050_BW_20);
 //  MPU6050_setBW(MPU6050_BW_10);
-  MPU6050_setBW(MPU6050_BW_5);
+  //MPU6050_setBW(MPU6050_BW_5);
 
-//  MPU6050_setAcceleroRange(MPU6050_ACCELERO_RANGE_2G);
+  MPU6050_setAcceleroRange(MPU6050_ACCELERO_RANGE_2G);
 //  MPU6050_setAcceleroRange(MPU6050_ACCELERO_RANGE_4G);
 //  MPU6050_setAcceleroRange(MPU6050_ACCELERO_RANGE_8G);
-  MPU6050_setAcceleroRange(MPU6050_ACCELERO_RANGE_16G);
+//  MPU6050_setAcceleroRange(MPU6050_ACCELERO_RANGE_16G);
 
                    
-//MPU6050_setGyroRange(MPU6050_GYRO_RANGE_250);
+MPU6050_setGyroRange(MPU6050_GYRO_RANGE_250);
 //MPU6050_setGyroRange(MPU6050_GYRO_RANGE_500);
 //MPU6050_setGyroRange(MPU6050_GYRO_RANGE_1000);
-MPU6050_setGyroRange(MPU6050_GYRO_RANGE_2000);
+//MPU6050_setGyroRange(MPU6050_GYRO_RANGE_2000);
     
     
   while(1){

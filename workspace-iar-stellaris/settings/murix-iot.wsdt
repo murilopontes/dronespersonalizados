@@ -20,11 +20,11 @@
         
         
       <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>846</ColumnWidth1><ColumnWidth2>225</ColumnWidth2><ColumnWidth3>56</ColumnWidth3></Build>
-    <Select-Ambiguous-Definitions><ColumnWidth0>407</ColumnWidth0><ColumnWidth1>58</ColumnWidth1><ColumnWidth2>699</ColumnWidth2></Select-Ambiguous-Definitions><TerminalIO/><Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1128</ColumnWidth1></Debug-Log><Find-in-Files><ColumnWidth0>440</ColumnWidth0><ColumnWidth1>62</ColumnWidth1><ColumnWidth2>754</ColumnWidth2></Find-in-Files></Static>
+    <Select-Ambiguous-Definitions><ColumnWidth0>407</ColumnWidth0><ColumnWidth1>58</ColumnWidth1><ColumnWidth2>699</ColumnWidth2></Select-Ambiguous-Definitions><TerminalIO/><Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1128</ColumnWidth1></Debug-Log><Find-in-Files><ColumnWidth0>440</ColumnWidth0><ColumnWidth1>62</ColumnWidth1><ColumnWidth2>754</ColumnWidth2><ColumnWidth3>251</ColumnWidth3></Find-in-Files></Static>
     <Windows>
       
       
-    <Wnd2>
+    <Wnd0>
         <Tabs>
           <Tab>
             <Identity>TabID-4379-12022</Identity>
@@ -32,11 +32,11 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>murix-iot</ExpandedNode><ExpandedNode>murix-iot/src</ExpandedNode><ExpandedNode>murix-iot/src/pinout-api</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>murix-iot</ExpandedNode><ExpandedNode>murix-iot/src</ExpandedNode><ExpandedNode>murix-iot/src/bitlash-v2.0</ExpandedNode><ExpandedNode>murix-iot/src/lm4f (energia-0101E0010)</ExpandedNode><ExpandedNode>murix-iot/src/lm4f (energia-0101E0010)/libraries</ExpandedNode><ExpandedNode>murix-iot/src/lm4f (energia-0101E0010)/libraries/EEPROM</ExpandedNode><ExpandedNode>murix-iot/src/pinout-api</ExpandedNode><ExpandedNode>murix-iot/src/sketch (murix-iot)</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd2><Wnd3>
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
         <Tabs>
           <Tab>
             <Identity>TabID-4149-12231</Identity>
@@ -46,20 +46,20 @@
           </Tab>
         <Tab><Identity>TabID-32693-13743</Identity><TabName>Ambiguous Definitions</TabName><Factory>Select-Ambiguous-Definitions</Factory><Session/></Tab><Tab><Identity>TabID-16369-10557</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab><Tab><Identity>TabID-14934-30203</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs>
         
-      <SelectedTab>0</SelectedTab></Wnd3></Windows>
+      <SelectedTab>0</SelectedTab></Wnd1></Windows>
     <Editor>
       
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\arduino_uip\utility\Dns.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>161</SelStart2><SelEnd2>161</SelEnd2></Tab><ActiveTab>0</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\sketch\sketch.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>15</YPos2><SelStart2>1130</SelStart2><SelEnd2>1130</SelEnd2></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\sketch\task_mpu6050_dmp.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>706</YPos2><SelStart2>30282</SelStart2><SelEnd2>30331</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\libraries\Wire\Wire.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\libraries\Wire\Wire.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>171</YPos2><SelStart2>715</SelStart2><SelEnd2>715</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-02992070><key>iaridepm.enu1</key></Toolbar-02992070></Sizes></Row0></Top><Left><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>453</Bottom><Right>381</Right><x>-2</x><y>-2</y><xscreen>190</xscreen><yscreen>301</yscreen><sizeHorzCX>173042</sizeHorzCX><sizeHorzCY>404027</sizeHorzCY><sizeVertCX>348816</sizeVertCX><sizeVertCY>610738</sizeVertCY></Rect></Wnd2></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd3><Rect><Top>-2</Top><Left>-2</Left><Bottom>247</Bottom><Right>1100</Right><x>-2</x><y>-2</y><xscreen>1102</xscreen><yscreen>249</yscreen><sizeHorzCX>1003643</sizeHorzCX><sizeHorzCY>334228</sizeHorzCY><sizeVertCX>173042</sizeVertCX><sizeVertCY>404027</sizeVertCY></Rect></Wnd3></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-02ee1f50><key>iaridepm.enu1</key></Toolbar-02ee1f50></Sizes></Row0><Row1><Sizes/></Row1><Row2><Sizes/></Row2></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>730</Bottom><Right>381</Right><x>-2</x><y>-2</y><xscreen>190</xscreen><yscreen>301</yscreen><sizeHorzCX>148438</sizeHorzCX><sizeHorzCY>327530</sizeHorzCY><sizeVertCX>299219</sizeVertCX><sizeVertCY>796518</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>144</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>146</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>158868</sizeHorzCY><sizeVertCX>148438</sizeVertCX><sizeVertCY>327530</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 

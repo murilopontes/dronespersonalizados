@@ -45,11 +45,11 @@ void setup()
   
     xTaskCreate(task_buttons, (signed portCHAR *)"buttons", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
     xTaskCreate(task_leds   , (signed portCHAR *)"leds"   , configMINIMAL_STACK_SIZE, NULL, 0, NULL);
-    xTaskCreate(task_bitlash, (signed portCHAR *)"bitlash", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
+    //xTaskCreate(task_bitlash, (signed portCHAR *)"bitlash", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
     
     
     //xTaskCreate(task_adc,  (signed portCHAR *)"adc", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
-    //xTaskCreate(task_mpu6050_dmp, (signed portCHAR *)"6050dmp", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
+    xTaskCreate(task_mpu6050_dmp, (signed portCHAR *)"6050dmp", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
     //xTaskCreate(task_esc,  (signed portCHAR *)"escp", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
     
     

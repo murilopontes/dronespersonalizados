@@ -1757,9 +1757,6 @@
       </file>
     </group>
   </group>
-  <file>
-    <name>$PROJ_DIR$\src\README.md</name>
-  </file>
 </project>
 
 

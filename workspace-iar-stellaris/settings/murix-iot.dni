@@ -11,7 +11,7 @@ ByteLimit=50
 [LMIFTDIDriver]
 LMI_ResetMode=0x00000000
 [DebugChecksum]
-Checksum=1501689931
+Checksum=-2039358997
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -39,6 +39,7 @@ mode=0
 [Breakpoints]
 Count=0
 [Aliases]
-A0=_ "C:\murix-iot\src\freertos\Source\portable\IAR\ARM_CM4F\portasm.s" ""
-Count=1
+A0=_ "C:\Users\mpontes\workspace\murix-iot-iar\src\freertos\Source\portable\IAR\ARM_CM4F\portasm.s" ""
+A1=_ "C:\murix-iot\src\freertos\Source\portable\IAR\ARM_CM4F\portasm.s" ""
+Count=2
 SuppressDialog=1
