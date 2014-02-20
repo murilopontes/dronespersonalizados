@@ -22,12 +22,6 @@
 #include "WString.h"
 #include "itoa.h"
 
-//FREERTOS
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "semphr.h"
-
 
 /*********************************************/
 /*  Constructors                             */
@@ -109,7 +103,7 @@ String::String(unsigned long value, unsigned char base)
 
 String::~String()
 {
-	vPortFree(buffer);
+	free(buffer);
 }
 
 /*********************************************/
@@ -126,7 +120,7 @@ inline void String::init(void)
 
 void String::invalidate(void)
 {
-	if (buffer) vPortFree(buffer);
+	if (buffer) free(buffer);
 	buffer = NULL;
 	capacity = len = 0;
 }
@@ -177,7 +171,7 @@ void String::move(String &rhs)
 			rhs.len = 0;
 			return;
 		} else {
-			vPortFree(buffer);
+			free(buffer);
 		}
 	}
 	buffer = rhs.buffer;

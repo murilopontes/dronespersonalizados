@@ -99,7 +99,7 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state>LM4F120H5QR	TexasInstruments LM4F120H5QR</state>
+          <state>TM4C123GH6PM	TexasInstruments TM4C123GH6PM</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
@@ -173,6 +173,7 @@
         <option>
           <name>CCDefines</name>
           <state>ARDUINO=150</state>
+          <state>ewarm</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -947,117 +948,6 @@
   <group>
     <name>src</name>
     <group>
-      <name>arduino_uip</name>
-      <excluded>
-        <configuration>murix-iot-lm4f120xl</configuration>
-      </excluded>
-      <group>
-        <name>utility</name>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\clock-arch.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\clock-arch.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\Dhcp.cpp</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\Dhcp.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\Dns.cpp</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\Dns.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\enc28j60.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\Enc28J60Network.cpp</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\Enc28J60Network.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\mempool.cpp</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\mempool.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\mempool_conf.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip-conf.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip-neighbor.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip-neighbor.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip_arch.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip_arp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip_arp.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip_clock.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip_timer.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uip_timer.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\uipopt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\src\arduino_uip\utility\util.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$\src\arduino_uip\ethernet_comp.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\arduino_uip\UIPClient.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\arduino_uip\UIPClient.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\arduino_uip\UIPEthernet.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\arduino_uip\UIPEthernet.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\arduino_uip\UIPServer.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\arduino_uip\UIPServer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\arduino_uip\UIPUdp.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\arduino_uip\UIPUdp.h</name>
-      </file>
-    </group>
-    <group>
       <name>bitlash-v2.0</name>
       <group>
         <name>src</name>
@@ -1112,13 +1002,16 @@
       </file>
     </group>
     <group>
-      <name>freertos (7.5.3)</name>
+      <name>freertos (8.0.0)</name>
       <group>
         <name>Source</name>
         <group>
           <name>include</name>
           <file>
             <name>$PROJ_DIR$\src\freertos\Source\include\croutine.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\src\freertos\Source\include\event_groups.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$\src\freertos\Source\include\FreeRTOS.h</name>
@@ -1143,6 +1036,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$\src\freertos\Source\include\StackMacros.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\src\freertos\Source\include\stdint.readme</name>
           </file>
           <file>
             <name>$PROJ_DIR$\src\freertos\Source\include\task.h</name>
@@ -1179,10 +1075,16 @@
           <name>$PROJ_DIR$\src\freertos\Source\croutine.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\src\freertos\Source\event_groups.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\src\freertos\Source\list.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\src\freertos\Source\queue.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\src\freertos\Source\readme.txt</name>
         </file>
         <file>
           <name>$PROJ_DIR$\src\freertos\Source\tasks.c</name>
@@ -1196,7 +1098,7 @@
       </file>
     </group>
     <group>
-      <name>lm4f (energia-0101E0010)</name>
+      <name>lm4f (energia-0101E0011)</name>
       <group>
         <name>cores</name>
         <group>
@@ -1208,6 +1110,12 @@
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\adc.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\aes.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\aes.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\can.c</name>
@@ -1228,7 +1136,19 @@
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\cpu.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\crc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\crc.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\debug.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\des.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\des.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\eeprom.c</name>
@@ -1237,19 +1157,37 @@
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\eeprom.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\emac.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\emac.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\epi.c</name>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\epi.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\epi_workaround_ccs.s</name>
+              <excluded>
+                <configuration>murix-iot-lm4f120xl</configuration>
+              </excluded>
+            </file>
+            <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\ethernet.c</name>
+              <excluded>
+                <configuration>murix-iot-lm4f120xl</configuration>
+              </excluded>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\ethernet.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\fan.c</name>
+              <excluded>
+                <configuration>murix-iot-lm4f120xl</configuration>
+              </excluded>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\fan.h</name>
@@ -1286,6 +1224,9 @@
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\i2s.c</name>
+              <excluded>
+                <configuration>murix-iot-lm4f120xl</configuration>
+              </excluded>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\i2s.h</name>
@@ -1297,7 +1238,16 @@
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\interrupt.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\lcd.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\lcd.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\lpc.c</name>
+              <excluded>
+                <configuration>murix-iot-lm4f120xl</configuration>
+              </excluded>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\lpc.h</name>
@@ -1310,6 +1260,9 @@
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\peci.c</name>
+              <excluded>
+                <configuration>murix-iot-lm4f120xl</configuration>
+              </excluded>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\peci.h</name>
@@ -1339,10 +1292,22 @@
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\rtos_bindings.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\shamd5.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\shamd5.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\ssi.c</name>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\ssi.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\sw_crc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\sw_crc.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\driverlib\sysctl.c</name>
@@ -1402,13 +1367,25 @@
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_adc.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_aes.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_can.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_ccm.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_comp.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_des.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_eeprom.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_emac.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_epi.h</name>
@@ -1438,6 +1415,9 @@
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_ints.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_lcd.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_lpc.h</name>
             </file>
             <file>
@@ -1454,6 +1434,9 @@
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_qei.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_shamd5.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\hw_ssi.h</name>
@@ -1488,12 +1471,18 @@
             <file>
               <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\lm4f120h5qr.h</name>
             </file>
+            <file>
+              <name>$PROJ_DIR$\src\lm4f\cores\lm4f\inc\tm4c123gh6pm.h</name>
+            </file>
           </group>
           <file>
             <name>$PROJ_DIR$\src\lm4f\cores\lm4f\Arduino.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$\src\lm4f\cores\lm4f\binary.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\src\lm4f\cores\lm4f\Client.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$\src\lm4f\cores\lm4f\Energia.h</name>
@@ -1503,6 +1492,12 @@
           </file>
           <file>
             <name>$PROJ_DIR$\src\lm4f\cores\lm4f\HardwareSerial.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\src\lm4f\cores\lm4f\IPAddress.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\src\lm4f\cores\lm4f\IPAddress.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$\src\lm4f\cores\lm4f\itoa.c</name>
@@ -1589,6 +1584,12 @@
         <group>
           <name>EEPROM</name>
           <file>
+            <name>$PROJ_DIR$\src\lm4f\libraries\EEPROM\EEPROM.cpp</name>
+            <excluded>
+              <configuration>murix-iot-lm4f120xl</configuration>
+            </excluded>
+          </file>
+          <file>
             <name>$PROJ_DIR$\src\lm4f\libraries\EEPROM\EEPROM.h</name>
           </file>
           <file>
@@ -1623,87 +1624,6 @@
           </file>
         </group>
       </group>
-    </group>
-    <group>
-      <name>multiwii-2.3</name>
-      <excluded>
-        <configuration>murix-iot-lm4f120xl</configuration>
-      </excluded>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Alarms.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Alarms.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\def.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\EEPROM.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\EEPROM.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\GPS.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\GPS.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\IMU.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\IMU.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\LCD.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\LCD.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\MultiWii.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\MultiWii.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Output.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Output.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Protocol.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Protocol.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\RX.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\RX.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Sensors.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Sensors.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Serial.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\Serial.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\src\multiwii\types.h</name>
-      </file>
     </group>
     <group>
       <name>sketch (murix-iot)</name>

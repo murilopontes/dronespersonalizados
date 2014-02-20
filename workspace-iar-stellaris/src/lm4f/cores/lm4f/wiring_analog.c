@@ -131,15 +131,18 @@ void PWMWrite(uint8_t pin, uint32_t analog_res, uint32_t duty, unsigned int freq
         	HWREG(timerBase + TIMER_O_TBMR) = PWM_MODE;
         }
         ROM_TimerLoadSet(timerBase, timerAB, periodPWM);
-        ROM_TimerMatchSet(timerBase, timerAB,(analog_res-duty)*periodPWM/analog_res);
+        ROM_TimerMatchSet(timerBase, timerAB,
+                (analog_res-duty)*periodPWM/analog_res);
 
         //
         // If using a 16-bit timer, with a periodPWM > 0xFFFF,
         // need to use a prescaler
         //
         if((offset < WTIMER0) && (periodPWM > 0xFFFF)) {
-            ROM_TimerPrescaleSet(timerBase, timerAB,  (periodPWM & 0xFFFF0000) >> 16);
-            ROM_TimerPrescaleMatchSet(timerBase, timerAB, (((analog_res-duty)*periodPWM/analog_res) & 0xFFFF0000) >> 16);
+            ROM_TimerPrescaleSet(timerBase, timerAB,
+                (periodPWM & 0xFFFF0000) >> 16);
+            ROM_TimerPrescaleMatchSet(timerBase, timerAB,
+                (((analog_res-duty)*periodPWM/analog_res) & 0xFFFF0000) >> 16);
         }
         ROM_TimerEnable(timerBase, timerAB);
 
@@ -175,6 +178,6 @@ uint16_t analogRead(uint8_t pin)
     {
     }
 	ROM_ADCIntClear(ADC0_BASE, 3);
-    ROM_ADCSequenceDataGet(ADC0_BASE, 3, (unsigned long*) value);
+    ROM_ADCSequenceDataGet(ADC0_BASE, 3, (uint32_t*) value);
     return value[0];
 }

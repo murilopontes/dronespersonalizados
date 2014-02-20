@@ -43,14 +43,14 @@ void setup()
   Serial.print("\r\n.\r\n.\r\n");
   Serial.println("Arduino API setup(): basic system setup OK!");
   
-    xTaskCreate(task_buttons, (signed portCHAR *)"buttons", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
-    xTaskCreate(task_leds   , (signed portCHAR *)"leds"   , configMINIMAL_STACK_SIZE, NULL, 0, NULL);
-    //xTaskCreate(task_bitlash, (signed portCHAR *)"bitlash", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
+    xTaskCreate(task_buttons, "buttons", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
+    xTaskCreate(task_leds   , "leds"   , configMINIMAL_STACK_SIZE, NULL, 0, NULL);
+    xTaskCreate(task_bitlash, "bitlash", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
     
     
-    //xTaskCreate(task_adc,  (signed portCHAR *)"adc", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
-    xTaskCreate(task_mpu6050_dmp, (signed portCHAR *)"6050dmp", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
-    //xTaskCreate(task_esc,  (signed portCHAR *)"escp", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
+    //xTaskCreate(task_adc,  "adc", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
+    //xTaskCreate(task_mpu6050_dmp, "6050dmp", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
+    //xTaskCreate(task_esc,  "escp", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
     
     
     Serial.println("FreeRTOS API: vTaskStartScheduler()");

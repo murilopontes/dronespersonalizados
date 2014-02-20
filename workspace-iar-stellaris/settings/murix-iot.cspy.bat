@@ -19,6 +19,6 @@
 @REM 
 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\common\bin\cspybat" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armproc.dll" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armlmiftdi.dll"  %1 --plugin "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armbat.dll" --flash_loader "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\config\flashloader\TexasInstruments\FlashLM4FxxxHxx.board" --backend -B "--endian=little" "--cpu=Cortex-M4F" "--fpu=VFPv4" "-p" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\CONFIG\debugger\TexasInstruments\LM4F120H5QR.ddf" "--drv_verify_download" "--semihosting=none" "--device=LM4F120H5QR" "--lmiftdi_speed=500" 
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\common\bin\cspybat" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armproc.dll" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armlmiftdi.dll"  %1 --plugin "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\bin\armbat.dll" --flash_loader "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\config\flashloader\TexasInstruments\FlashTC4_H6_o.board" --backend -B "--endian=little" "--cpu=Cortex-M4F" "--fpu=VFPv4" "-p" "C:\Program Files (x86)\IAR Systems\Embedded Workbench 6.5\arm\CONFIG\debugger\TexasInstruments\TM4C123GH6PM.ddf" "--drv_verify_download" "--semihosting=none" "--device=TM4C123GH6PM" "--lmiftdi_speed=500" 
 
 

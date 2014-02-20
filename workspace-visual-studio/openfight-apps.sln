@@ -37,9 +37,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ssh", "telnet\Ssh\Ssh.cspro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AxiomDX9Game", "AxiomDX9Game\AxiomDX9Game.csproj", "{1E2AEB19-3715-4069-A129-50277726D449}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPlotAccel", "SerialPlotAccel\SerialPlotAccel.csproj", "{2437BDA8-751B-42DF-8418-E149CD53B305}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StellarisMPU6050", "SerialPlotAccel\StellarisMPU6050.csproj", "{2437BDA8-751B-42DF-8418-E149CD53B305}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PID_Auto_tune_simulator", "PID_auto_tune_simulator\PID_Auto_tune_simulator.csproj", "{D4E33B83-127B-478B-9D09-5FB06A9F29C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneMURIX", "DroneMURIX\DroneMURIX.csproj", "{350C9F93-9773-4F6C-9539-B6C08CDA88FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StellarisXbox", "StellarisXbox\StellarisXbox.csproj", "{51D276F0-D4A2-4E66-80BF-7169159A991D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -285,6 +289,30 @@ Global
 		{D4E33B83-127B-478B-9D09-5FB06A9F29C0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D4E33B83-127B-478B-9D09-5FB06A9F29C0}.Release|Win32.ActiveCfg = Release|Any CPU
 		{D4E33B83-127B-478B-9D09-5FB06A9F29C0}.Release|x86.ActiveCfg = Release|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Release|Win32.ActiveCfg = Release|Any CPU
+		{350C9F93-9773-4F6C-9539-B6C08CDA88FB}.Release|x86.ActiveCfg = Release|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Release|Win32.ActiveCfg = Release|Any CPU
+		{51D276F0-D4A2-4E66-80BF-7169159A991D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

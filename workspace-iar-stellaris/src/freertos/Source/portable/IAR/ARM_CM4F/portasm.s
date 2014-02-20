@@ -1,5 +1,5 @@
 /*
-    FreeRTOS V7.5.3 - Copyright (C) 2013 Real Time Engineers Ltd. 
+    FreeRTOS V8.0.0 - Copyright (C) 2014 Real Time Engineers Ltd.
     All rights reserved
 
     VISIT http://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
@@ -83,7 +83,7 @@
 
 xPortPendSVHandler:
 	mrs r0, psp
-
+	isb
 	/* Get the location of the current TCB. */
 	ldr	r3, =pxCurrentTCB
 	ldr	r2, [r3]
@@ -99,13 +99,13 @@ xPortPendSVHandler:
 	/* Save the new top of stack into the first member of the TCB. */
 	str r0, [r2]
 
-	stmdb sp!, {r3, r14}
+	stmdb sp!, {r3}
 	mov r0, #configMAX_SYSCALL_INTERRUPT_PRIORITY
 	msr basepri, r0
 	bl vTaskSwitchContext
 	mov r0, #0
 	msr basepri, r0
-	ldmia sp!, {r3, r14}
+	ldmia sp!, {r3}
 
 	/* The first item in pxCurrentTCB is the task top of stack. */
 	ldr r1, [r3]
@@ -121,7 +121,7 @@ xPortPendSVHandler:
 	vldmiaeq r0!, {s16-s31}
 
 	msr psp, r0
-
+	isb
 	#ifdef WORKAROUND_PMU_CM001 /* XMC4000 specific errata */
 		#if WORKAROUND_PMU_CM001 == 1
 			push { r14 }
@@ -156,6 +156,7 @@ vPortSVCHandler:
 	/* Pop the core registers. */
 	ldmia r0!, {r4-r11, r14}
 	msr psp, r0
+	isb
 	mov r0, #0
 	msr	basepri, r0
 	bx r14
@@ -171,6 +172,8 @@ vPortStartFirstTask
 	msr msp, r0
 	/* Call SVC to start the first task. */
 	cpsie i
+	dsb
+	isb
 	svc 0
 
 /*-----------------------------------------------------------*/

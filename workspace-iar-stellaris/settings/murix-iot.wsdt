@@ -12,15 +12,15 @@
           
           
           
-        <Column0>307</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+        <Column0>295</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
       </Workspace>
       <Build>
         
         
         
         
-      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>846</ColumnWidth1><ColumnWidth2>225</ColumnWidth2><ColumnWidth3>56</ColumnWidth3></Build>
-    <Select-Ambiguous-Definitions><ColumnWidth0>407</ColumnWidth0><ColumnWidth1>58</ColumnWidth1><ColumnWidth2>699</ColumnWidth2></Select-Ambiguous-Definitions><TerminalIO/><Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1128</ColumnWidth1></Debug-Log><Find-in-Files><ColumnWidth0>440</ColumnWidth0><ColumnWidth1>62</ColumnWidth1><ColumnWidth2>754</ColumnWidth2><ColumnWidth3>251</ColumnWidth3></Find-in-Files></Static>
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>558</ColumnWidth1><ColumnWidth2>340</ColumnWidth2><ColumnWidth3>56</ColumnWidth3></Build>
+    <Select-Ambiguous-Definitions><ColumnWidth0>407</ColumnWidth0><ColumnWidth1>58</ColumnWidth1><ColumnWidth2>699</ColumnWidth2></Select-Ambiguous-Definitions><TerminalIO/><Debug-Log><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1128</ColumnWidth1></Debug-Log><Find-in-Files><ColumnWidth0>567</ColumnWidth0><ColumnWidth1>62</ColumnWidth1><ColumnWidth2>754</ColumnWidth2><ColumnWidth3>251</ColumnWidth3></Find-in-Files></Static>
     <Windows>
       
       
@@ -32,7 +32,7 @@
             <Factory>Workspace</Factory>
             <Session>
               
-            <NodeDict><ExpandedNode>murix-iot</ExpandedNode><ExpandedNode>murix-iot/src</ExpandedNode><ExpandedNode>murix-iot/src/bitlash-v2.0</ExpandedNode><ExpandedNode>murix-iot/src/lm4f (energia-0101E0010)</ExpandedNode><ExpandedNode>murix-iot/src/lm4f (energia-0101E0010)/libraries</ExpandedNode><ExpandedNode>murix-iot/src/lm4f (energia-0101E0010)/libraries/EEPROM</ExpandedNode><ExpandedNode>murix-iot/src/pinout-api</ExpandedNode><ExpandedNode>murix-iot/src/sketch (murix-iot)</ExpandedNode></NodeDict></Session>
+            <NodeDict><ExpandedNode>murix-iot</ExpandedNode><ExpandedNode>murix-iot/Output</ExpandedNode><ExpandedNode>murix-iot/src</ExpandedNode><ExpandedNode>murix-iot/src/freertos (8.0.0)</ExpandedNode><ExpandedNode>murix-iot/src/lm4f (energia-0101E0011)</ExpandedNode><ExpandedNode>murix-iot/src/lm4f (energia-0101E0011)/cores</ExpandedNode><ExpandedNode>murix-iot/src/lm4f (energia-0101E0011)/cores/lm4f</ExpandedNode><ExpandedNode>murix-iot/src/pinout-api</ExpandedNode><ExpandedNode>murix-iot/src/sketch (murix-iot)</ExpandedNode></NodeDict></Session>
           </Tab>
         </Tabs>
         
@@ -52,14 +52,14 @@
       
       
       
-    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\sketch\sketch.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>15</YPos2><SelStart2>1130</SelStart2><SelEnd2>1130</SelEnd2></Tab><ActiveTab>0</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\sketch\task_mpu6050_dmp.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>706</YPos2><SelStart2>30282</SelStart2><SelEnd2>30331</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\libraries\Wire\Wire.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\libraries\Wire\Wire.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>171</YPos2><SelStart2>715</SelStart2><SelEnd2>715</SelEnd2></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\sketch\sketch.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>15</YPos2><SelStart2>984</SelStart2><SelEnd2>984</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\freertos\Source\tasks.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>374</YPos2><SelStart2>19055</SelStart2><SelEnd2>19055</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\cores\lm4f\startup_ewarm.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>0</YPos2><SelStart2>20920</SelStart2><SelEnd2>20920</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\murix-iot-lm4f120xl\List\cpp.map</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>313</YPos2><SelStart2>0</SelStart2><SelEnd2>0</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\freertos\FreeRTOSConfig.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>66</YPos2><SelStart2>3717</SelStart2><SelEnd2>3717</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\cores\lm4f\Energia.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>95</YPos2><SelStart2>2295</SelStart2><SelEnd2>2295</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\cores\lm4f\driverlib\adc.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>153</YPos2><SelStart2>8865</SelStart2><SelEnd2>8865</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\cores\lm4f\driverlib\emac.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>3548</YPos2><SelStart2>151347</SelStart2><SelEnd2>151347</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\cores\lm4f\wiring_analog.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>150</YPos2><SelStart2>5579</SelStart2><SelEnd2>5579</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\cores\lm4f\Stream.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>167</YPos2><SelStart2>5757</SelStart2><SelEnd2>5757</SelEnd2></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\src\lm4f\cores\lm4f\main.cpp</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd><XPos2>0</XPos2><YPos2>6</YPos2><SelStart2>1097</SelStart2><SelEnd2>1097</SelEnd2></Tab><ActiveTab>10</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
     <Positions>
       
       
       
       
       
-    <Top><Row0><Sizes><Toolbar-02ee1f50><key>iaridepm.enu1</key></Toolbar-02ee1f50></Sizes></Row0><Row1><Sizes/></Row1><Row2><Sizes/></Row2></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>730</Bottom><Right>381</Right><x>-2</x><y>-2</y><xscreen>190</xscreen><yscreen>301</yscreen><sizeHorzCX>148438</sizeHorzCX><sizeHorzCY>327530</sizeHorzCY><sizeVertCX>299219</sizeVertCX><sizeVertCY>796518</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>144</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>146</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>158868</sizeHorzCY><sizeVertCX>148438</sizeVertCX><sizeVertCY>327530</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+    <Top><Row0><Sizes><Toolbar-029e5900><key>iaridepm.enu1</key></Toolbar-029e5900></Sizes></Row0><Row1><Sizes><Toolbar-0d73af10><key>debuggergui.enu1</key></Toolbar-0d73af10></Sizes></Row1></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>595</Bottom><Right>386</Right><x>-2</x><y>-2</y><xscreen>190</xscreen><yscreen>301</yscreen><sizeHorzCX>148438</sizeHorzCX><sizeHorzCY>327530</sizeHorzCY><sizeVertCX>303125</sizeVertCX><sizeVertCY>649619</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>279</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>281</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>305767</sizeHorzCY><sizeVertCX>148438</sizeVertCX><sizeVertCY>327530</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
   </Desktop>
 </Workspace>
 

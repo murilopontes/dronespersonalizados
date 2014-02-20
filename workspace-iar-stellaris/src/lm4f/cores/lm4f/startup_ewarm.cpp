@@ -249,7 +249,7 @@ static void HardFault_Handler(void)
 //
 //*****************************************************************************
 
-#define TOTAL_CSTACK ((416/4)+16)
+#define TOTAL_CSTACK ((1024/4)+16)
 #warning "always look map file for max uncalled stack"
 
 static uint32_t pulStack[TOTAL_CSTACK] @ ".noinit";
