@@ -1,0 +1,146 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;2.&nbsp;New and Noteworthy</title><link rel="stylesheet" type="text/css" href="media/style.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="main.html" title="Eclipse Code Recommenders"><link rel="up" href="main.html" title="Eclipse Code Recommenders"><link rel="prev" href="usr.html" title="Chapter&nbsp;1.&nbsp;User Manual"><link rel="next" href="isv.html" title="Chapter&nbsp;3.&nbsp;ISV Manual"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter&nbsp;2.&nbsp;New and Noteworthy"><div class="titlepage"><div><div><h2 class="title"><a name="changes"></a>Chapter&nbsp;2.&nbsp;New and Noteworthy</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="changes.html#v0.5">v0.5</a></span></dt><dd><dl><dt><span class="section"><a href="changes.html#d0e494">Bugzilla Summaries</a></span></dt><dt><span class="section"><a href="changes.html#d0e516">New Feature Namespaces</a></span></dt><dt><span class="section"><a href="changes.html#d0e524">Removal of Project Builder and Nature</a></span></dt><dt><span class="section"><a href="changes.html#d0e541">Completion Engines completely based on JDT</a></span></dt><dt><span class="section"><a href="changes.html#d0e552">JDT-based Call Chain Completion</a></span></dt><dt><span class="section"><a href="changes.html#d0e566">Extended Documentation Platform</a></span></dt><dt><span class="section"><a href="changes.html#d0e580">Improved Subwords Completion</a></span></dt><dt><span class="section"><a href="changes.html#d0e598">Temporary Deactivation of Template Completion</a></span></dt><dt><span class="section"><a href="changes.html#d0e606">Forecast: New Local Code-search</a></span></dt></dl></dd><dt><span class="section"><a href="changes.html#v0.4">v0.4</a></span></dt><dd><dl><dt><span class="section"><a href="changes.html#d0e628">Maintenance Release</a></span></dt></dl></dd><dt><span class="section"><a href="changes.html#v0.3">v0.3</a></span></dt><dd><dl><dt><span class="section"><a href="changes.html#d0e638">Subwords Completion</a></span></dt></dl></dd><dt><span class="section"><a href="changes.html#v0.2">v0.2</a></span></dt><dd><dl><dt><span class="section"><a href="changes.html#d0e674">Chain Completion</a></span></dt><dt><span class="section"><a href="changes.html#changes-v0.2-templates">Templates Completion Engine</a></span></dt></dl></dd><dt><span class="section"><a href="changes.html#v0.1">v0.1</a></span></dt><dd><dl><dt><span class="section"><a href="changes.html#d0e735">Calls Completion</a></span></dt><dt><span class="section"><a href="changes.html#d0e772">Overrides Completion</a></span></dt><dt><span class="section"><a href="changes.html#d0e781">Eclipse Help
+            </a></span></dt></dl></dd></dl></div><div class="section" title="v0.5"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="v0.5"></a>v0.5</h2></div><div><h3 class="subtitle">Planned for 2012-02-XX, first official release. Formal review needs to be scheduled.</h3></div></div></div><div class="section" title="Bugzilla Summaries"><div class="titlepage"><div><div><h3 class="title"><a name="d0e494"></a>Bugzilla Summaries</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+                        List of
+                        <a class="ulink" href="http://goo.gl/g96bt" target="_top">closed bugs</a>
+                        for v0.5.
+                    </p></li><li class="listitem"><p>
+                        List of
+                        <a class="ulink" href="http://goo.gl/7JfIM" target="_top">open bugs</a>
+                        for v0.5.
+                    </p></li><li class="listitem"><p>
+                        List of
+                        <a class="ulink" href="http://goo.gl/8QG32" target="_top">all plan items</a>
+                        for v1.0.
+                    </p></li></ul></div></div><div class="section" title="New Feature Namespaces"><div class="titlepage"><div><div><h3 class="title"><a name="d0e516"></a>New Feature Namespaces</h3></div></div></div><p>
+                We outgrew our initial naming scheme. For v0.5 we changed the namespace of our features and plug-ins
+                completely. As result, using the update manager wont work as expected. You have to uninstall previous
+                versions and install code recommenders from one of our
+                <a class="ulink" href="http://eclipse.org/recommenders/download/" target="_top">update sites</a>
+                .
+            </p></div><div class="section" title="Removal of Project Builder and Nature"><div class="titlepage"><div><div><h3 class="title"><a name="d0e524"></a>Removal of Project Builder and Nature</h3></div></div></div><p>
+                Earlier version of Code Recommenders required to
+                <span class="emphasis"><em>activate</em></span>
+                Recommenders on a per-project basis. This activation added a
+                <span class="emphasis"><em>builder</em></span>
+                to the project that analyzed file changes whenever Eclipse decided to run the builders (on save or on
+                workspace fresh etc.) and stored the analysis results in a
+                <code class="filename">.recommenders/</code>
+                folder. With v0.5 this is not required anymore. Code Recommenders now analyzes the compilation unit
+                on-the-fly whenever code completion is triggered. Developers now can easily use Code Recommenders
+                without changing any project configuration file. Just install-and-go.
+            </p><div class="important" title="Important" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Important</h3><p> Please note that currently only Eclipse APIs like JFace, SWT, Workbench etc. are supported.
+                    Adding support for other frameworks is planned for v0.6 and v0.7.
+                </p></div></div><div class="section" title="Completion Engines completely based on JDT"><div class="titlepage"><div><div><h3 class="title"><a name="d0e541"></a>Completion Engines completely based on JDT</h3></div></div></div><p>
+                Related to the previous change, we also switched from the
+                <a class="ulink" href="http://wala.sf.net" target="_top">WALA bytecode analysis toolkit</a>
+                to
+                <span class="emphasis"><em>Eclipse JDT</em></span>
+                as primary analysis tool for code completion. WALA will, however, still be the analysis toolkit of
+                choice for sophisticated code analysis and data exports. There is yet no better analysis toolkit
+                available that suites our needs.
+            </p></div><div class="section" title="JDT-based Call Chain Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e552"></a>JDT-based Call Chain Completion</h3></div></div></div><p>
+                With v0.5, Code Recommenders ships a new version of its
+                <a class="ulink" href="http://eclipse.org/recommenders/documentation/completion/" target="_top">chain completion engine</a>
+                completely based on JDT. Thanks to Marko Martin who
+                <a class="ulink" href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=359694" target="_top">contributed this</a>
+                to Code Recommenders. Since this code is a major rewrite of the existing engine, please
+                <a class="ulink" href="https://bugs.eclipse.org/bugs/enter_bug.cgi?product=Recommenders" target="_top">report any issues</a>
+                you experience to bugzilla.
+            </p></div><div class="section" title="Extended Documentation Platform"><div class="titlepage"><div><div><h3 class="title"><a name="d0e566"></a>Extended Documentation Platform</h3></div></div></div><p>
+                Based on Stefan Henss' work in this year's
+                <a class="ulink" href="http://stefanhenss.com/summing-up-eclipse-extdoc" target="_top">Google Summer of Code</a>
+                project, this release ships with an updated version of Stefan's
+                <span class="emphasis"><em>Extdoc View</em></span>
+                . Internally, we changed the code to be easily extensible by other contributors. Check
+                <a class="link" href="isv.html#isv-extdoc" title="Extdoc"> Extended Documentation Platform ISV documentation
+                </a>
+                for more details on that.
+            </p></div><div class="section" title="Improved Subwords Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e580"></a>Improved Subwords Completion</h3></div></div></div><p>
+                For assignments,
+                <span class="emphasis"><em>subwords completion</em></span>
+                now takes into account the variable name of the assignment.
+                </p><div class="mediaobject"><img src="media/figures/changes/v0.5/subwords-assignment.png"></div><p>
+                The exact implementation of the matching and ranking strategy is subject to change. If you have ideas on
+                how to improve the current strategy, look at the
+                <a class="ulink" href="http://git.eclipse.org/c/recommenders/org.eclipse.recommenders.git/tree/plugins/org.eclipse.recommenders.completion.rcp.subwords2/src/org/eclipse/recommenders/internal/completion/rcp/subwords2/AssignmentVarnameMatchCompletionProposalComputer.java" target="_top">code</a>
+                and send your ideas to the
+                <a class="ulink" href="http://eclipse.org/forums/eclipse.recommenders" target="_top">forum</a>
+                .
+            </p></div><div class="section" title="Temporary Deactivation of Template Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e598"></a>Temporary Deactivation of Template Completion</h3></div></div></div><p>
+                In v0.2 we added a new
+                <a class="link" href="changes.html#changes-v0.2-templates" title="Templates Completion Engine">template completion engine</a>
+                to Code Recommenders. Due to the large internal refactorings, this engine was left out of this release
+                but will be added again in v0.6.
+            </p></div><div class="section" title="Forecast: New Local Code-search"><div class="titlepage"><div><div><h3 class="title"><a name="d0e606"></a>Forecast: New Local Code-search</h3></div></div></div><p>
+                Yet, Code Recommenders ships without official code search support. However, there is some work going on
+                in this area. Previous updates offered first draft of code-search client in the
+                <span class="emphasis"><em>experimental</em></span>
+                section of the update site. For v0.5 we removed this feature from the update sites as it's currently
+                developed by Tobias Boehm, a Student at Darmstadt University of Technology as part of his Master thesis.
+                For the curious, the sources can be found in
+                <a class="ulink" href="http://code.google.com/a/eclipselabs.org/p/code-recommenders/source/browse/?repo=codesearch-tobias" target="_top">Code Recommenders' Labs repository</a>
+                . If you are interested in bleeding edge state of (local) code-search, there is also an
+                <a class="ulink" href="http://vandyk.st.informatik.tu-darmstadt.de/updates/students/ep/codesearch-tobias/repositories/org.eclipselabs.recommenders.repository.codesearchquery/target/repository/" target="_top">temporary update site</a>
+                . Please send your questions regarding local code-search to the
+                <a class="ulink" href="http://eclipse.org/forums/eclipse.recommenders" target="_top">forum</a>
+                .
+            </p></div></div><div class="section" title="v0.4"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="v0.4"></a>v0.4</h2></div><div><h3 class="subtitle">Published on 2011-11-07</h3></div></div></div><div class="section" title="Maintenance Release"><div class="titlepage"><div><div><h3 class="title"><a name="d0e628"></a>Maintenance Release</h3></div></div></div><p>This is a maintenance release without any new features.</p></div></div><div class="section" title="v0.3"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="v0.3"></a>v0.3</h2></div><div><h3 class="subtitle">Published on 2011-08-26</h3></div></div></div><div class="section" title="Subwords Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e638"></a>Subwords Completion</h3></div></div></div><p>Sometimes you just don't know the complete name of a method - or entering its full name from the first
+                character? Subwords is here to assist.
+            </p><div class="section" title="Completion on method calls:"><div class="titlepage"><div><div><h4 class="title"><a name="d0e643"></a>Completion on method calls:</h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.3/subwords-completion-on-method-calls.png"></div></div><div class="section" title="Completion on variables:"><div class="titlepage"><div><div><h4 class="title"><a name="d0e649"></a>Completion on variables:</h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.3/subwords-completion-on-variables.png"></div></div><div class="section" title="Completion on method overrides:"><div class="titlepage"><div><div><h4 class="title"><a name="d0e655"></a>Completion on method overrides:</h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.3/subwords-completion-on-method-overrides.png"></div></div></div><p>
+            Subwords has been mainly developed by Paul-Emmanuel Faidherbe and contributed to Eclipse Code Recommenders.
+            Thank you Paul-Emmanuel!
+            </p><div class="note" title="Subwords currently has some limitations:" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Subwords currently has some limitations:</h3><p> It doesn't support dynamic reranking of proposals with better/larger overlaps. It only works in
+                    the scenarios shown above. Typename completions are yet not possible. You may find more limitations
+                    as you go. Please send your feature requests and bugs to Bugzilla. A thread discussing this
+                    contribution is here: https://bugs.eclipse.org/bugs/show_bug.cgi?id=350000
+                </p></div><p>
+        </p></div><div class="section" title="v0.2"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="v0.2"></a>v0.2</h2></div><div><h3 class="subtitle">Published on 2011-03-01</h3></div></div></div><div class="section" title="Chain Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e674"></a>Chain Completion</h3></div></div></div><p>
+                How many times did you ask yourself
+                <span class="emphasis"><em>"How do I get an instance of X?"</em></span>
+                And how much time did you spent with shimming from one method call to another to find a call chain
+                returning the type you were looking for?
+            </p><p> Clearly, by far too long. Code Recommenders' new chain completion engine supports you in finding all
+                applicable call chains and thus saves you lots of time when learning new APIs. How does it work? In a
+                nutshell, Code Recommenders takes the current context code completion was triggered in and starts a
+                search on all local variables, fields and methods of the enclosing class recursively until a path to the
+                requested type is found (or a time out occurred :D). If it could find some valid paths, it generates
+                ready-to-use code snippets the developer can immediately insert into her code. Look at the screenshots
+                below for some examples:
+            </p><div class="section" title="Completion on this"><div class="titlepage"><div><div><h4 class="title"><a name="d0e684"></a>
+                    Completion on
+                    <code class="code">this</code>
+                </h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.2/chain-completion-on-IStatusLineManager.png"></div></div><div class="section" title="Completion on static types"><div class="titlepage"><div><div><h4 class="title"><a name="d0e693"></a>Completion on static types
+                </h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.2/chain-completion-on-platformui.png"></div></div><div class="section" title="Completion on method returns"><div class="titlepage"><div><div><h4 class="title"><a name="d0e699"></a>Completion on method returns
+                </h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.2/chain-completion-on-method-return.png"></div></div><div class="section" title="Completion with type cast"><div class="titlepage"><div><div><h4 class="title"><a name="d0e705"></a>Completion with type cast
+                </h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.2/chain-completion-with-cast.png"></div></div></div><div class="section" title="Templates Completion Engine"><div class="titlepage"><div><div><h3 class="title"><a name="changes-v0.2-templates"></a>Templates Completion Engine</h3></div></div></div><p> Have you ever wondered how to deal with a new framework's objects? Or got tired by continuously
+                writing the same procedures, e.g. instantiating an object and calling a bunch of setters!? For this
+                Eclipse contains standard-templates but they are only few and writing new is time-consuming and often
+                difficult to do.
+            </p><p> Our templates completion engine provides templates dynamically created on completion requests. They
+                are not manually crafted but obtained from frequent patterns found in real-life framework usage, i.e.
+                you are instantly served with the most common practices. For this not only the object type is
+                considered, but also what has already been done with the variable itself - our templates are
+                context-sensitive! You can see how they adopt to different occasion in the following screenshots. With
+                this the new templates completion engine provides valuable dynamic shortcuts for frequent code blocks
+                and is also able to guide framework novices with relevant examples.
+            </p><div class="section" title="Completion for Local Declaration"><div class="titlepage"><div><div><h4 class="title"><a name="d0e718"></a>Completion for Local Declaration
+                </h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.2/template-completion-on-button-declaration.png"></div></div><div class="section" title="Dynamic Pattern Completion"><div class="titlepage"><div><div><h4 class="title"><a name="d0e724"></a>Dynamic Pattern Completion
+                </h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.2/template-completion-on-button-with-observed-calls.png"></div></div></div></div><div class="section" title="v0.1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="v0.1"></a>v0.1</h2></div><div><h3 class="subtitle">Published on 2011-02-15</h3></div></div></div><div class="section" title="Calls Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e735"></a>Calls Completion</h3></div></div></div><div class="section" title="Completion on Declared Variables"><div class="titlepage"><div><div><h4 class="title"><a name="d0e738"></a>Completion on Declared Variables</h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.1/completion-on-field.png"></div></div><div class="section" title="Completion on This"><div class="titlepage"><div><div><h4 class="title"><a name="d0e744"></a>Completion on This</h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.1/completion-on-this.png"></div></div><div class="section" title="Completion on Anonymous Method Returns"><div class="titlepage"><div><div><h4 class="title"><a name="d0e750"></a>Completion on Anonymous Method Returns</h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.1/completion-on-method-return.png"></div></div><div class="section" title="Completion from Anonymous Inner Classes"><div class="titlepage"><div><div><h4 class="title"><a name="d0e756"></a>Completion from Anonymous Inner Classes</h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.1/completion-on-local-from-nested.png"></div></div><div class="section" title="On-the-fly Code Analysis"><div class="titlepage"><div><div><h4 class="title"><a name="d0e762"></a>On-the-fly Code Analysis</h4></div></div></div><p> Code Recommenders performs several static analyses on your code whenever you save your editor
+                    contents. However, sometimes you work a while with a dirty editor (i.e., editor contains un-safed
+                    changes). If code completion now was triggered on variables added after the last save code
+                    recommenders couldn't make any recommendations for these variables. This update now contains an
+                    on-the-fly analyzer that performs a flat analysis of your current method body whenever code
+                    completion is triggered on a previously unknown variable based on the information it obtains from
+                    the JDT AST.
+                </p></div><div class="section" title="Performance Improvements"><div class="titlepage"><div><div><h4 class="title"><a name="d0e767"></a>Performance Improvements</h4></div></div></div><p> Code Completion's performance has been improve quite a lot. However, the loading of recommender
+                    models may take a second and thus may slow down your code completion on the first load. After the
+                    models are loaded, code completion usually takes between 10 to 50 ms.
+                </p></div></div><div class="section" title="Overrides Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e772"></a>Overrides Completion</h3></div></div></div><div class="section" title="Completion on Class Body"><div class="titlepage"><div><div><h4 class="title"><a name="d0e775"></a>Completion on Class Body</h4></div></div></div><div class="mediaobject"><img src="media/figures/changes/v0.1/completion-on-class-body.png"></div></div></div><div class="section" title="Eclipse Help"><div class="titlepage"><div><div><h3 class="title"><a name="d0e781"></a>Eclipse Help
+            </h3></div></div></div><p> Code Recommenders follows the model of EGit and Mylyn and maintains its user and developer guides as
+                well as its new and noteworthy release notes in wiki.eclipse.org. This allows developers and users
+                likewise to edit and comment on existing documentation. The latest version of these wiki pages are
+                automatically integrated into the latest Eclipse Help plug-in and changes are available immediately to
+                you.
+            </p><div class="mediaobject"><img src="media/figures/changes/v0.1/eclipse-help-user.png"></div></div></div></div></body></html>

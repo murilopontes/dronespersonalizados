@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>IAR Embedded Workbench for Eclipse Frequently Asked
+	Questions</title>
+<link type="text/css" rel="stylesheet" media="all" href="style.css" />
+</head>
+<body>
+	<h1>IAR Embedded Workbench for Eclipse FAQ</h1>
+	<h2>Network problems</h2>
+
+	<h3>Eclipse says "unable to connect to repository". Can I install
+		any other way?</h3>
+
+	Yes. All the update sites are available as downloadable zip files. Open
+	<a href="http://eclipse-update.iar.com/">http://eclipse-update.iar.com/</a>
+	and select the "zip file" link besides your product.
+
+    <h2>Dependency problems</h2>
+
+	<h3>IAR Plugin installation fails with missing component error</h3>
+
+	<p>If Eclipse fails installation with an error message similar to:
+    <p><tt>Cannot complete the install because one or more required items could not be found.
+  Software being installed: IAR Project Importer (EXPERIMENTAL) 0.11.3.v201111110257 (com.iar.common.projectimport.feature.feature.group 0.11.3.v201111110257)
+  Missing requirement: IAR Project Importer Components 1.0.0.v201111110257 (com.iar.common.projectimport 1.0.0.v201111110257) requires 'bundle org.eclipse.emf.ecore 2.6.1' but it could not be found
+    </tt>
+    <p> this is most probably due to an error with the Eclipse mirror which should provide the <tt>org.eclipse.emf.ecore 2.6.1</tt> bundle.
+    <p>As this problem is caused by a misconfiguration in the Eclipse.org servers (see <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=329923">this bugzilla entry</a>), the easiest way to solve this issue is to simply wait and retry the installation at a later time.
+    <p>Otherwise, it is possible to force Eclipse to download updates from a specific mirror by doing the following (for Eclipse 3.7 Indigo release):
+    <ul>
+    <li>Disabling the <tt>http://download.eclipse.org/releases/indigo</tt> update site in Window > Preferences > Install/Update > Available Software Sites</li>
+    <li>Adding the following mirror URL to the list of available update sites in the same preference page: <tt><a href="http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/releases/indigo/">http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/releases/indigo/</a></tt></li>
+    </ul>
+    <p>For the older Eclipse Helios 3.6 distributions, the URLs to disable / add are, respectively:
+    <ul>
+    <li>http://download.eclipse.org/releases/helios</li>
+    <li><a href="http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/releases/helios/">http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/releases/helios/</a></li>
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+a#com_iar_doc_intro_link img {
+    background-image: url(graphics/ew32.png);
+}
+
+a#com_iar_doc_intro_link:hover img {
+    background-image: url(graphics/ew32.png);
+}
+
+a#com_iar_doc_pm_tutorial_link img {
+    background-image: url(graphics/ew32.png);
+}
+
+a#com_iar_doc_pm_tutorial_link:hover img {
+    background-image: url(graphics/ew32.png);
+}
+
+a#com_iar_doc_dbg_tutorial_link img {
+    background-image: url(graphics/ew32.png);
+}
+
+a#com_iar_doc_dbg_tutorial_link:hover img {
+    background-image: url(graphics/ew32.png);
+}
+
+a#com_iar_doc_whatsnew_link img {
+    background-image: url(graphics/ew32.png);
+}
+
+a#com_iar_doc_whatsnew_link:hover img {
+    background-image: url(graphics/ew32.png);
+}

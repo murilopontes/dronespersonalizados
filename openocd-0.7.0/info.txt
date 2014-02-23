@@ -1,0 +1,30 @@
+OpenOCD 0.7.0
+commit date: 05.05.2013 07:46:23
+build date: 05.05.2013
+package date: 05.05.2013
+build system: Linux 3.8.11-1-ARCH #1 SMP PREEMPT Wed May 1 20:18:57 CEST 2013 x86_64 GNU/Linux
+compiler: GCC 4.8.0 (i686-w64-mingw32 / x86_64-w64-mingw32; rubenvb 130323)
+
+Libraries used:
+libftdi-0.20
+libusb-win32-1.2.6.0
+libusbx-1.0.15
+
+Build commands used for 32-bit version:
+../configure --host=i686-w64-mingw32 --enable-amtjtagaccel --enable-arm-jtag-ew --enable-ft2232_libftdi --enable-ftdi
+	--enable-gw16012 --enable-jlink --enable-opendous --enable-osbdm --enable-parport --disable-parport-ppdev
+	--enable-parport-giveio --enable-presto_libftdi --enable-remote-bitbang --enable-rlink --enable-stlink
+	--enable-ti-icdi --enable-ulink --enable-usb_blaster_libftdi --enable-usbprog --enable-vsllink
+make
+i686-w64-mingw32-strip src/openocd.exe
+
+Build commands used for 64-bit version:
+../configure --host=x86_64-w64-mingw32 --enable-amtjtagaccel --enable-arm-jtag-ew --enable-ft2232_libftdi --enable-ftdi
+	--enable-gw16012 --enable-jlink --enable-opendous --enable-osbdm --enable-parport --disable-parport-ppdev
+	--enable-parport-giveio --enable-presto_libftdi --enable-remote-bitbang --enable-rlink --enable-stlink
+	--enable-ti-icdi --enable-ulink --enable-usb_blaster_libftdi --enable-usbprog --enable-vsllink
+make
+x86_64-w64-mingw32-strip src/openocd.exe
+
+This package and info about it can be found on Freddie Chopin's website:
+http://www.freddiechopin.info/

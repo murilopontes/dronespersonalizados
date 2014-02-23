@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>com.iar.ide.common.doc</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
+	<packaging>eclipse-plugin</packaging>
+	<parent>
+		<groupId>com.iar</groupId>
+		<artifactId>com.iar.product.common</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../../com.iar.product.common</relativePath>
+	</parent>
+
+	<properties>
+		<site-contents>${project.build.directory}/site-contents.zip</site-contents>
+	</properties>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<id>generate-aux-site-contents</id>
+						<configuration>
+							<target>
+								<ant>
+									<property name="site-contents" value="${site-contents}" />
+								</ant>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Attach site-contents.zip -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>add-html</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${site-contents}</file>
+									<classifier>site-contents</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

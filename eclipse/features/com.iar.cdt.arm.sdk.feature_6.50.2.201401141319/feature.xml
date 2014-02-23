@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.iar.cdt.arm.sdk.feature"
+      label="IAR Toolchain for ARM"
+      version="6.50.2.201401141319"
+      provider-name="IAR Systems AB"
+      plugin="com.iar.cdt.arm.sdk.branding">
+
+   <description url="http://www.iar.com">
+      IAR toolchain integration for ARM.
+   </description>
+
+   <copyright>
+      Copyright 2013 IAR Systems AB
+   </copyright>
+
+   <requires>
+      <import feature="org.eclipse.cdt" version="7.0.2"/>
+      <import feature="org.eclipse.emf" version="2.6.1.v20100914-1218"/>
+      <import feature="com.iar.common.feature" version="1.0.0.qualifier"/>
+   </requires>
+
+   <plugin
+         id="com.iar.cdt.arm.sdk.branding"
+         download-size="15"
+         install-size="32"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.cdt.arm.language"
+         download-size="18"
+         install-size="41"
+         version="1.1.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.cdt.arm.toolchain"
+         download-size="145"
+         install-size="785"
+         version="6.7.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.common.doc"
+         download-size="45"
+         install-size="79"
+         version="1.0.1.201401141319"/>
+
+   <plugin
+         id="com.iar.importer.target.arm"
+         download-size="11"
+         install-size="21"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.doc.HelpEclipseARMIDE_2D4"
+         download-size="649"
+         install-size="1572"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.doc.HelpEclipseARMProjectImporter_2D3"
+         download-size="102"
+         install-size="454"
+         version="1.0.0.201401141319"/>
+
+   <plugin
+         id="com.iar.doc.HelpEclipseARMTutorials_2D3"
+         download-size="746"
+         install-size="1257"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.doc.HelpEclipseARMDebugging_2D5"
+         download-size="546"
+         install-size="1366"
+         version="1.0.0.201401141319"/>
+
+   <plugin
+         id="com.iar.cdt.arm.toolchain.ui"
+         download-size="4"
+         install-size="4"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+</feature>

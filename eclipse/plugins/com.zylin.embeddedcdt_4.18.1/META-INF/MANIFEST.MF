@@ -1,0 +1,42 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Zylin Embedded CDT Plug-in
+Bundle-SymbolicName: com.zylin.embeddedcdt; singleton:=true
+Bundle-Version: 4.18.1
+Bundle-ClassPath: zylinembeddedcdt.jar,
+ lib/commons-httpclient-3.1.jar,
+ lib/commons-codec-1.3.jar,
+ lib/commons-logging-1.1.1.jar,
+ lib/junit-4.4.jar
+Bundle-Activator: com.zylin.embeddedcdt.LaunchPlugin
+Bundle-Vendor: Zylin AS
+Bundle-Localization: plugin
+Export-Package: com.zylin.embeddedcdt,
+ com.zylin.embeddedcdt.copied,
+ com.zylin.embeddedcdt.gui,
+ com.zylin.embeddedcdt.gui.buttons,
+ com.zylin.embeddedcdt.gui.jtag,
+ com.zylin.embeddedcdt.launch,
+ com.zylin.embeddedcdt.launch.cygwin,
+ com.zylin.embeddedcdt.launch.jtag,
+ com.zylin.embeddedcdt.launch.nativeos,
+ com.zylin.embeddedcdt.preferences,
+ com.zylin.embeddedcdt.sourcelookup,
+ com.zylin.embeddedcdt.sourcelookup.cygwin,
+ org.eclipse.cdt.debug.mi.core.output
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.cdt.launch,
+ org.eclipse.cdt.debug.mi.core,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.core.resources,
+ org.eclipse.cdt.debug.core,
+ org.eclipse.cdt,
+ org.eclipse.cdt.core,
+ org.eclipse.cdt.debug.mi.ui,
+ org.eclipse.cdt.ui,
+ org.eclipse.cdt.debug.ui
+Eclipse-LazyStart: true
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: com.ibm.icu.text

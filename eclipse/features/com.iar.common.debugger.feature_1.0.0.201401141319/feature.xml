@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.iar.common.debugger.feature"
+      label="IAR Common Debugger Components"
+      version="1.0.0.201401141319"
+      provider-name="IAR Systems AB">
+
+   <description>
+      Components common to IAR debugger integration plugins.
+   </description>
+
+   <copyright>
+      Copyright 2013 IAR Systems AB
+   </copyright>
+
+   <plugin
+         id="com.iar.ide.common.dialogs"
+         download-size="61"
+         install-size="124"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.common.dialogservice"
+         download-size="23"
+         install-size="52"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.cdp"
+         download-size="157"
+         install-size="335"
+         version="2.4.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.driver"
+         download-size="30"
+         install-size="67"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.dsf"
+         download-size="370"
+         install-size="860"
+         version="1.5.0.201401141319"/>
+
+   <plugin
+         id="com.iar.ide.debugger.dsf.ui"
+         download-size="288"
+         install-size="624"
+         version="1.5.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.kernel"
+         download-size="180"
+         install-size="349"
+         version="2.7.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.kernel.ui"
+         download-size="104"
+         install-size="230"
+         version="1.1.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.listwindow"
+         download-size="49"
+         install-size="125"
+         version="2.1.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.listwindow.ui"
+         download-size="163"
+         install-size="321"
+         version="4.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.rpc.runtime"
+         download-size="61"
+         install-size="148"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.rpc.runtime.edit"
+         download-size="28"
+         install-size="63"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.service.codecoverage"
+         download-size="17"
+         install-size="37"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.service.codecoverage.ui"
+         download-size="71"
+         install-size="140"
+         version="1.1.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.timeline.service"
+         download-size="100"
+         install-size="267"
+         version="0.13.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.timeline.view"
+         download-size="26"
+         install-size="55"
+         version="0.13.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.debugger.timeline.widget"
+         download-size="167"
+         install-size="360"
+         version="0.13.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.protobuf"
+         download-size="1602"
+         install-size="3990"
+         version="2.4.1.201401141319"/>
+
+   <plugin
+         id="com.google.guava"
+         download-size="1635"
+         install-size="3592"
+         version="11.0.1"
+         unpack="false"/>
+
+</feature>

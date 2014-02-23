@@ -1,0 +1,96 @@
+Manifest-Version: 1.0
+Bundle-ClassPath: lib/guava-13.0.1.jar,lib/MVEL-fork.jar,lib/commons-l
+ ang-2.5.jar,lib/commons-primitives-1.0.jar,lib/commons-collections-3.
+ 2.1.jar,lib/commons-io-2.0.1.jar,lib/commons-beanutils-1.8.0.jar,lib/
+ commons-logging-1.1.1.jar,lib/commons-digester-2.0.jar,lib/asm-all-3.
+ 3.1.jar,lib/nebula-cdatetime.jar,lib/nebula-cwt.jar
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.wb.core.lib;singleton:=true
+Require-Bundle: org.eclipse.ui
+Bundle-Version: 1.6.1.r43x201309092314
+Export-Package: com.google.common.annotations,com.google.common.base,c
+ om.google.common.base.internal,com.google.common.cache,com.google.com
+ mon.collect,com.google.common.eventbus,com.google.common.hash,com.goo
+ gle.common.io,com.google.common.math,com.google.common.net,com.google
+ .common.primitives,com.google.common.reflect,com.google.common.util.c
+ oncurrent,org.apache.commons.beanutils,org.apache.commons.beanutils.c
+ onverters,org.apache.commons.beanutils.expression,org.apache.commons.
+ beanutils.locale,org.apache.commons.beanutils.locale.converters,org.a
+ pache.commons.collections,org.apache.commons.collections.bag,org.apac
+ he.commons.collections.bidimap,org.apache.commons.collections.buffer,
+ org.apache.commons.collections.collection,org.apache.commons.collecti
+ ons.comparators,org.apache.commons.collections.functors,org.apache.co
+ mmons.collections.iterators,org.apache.commons.collections.keyvalue,o
+ rg.apache.commons.collections.list,org.apache.commons.collections.map
+ ,org.apache.commons.collections.primitives,org.apache.commons.collect
+ ions.primitives.adapters,org.apache.commons.collections.primitives.ad
+ apters.io,org.apache.commons.collections.primitives.decorators,org.ap
+ ache.commons.collections.set,org.apache.commons.digester,org.apache.c
+ ommons.digester.parser,org.apache.commons.digester.plugins,org.apache
+ .commons.digester.plugins.strategies,org.apache.commons.digester.subs
+ titution,org.apache.commons.digester.xmlrules,org.apache.commons.io,o
+ rg.apache.commons.io.comparator,org.apache.commons.io.filefilter,org.
+ apache.commons.io.input,org.apache.commons.io.monitor,org.apache.comm
+ ons.io.output,org.apache.commons.lang,org.apache.commons.lang.builder
+ ,org.apache.commons.lang.enums,org.apache.commons.lang.exception,org.
+ apache.commons.lang.math,org.apache.commons.lang.mutable,org.apache.c
+ ommons.lang.reflect,org.apache.commons.lang.text,org.apache.commons.l
+ ang.time,org.apache.commons.logging,org.apache.commons.logging.impl,o
+ rg.eclipse.nebula.cwt.base,org.eclipse.nebula.widgets.cdatetime,org.m
+ vel2,org.mvel2.compiler,org.mvel2.optimizers,org.mvel2.util,org.objec
+ tweb.asm,org.objectweb.asm.commons,org.objectweb.asm.signature,org.ob
+ jectweb.asm.util
+Bundle-ManifestVersion: 2
+
+Name: lib/asm-all-3.3.1.jar
+SHA1-Digest: ZFw5vOkCxz4JmPIGp8zRPToXgiY=
+
+Name: lib/commons-collections-3.2.1.jar
+SHA1-Digest: eGBxscuRW4YxATwm21b5wT6Z/qs=
+
+Name: lib/MVEL-fork.jar
+SHA1-Digest: HqLhdvs7BS+ZsojgE5Bd1FtwXLU=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: 09gN05tobgS/MdtqyTNQhOhB73M=
+
+Name: lib/commons-logging-1.1.1.jar
+SHA1-Digest: +IvX9iGjfcrf3wAVaMhjjkpkwWE=
+
+Name: lib/nebula-cdatetime.jar
+SHA1-Digest: ptRsusCXzPtYc9XNIK15etYYDIU=
+
+Name: lib/nebula-cwt.jar
+SHA1-Digest: uV7+ER3ZULRQ11UGVKWbWlQUI7k=
+
+Name: about.html
+SHA1-Digest: gFg+ZyfywojrAANvx7c7pFQ/OcE=
+
+Name: lib/commons-io-2.0.1.jar
+SHA1-Digest: QALWUFa079/oO6Gx2pJCnXI4I2s=
+
+Name: lib/guava-13.0.1.jar
+SHA1-Digest: NqI3l+0QCpcpDyq5TmQCaFqRHfk=
+
+Name: plugin.properties
+SHA1-Digest: T2PXTvfRhDPtqD+LO2xMHdd+S4o=
+
+Name: lib/commons-primitives-1.0.jar
+SHA1-Digest: GRGZjKSk8rOwllHEfPMdd7iHWps=
+
+Name: lib/commons-beanutils-1.8.0.jar
+SHA1-Digest: FGWGmV1Tzn42Q+ZKY0W5aZnJlTw=
+
+Name: target.properties
+SHA1-Digest: nrX7sn/605HQa+wyaA3VX38UJX0=
+
+Name: lib/commons-digester-2.0.jar
+SHA1-Digest: hrN1jox5BsiM4HFRNMgqpP1BqoQ=
+
+Name: lib/commons-lang-2.5.jar
+SHA1-Digest: r+EwtcAz0u4nqCA7cstzZadPMXE=
+

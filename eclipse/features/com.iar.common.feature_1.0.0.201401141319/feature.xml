@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.iar.common.feature"
+      label="IAR Common Components"
+      version="1.0.0.201401141319"
+      provider-name="IAR Systems AB">
+
+   <description>
+      Common components for IAR compiler and debugger integration plugins.
+   </description>
+
+   <copyright>
+      Copyright 2013 IAR Systems AB
+   </copyright>
+
+   <license url="http://iar.com/">
+      IAR SOFTWARE LICENSE AGREEMENT
+
+Concerning the Products: IAR Embedded Workbench(R) and visualSTATE(R)
+from IAR Systems AB December 2011
+
+PREAMBLE 
+
+THIS SOFTWARE LICENSE AGREEMENT (&quot;THE AGREEMENT&quot;) APPLIES TO PRODUCTS 
+LICENSED BY IAR SYSTEMS AB INCLUDING ANY OF ITS SUBSIDIARIES (&quot;IAR 
+SYSTEMS&quot;) OR DISTRIBUTORS (&quot;IAR DISTRIBUTORS&quot;), TO YOU (&quot;THE LICENSEE&quot;). 
+
+The order confirmation from IAR Systems, or when applicable the 
+agreement between IAR Systems and the Licensee, will set out, apart from 
+the applicable licensed product and license fee (which will also be 
+stated in the Invoice), a) if the License in question is a PC-locked 
+License or a Multi-user License, b) in case of a Multi-user License with 
+the allowed number of simultaneous users, c) if the license includes a 
+time limited Support and Update Service and in such cases the expiry 
+date of such service. Any opening of a package where these terms have 
+been stated or referred to, and any use of IAR Systems software, is 
+subject to these terms and conditions. 
+
+YOU AS A USER OF THE LICENSED PRODUCTS STATED ABOVE AND ON THE INVOICE, 
+WILL BIND THE CORPORATION OR ORGANIZATION ALSO SET OUT ON THE INVOICE TO 
+THIS AGREEMENT, BY OPENING OF A PACKAGE OR INSTALLING SOFTWARE WHERE 
+THIS AGREEMENT HAS BEEN STATED OR REFERRED TO. IF YOU ARE NOT IN 
+AGREEMENT WITH THE TERMS HEREIN, OR DO NOT HAVE THE AUTHORITY TO BIND 
+YOUR CORPORATION OR ORGANIZATION TO THESE TERMS, you shALL immediately 
+contact iar systems and YOU MAY NOT INSTALL ANY SOFTWARE or make use of 
+any parts of the product. 
+
+1. Definitions 
+
+The following terms have the meanings set forth below whenever they are 
+used in this Agreement: 
+
+1.1 &quot;Executable Software&quot; means a copy of the executable code version of 
+the software program(s) included in the enclosed package or otherwise 
+specified in this Agreement or Invoice (including any link-time and 
+runtime modules), along with templates and other instructions and any 
+Software updates, revisions, and additional modules and templates (if 
+any) that the Licensee may receive from IAR Systems hereunder from time 
+to time. 
+
+1.2 &quot;Software Source Code&quot; has the meaning set out in section 3.7. 
+
+1.3 &quot;Software&quot; is a collective term for Executable Software and Software 
+Source Code as defined above. 
+
+1.4 &quot;Documentation&quot; means a copy of the documentation, as provided by 
+IAR Systems together with the Software for use by the Licensee. 
+
+1.5 &quot;Product&quot; means the Software and Documentation licensed to the 
+Licensee under the conditions of this Agreement. 
+
+1.6 &quot;Invoice&quot; means IAR Systems&apos; or IAR Distributor&apos;s invoice to the 
+Licensee for the Product license granted hereunder. 
+
+1.7 &quot;PC-locked License&quot; has the meaning set out in section 3.2. 
+
+1.8 &quot;Mobile License&quot; has the meaning set out in section 3.3. 
+
+1.9 &quot;Multi-user License&quot; has the meanings set out in section 3.4. 
+
+1.10 &quot;Network License&quot; has the meanings set out in section 3.5. 
+
+1.11 &quot;Concurrent Users&quot; has the meaning as set out in section 3.6. 
+
+1.12 &quot;Site&quot; means the physical premises of the Licensee within the 
+borders of one city. 
+
+1.13 &quot;Target Architecture&quot; means the family or group of embedded 
+micro-controller and micro-processor devices belonging to one processor 
+architecture, as defined by its instruction set, and as specified on the 
+Invoice. 
+
+1.14 &quot;Support and Update Services&quot; means the services set out in section 
+12. 
+
+2. Term of agreement 
+
+2.1 This Agreement shall become effective on the latest at the 
+Licensee&apos;s receipt of the Software and shall remain in effect for an 
+indefinite period in time, subject to the terms and conditions set out 
+below - in particular the right of IAR Systems to terminate the 
+Agreement upon Licensee&apos;s breach. Registration of the Licensee as a 
+rightful user of Licensed Products shall be made in accordance with 
+applicable instructions from IAR Systems. 
+
+2.2 For the avoidance of doubt: Also for Software delivered with a 
+temporary license key (for some products called quick start key) 
+enabling use for a limited time, the Agreement terms have become 
+effective, including but not limited to its payment terms and use 
+restrictions, already upon the Licensee&apos;s receipt of the Software, 
+regardless of whether registration is made or not. (Evaluation licenses 
+without obligation to pay license fees, are available to the extent 
+separately provided by IAR Systems.) 
+
+3. Ownership and license grant 
+
+3.1 IAR Systems holds the copyright, trade secrets, and any other 
+intellectual property rights which subsist in the Licensed Product and 
+all copies thereof. No title or other rights in the Licensed Product 
+(other than rights expressly granted herein) shall pass to the Licensee. 
+
+The Product is licensed, not sold, to the LICENSEE FOR use only under 
+the terms of this agreement. THE Licensee acknowledgES that the Product 
+consists of proprietary, unpublished products of IAR Systems, protected 
+under international copyright and trade secret laws. 
+
+3.2 PC-locked License; To the extent the relevant license granted is a 
+PC-locked License, the terms in 3.2.a and 3.2.b shall apply. 
+
+A PC-locked License is a single-user license, locked to the computer 
+where the software is installed. 
+
+3.2.a Subject to the terms and conditions of this Agreement, IAR Systems 
+hereby grants to the Licensee a personal, non-transferable and 
+non-exclusive PC-locked License to use the Software. The Licensee&apos;s 
+number of authorized users of the Software under the PC-locked License, 
+if more than one, is stated in the Invoice or otherwise in writing from 
+IAR Systems. 
+
+3.2.b The PC-locked License may be used by the Licensee only on one 
+single, self-contained computer unit (stationary or portable), 
+designated through its IP number or other means of identification. A 
+switch of the designated computer to another single computer may be 
+allowed to transfer the license via a transfer program provided by IAR 
+Systems within the license management system. The Software may not be 
+accessed by users from other computer units than the unit designated as 
+set forth in this clause; through modem, Internet or any other means of 
+network or remote access. 
+
+3.3 Mobile License: To the extent the relevant license granted is a 
+Mobile License, the terms in 3.2.a and 3.2.b shall apply. 
+
+A Mobile License comes with a hardware lock (dongle). A hardware lock is 
+a device to be attached to one of the computer&apos;s external ports, which 
+allows the Licensee to move the license to another computer. A hardware 
+lock is part of the product package only to the extent explicitly 
+ordered. 3.3.b The Mobile License may be used by the Licensee only for 
+one single user, but with the right to a switch of the designated 
+computer to another single computer using a hardware lock. The Software 
+may not be accessed by users from other computer units than the unit 
+designated as set forth in this clause; through modem, Internet or any 
+other means of network or remote access. 
+
+3.4 Multi-user License; To the extent the Product license granted is a 
+Multi-user License, the terms in 3.4.a and 3.4.b shall apply. 
+
+3.4.a Subject to the terms and conditions of this Agreement, IAR Systems 
+hereby grants to the Licensee a personal, non-transferable and 
+non-exclusive Multi-user License to use the Software. The Licensee&apos;s 
+number of authorized users of the Software under the Multi-user License, 
+if more than one, is stated in the Invoice or otherwise in writing from 
+IAR Systems or IAR Distributors. 
+
+3.4.b The Network License may be used by the Licensee only on the single 
+designated server on one Site for the number of simultaneously 
+authorized users. 
+
+3.5 A Network License is a Multi-user License, located on a license 
+server and used by multiple users on a network and on one Site only. The 
+Network License is locked either to the computer where the license 
+server software runs, or to a hardware lock (dongle). The use of a 
+hardware lock allows to move the Network License to another server 
+computer, in case of server failure. The Network License can be used on 
+all client computers on the network where the Software is installed. 
+However, the Network License is made for a maximum number of concurrent 
+users. 
+
+3.6 Concurrent Users; For Products that are Executable Software and 
+licensed as Network Licenses, the definition of concurrency is given by 
+the license server software, which also keeps track of the number of 
+current of users. A user session of an Executable Software is always a 
+minimum of thirty (30) minutes, and is deemed to last for additional 
+thirty (30) minutes after the last license activation by the license 
+server. For Products including Software Source Code, the software shall 
+be deemed in (concurrent) use on a computer when it is loaded into 
+temporary memory (i.e. RAM) or installed into permanent memory (e.g., 
+hard disk, CD-ROM, or other storage device) of that computer. 
+
+3.7 Source Code License: If the Product Licensee receives hereunder 
+contained software modules or components in source code format 
+(&quot;Software Source Code&quot;), the following shall apply to such Software 
+Source Code, in addition to all other provisions of this Agreement: The 
+Licensee may use such Software Source Code only in conjunction with the 
+Product and the Software Source Code or any derivative works thereof. 
+The Software Source Code may only be compiled and linked with products 
+from IAR Systems, and only in accordance with the provisions on such use 
+set out in the Documentation and/or this Agreement. The Licensee is 
+strictly prohibited to make any other use of the Software Source Code. 
+Any breach of this Section 3.7 shall be considered a material breach of 
+this Agreement. 
+
+THE Licensee acknowledges that the Software Source Code embeds 
+copyrighted and propriety information of IAR Systems, and that making 
+Software Source Code accessible to others outside the scope of this 
+Agreement, by the nature of source code, severely damages the 
+intellectual property RIGHTS of IAR Systems, AND AGREES TO COMPENSATE 
+IAR FOR ALL DAMAGE RESULTING FROM SUCH BREACH, THAT CAN BE REASONABLY 
+SUBSTANTIATED BY IAR. The Licensee shall keep and protect the Software 
+Source Code with at least the same degree of care as its own proprietary 
+source code, as further specified in section 5. 
+
+3.8 Back-up Copies: The Licensee may make back-up copies of the Software 
+in machine executable code form, only to be used in the event and to the 
+extent that the copy of the Software received from IAR Systems fails to 
+function, is lost, damaged, or destroyed. The Licensee warrants that it 
+will make no other copies of the Software and will not allow, authorize, 
+or assist others to copy any part or all of the Software in any form 
+without the prior written approval of IAR Systems. There may be no more 
+copies than are necessary to form part of a reasonable back-up cycle for 
+the Licensee. Back-up copies of the Software may be kept by the Licensee 
+in a bank deposit or other such secure place as is normally used by the 
+Licensee for storage of its computer program back-ups. The rights for 
+the Licensee under this section shall not in any case include any 
+measures to affect or decrease the function of the software protection 
+included in the software. 
+
+4. LICENSE RESTRICTIONS 
+
+4.1 The Licensee may not remove, make emulation, reverse engineer, 
+decompile, or disassemble the Executable Software. Licensee is not 
+allowed to derive the source or assembly code of files provided in 
+executable or object formats. The Licensee accepts that all information 
+gained about the Software is the valuable intellectual property of IAR 
+Systems and as such must be treated as confidential as described under 
+Article 5. The Licensee warrants that it will not sell, license, lease, 
+rent, loan, lend, transmit, network, communicate, or otherwise 
+distribute or transfer the Software in any manner to any third party 
+whether on a permanent or temporary basis, except as explicitly stated 
+in this Agreement. Furthermore the Licensee warrants that it will not 
+use or permit the use of (including without limitation by time sharing 
+or network use) the Software for the benefit of any entity other than 
+the Licensee; or in a computer service business; make unauthorized 
+copies of the documentation; make verbal or media translations of the 
+documentation; make telecommunications data transmissions of the 
+Software; use long-haul gateways on any central processing unit on which 
+the Software is used. The Licensee is also expressly prohibited from 
+adapting, modifying, revising, improving, upgrading, enhancing, and 
+creating derivative works of the Executable Software for any purpose 
+including error correction or any other type of maintenance. 
+
+4.2 The Licensee shall keep records of the Licensee&apos;s use of Software. 
+The Licensee shall make the records available to either IAR Systems or a 
+neutral third party on reasonable notice, as agreed between the parties. 
+In the case of a neutral third party audit, IAR Systems and Licensee 
+shall in good faith mutually appoint an auditor. Should such an 
+agreement not be reached within 60 days after IAR Systems notice, then 
+the parties agree to have Business Software Alliance conduct such an 
+audit, or itself elect an auditor. The Licensee will permit IAR Systems 
+or a third party, as the case may be, to have access to the Licensee&apos;s 
+records and computer systems and to use software audit tools on the 
+Licensee&apos;s systems to ensure that the Licensee is using its software 
+in accordance with the applicable license terms. Upon the Licensee&apos;s 
+request, the party conducting the audit with the Licensee shall enter 
+into a non-disclosure agreement with the Licensee, to protect the 
+Licensee&apos;s propriety and/or confidential information. Information 
+retrieved and/or conveyed to IAR Systems as a result of such an audit as 
+here described shall be limited as to only ensure that the Licensee is 
+using its software in accordance with the applicable license terms, or 
+evidence of the contrary. 
+
+4.3 Subject to the other terms herein, and with the Licensee as fully 
+responsible for all actions or omissions of such a consultant, Licensee 
+may let a consultant use the Software for work solely on behalf of the 
+Licensee for the licensed purpose and provided that the Software is not 
+used for any other purpose or third party. 
+
+4.4 Upon each and every breach by the Licensee hereunder a contractual 
+penalty amounting to 200% for breach under sections 3.2, 3.3, 3.4, 3.5, 
+3.8, 4.1 or 4.3 and 1000% for breach under section 3.7 of the applicable 
+licensee fee under the relevant Invoice is payable by the Licensee to 
+IAR Systems. In case IAR Systems&apos; actual damage due to the breach 
+would exceed this amount, also the remainder shall be paid by the 
+Licensee, see also Section 3.7. 
+
+5. CONFIDENTIALITY 
+
+5.1 The Licensee agrees that all material and information relating to 
+the Software is made available for the use solely under and in 
+accordance with this Agreement. The Licensee has no right at any time 
+during or after cancellation or termination of this Agreement to 
+disclose such material and/or information relating to the Software, 
+whether directly or indirectly, to any third party without IAR 
+Systems&apos; prior written approval. The Licensee shall hold harmless, 
+defend, and indemnify IAR Systems from and against any and all losses, 
+costs, damages, and expenses arising out of or in connection with the 
+Licensee&apos;s failure to comply with requirements of this Article 5. The 
+Licensee&apos;s confidentiality obligations hereunder shall survive 
+cancellation or termination, for any reason, of this Agreement. 
+
+6. PAYMENT TERMS AND CONDITIONS 
+
+6.1 In consideration of the rights granted and services rendered by IAR 
+Systems under this Agreement, the Licensee shall pay the license fees 
+for the Software as specified in the Invoice. Payments are to be made 
+according to the payment schedule stated in the Invoice, or if not 
+stated, invoices are payable within 30 days of the invoice date. 
+
+6.2 If the Licensee fails to effect payment within the stipulated time, 
+IAR Systems or IAR Distributors shall be entitled to a) charge interest 
+after due date as stated in the Invoice, or if not stated in the 
+invoice, the interest charged will be the reference rate set by 
+Sweden&apos;s central bank (the Riksbank) + 8%. b) postpone the fulfilment 
+of any of its own obligations until payment is made, and/or c) terminate 
+the Agreement by notice in writing to the Licensee and recover from the 
+Licensee any and all loss incurred. 
+
+6.3 All prices are exclusive of, and the Licensee is responsible for, 
+all fees and taxes, including custom duties, importation fees, sales, 
+use, withholding, gross revenue, and like taxes, dues, and charges 
+assessed or incurred in connection with the provision of goods and 
+services under this Agreement. 
+
+7. LIMITED WARRANTY 
+
+7.1 IAR Systems warrants that the media on which the Software is 
+recorded upon receipt by the Licensee will be free from defects in 
+materials and faulty workmanship under normal use for a period of ninety 
+(90) days from the date of delivery to the Licensee. During this 
+warranty period IAR Systems will, at its option, after its receipt of 
+the media in return, repair or replace, free of charge, defective media 
+upon which the Software was supplied and record a copy of the Software 
+on the repaired or replacement media. Said repair or replacement shall 
+be the Licensee&apos;s exclusive remedy under this media warranty. 
+Notwithstanding the foregoing, IAR Systems shall have no responsibility 
+to repair or replace a media which, in IAR Systems&apos; opinion, has been 
+damaged by the Licensee by accident, abuse, or as a result of attempted 
+self-maintenance service. 
+
+7.2 IAR Systems does not warrant that the Software will meet the 
+Licensee&apos;s requirements or that the operation of the Software will be 
+uninterrupted and error free. The Licensee is solely responsible for the 
+selection of the Software to achieve its intended results or for the 
+results actually obtained. 
+
+7.3 The above warranty does not apply to conditions resulting from 
+improper use, external causes, including service or modifications not 
+performed by IAR Systems or a contractor appointed by IAR Systems, or 
+operation outside the specified environmental parameters. IAR Systems 
+will not be responsible for operation of the Software other than on the 
+host equipment specified in the Invoice and in conjunction with the 
+operating environment designated for each version of the Software. Minor 
+deviations from the above warranty, which are of little importance for 
+the intended use of the Software and which do not cause more than minor 
+inconvenience for the Licensee shall not be considered as breaches of 
+the above warranty. 
+
+7.4 THE ABOVE WARRANTY IS IAR SYSTEMS&apos; ONLY WARRANTY WITH REGARD TO 
+THE SOFTWARE AND THIS AGREEMENT AND, SAVE AS PROVIDED IN THIS AGREEMENT, 
+NO OTHER WARRANTY OR CONDITION, EXPRESSED OR IMPLIED, WILL APPLY, AND 
+THE LICENSEE WILL NOT RAISE ANY OTHER CLAIMS BASED ON THE PERFORMANCE OR 
+LACK OF PERFORMANCE OF THE SOFTWARE. IAR SYSTEMS SPECIFICALLY EXCLUDES 
+ALL OTHER WARRANTIES, REPRESENTATIONS OR UNDERTAKINGS, EXPRESS, IMPLIED 
+OR STATUTORY, INCLUDING BUT NOT LIMITED TO ANY IMPLIED WARRANTIES OF 
+MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, ABILITY TO ACHIEVE 
+A PARTICULAR RESULT, OR OF ANY OTHER WARRANTY OBLIGATION ON THE PART OF 
+IAR SYSTEMS. 
+
+7.5 IAR Systems expressly disclaims any liability for any hardware or 
+software solutions at the Licensee which may affect the performance of 
+the Software, including but not limited to network configurations. 
+
+7.6 The provisions of this Article 7 shall survive any expiration or 
+termination of this Agreement. 
+
+8. INTELLECTUAL PROPERTY INFRINGEMENT 
+
+8.1 IAR Systems will in the way set out in 8.2, and subject to all 
+limitations therein, act on any action brought against the Licensee to 
+the extent it is based on a claim that the Software as it exists on the 
+date of the Invoice infringes any patent or copyright duly issued under 
+the laws of the country under which IAR Systems or the Licensee is 
+organized. 
+
+8.2 IAR Systems shall, in the way set out below, as sole remedy, act on 
+a third-party claim that the Software infringes the intellectual 
+property rights of such party, provided that IAR Systems is given prompt 
+notice of such claim and is given information, reasonable assistance, 
+and sole authority to defend or settle the claim. IAR Systems may at its 
+option obtain the right for the Licensee to continue using the 
+infringing IAR Product, replace or modify the infringing Product until 
+it becomes non-infringing, or if such replacement or modification is not 
+reasonably available, terminate this license with respect to the 
+infringing Product and provide for a reasonable refund of fees paid by 
+the Licensee to IAR Systems for the IAR Product so affected. 
+
+8.3 IAR Systems shall not have any liability if the alleged infringement 
+arises out of unauthorized use of the Software, postdelivery, non-IAR 
+Systems modifications, or the combination with other products or devices 
+not furnished by IAR Systems. THE OBLIGATIONS STATED IN THIS SECTION ARE 
+IAR SYSTEMS&apos; SOLE LIABILITIES AND THE LICENSEE&apos;S SOLE REMEDIES FOR 
+INFRINGEMENT OF PATENTS AND COPYRIGHTS. FOR THE AVOIDANCE OF DOUBT: THE 
+LIABILITY OF IAR SYSTEMS UNDER THIS SECTION 8 MAY NEVER EXCEED THE 
+LICENSE FEE PAID BY THE LICENSEE. 
+
+9. FORCE MAJEURE 
+
+9.1 Either party shall be excused from fulfilment of any obligation 
+under this Agreement only to the extent that and for so long as such 
+performance is prevented or delayed by an industrial dispute or any 
+other cause beyond its reasonable control, such as, but not limited to, 
+riots; floods; war; warlike hostilities; fires; embargo; shortage of 
+labor, power, fuel, means of transportation, or common lack of other 
+necessities. A party wishing to claim relief under this Article shall 
+forthwith notify the other party in writing on the intervention and on 
+the cessation of such circumstance. 
+
+10. LIMITATION OF LIABILITY 
+
+10.1 THE USE OF THE SOFTWARE AND ALL CONSEQUENCES ARISING THEREFROM IS 
+THE SOLE RESPONSIBILITY OF LICENSEE. IAR SYSTEMS SHALL NOT BE LIABLE TO 
+THE LICENSEE FOR ANY LOSS OR DAMAGE CAUSED ARISING DIRECTLY OR 
+INDIRECTLY IN CONNECTION WITH THE SOFTWARE, THE USE OF THE SOFTWARE, OR 
+OTHERWISE. 
+
+10.2 IAR SYSTEMS&apos; LIABILITY VIS-À-VIS THE LICENSEE UNDER THIS 
+AGREEMENT SHALL UNDER ALL CIRCUMSTANCES BE LIMITED TO FIFTY (50) PER 
+CENT OF THE LICENSE FEE FOR THE SOFTWARE PAID BY THE LICENSEE HEREUNDER, 
+PROVIDED HOWEVER THAT IF SECTION 8 IS APPLICABLE THE TOTAL LIABILITY OF 
+IAR SYSTEMS HEREUNDER MAY INSTEAD NEVER EXCEED 100% OF THE LICENSE FEE 
+PAID BY THE LICENSEE HEREUNDER FOR SUCH SOFTWARE. 
+
+10.3 IAR SYSTEMS SHALL IN NO EVENT BE LIABLE TO THE LICENSEE UNDER THIS 
+AGREEMENT FOR ANY SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL 
+DAMAGES UNDER ANY LEGAL THEORY, SUCH AS LOSS OF DATA, USE AND/OR 
+PROFITS, BUSINESS INTERRUPTION OR DOWNTIME COSTS AND CAPITAL COSTS OR 
+CLAIM OF THIRD PARTY, WHETHER ON ACCOUNT OF DEFECTS, PERFORMANCES, 
+NON-PERFORMANCES, DELAYS, PERSONAL INJURIES, PROPERTY DAMAGES, OR 
+OTHERWISE, REGARDLESS WHETHER IAR SYSTEMS HAS BEEN ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGES. 
+
+10.4 NOTHING IN THIS AGREEMENT SHALL EXCLUDE OR LIMIT THE LIABILITY 
+UNDER APPLICABLE COMPULSORY LAW OF IAR SYSTEMS FOR DEATH OR PERSONAL 
+INJURY RESULTING FROM ITS NEGLIGENCE. 
+
+10.5 The provisions of this Article 10 shall survive the cancellation or 
+termination of this Agreement. 
+
+11. THIRD PARTY RIGHTS 
+
+11.1 The IAR Embedded Workbench for Eclipse includes Eclipse Materials. 
+This License does not apply to such Eclipse Material and this is not 
+included in the term &quot;Software&quot; under this License. You agree to comply 
+with all terms and conditions imposed on you in respect of such Eclipse 
+Materials. 
+
+11.2 The Eclipse Materials are licensed under the terms of the Eclipse 
+Public License (EPL), Version 1.0, a copy of which is included in the 
+Eclipse Materials and also available at 
+http://www.opensource.org/licenses/eclipse-1.0.php. 
+
+12. SUPPORT AND UPDATE AGREEMENT (SUA) 
+
+12.1 Excluding what is specified in Section 12.2 and/or Section 7 of 
+this Agreement, this Agreement does not grant the Licensee any right 
+whatsoever to any improvements, modifications, enhancements, upgrades or 
+updates to the Software, or any other support services relating to the 
+Software. 
+
+12.2 To the extent that the license granted includes a time-limited 
+Support and Update Service, the Licensee will be entitled to the 
+services defined in the Support and Update Agreement (&quot;SUA&quot;) attached 
+hereto. In the case that the license granted does not include Support 
+and Update Services or in the case where such services have expired, the 
+Licensee may, depending on the nature of the granted license, purchase 
+additional periods of Support and Update Services 
+
+12.3 Use of improvements, modifications, enhancements, updates, or 
+upgrades received by the Licensee under IAR Systems&apos; Support and 
+Update Agreement (SUA) or received under Section 7 of this Agreement, 
+shall be governed by the terms and conditions contained herein. 
+
+13. TERMINATION OF THE AGREEMENT 
+
+13.1 IAR Systems shall have the right to terminate this Agreement with 
+immediate effect if the Licensee is in breach of any of its obligations 
+under this Agreement, including, but not limited to (a) use of the 
+Software in any manner other than pursuant to the rights granted in 
+Article 3 and 4, (b) breach of the confidentiality provisions of Article 
+5, or (c) failure of the Licensee to remit payments as provided in 
+Article 6. 
+
+13.2 This Agreement will terminate immediately without notice if 
+Licensee suspends its payments, becomes bankrupt or insolvent or enters 
+into liquidation or otherwise can be regarded as insolvent. 
+
+13.3 Upon IAR Systems&apos; termination of this Agreement, as set out in 
+this Article, then, IAR Systems may, at its option, and in addition to 
+any other rights hereunder, and in addition to any other remedies 
+available to IAR Systems under the law, in writing require the Licensee 
+to return or destroy all versions of the Software and the Documentation 
+and any and all documentation relating thereto on any media and in any 
+form in Licensee&apos;s possession. Licensee shall give a written 
+confirmation to IAR Systems that all material related to the Software 
+and its operation has been returned to IAR Systems or destroyed. The 
+provisions of this Section 13.3 shall survive the cancellation or 
+termination of this Agreement. 
+
+14. EXPORT CONTROL REGULATIONS 
+
+14.1 The Software and the Documentation is subject to export or import 
+regulations in various countries, including the regulations of the 
+United States Export Administration Act. The Licensee hereby agrees that 
+the Licensee will not knowingly (a) export or reexport, directly or 
+indirectly, any product or technical data or any controlled products 
+restricted by applicable national regulations, including software, 
+received from IAR Systems under this agreement, (b) disclose such 
+technical data for use in, or (c) export or reexport, directly or 
+indirectly, any direct product of such technical data or of such other 
+controlled products, including software, to any destination to which 
+such export or reexport is restricted or prohibited by U.S. or 
+applicable non-U.S. law, without obtaining prior written consent of IAR 
+Systems. 
+
+15. MISCELLANEOUS 
+
+15.1 This Agreement shall not in any situation be assignable or 
+transferable in whole or in part by either party, without the prior 
+written approval of the other party. This notwithstanding, IAR Systems 
+shall be entitled to assign this Agreement in whole or in part to a 
+company within the IAR Systems Group, and IAR Systems may assign this 
+Agreement without penalty or detriment to its rights under this 
+Agreement, and without the Licensee&apos;s prior written consent, in the 
+event of a merger or similar reorganization or sale of substantially all 
+of IAR Systems&apos; assets. 
+
+15.2 No alteration or amendment to this Agreement shall be valid unless 
+such alteration or amendment is made in writing and signed by the 
+parties hereto. 
+
+15.3 Any notice or other communication under this Agreement shall be 
+made in writing either by hand or by telefax (confirmed by airmail) or 
+by certified or registered airmail first-class postage prepaid to the 
+parties at the addresses stated in the Invoice (or at such other address 
+a party may specify by written notice to the other). 
+
+15.4 This Agreement contains the entire understanding between the 
+parties on its subject matter, and annuls and replaces any other 
+agreements or understandings, whether written or oral, which may exist 
+or have existed between the parties on the subject matter hereof. 
+
+15.5 This Agreement shall be governed by and construed in accordance 
+with the substantive to the courts of the country in which IAR Systems 
+is incorporated. Any dispute concerning this agreement or the 
+interpretation or validity thereof, or any other dispute based thereon, 
+shall be submitted to the courts of the country in which IAR Systems is 
+incorporated. 
+
+15.6 The provisions of this Article 15 shall survive the cancellation or 
+termination of this Agreement.
+   </license>
+
+   <plugin
+         id="com.iar.cdt.generic.toolchain"
+         download-size="121"
+         install-size="251"
+         version="4.1.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.cdt.generic.toolchain.language"
+         download-size="25"
+         install-size="52"
+         version="1.1.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.cdt.generic.toolchain.ui"
+         download-size="14"
+         install-size="32"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.cdt.generic.wizardPages"
+         download-size="41"
+         install-size="93"
+         version="2.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.cdt.project.utils"
+         download-size="48"
+         install-size="118"
+         version="1.9.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.common"
+         download-size="83"
+         install-size="157"
+         version="2.7.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.common.ui"
+         download-size="47"
+         install-size="94"
+         version="1.4.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.errorreporter"
+         download-size="50"
+         install-size="103"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.ide.log4j"
+         download-size="359"
+         install-size="407"
+         version="0.3.0.201401141319"/>
+
+   <plugin
+         id="com.iar.ide.utils"
+         download-size="37"
+         install-size="79"
+         version="1.1.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.importer.cdt"
+         download-size="31"
+         install-size="67"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.importer.core"
+         download-size="242"
+         install-size="585"
+         version="1.1.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.importer.core.edit"
+         download-size="140"
+         install-size="263"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.importer.core.editor"
+         download-size="207"
+         install-size="407"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.importer.ui"
+         download-size="65"
+         install-size="127"
+         version="1.0.0.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.iar.jna"
+         download-size="983"
+         install-size="1026"
+         version="3.4.0.201401141319"/>
+
+   <plugin
+         id="com.iar.cdt.errorParser"
+         download-size="23"
+         install-size="51"
+         version="5.40.2.201401141319"
+         unpack="false"/>
+
+   <plugin
+         id="com.google.guava"
+         download-size="1635"
+         install-size="3592"
+         version="11.0.1"
+         unpack="false"/>
+
+</feature>

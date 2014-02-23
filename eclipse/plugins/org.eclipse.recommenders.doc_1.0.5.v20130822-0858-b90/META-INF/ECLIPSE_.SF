@@ -1,0 +1,236 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest: yXyL7r2ckIHUvEtrpXM0fm/UFUg=
+Created-By: 1.6.0 (IBM Corporation)
+SHA1-Digest-Manifest-Main-Attributes: Y0tNS3NQIkBlnyXcL8scrIxsXC4=
+
+Name: media/figures/changes/v0.3/templates-completion-grouped-proposal
+ -order.png
+SHA1-Digest: d3fFWtyhLTREN8YO61bwWdq1+C0=
+
+Name: media/graffle/modelstore.graffle
+SHA1-Digest: /WrvBPyIDgJhfvfsIAmxn/NMlAs=
+
+Name: media/figures/changes/v0.2/chain-completion-on-platformui.png
+SHA1-Digest: jQitH4hZgCTlEw2SulInsHeG/p4=
+
+Name: media/figures/changes/v0.3/extdoc-comments.png
+SHA1-Digest: bYQEx7l5ci18iDPc4E0m9DxQ5jc=
+
+Name: media/figures/changes/v0.3/subwords-completion-on-method-calls.p
+ ng
+SHA1-Digest: jVQK+cGk1Mwrvdw531E9n3z089U=
+
+Name: media/figures/isv/extdoc/exampleProvider.png
+SHA1-Digest: +OhS3CKMZMEZ2p90CfWl+53nSS4=
+
+Name: media/figures/changes/v0.1/eclipse-help-user.png
+SHA1-Digest: 0l6O2K2NvbOWfoVSxCCc2uMqKKQ=
+
+Name: media/figures/usr/extdoc/view01.png
+SHA1-Digest: MMzK2uf9+YaT7wB0mZb7tiNRBXo=
+
+Name: media/figures/usr/completion/overrides-dialog.png
+SHA1-Digest: 0JlZtagb+ShJcl7Kvej3XdLfbEY=
+
+Name: media/graffle/udc-draft (Autosaved).graffle
+SHA1-Digest: 4s8gc5mObGUyVSZCaYd+DkOMf/4=
+
+Name: media/figures/changes/v0.3/extdoc-patterns-provider.png
+SHA1-Digest: 9RjJvy0djYANHQjIcbgj9GvUnSQ=
+
+Name: media/figures/changes/v0.3/extdoc-bookmarks-provider.png
+SHA1-Digest: QsUMr7lKdcvJjV6DuRP0z48iLGM=
+
+Name: media/figures/usr/intro/ide20.png
+SHA1-Digest: rEtLnBqFS8ISIiKNwXHhOCUyDTc=
+
+Name: media/figures/usr/completion/chain-preferences.png
+SHA1-Digest: mt9Mi1ZICVWputqTJMNZmM+6FF8=
+
+Name: media/figures/usr/extdoc/class-overrides.png
+SHA1-Digest: V/XVU07ItkRGp5th8DQNxp1LLOw=
+
+Name: media/figures/usr/extdoc/snippets.png
+SHA1-Digest: KlmJ/r3NV7onDeJ8fsFa8nQMmlI=
+
+Name: media/figures/usr/completion/subwords-ijavaelement.png
+SHA1-Digest: M8i2s62KMN3zZ4xMcApWm8KHN6w=
+
+Name: media/graffle/extdoc.graffle
+SHA1-Digest: cgK4WsSA2JPiAPQmEZ01d8tAaV8=
+
+Name: META-INF/maven/org.eclipse.recommenders/org.eclipse.recommenders
+ .doc/pom.properties
+SHA1-Digest: KWQkY6/YF4QkvNj8o9LP+aoO34w=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: QdryQvJlVywlE0MGLuwYCkmkyWk=
+
+Name: META-INF/maven/org.eclipse.recommenders/org.eclipse.recommenders
+ .doc/pom.xml
+SHA1-Digest: INBBmVP8ego7p2bsUzu7RUUah1o=
+
+Name: media/figures/changes/v0.3/extdoc-hover-large.png
+SHA1-Digest: XfRoNVMKTSCirdAWJabmuBWfAYk=
+
+Name: media/figures/isv/chain-completion/design-overview.png
+SHA1-Digest: XTLnurKgpr50AE31BR33+ukTSMY=
+
+Name: media/figures/usr/completion/calls-preferences.png
+SHA1-Digest: Vcv6xUJv0ELpRpOhQiZFlupf/bE=
+
+Name: media/figures/changes/v0.1/completion-on-this.png
+SHA1-Digest: C7sBG7QT4sbRb+mzqNlspOak6tE=
+
+Name: media/figures/usr/completion/chain-istatuslinemanager.png
+SHA1-Digest: XfR+YVnn/KM09w7VRfIN8tgwiCc=
+
+Name: media/figures/changes/v0.5/subwords-assignment.png
+SHA1-Digest: 9/2sE7m59RMixd/nE6RLy1pkXp4=
+
+Name: media/figures/changes/v0.3/extdoc-subclassing-directives-provide
+ r.png
+SHA1-Digest: EyO8hmLutne+IW7NpJ8qRq0XTKQ=
+
+Name: media/figures/usr/extdoc/class-override-patterns.png
+SHA1-Digest: M5VGOsaE+JdNg32Dr6o5JqnPXeU=
+
+Name: media/figures/changes/v0.3/extdoc-hover-window.png
+SHA1-Digest: USvyzAFU+eqcHFYIi3Wcnb0k2Q8=
+
+Name: media/figures/isv/extdoc/scheduling.png
+SHA1-Digest: aYtlkRu0BYssUetBm0Xy2OjRUfM=
+
+Name: media/figures/usr/extdoc/hooks.png
+SHA1-Digest: EfTktyERmnD8gyqaGj1pH3LzVUQ=
+
+Name: media/figures/usr/completion/templates-tableviewer01.png
+SHA1-Digest: Nlt5qG74tgZBuIZFrug35z0U+gU=
+
+Name: media/figures/usr/completion/templates-tableviewer02.png
+SHA1-Digest: Uk4I2JYssN+1k3ke0Yw1QXsXyek=
+
+Name: media/figures/changes/v0.2/chain-completion-on-IStatusLineManage
+ r.png
+SHA1-Digest: AgLYHwv9vWg3iPcIbieBMzOZ1VU=
+
+Name: media/figures/changes/v0.3/extdoc-view.png
+SHA1-Digest: pcJmYVNnZ+XNPJB5+Qw8QxZPRf0=
+
+Name: main.html
+SHA1-Digest: 8Dz8J2yT+utWlpq098XAjqN08ug=
+
+Name: media/figures/changes/v0.3/extdoc-calls-provider.png
+SHA1-Digest: r24ybGjl0bddY4VIKd6s55xrNN4=
+
+Name: media/figures/usr/extdoc/method-self.png
+SHA1-Digest: x+nbvkCVCnsLlvFXI2+4TMwNsOE=
+
+Name: usr.html
+SHA1-Digest: oOLRuqV1ZnkdkvGTGye/HncPRXc=
+
+Name: media/figures/usr/completion/subwords-ast01.png
+SHA1-Digest: nSSy7ywnCRqZDa5gdz7E87nFnpI=
+
+Name: media/figures/usr/completion/subwords-ast02.png
+SHA1-Digest: vz3hAyZ1kB+PMe4FaJ41jMC+kGU=
+
+Name: media/figures/changes/v0.3/subwords-completion-on-variables.png
+SHA1-Digest: pyzQLXyDPXzOoQlQH82xSNl1+5Y=
+
+Name: media/figures/usr/completion/subwords-compilationunit.png
+SHA1-Digest: LVno+HZ1RkoPIs5N/+6E+Y03Z6A=
+
+Name: isv.html
+SHA1-Digest: HfyEK2OiRaSpK8Gfu7Eow0ohoq8=
+
+Name: media/figures/usr/completion/calls-text.png
+SHA1-Digest: rByBuHfCNfGPzJOH4SANWMJmqx8=
+
+Name: media/figures/changes/v0.2/template-completion-on-button-with-ob
+ served-calls.png
+SHA1-Digest: JJF+0y+U0jZuATEr+43MCwoOgPQ=
+
+Name: media/figures/isv/extdoc/layout.png
+SHA1-Digest: m6guL6+yYNj23GhUsILyXmFEiDw=
+
+Name: media/figures/changes/v0.2/template-completion-on-button-declara
+ tion.png
+SHA1-Digest: 4Oj2TIizsgR9cRWzV7NtCiANZbs=
+
+Name: media/figures/isv/chain-completion/on-local.png
+SHA1-Digest: dB0JlKrLB64ux5y1KWjiqOzK424=
+
+Name: media/figures/isv/extdoc/exampleProvider.txt
+SHA1-Digest: jPNejuyEHyxOh12/sAKX3hQVS9I=
+
+Name: media/graffle/chain-completion.graffle
+SHA1-Digest: sDznSP9wdCNIKGJGs/NBHnD98Go=
+
+Name: media/figures/usr/completion/api-jbutton.png
+SHA1-Digest: pam3QNBOnUroMqbOgWgZcPC7FcM=
+
+Name: media/style.css
+SHA1-Digest: aPURrjleJjPD8ye0ljVeyb6q4Xw=
+
+Name: plugin.xml
+SHA1-Digest: /gK5DloOL3Zp8f7w6q3wa5/wL8w=
+
+Name: media/figures/changes/v0.1/completion-on-field.png
+SHA1-Digest: 00CJQ71oSlJoxojoTU9keOSJDD0=
+
+Name: media/figures/changes/v0.3/subwords-completion-on-method-overrid
+ es.png
+SHA1-Digest: aSUjakS1aV57W1Gj2+kfYrHKV14=
+
+Name: media/figures/changes/v0.3/call-completion-models.png
+SHA1-Digest: XK82W66UnvX3aW2rtGO+KQAcFyY=
+
+Name: media/figures/isv/extdoc/design.png
+SHA1-Digest: OG8+68lDmVKyZxo+6FY4PI2FMxg=
+
+Name: media/figures/usr/general/preferences.png
+SHA1-Digest: PxawaEzOQlyS4rIIqwE1PKRFCUc=
+
+Name: media/figures/usr/completion/preferences.png
+SHA1-Digest: PvbtG3v6R6v9IyRNzUwkUmBcTP4=
+
+Name: media/figures/changes/v0.1/completion-on-class-body.png
+SHA1-Digest: L4qhsIsOtJrW/DXh5FTDgqqJSe8=
+
+Name: about.html
+SHA1-Digest: p+J1lshfujMqAzV5/VljRFB28RA=
+
+Name: toc.xml
+SHA1-Digest: Ejyb3DSGBrkmVhiGdJ2KABupVbU=
+
+Name: media/figures/changes/v0.3/extdoc-examples-provider.png
+SHA1-Digest: j0vNwDbgqF2JHvJuNF4LDsQenJo=
+
+Name: media/figures/changes/v0.2/chain-completion-on-method-return.png
+SHA1-Digest: oyUN0YJbMF6GqaZKoW971Ssa1Z4=
+
+Name: media/figures/changes/v0.2/chain-completion-with-cast.png
+SHA1-Digest: C7aTdLX0TF5XTCmmgWwCt6PuuI4=
+
+Name: changes.html
+SHA1-Digest: QvNCqRqzuSQWslPzgyd4v5poE5Q=
+
+Name: media/figures/changes/v0.1/completion-on-local-from-nested.png
+SHA1-Digest: J/SC3t38+SRRWONipWOxyesZI+k=
+
+Name: media/figures/usr/completion/templates-astparser.png
+SHA1-Digest: dNdcRqJFO5YbNHYTa73wiPQ0dFc=
+
+Name: index.xml
+SHA1-Digest: vZcN/MElERzeTmWIUEMcOi9v0M8=
+
+Name: media/figures/usr/completion/subwords-preferences.png
+SHA1-Digest: J01KFBjo/bRtiWniIrbfqfgMRfY=
+
+Name: media/graffle/udc-draft.graffle
+SHA1-Digest: TmQsWi1hFrE1xo6Ye+g/d7R93I0=
+
+Name: media/figures/changes/v0.1/completion-on-method-return.png
+SHA1-Digest: 48NQDwuN/eeTx7TTMVYNStYt9AA=
+

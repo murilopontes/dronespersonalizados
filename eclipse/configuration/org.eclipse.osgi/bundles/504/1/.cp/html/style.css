@@ -1,0 +1,29 @@
+h1 {
+	font-family: Arial;
+	font-size: 30px;
+	color: #FABB00;
+	text-align: center;
+}
+
+h2 {
+    font-family: Arial;
+    font-size: 18px;
+    color: #9b9b9b;
+    text-align: left;
+}
+
+h3 {
+    font-family: Arial;
+    font-size: 14px;
+    color: #9b9b9b;
+    text-align: left;
+}
+
+body {
+	font-family: Arial;
+	font-size: 14px;
+}
+
+blockquote {
+    background-color: #dddddd	
+}

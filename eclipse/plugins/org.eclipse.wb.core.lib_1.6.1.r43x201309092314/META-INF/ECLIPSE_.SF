@@ -1,0 +1,53 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest: BcEcDtNgiFYPVruHmv3ycP5cI1I=
+Created-By: 1.6.0 (IBM Corporation)
+SHA1-Digest-Manifest-Main-Attributes: RR9tp0jh0pUa4rTTEylva99+0FU=
+
+Name: lib/asm-all-3.3.1.jar
+SHA1-Digest: IROnyAkdq1NFx5iRSlhUJGbTJB4=
+
+Name: lib/commons-collections-3.2.1.jar
+SHA1-Digest: v6ATY3bMZTeLNoVBKRxnt+rAxR4=
+
+Name: lib/MVEL-fork.jar
+SHA1-Digest: L9twBbUOQrK8dCtSijtsFabFiIs=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: QdryQvJlVywlE0MGLuwYCkmkyWk=
+
+Name: lib/commons-logging-1.1.1.jar
+SHA1-Digest: iGe0jKd5Kh2K9NGdTzXkxRy7mWw=
+
+Name: lib/nebula-cdatetime.jar
+SHA1-Digest: viy/AdBewAL4Y+BRuciLUC+t1lA=
+
+Name: lib/nebula-cwt.jar
+SHA1-Digest: l9GmRMtUlY9uQEZHFjp9v2gByNw=
+
+Name: about.html
+SHA1-Digest: Aj5HNx2khG4ejAT7ghA8xkruzOg=
+
+Name: lib/commons-io-2.0.1.jar
+SHA1-Digest: YK8s2V/Q4F/NjhtbWYDbEjyQzCA=
+
+Name: lib/guava-13.0.1.jar
+SHA1-Digest: vjr9h5Se/OVOxMeg/JgGUexb8/8=
+
+Name: plugin.properties
+SHA1-Digest: Wh5Iw1WpfBO5ZkRWyQ4sgw26emc=
+
+Name: lib/commons-primitives-1.0.jar
+SHA1-Digest: bSZP90VMXxCjVM2sSZodZ4FJTc4=
+
+Name: lib/commons-beanutils-1.8.0.jar
+SHA1-Digest: theSA5c38gtEphD+5pSfct+n+r8=
+
+Name: target.properties
+SHA1-Digest: 6PrHrMFV3w1zRPq9A7y1qd9ivtA=
+
+Name: lib/commons-digester-2.0.jar
+SHA1-Digest: GVyGoi/deJcxq/4wHzXAT64pANs=
+
+Name: lib/commons-lang-2.5.jar
+SHA1-Digest: 6Klvaj/cXZeYkEDdx5b23l46v0g=
+

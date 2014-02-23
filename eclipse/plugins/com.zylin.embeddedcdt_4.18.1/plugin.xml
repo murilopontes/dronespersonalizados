@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            delegate="com.zylin.embeddedcdt.launch.cygwin.CygWinLaunch"
+            public="true"
+            name="Zylin Embedded debug (Cygwin)"
+            modes="debug"
+            id="com.zylin.embeddedcdt.idle"
+
+            sourceLocatorId="com.zylin.embeddedcdt.sourceLocatorCygWin"
+            sourcePathComputerId="com.zylin.embeddedcdt.sourcePathComputerCygWin"
+            />
+            <!--
+      <launchConfigurationType
+            delegate="com.zylin.embeddedcdt.launch.jtag.JTAGLaunch"
+            public="true"
+            name="Zylin JTAG debugger (Cygwin)"
+            modes="debug"
+            id="com.zylin.embeddedcdt.idleJTAG"
+
+            sourceLocatorId="com.zylin.embeddedcdt.sourceLocatorCygWin"
+            sourcePathComputerId="com.zylin.embeddedcdt.sourcePathComputerCygWin"
+            />
+      <launchConfigurationType
+            delegate="com.zylin.embeddedcdt.launch.jtag.JTAGLaunch"
+            public="true"
+            name="Zylin JTAG debugger (native)"
+            modes="debug"
+            id="com.zylin.embeddedcdt.idleJTAGNative"
+
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="org.eclipse.cdt.debug.core.sourcePathComputer"
+            />
+            -->
+
+      <launchConfigurationType
+            delegate="com.zylin.embeddedcdt.launch.nativeos.NativeLaunch"
+            public="true"
+            name="Zylin Embedded debug (Native)"
+            modes="debug"
+            id="com.zylin.embeddedcdt.idleNative"
+
+            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
+            sourcePathComputerId="org.eclipse.cdt.debug.core.sourcePathComputer"
+            />
+
+
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+         <!--
+      <launchConfigurationTabGroup
+            type="com.zylin.embeddedcdt.idleJTAG"
+            class="com.zylin.embeddedcdt.gui.jtag.JTAGLaunchConfigurationTabGroup"
+            id="com.zylin.embeddedcdt.TabGroup">
+      </launchConfigurationTabGroup>
+      <launchConfigurationTabGroup
+            type="com.zylin.embeddedcdt.idleJTAGNative"
+            class="com.zylin.embeddedcdt.gui.jtag.JTAGLaunchConfigurationTabGroup"
+            id="com.zylin.embeddedcdt.TabGroup">
+      </launchConfigurationTabGroup>
+            -->
+      <launchConfigurationTabGroup
+            type="com.zylin.embeddedcdt.idle"
+            class="com.zylin.embeddedcdt.gui.LaunchConfigurationTabGroup"
+            id="com.zylin.embeddedcdt.TabGroup">
+      </launchConfigurationTabGroup>
+      <launchConfigurationTabGroup
+            type="com.zylin.embeddedcdt.idleNative"
+            class="com.zylin.embeddedcdt.gui.LaunchConfigurationTabGroup"
+            id="com.zylin.embeddedcdt.TabGroup">
+      </launchConfigurationTabGroup>
+	</extension>
+
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            icon="icons/c_app.gif"
+            configTypeID="com.zylin.embeddedcdt.idle"
+            id="com.zylin.embeddedcdt.Image">
+      </launchConfigurationTypeImage>
+      <!--
+      <launchConfigurationTypeImage
+            icon="icons/c_app.gif"
+            configTypeID="com.zylin.embeddedcdt.idleJTAG"
+            id="com.zylin.embeddedcdt.Image">
+      </launchConfigurationTypeImage>
+      -->
+      <launchConfigurationTypeImage
+            icon="icons/c_app.gif"
+            configTypeID="com.zylin.embeddedcdt.idleNative"
+            id="com.zylin.embeddedcdt.Image">
+      </launchConfigurationTypeImage>
+   </extension>
+   
+   <extension
+         point="org.eclipse.cdt.debug.core.CDebugger">
+      <debugger
+            platform="*"
+            name="Embedded GDB"
+            modes="run"
+            cpu="*"
+            class="com.zylin.embeddedcdt.EmbeddedGDBCDIDebugger"
+            id="com.zylin.embeddedcdt.EmbeddedCDebugger">
+      </debugger>
+   </extension>
+   <extension
+         point="org.eclipse.cdt.debug.ui.CDebuggerPage">
+      <debuggerPage
+            class="com.zylin.embeddedcdt.gui.EmbeddedGDBDebuggerPage"
+            debuggerID="com.zylin.embeddedcdt.EmbeddedCDebugger"
+            id="com.zylin.embeddedcdt.gui.EmbeddedGDBDebuggerPage">
+      </debuggerPage>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.sourceLocators">
+      <sourceLocator
+            class="com.zylin.embeddedcdt.sourcelookup.cygwin.CygWinSourceLookupDirector"
+            name="Zylin Embedded CDT source locator CygWin"
+            id="com.zylin.embeddedcdt.sourceLocatorCygWin"/>
+   </extension>
+   <!-- CygWin source path handling -->
+   <extension
+         point="org.eclipse.debug.core.sourceContainerTypes">
+      <sourceContainerType
+            class="com.zylin.embeddedcdt.sourcelookup.cygwin.CygWinSourceContainerType"
+            id="com.zylin.embeddedcdt.containerType.cygwin"
+            description="%containerDescription.cygwin"
+            name="%containerName.cygwin"/>
+            />
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.sourceContainerPresentations">
+      <sourceContainerPresentation
+            browserClass="com.zylin.embeddedcdt.sourcelookup.cygwin.CygWinSourceContainerBrowser"
+            containerTypeID="com.zylin.embeddedcdt.containerType.cygwin"
+            icon="icons/obj16/mapping_obj.gif"
+            id="com.zylin.embeddedcdt.sourceContainerPresentation.cygwin"/>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.sourcePathComputers">
+      <sourcePathComputer
+            class="com.zylin.embeddedcdt.sourcelookup.cygwin.CygWinSourcePathComputerDelegate"
+            id="com.zylin.embeddedcdt.sourcePathComputerCygWin"/>
+   </extension>
+
+
+   <extension
+         point="org.eclipse.cdt.debug.mi.core.commandFactories">
+      <commandFactory
+            class="org.eclipse.cdt.debug.mi.core.command.factories.StandardCommandFactory"
+            debuggerID="com.zylin.embeddedcdt.EmbeddedCDebugger"
+            id="org.eclipse.cdt.debug.mi.core.standardCommandFactory"
+            miVersions="mi,mi1,mi2"
+            name="%StandardCommandFactory.name"
+            platforms="*"/>
+	</extension>
+	
+    <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.zylin.embeddedcdt.preferences.PrefInitializer">
+      </initializer>
+    </extension>
+</plugin>
+

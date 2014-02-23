@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.cdt.bupc"
+      label="%featureName"
+      version="1.2.0.201309180223"
+      provider-name="%providerName"
+      plugin="org.eclipse.cdt.managedbuilder.bupc.ui">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.cdt.managedbuilder.bupc.ui"
+         download-size="14"
+         install-size="41"
+         version="1.0.3.201309180223"/>
+
+</feature>

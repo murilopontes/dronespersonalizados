@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.wb.core.ui.feature"
+      label="%featureName"
+      version="1.6.1.r43x201309092325"
+      provider-name="%providerName"
+      plugin="org.eclipse.wb.core.ui"
+      image="eclipse_update_120.jpg">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.wb.core.feature" version="1.6.1.r43x201309092314" match="greaterOrEqual"/>
+      <import feature="org.eclipse.wb.core.java.feature" version="1.6.1.r43x201309092318" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.wb.core.ui"
+         download-size="0"
+         install-size="0"
+         version="1.6.1.r43x201309092325"
+         unpack="false"/>
+
+</feature>

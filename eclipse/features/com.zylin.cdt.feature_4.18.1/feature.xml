@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.zylin.cdt.feature"
+      label="Zylin Embedded CDT"
+      version="4.18.1"
+      provider-name="ZYLIN"
+      plugin="com.zylin.embeddedcdt"
+      image="logo_emb_full.png">
+
+   <description url="http://opensource.zylin.com/embeddedcdt.html">
+      Zylin Embedded CDT debug plugin
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="Zylin Embedded CDT" url="http://opensource.zylin.com/zylincdt"/>
+      <discovery label="Zylin Embedded CDT home" url="http://opensource.zylin.com"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.cdt.launch"/>
+      <import plugin="org.eclipse.cdt.debug.mi.core"/>
+      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.cdt.debug.core"/>
+      <import plugin="org.eclipse.cdt"/>
+      <import plugin="org.eclipse.cdt.core"/>
+      <import plugin="org.eclipse.cdt.debug.mi.ui"/>
+      <import plugin="org.eclipse.cdt.ui"/>
+      <import plugin="org.eclipse.cdt.debug.ui"/>
+   </requires>
+
+   <plugin
+         id="com.zylin.embeddedcdt"
+         download-size="0"
+         install-size="0"
+         version="4.18.1"/>
+
+</feature>

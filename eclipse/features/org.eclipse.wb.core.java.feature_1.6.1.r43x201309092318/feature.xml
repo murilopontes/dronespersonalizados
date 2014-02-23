@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.wb.core.java.feature"
+      label="%featureName"
+      version="1.6.1.r43x201309092318"
+      provider-name="%providerName">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.wb.core.feature" version="1.6.1.r43x201309092314"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.wb.core.java"
+         download-size="0"
+         install-size="0"
+         version="1.6.1.r43x201309092318"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.wb.core.databinding"
+         download-size="0"
+         install-size="0"
+         version="1.6.1.r43x201309092318"
+         unpack="false"/>
+
+   
+
+</feature>

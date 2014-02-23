@@ -1,0 +1,415 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;3.&nbsp;ISV Manual</title><link rel="stylesheet" type="text/css" href="media/style.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="main.html" title="Eclipse Code Recommenders"><link rel="up" href="main.html" title="Eclipse Code Recommenders"><link rel="prev" href="changes.html" title="Chapter&nbsp;2.&nbsp;New and Noteworthy"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter&nbsp;3.&nbsp;ISV Manual"><div class="titlepage"><div><div><h2 class="title"><a name="isv"></a>Chapter&nbsp;3.&nbsp;ISV Manual</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="isv.html#isv-eventbus">Eventbus</a></span></dt><dt><span class="section"><a href="isv.html#isv-eventbus">IAstProvider</a></span></dt><dt><span class="section"><a href="isv.html#isv-java-element-events-provider">JavaElement Events Provider</a></span></dt><dt><span class="section"><a href="isv.html#isv-chain-completion">Call Chain Completion</a></span></dt><dd><dl><dt><span class="section"><a href="isv.html#d0e837">Example: Call Chain Using a Local Variable</a></span></dt><dt><span class="section"><a href="isv.html#d0e850">Design Overview</a></span></dt></dl></dd><dt><span class="section"><a href="isv.html#isv-extdoc">Extdoc</a></span></dt><dd><dl><dt><span class="section"><a href="isv.html#d0e912">Design Overview for Extdoc</a></span></dt><dt><span class="section"><a href="isv.html#d0e1038">Workflow: Processing of a Java Selection Event</a></span></dt><dt><span class="section"><a href="isv.html#d0e1094">Example of a provider execution scheduling</a></span></dt><dt><span class="section"><a href="isv.html#d0e1187">Layout of the ExtdocView</a></span></dt><dt><span class="section"><a href="isv.html#extdoc-example-provider">Sources of an example provider</a></span></dt></dl></dd></dl></div><div class="section" title="Eventbus"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="isv-eventbus"></a>Eventbus</h2></div></div></div><p>Code Recommenders uses an event bus to get rid of all kind of listener interfaces. Although considered to
+        be used internally mostly, the bus may be used by other subscribers (such as usage data collectors, indexing
+        services etc.) to respond to events such as compilation unit changes, project creations or deletions etc.
+    </p><p>
+        To subscribe to the event bus one has to obtain an instance of
+        <code class="classname">EventBus</code>
+        using Code Recommenders' injection service (or Guice Injector).
+    </p><p>
+        </p><div class="itemizedlist" title="Event providers using the workspace event bus:"><p class="title"><b>Event providers using the workspace event bus:</b></p><ul class="itemizedlist" type="disc"><li class="listitem">
+                    <code class="classname">JavaElementEventsProvider</code>
+                    : a provider that sends events such as project open/close or compilation unit
+                    added/removed/changed/saved events. See
+                    <a class="xref" href="isv.html#isv-java-element-events-provider" title="JavaElement Events Provider">the section called &#8220;JavaElement Events Provider&#8221;</a>
+                    for more details on this provider.
+                </li></ul></div><p>
+    </p></div><div class="section" title="IAstProvider"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="isv-eventbus"></a>IAstProvider</h2></div></div></div><p>Code Recommenders offers an AST caching service that can be used by completion engines to get the last know
+        ast of a compilation unit.
+    </p><div class="note" title="Needs verification." style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Needs verification.</h3><p>Do we still need that? Why not use the AST that is send with the compilation unit?
+        </p></div></div><div class="section" title="JavaElement Events Provider"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="isv-java-element-events-provider"></a>JavaElement Events Provider</h2></div></div></div><p>
+        The
+        <code class="classname">JavaElementEventsProvider</code>
+        sends events such as project open/close or compilation unit added/removed/changed/saved events. This list
+        is incomplete and is expected to grow quickly for 1.0. Look at the corresponding class to learn which events it
+        posts to the event bus.
+    </p></div><div class="section" title="Call Chain Completion"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="isv-chain-completion"></a>Call Chain Completion</h2></div></div></div><div class="section" title="Example: Call Chain Using a Local Variable"><div class="titlepage"><div><div><h3 class="title"><a name="d0e837"></a>Example: Call Chain Using a Local Variable</h3></div></div></div><p>
+            This example briefly illustrates the graph structure used to create call chains by a simple example:
+            </p><pre class="programlisting">
+        ExecutorService pool = Executors.newCachedThreadPool();
+        Future future = $
+        </pre><p>
+        </p><div class="mediaobject"><img src="media/figures/isv/chain-completion/on-local.png"><div class="caption">Resulting Callchain graph</div></div></div><div class="section" title="Design Overview"><div class="titlepage"><div><div><h3 class="title"><a name="d0e850"></a>Design Overview</h3></div></div></div><p>
+            </p><div class="orderedlist" title="Class Responsibilities"><p class="title"><b>Class Responsibilities</b></p><ol class="orderedlist" type="1"><li class="listitem">
+                        <code class="classname">CallChainCompletionProposalComputer</code>
+                        : Extracts the available information about accessible locals, fields and methods to find all
+                        potential entry-points for the
+                        <code class="classname">GraphBuilder</code>
+                        .
+                    </li><li class="listitem">
+                        <code class="classname">CallChainCompletionProposal</code>
+                        : The proposal that gets executed when the user selects the proposal from code completion
+                        window. It internally relies on a (jdt)
+                        <code class="classname">Template</code>
+                        built by the
+                        <code class="classname">CompletionTemplateBuilder</code>
+                        .
+                    </li><li class="listitem">
+                        <code class="classname">CompletionTemplateBuilder</code>
+                        : builds, as the name suggests, the Java template. It does quite a lot JDT internal magic and is
+                        considered unclean and yet incomplete (!).
+                    </li><li class="listitem">
+                        <code class="classname">GraphBuilder</code>
+                        : Creates the call chain graph. Uses a thread pool internally for building the graph (but not
+                        for creating the call chains). This might change?
+                    </li><li class="listitem">
+                        <code class="classname">TypeNode</code>
+                        : represents the class node in a call chain. It stores the incoming edges which are later used
+                        to travers the graph and build the call chains.
+                    </li><li class="listitem">
+                        <code class="classname">MemberEdge</code>
+                        : represents a transition from one type to another, typically an IMethod, IType, or
+                        ILocalVariable (for entry points only).
+                    </li></ol></div><p>
+        </p><div class="mediaobject"><img src="media/figures/isv/chain-completion/design-overview.png"><div class="caption">Design Overview</div></div></div></div><div class="section" title="Extdoc"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="isv-extdoc"></a>Extdoc</h2></div></div></div><div class="section" title="Design Overview for Extdoc"><div class="titlepage"><div><div><h3 class="title"><a name="d0e912"></a>Design Overview for Extdoc</h3></div></div></div><div class="mediaobject"><img src="media/figures/isv/extdoc/design.png"></div><div class="variablelist" title="Class Responsibilities"><p class="title"><b>Class Responsibilities</b></p><dl><dt><span class="term">ExtdocView</span></dt><dd><p>
+						central controller; manages the registering and unregistering of
+						all components on the
+						<code class="classname">EventBus</code>
+						;
+						listens for selection events and delegates them to the
+						<code class="classname">ProviderExecutionScheduler</code>
+						. Uses
+						<code class="classname">ProviderConfigurationPersistenceService</code>
+						to persist the width of the
+						<code class="classname">Sash</code>
+						(vertical separator between overview and content).
+					</p></dd><dt><span class="term">SubscriptionManager</span></dt><dd><p>
+						Manages the subscriptions for specific java selections of all
+						registered providers.
+						Can be queried to return a matching
+						<code class="classname">java.lang.reflect.Method</code>
+						for a given provider that should be called for the selection. No
+						guarantees are provided
+						which method is returned if multiple
+						methods of a provider overlap.
+					</p></dd><dt><span class="term">ProviderExecutionScheduler</span></dt><dd><p>
+						Manages the multithreaded execution of all providers. To indicate
+						the status of
+						the execution corresponding execution events are
+						posted to the
+						<code class="classname">EventBus</code>
+						.
+					</p></dd><dt><span class="term">ExtdocProvider</span></dt><dd><p>
+						Extdoc providers are the entities of the extdoc view that bring
+						the real content. Providers are registered via the extension point
+						<code class="classname">org.eclipse.recommenders.extdoc.rcp.provider
+						</code>
+						.
+					</p><p>
+						The content is provided through methods that are annotated with a
+						<code class="classname">@JavaSelectionSubscriber</code>
+						annotation. More details on
+						this and an example provider is given
+						in a
+						<a class="link" href="isv.html#extdoc-example-provider" title="Sources of an example provider">later section</a>
+					</p><p>
+						<code class="classname">ExtdocProvider</code>
+						provide an
+						<code class="classname">ExtdocProviderDescriptor</code>
+						to access their
+					</p><p>
+						A single
+						<code class="classname">List&lt;ExtdocProvider&gt;</code>
+						is injected to all entities that need to know the providers.
+					</p></dd><dt><span class="term">ProviderOverviewPart</span></dt><dd><p>
+						darstellung des status aktivierung / deaktivierung order
+						change insb. das
+						management in der liste
+					</p></dd><dt><span class="term">ProviderContentPart</span></dt><dd><p>
+						manages the displayed content. A new (background) rendering
+						panel
+						can be created and the corresponding
+						<code class="classname">Composite</code>
+						can be accessed for each provider.
+					</p></dd><dt><span class="term">ProviderArea</span></dt><dd><p>
+						Helper class for the visualization of the providers. Mainly
+						accessed by the
+						<code class="classname">ProviderContentPart</code>
+						it can be used to set a status or to show the contents of
+						a
+						provider when it is completely rendered.
+					</p></dd><dt><span class="term">ProviderConfigurationPersistenceService</span></dt><dd><p>
+						This entity is left out in the diagram. It is registered on the
+						<code class="classname">EventBus</code>
+						and used to persist the provider configuration to disc on change.
+						The provider configuration consists of the order of all providers
+						and of a list of all disabled providers.
+					</p></dd><dt><span class="term">PreferencesFacade</span></dt><dd><p>
+						This entity is left out in the diagram. It directly accesses
+						Eclipses singletons to be able to load and save preferences. A
+						low-level API is provided to load/store:
+						</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>order of the providers</p></li><li class="listitem"><p>disabled providers</p></li><li class="listitem"><p>position of the sash in the Extdoc view</p></li></ol></div><p>
+						This entity is mainly used to increase the testability of all
+						entities that make use of it as they do not need to access
+						Eclipses singletons and this class can be exchanged with a mock
+						for testing.
+					</p></dd></dl></div></div><div class="section" title="Workflow: Processing of a Java Selection Event"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1038"></a>Workflow: Processing of a Java Selection Event</h3></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+					A
+					<code class="classname">JavaSelectionEvent</code>
+					is posted to the extdoc view.
+				</p></li><li class="listitem"><p>
+					A new
+					<code class="classname">ProviderExecutionScheduler</code>
+					is created and the old one is disposed.
+				</p></li><li class="listitem"><p>
+					The
+					<code class="classname">SubscriptionManager</code>
+					is used to identify the providers that are interested in the
+					selection.
+				</p></li><li class="listitem"><p>
+					A new (hidden) rendering panel is created in the
+					<code class="classname">ProviderContentPart</code>
+					.
+				</p></li><li class="listitem"><p>
+					For each provider the new content area is requested and used as a
+					parameter for the provider execution. This is done by the
+					<code class="classname">ProviderExecutionScheduler</code>
+					in multiple threads.
+				</p></li><li class="listitem"><p>
+					The
+					<code class="classname">ProviderOverviewPart</code>
+					updates the provider icons according to the posted execution events
+					of all providers.
+				</p></li><li class="listitem"><p>
+					The
+					<code class="classname">ProviderContentPart</code>
+					listen for the resulting events and update their displayed data
+					accordingly. On finish events the hidden content area of the
+					provider is shown, delay and fail events lead to a status message.
+				</p></li><li class="listitem"><p>
+					The
+					<code class="classname">ProviderContentPart</code>
+					listens for the
+					<code class="classname">RenderNowEvent</code>
+					and switches the rendering panel to the new foreground panel if it
+					is posted.
+				</p></li></ol></div></div><div class="section" title="Example of a provider execution scheduling"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1094"></a>Example of a provider execution scheduling</h3></div></div></div><div class="mediaobject"><img src="media/figures/isv/extdoc/scheduling.png"></div><p>
+			This example is a conceptual view onto the events that are
+			posted
+			during the provider execution. For this example it is assumed
+			that
+			three providers are registered:
+			</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>P1 is a fast provider that terminates correctly.</p></li><li class="listitem"><p>P2 is a provider that crashes on execution with an
+						exception.
+					</p></li><li class="listitem"><p>P3 is a provider that terminates correctly but takes very
+						long.
+					</p></li></ol></div><p>
+			The entry point is the
+			<code class="methodname">schedule(selection)</code>
+			call from the extdoc view. The current selection is provided as a
+			parameter and a
+			<code class="classname">NewSelectionEvent</code>
+			is posted. Based on the selection
+			all subscribed provider methods are
+			queried from the
+			<code class="classname">SubscriptionManager</code>
+			. A
+			<code class="classname">ProviderStartedEvent</code>
+			is posted for each provider and the execution is started in separate
+			threads. Additionally a timeout is started to be able to guarantee a
+			maximum rendering time for the Extdoc view.
+		</p><p>
+			P1 finishes first and the successful execution triggers the posting
+			of a
+			<code class="classname">ProiderFinishedEvent</code>
+			. The event contains the corresponding provider. P2 crashes on
+			execution and the caught exception triggers a
+			<code class="classname">ProviderFailedEvent</code>
+			. Also P3 is not finished yet the render timeout is reached so the
+			next event is a
+			<code class="classname">RenderNowEvent</code>
+			companied by
+			<code class="classname">ProviderDelayedEvent</code>
+			s for all still running providers.
+			. P3 terminaes successfully after
+			this and a
+			<code class="classname">ProviderFinishedLateEvent</code>
+			is posted.
+		</p><p>
+			In addition to the normal execution events it is possible that a
+			provider is not interested in a selection. This is possible in two
+			different ways:
+			</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+						If a provider is not subscribed to a selection the
+						<code class="classname">SubscriptionManager</code>
+						does not find a suitable method.
+					</p></li><li class="listitem"><p>
+						A provider might detect during the execution that no data is
+						available to successfully process the selection. In this case a
+						<code class="classname">Status.NOT_AVAILABLE</code>
+						can be returned.
+					</p></li></ol></div><p>
+			In both cases a
+			<code class="classname">ProviderNotAvailableEvent</code>
+			is posted for the provider.
+		</p><p>
+			Several other events exist:
+			</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+						<code class="classname">ProviderOrderChangedEvent</code>
+						: indicates a reordering of the providers
+					</p></li><li class="listitem"><p>
+						<code class="classname">ProviderDe-/ActivationEvent</code>
+						: posted if providers are enabled/disabled. Both are consumed by
+						the
+						<code class="classname">ProviderExecutionScheduler</code>
+						. Activation events lead to the execution of the provider with the
+						last selection, deactivation events cancel the running provider.
+					</p></li><li class="listitem"><p>
+						<code class="classname">ProviderSelectionEvent</code>
+						: if providers are selected in the overview the content shuld
+						"jump" to their positions in the content. This event is
+						used to indicate such a selection and is irrelevant for the
+						execution scheduler.
+					</p></li></ol></div><p>
+			All these are posted from the UI components and not from the
+			scheduler.
+		</p></div><div class="section" title="Layout of the ExtdocView"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1187"></a>Layout of the ExtdocView</h3></div></div></div><div class="mediaobject"><img src="media/figures/isv/extdoc/layout.png"></div><div class="orderedlist" title="Description of the Layout"><p class="title"><b>Description of the Layout</b></p><ol class="orderedlist" type="1"><li class="listitem">
+					<code class="classname">ExtdocView</code>
+					: Central view that is registered with Eclipse and container for
+					all sub content parts.
+				</li><li class="listitem">
+					<code class="classname">ProviderOverviewPart</code>
+					: Manages an overview of all available Extdoc providers in a table.
+					Each provider can be de-/activated by un-/checking the associated
+					<code class="classname">ProviderItem</code>
+					. The order of the providers can be changed through drag and drop.
+				</li><li class="listitem"><p class="simpara">
+					<code class="classname">ProviderContentPart</code>
+					: Manages a scrolling stack of content panes. Allows to create a
+					new (background) rendering
+					<code class="classname">Composite</code>
+					that contains
+					<code class="classname">ProviderArea</code>
+					s for all providers.
+				</p><p>
+					The
+					<code class="classname">ProviderContentPart</code>
+					is registered on the
+					<code class="classname">EventBus</code>
+					and subscribes all provider related events.
+					Depending on the
+					execution status a providers area is shown or the status is set.
+				</p></li><li class="listitem">
+					<code class="classname">ContentPane (Composite)</code>
+					simple composite that contains all rendered content for a selection
+				</li><li class="listitem">
+					<code class="classname">ProviderArea</code>
+					: area that is associated with an Extdoc provider. Allows to set an
+					(optionally clickable) status and to show the rendered content.
+					All
+					sub elements are plain SWT components and with the exception of the
+					content that is provided to the
+					<code class="classname">ExtdocProvider</code>
+					all are hidden to the outside. Renders a title for the associated
+					provider.
+				</li><li class="listitem">
+					<code class="classname">TitleArea (Composite)</code>
+					status for a providers. It is used at the moment to show delay in
+					execution or to show execution failures.
+				</li><li class="listitem">
+					<code class="classname">StatusArea (Composite)</code>
+					status for a providers. It is used at the moment to show delay in
+					execution or to show execution failures.
+				</li><li class="listitem">
+					<code class="classname">ContentArea (Composite)</code>
+					Composite that contains the rendered results of the corresponding
+					provider.
+				</li></ol></div></div><div class="section" title="Sources of an example provider"><div class="titlepage"><div><div><h3 class="title"><a name="extdoc-example-provider"></a>Sources of an example provider</h3></div></div></div><p>
+			An
+			<code class="classname">ExtdocProvider</code>
+			is registered on the
+			<code class="classname">SubscriptionManager</code>
+			.
+			To be recognized as an provider its methods need to be annotated
+			with a
+			<code class="classname">JavaSelectionSubsriber</code>
+			annotation. The parameter list of such methods is fixed:
+			</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+						a
+						<code class="classname">IJavaElement</code>
+						(or a subclass of it)
+						defines for which elements this methods
+						provides some content.
+					</p></li><li class="listitem"><p>
+						the fired
+						<code class="classname">JavaSelectionEvent</code>
+					</p></li><li class="listitem"><p>
+						a
+						<code class="classname">Composite</code>
+						into which the contents should be rendered
+					</p></li></ol></div><p>
+			Three examples are shown in the following diagram.
+		</p><div class="mediaobject"><img src="media/figures/isv/extdoc/exampleProvider.png"></div><p>
+			The simplest case is shown in the method
+			<code class="methodname">example(...)</code>
+			. The annotation indicates that it is interested in all
+			<code class="classname">JavaSelectionEvents</code>
+			. Because the first parameter is an
+			<code class="classname">IJavaElement</code>
+			(the super class of all selectable java elements) the method is
+			executed for all possible events.
+		</p><p>
+			It is possible to use the annotation and the
+			<code class="classname">IJavaElement</code>
+			as a filter
+			to be able to write more specialized provider methods. An
+			example of this is given in method
+			<code class="methodname">unavailableProvider(...)</code>
+			.
+			The annotation take optional arguments to specify locations for
+			which a selection should be processed.
+			It is possible to provide
+			multiple locations, i.e.:
+			<code class="methodname">@JavaSelectionSubscriber({METHOD_BODY, TYPE_DECLARATION})
+			</code>
+			.
+			The events are also matched by the selected java element so it is
+			possible to only subscribe for
+			<code class="classname">IType</code>
+			selections if it is used as the first parameter.
+		</p><p>
+			<span class="emphasis"><em>Word of caution:</em></span>
+			if method subscriptions overlap (like it is in this example) only on
+			method is called on an event. No guarantees are given which one.
+		</p><p>
+			The providers are executed in their own thread so it is
+			necessary to
+			switch to the UI thread for the rendering.
+			Take a look on the two
+			parts of the
+			<code class="methodname">example(...)</code>
+			method.
+			All non-UI related information gathering should be done in the
+			provider thread.
+			After that a
+			<code class="classname">Runnable</code>
+			can be executed with the helper method
+			<code class="methodname">runSyncInUiThread(...)</code>
+			. By doing so exceptions that are thrown in the runnable are bubbled
+			out of the
+			<code class="classname">Runnable</code>
+			and rethrown in the provider thread.
+			The execution is run sync so that
+			the providers does not finish until the rendering is complete.
+		</p><p>
+			A provider can return an
+			<code class="classname">ExtdocProvider.Status</code>
+			to indicate its processing status.
+			A normal execution returns
+			<code class="classname">Status.OK</code>
+			.
+			If it is not possible to process the current selection (i.e. because
+			the provider has no data available), it is possible to return
+			<code class="classname">Status.NOT_AVAILABLE</code>
+			.
+			The provider status is then handled by the UI as if it is not
+			subscribed even if it has already started processing.
+		</p><p>
+			It is feasible to throw an exception in a provider as shown in method
+			<code class="methodname">errorCase(...)</code>
+			.
+			In this case the provider is shown as failed in the UI and a link is
+			shown that opens a dialog with a stacktrace and the message from the
+			exception.
+		</p></div></div></div></body></html>

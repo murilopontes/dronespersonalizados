@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.cdt.xlc.feature"
+      label="%featureName"
+      version="6.4.0.201309180223"
+      provider-name="%providerName"
+      plugin="org.eclipse.cdt.managedbuilder.xlc.core"
+      image="eclipse_update_120.jpg">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.cdt.errorparsers.xlc"
+         download-size="5"
+         install-size="10"
+         version="5.0.100.201309180223"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.managedbuilder.xlc.ui"
+         download-size="55"
+         install-size="243"
+         version="6.4.0.201309180223"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.make.xlc.core"
+         download-size="59"
+         install-size="122"
+         version="5.2.100.201309180223"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.managedbuilder.xlc.core"
+         download-size="11"
+         install-size="18"
+         version="5.0.1.201309180223"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.core.lrparser.xlc"
+         download-size="258"
+         install-size="498"
+         version="5.1.0.201309180223"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.managedbuilder.xlupc.ui"
+         download-size="14"
+         install-size="40"
+         version="1.1.0.201309180223"
+         unpack="false"/>
+
+</feature>

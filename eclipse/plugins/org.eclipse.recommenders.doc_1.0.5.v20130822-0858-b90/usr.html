@@ -1,0 +1,291 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;1.&nbsp;User Manual</title><link rel="stylesheet" type="text/css" href="media/style.css"><meta name="generator" content="DocBook XSL-NS Stylesheets V1.76.1"><link rel="home" href="main.html" title="Eclipse Code Recommenders"><link rel="up" href="main.html" title="Eclipse Code Recommenders"><link rel="prev" href="main.html" title="Eclipse Code Recommenders"><link rel="next" href="changes.html" title="Chapter&nbsp;2.&nbsp;New and Noteworthy"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter&nbsp;1.&nbsp;User Manual"><div class="titlepage"><div><div><h2 class="title"><a name="usr"></a>Chapter&nbsp;1.&nbsp;User Manual</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="usr.html#d0e9">What is Code Recommenders?</a></span></dt><dt><span class="section"><a href="usr.html#d0e29">Recommenders' Code Completion Engines</a></span></dt><dd><dl><dt><span class="section"><a href="usr.html#d0e32">Intelligent Call Completion</a></span></dt><dt><span class="section"><a href="usr.html#d0e97">Intelligent Code Templates (single-object, no-order)</a></span></dt><dt><span class="section"><a href="usr.html#d0e165">Intelligent Overrides Completion</a></span></dt><dt><span class="section"><a href="usr.html#d0e185">Subwords Completion</a></span></dt><dt><span class="section"><a href="usr.html#d0e280">Chain Completion</a></span></dt></dl></dd><dt><span class="section"><a href="usr.html#d0e351">The Extended Documentation Platform</a></span></dt><dd><dl><dt><span class="section"><a href="usr.html#d0e384">Subclassing Directives Provider</a></span></dt><dt><span class="section"><a href="usr.html#d0e396">Self-calls Directives Provider</a></span></dt><dt><span class="section"><a href="usr.html#d0e408">Example Code Snippets Provider</a></span></dt><dt><span class="section"><a href="usr.html#d0e420">Calls Recommendation Provider</a></span></dt></dl></dd><dt><span class="section"><a href="usr.html#d0e424">Snipmatch</a></span></dt><dt><span class="section"><a href="usr.html#d0e429">Local Code-Search
+        </a></span></dt><dt><span class="section"><a href="usr.html#d0e434">The Model Repository</a></span></dt></dl></div><div class="section" title="What is Code Recommenders?"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e9"></a>What is Code Recommenders?</h2></div></div></div><p>Code Recommenders supports developers learning new APIs by providing tools which learn correct API usages
+            or valuable patterns by analyzing example code and re-integrates this knowledge back into your IDE.
+        </p><p>Put differently, it helps your team to cut down development costs when dealing with new APIs by means of
+            intelligent code completion, extended documentation, smart bug detection systems and others - all powered by
+            the knowledge of the programming masses.
+        </p><p>
+            Code Recommenders is a
+            <span class="emphasis"><em>set</em></span>
+            of IDE extensions for the Java programming language. In version 1.0, recommenders consists of two large
+            component groups:
+            </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>5 Intelligent Code Completion Engines,
+                    </p></li><li class="listitem"><p>4 Extended Documentation Providers,</p></li></ul></div><p>
+            which will be introduced in detail below.
+        </p></div><div class="section" title="Recommenders' Code Completion Engines"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e29"></a>Recommenders' Code Completion Engines</h2></div></div></div><div class="section" title="Intelligent Call Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e32"></a>Intelligent Call Completion</h3></div></div></div><p>
+                The intelligent call completion engine probably illustrates the idea of Code Recommenders best. When
+                dealing with Framework APIs, developers frequently have to deal with complex APIs. For illustration,
+                consider the public API of
+                <code class="classname">javax.swing.JButton</code>
+                which consists of
+                <span class="emphasis"><em>381</em></span>
+                public methods. A huge API of which a developer typically only has to know a small subset. The
+                remaining, say, 360 methods bloat the API (from a API user's viewpoint) and thus unnecessarily increase
+                the complexity of learning and using this API.
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/api-jbutton.png"><div class="caption"><p>
+                            All potential completions for
+                            <code class="classname">JButton</code>
+                        </p></div></div><p>
+            </p><p>
+                This is where Code Recommenders intelligent call completion comes in. It assists developers by
+                recommending him only those methods that are actually relevant for his task at hand. For instance, given
+                that a developer just created a text widget makes it obvious for Code Recommenders which methods a
+                developer wants to use next - even if the developer doesn't know it by himself:
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/calls-text.png"><div class="caption"><p>
+                            Recommenders' Intelligent Completion on SWT Text after calling
+                            <code class="code">new Text()</code>
+                        </p></div></div><p>
+            </p><p>
+                At the time of writing this section (1.0.0.rc2), Code Recommenders partially supports the Java Standard
+                Library, namely the main packages under
+                <span class="package">java.*</span>
+                and some packages under
+                <span class="package">javax.*</span>
+                . As the recommendation models are generated from the Eclipse Juno Release Train code base only,
+                packages like
+                <span class="package">java.awt</span>
+                or
+                <span class="package">javax.swing</span>
+                are not supported as no data was available at generation time. For a detailed list of which libraries or
+                packages are supported, check the reports section on the Code Recommenders home page.
+            </p><div class="section" title="Configuration"><div class="titlepage"><div><div><h4 class="title"><a name="d0e79"></a>Configuration
+                </h4></div></div></div><p>
+                    Code Recommenders intelligent completion engines can be enabled and disabled in its preference page:
+                    </p><div class="mediaobject"><img src="media/figures/usr/completion/calls-preferences.png"><div class="caption"><p>Call Completion Preference Page
+                            </p></div></div><p>
+                    Furthermore, how many proposals Recommenders computes as well as some recommendation model
+                    information can be configured here too.
+                    </p><div class="variablelist"><dl><dt><span class="term"></span></dt><dd><p></p></dd></dl></div><p>
+                </p></div></div><div class="section" title="Intelligent Code Templates (single-object, no-order)"><div class="titlepage"><div><div><h3 class="title"><a name="d0e97"></a>Intelligent Code Templates (single-object, no-order)</h3></div></div></div><p>
+                Code templates are helpful when code is needed to iterate over an array of objects or when creating a
+                getter for a property of a class. But code templates
+                <span class="emphasis"><em>really</em></span>
+                shine when developers have to use APIs they are not very familiar with. Then, code templates serve as
+                additional documentation that quickly shows how an API can be used and save developers lot of time
+                otherwise needed for reading API documentation.
+            </p><p>
+                Eclipse maintains more than 70 of such Java code templates - ranging from simple
+                <code class="code">for</code>
+                loops up to complex API usage patterns like creating an SWT
+                <code class="classname">Button</code>
+                or
+                <code class="classname">Composite</code>
+                . Unfortunately, developing templates for API usage patterns is
+                <span class="emphasis"><em>extremely</em></span>
+                costly and tedious - and in consequence only few templates for few APIs exist.
+            </p><p>
+                This is where Code Recommenders comes in again. In the previous section we showed how to recommend
+                single methods to invoke on an object. Templates completion takes this to the next level by recommending
+                not only
+                <span class="emphasis"><em>single</em></span>
+                methods but complete
+                <span class="emphasis"><em>sets</em></span>
+                of methods:
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/templates-astparser.png"><div class="caption"><p>
+                            Intelligent Template Completion on JDT
+                            <code class="classname">ASTParser</code>
+                        </p></div></div><p>
+                As you probably have noticed in the example above, Recommenders' templates completion can be applied on
+                existing variables to complete existing usages but also works on type names as the example below shows:
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/templates-tableviewer01.png"><div class="caption"><p>
+                            Intelligent Template Completion on JFace
+                            <code class="classname">TableViewer</code>
+                        </p></div></div><p>
+                The final result after applying the template looks as follows:
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/templates-tableviewer02.png"><div class="caption"><p>
+                            Resulting code snippet for JFace
+                            <code class="classname">TableViewer</code>
+                        </p></div></div><p>
+            </p><div class="warning" title="Warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>The generated template proposals do not reflect method execution ordering constraints, i.e., the
+                    order of the proposed method may have to be changed manually after insertion.
+                </p></div><div class="section" title="Configuration"><div class="titlepage"><div><div><h4 class="title"><a name="d0e160"></a>Configuration
+                </h4></div></div></div><p> Template Completion yet has no configurable options. Note that Templates Completion can not be
+                    run on the default content assist. As soon as it detects it was configured for default content
+                    assist it immediately deactivates itself. This decision was made because of performance reasons.
+                    Computing likely code snippets is a computation-intensive task developers should trigger explicitly.
+                </p></div></div><div class="section" title="Intelligent Overrides Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e165"></a>Intelligent Overrides Completion</h3></div></div></div><p>
+                Similar to recommending method calls, one can also recommend which methods a developer should typically
+                override. This is what Recommenders intelligent overrides completion does. We'll discuss class extension
+                patterns in more detail in the extended documentatiton chapter below.
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/overrides-dialog.png"><div class="caption"><p>
+                            Recommenders' Intelligent Overrides Completion on JFace
+                            <code class="classname">Dialog</code>
+                        </p></div></div><p>
+            </p><div class="section" title="Configuration"><div class="titlepage"><div><div><h4 class="title"><a name="d0e180"></a>Configuration
+                </h4></div></div></div><p>Intelligent Overrides Completion yet has no configurable options. It is enabled and disabled
+                    together with Recommenders Call Completion, i.e., deactivating Code Recommenders content assist
+                    category in JDT, will automatically disable Intelligent Overrides Completion.
+                </p></div></div><div class="section" title="Subwords Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e185"></a>Subwords Completion</h3></div></div></div><p>
+                You probably know JDT's
+                <span class="emphasis"><em>CamelCaseCompletion</em></span>
+                . This is a nice engine but requires you to remember exactly the uppercase letters of the completion
+                proposal you want to insert. Subwords makes this more convenient. The idea is simple enough - you should
+                not have to type a name from the beginning to find a match in the content assist popup. It helps when a
+                developer doesn not know if one has to 'find' - or - 'get' an element.
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/subwords-compilationunit.png"><div class="caption"><p>
+                            Recommenders' Subwords Completion on JDT's
+                            <code class="classname">CompilationUnit</code>
+                        </p></div></div><p>
+            </p><p>
+                The feature is sophisticated enough to understand a rough shorthand e.g.
+                <span class="emphasis"><em>dclr</em></span>
+                for
+                <span class="emphasis"><em>declaration</em></span>
+                .
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/subwords-ast01.png"><div class="caption"><p>
+                            Recommenders' Subwords Completion Completion on JDT's
+                            <code class="classname">AST</code>
+                        </p></div></div><p>
+            </p><p>
+                It is also sophisticated enough to understand that a method or type name in Java is composed of several
+                words e.g.
+                <span class="emphasis"><em>'ty + dclr'</em></span>
+                finds all 'type' + 'declarations'.
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/subwords-ast02.png"><div class="caption"><p>
+                            Recommenders' Subwords Completion Completion on JDT's
+                            <code class="classname">AST</code>
+                        </p></div></div><p>
+                </p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+                        Subwords does not fall into the group of
+                        <span class="emphasis"><em>intelligent</em></span>
+                        completion engines, i.e., it does not need any training data and thus works with any framework
+                        or API out of the box.
+                    </p></div><p>
+            </p><p>
+                <span class="emphasis"><em>This section is based on the work of Deepak Azad, JDT Committer, source:
+                    http://blog.deepakazad.com/2012/05/
+                </em></span>
+            </p><div class="section" title="Configuration"><div class="titlepage"><div><div><h4 class="title"><a name="d0e248"></a>Configuration</h4></div></div></div><p>
+                    Note that Subwords can not be used together with JDT's or Mylyn's content assist engines. It
+                    actually disables itself immediately as soon as it detects that either Mylyn or JDT is enabled on
+                    the default content assist list. To use Subwords on the default (first) content assist list, you
+                    have to explicitly disable JDT and Mylyn and enable Subwords via
+                    <span class="guimenu">Preferences</span>
+                    &raquo;
+                    <span class="guimenuitem">Java</span>
+                    &raquo;
+                    <span class="guimenuitem">Editor</span>
+                    &raquo;
+                    <span class="guimenuitem">Content Assist</span>
+                    &raquo;
+                    <span class="guimenuitem">Advanced</span>
+                    &raquo;
+                    <span class="guimenuitem">Default Content Assist</span>
+                </p><p>
+                    Subwords offers a shortcut for doing this enable and disablement automatically. Visit the Subwords
+                    preference page to use that shortcut.
+                    </p><div class="mediaobject"><img src="media/figures/usr/completion/subwords-preferences.png"><div class="caption"><p> Subwords Preference Page: Configuration Shortcut
+                            </p></div></div><p>
+                </p></div></div><div class="section" title="Chain Completion"><div class="titlepage"><div><div><h3 class="title"><a name="d0e280"></a>Chain Completion</h3></div></div></div><p>
+                </p><div class="mediaobject"><img src="media/figures/usr/completion/chain-istatuslinemanager.png"><div class="caption"><p>
+                            Recommenders' Chain Completion on
+                            <code class="classname">IStatusLineManager</code>
+                            in a
+                            <code class="classname">ViewPart</code>
+                        </p></div></div><p>
+            </p><div class="section" title="Configuration"><div class="titlepage"><div><div><h4 class="title"><a name="d0e298"></a>Configuration</h4></div></div></div><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p> Note that Recommenders Chain completion cannot be used on the default (first) content assist
+                        list. It actually disables itself immediately as soon as it detects that it was configured for
+                        the default list. The main reason for this is, that chain completion is essentially an
+                        exhaustive search that consumes a lot of CPU time, and thus, should only run when explicitly
+                        requested.
+                    </p></div><p>
+                    Chain completion allows its search to be configurations for specia situations. To change chain
+                    completion's defaults visit its preference page under
+                    <span class="guimenu">Preferences</span>
+                    &raquo;
+                    <span class="guimenu">Code Recommenders</span>
+                    &raquo;
+                    <span class="guimenu">Chain</span>
+                    :
+                    </p><div class="mediaobject"><img src="media/figures/usr/completion/chain-preferences.png"><div class="caption"><p> Chain Completion Preference Page
+                            </p></div></div><p>
+                    </p><div class="variablelist"><dl><dt><span class="term">Maximum Number of Chains:</span></dt><dd><p>Limits the number of call chains found to max. Has the effect that search is
+                                    immediately terminated after max number of chains have been found. Change this
+                                    parameter to gain performance improvements.
+                                </p></dd><dt><span class="term">Maximum Chains Depth:</span></dt><dd><p>Limits how many levels in the API call graph chain completion traverses to find
+                                    matching call chains. Set this to lowerer levels (e.g. three) if you only want chain
+                                    completion to find chains of the maximal lenght of three.
+                                </p></dd><dt><span class="term">Search Timeout (sec):</span></dt><dd><p>API graph traversal uses a time limit when searching for chains. Modify this value
+                                    if chain completion does not find the propsoals due to time limits. Please note that
+                                    JDT has a built in performance measure and brings up a warning if a content assist
+                                    engine needs longer thatn 4.5 seconds.
+                                </p></dd><dt><span class="term">Types Ignore List:</span></dt><dd><p>
+                                    Some type result in far too many proposal, like
+                                    <code class="classname">java.ang.String</code>
+                                    . Such types can be explicitly excluded from search by adding them to the ignore
+                                    list.
+                                </p></dd></dl></div><p>
+                </p></div></div></div><div class="section" title="The Extended Documentation Platform"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e351"></a>The Extended Documentation Platform</h2></div></div></div><p>Writing documentation is one of those tasks programmers are typically not very keen about. It is
+            time-consuming, tedious, and has almost no immediate rewards.&nbsp;Consequently, documentation is (too) often
+            incomplete (or even worse) completely outdated.
+        </p><p>
+            But good and comprehensive documentation is crucial for the success of a library or framework. Tools exist,
+            that generate documentation from source code (i.e., extracting obvious information from code and generating
+            more or less helpful javadoc comments). Such approaches seem valuable at first, but finally this kind of
+            documentation only pleases our manager since it improves on the
+            <span class="italic">source code to documentation
+            </span>
+            ratio; from a developer's point of view this documentation is rather useless.
+        </p><p>
+            However, there are many other resources out there that offer valuable information about an API.
+            Stackoverflow for instance is an abundant source of information providing valuable tips on how to use a
+            certain API or deal with errors. Code-search engines offer code snippets showing how to use an API in action
+            etc. Many more resources exist. The
+            <span class="italic">Extended Documentation Platform</span>
+            is solely developed to serve the purpose to aggregate this the wide range of information sources available
+            on the web into a single view in Eclipse.
+        </p><p>
+            The figure below shows the
+            <span class="italic">Ext</span>
+            ended
+            <span class="italic">Doc</span>
+            umentation View (
+            <span class="italic">Extdoc View
+            </span>
+            for short). It basically consists of two parts: a provider overview panel on the left and a content area on
+            the right in which every provider presents its information is has for a given selection in the workspace or
+            active JavaEditor:
+        </p><p>
+            <span class="inlinemediaobject"><img src="media/figures/usr/extdoc/view01.png" width="531.496062992126"></span>
+        </p><p></p><div class="section" title="Subclassing Directives Provider"><div class="titlepage"><div><div><h3 class="title"><a name="d0e384"></a>Subclassing Directives Provider</h3></div></div></div><p>
+                </p><div class="mediaobject"><img src="media/figures/usr/extdoc/class-overrides.png"><div class="caption"><p>
+                        </p></div></div><p>
+            </p></div><div class="section" title="Self-calls Directives Provider"><div class="titlepage"><div><div><h3 class="title"><a name="d0e396"></a>Self-calls Directives Provider</h3></div></div></div><p>
+                </p><div class="mediaobject"><img src="media/figures/usr/extdoc/method-self.png"><div class="caption"><p>
+                        </p></div></div><p>
+            </p></div><div class="section" title="Example Code Snippets Provider"><div class="titlepage"><div><div><h3 class="title"><a name="d0e408"></a>Example Code Snippets Provider</h3></div></div></div><p>
+                </p><div class="mediaobject"><img src="media/figures/usr/extdoc/snippets.png"><div class="caption"><p>
+                        </p></div></div><p>
+            </p></div><div class="section" title="Calls Recommendation Provider"><div class="titlepage"><div><div><h3 class="title"><a name="d0e420"></a>Calls Recommendation Provider</h3></div></div></div><p></p></div></div><div class="section" title="Snipmatch"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e424"></a>Snipmatch</h2></div></div></div><p>Snipmatch is currently moving in an not ready for 1.0.0.</p></div><div class="section" title="Local Code-Search"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e429"></a>Local Code-Search
+        </h2></div></div></div><p>Recommenders' local code-search engine is also not ready for 1.0.0., and thus, will not be part of the
+            Juno release. However, first prototype are available and can be installed from the Recommenders' lab
+            channel.
+        </p></div><div class="section" title="The Model Repository"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e434"></a>The Model Repository</h2></div></div></div><p>
+            Code Recommenders uses precomputed
+            <span class="emphasis"><em>recommendation models</em></span>
+            to make its proposals. These models are hosted under
+            <code class="uri">http://download.eclipse.org/recommenders/models/&laquo;release&raquo;</code>
+            and downloaded automatically on first access. Figure
+            <a class="xref" href="usr.html#fig::preferences">???</a>
+            depicts the configuration settings which are explained in details below.
+            </p><div class="mediaobject"><a name="fig::preferences"></a><img src="media/figures/usr/general/preferences.png"><div class="caption"><p>Recommenders' Model Repository Preference Page</p></div></div><p>
+            </p><div class="variablelist"><dl><dt><span class="term">Model Repository:</span></dt><dd><p>
+                            <span class="emphasis"><em></em></span>
+                            The URL of the model repository Code Recommenders searches for new recommendation models
+                            when accessed.
+                        </p></dd><dt><span class="term">Enable Auto-Download:</span></dt><dd><p> If enabled, recommenders downloads suiteable recommendation models automatically. If
+                            unchecked no attempts are made to download models from the server.
+                        </p></dd><dt><span class="term">Clear Caches:</span></dt><dd><p>
+                            All previously downloaded models are cached locally under
+                            <code class="varname">${workspace}/.metadata/.plugins/org.eclipse.recommenders.rcp/repository/
+                            </code>
+                            . When
+                            <span class="guibutton">Clear cache</span>
+                            is pressed, this directory is deleted. Files that could not be deleted are marked for
+                            deletion and will be deleted on Eclipse shutdown. All models are downloaded again
+                            automatically on next access.
+                            </p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>It is recommended to restart Eclipse after clearing the local caches.</p></div><p>
+                        </p></dd></dl></div><p>
+        </p></div></div></body></html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2010 Darmstadt University of Technology.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+       Darmstadt University of Technology - initial API and implementation.
+
+-->
+<feature
+      id="org.eclipse.recommenders.feature.rcp.core"
+      label="Code Recommenders: Core Runtime"
+      version="1.0.5.v20130822-0858-b90"
+      provider-name="Eclipse Code Recommenders">
+
+   <description url="http://www.eclipse.org/recommenders/">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.recommenders.rcp"
+         download-size="117"
+         install-size="227"
+         version="1.0.5.v20130822-0858-b90"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.recommenders.injection"
+         download-size="8"
+         install-size="11"
+         version="1.0.5.v20130822-0858-b90"
+         unpack="false"/>
+
+   <plugin
+         id="com.google.inject"
+         download-size="508"
+         install-size="1162"
+         version="3.0.0.v201203062045"
+         unpack="false"/>
+
+   <plugin
+         id="com.google.inject.assistedinject"
+         download-size="38"
+         install-size="88"
+         version="3.0.0.v20130529-1354"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="com.google.inject.multibindings"
+         download-size="35"
+         install-size="88"
+         version="3.0.0.v20130529-1354"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="javax.inject"
+         download-size="12"
+         install-size="21"
+         version="1.0.0.v20091030"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.recommenders.utils"
+         download-size="99"
+         install-size="182"
+         version="1.0.5.v20130822-0858-b90"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.recommenders.utils.rcp"
+         download-size="58"
+         install-size="127"
+         version="1.0.5.v20130822-0858-b90"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.recommenders.doc"
+         download-size="4104"
+         install-size="4675"
+         version="1.0.5.v20130822-0858-b90"
+         unpack="false"/>
+
+</feature>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<toc label="Eclipse Code Recommenders" topic="main.html">
+   <topic label="User Manual" href="usr.html">
+      <topic label="What is Code Recommenders?" href="usr.html#d0e9"/>
+      <topic label="Recommenders' Code Completion Engines" href="usr.html#d0e29">
+         <topic label="Intelligent Call Completion" href="usr.html#d0e32">
+            <topic label="Configuration" href="usr.html#d0e79"/>
+         </topic>
+         <topic label="Intelligent Code Templates (single-object, no-order)" href="usr.html#d0e97">
+            <topic label="Configuration" href="usr.html#d0e160"/>
+         </topic>
+         <topic label="Intelligent Overrides Completion" href="usr.html#d0e165">
+            <topic label="Configuration" href="usr.html#d0e180"/>
+         </topic>
+         <topic label="Subwords Completion" href="usr.html#d0e185">
+            <topic label="Configuration" href="usr.html#d0e248"/>
+         </topic>
+         <topic label="Chain Completion" href="usr.html#d0e280">
+            <topic label="Configuration" href="usr.html#d0e298"/>
+         </topic>
+      </topic>
+      <topic label="The Extended Documentation Platform" href="usr.html#d0e351">
+         <topic label="Subclassing Directives Provider" href="usr.html#d0e384"/>
+         <topic label="Self-calls Directives Provider" href="usr.html#d0e396"/>
+         <topic label="Example Code Snippets Provider" href="usr.html#d0e408"/>
+         <topic label="Calls Recommendation Provider" href="usr.html#d0e420"/>
+      </topic>
+      <topic label="Snipmatch" href="usr.html#d0e424"/>
+      <topic label="Local Code-Search" href="usr.html#d0e429"/>
+      <topic label="The Model Repository" href="usr.html#d0e434"/>
+   </topic>
+   <topic label="New and Noteworthy" href="changes.html">
+      <topic label="v0.5" href="changes.html#v0.5">
+         <topic label="Bugzilla Summaries" href="changes.html#d0e494"/>
+         <topic label="New Feature Namespaces" href="changes.html#d0e516"/>
+         <topic label="Removal of Project Builder and Nature" href="changes.html#d0e524"/>
+         <topic label="Completion Engines completely based on JDT" href="changes.html#d0e541"/>
+         <topic label="JDT-based Call Chain Completion" href="changes.html#d0e552"/>
+         <topic label="Extended Documentation Platform" href="changes.html#d0e566"/>
+         <topic label="Improved Subwords Completion" href="changes.html#d0e580"/>
+         <topic label="Temporary Deactivation of Template Completion" href="changes.html#d0e598"/>
+         <topic label="Forecast: New Local Code-search" href="changes.html#d0e606"/>
+      </topic>
+      <topic label="v0.4" href="changes.html#v0.4">
+         <topic label="Maintenance Release" href="changes.html#d0e628"/>
+      </topic>
+      <topic label="v0.3" href="changes.html#v0.3">
+         <topic label="Subwords Completion" href="changes.html#d0e638">
+            <topic label="Completion on method calls:" href="changes.html#d0e643"/>
+            <topic label="Completion on variables:" href="changes.html#d0e649"/>
+            <topic label="Completion on method overrides:" href="changes.html#d0e655"/>
+         </topic>
+      </topic>
+      <topic label="v0.2" href="changes.html#v0.2">
+         <topic label="Chain Completion" href="changes.html#d0e674">
+            <topic label="Completion on this" href="changes.html#d0e684"/>
+            <topic label="Completion on static types" href="changes.html#d0e693"/>
+            <topic label="Completion on method returns" href="changes.html#d0e699"/>
+            <topic label="Completion with type cast" href="changes.html#d0e705"/>
+         </topic>
+         <topic label="Templates Completion Engine" href="changes.html#changes-v0.2-templates">
+            <topic label="Completion for Local Declaration" href="changes.html#d0e718"/>
+            <topic label="Dynamic Pattern Completion" href="changes.html#d0e724"/>
+         </topic>
+      </topic>
+      <topic label="v0.1" href="changes.html#v0.1">
+         <topic label="Calls Completion" href="changes.html#d0e735">
+            <topic label="Completion on Declared Variables" href="changes.html#d0e738"/>
+            <topic label="Completion on This" href="changes.html#d0e744"/>
+            <topic label="Completion on Anonymous Method Returns" href="changes.html#d0e750"/>
+            <topic label="Completion from Anonymous Inner Classes" href="changes.html#d0e756"/>
+            <topic label="On-the-fly Code Analysis" href="changes.html#d0e762"/>
+            <topic label="Performance Improvements" href="changes.html#d0e767"/>
+         </topic>
+         <topic label="Overrides Completion" href="changes.html#d0e772">
+            <topic label="Completion on Class Body" href="changes.html#d0e775"/>
+         </topic>
+         <topic label="Eclipse Help" href="changes.html#d0e781"/>
+      </topic>
+   </topic>
+   <topic label="ISV Manual" href="isv.html">
+      <topic label="Eventbus" href="isv.html#isv-eventbus"/>
+      <topic label="IAstProvider" href="isv.html#isv-eventbus"/>
+      <topic label="JavaElement Events Provider" href="isv.html#isv-java-element-events-provider"/>
+      <topic label="Call Chain Completion" href="isv.html#isv-chain-completion">
+         <topic label="Example: Call Chain Using a Local Variable" href="isv.html#d0e837"/>
+         <topic label="Design Overview" href="isv.html#d0e850"/>
+      </topic>
+      <topic label="Extdoc" href="isv.html#isv-extdoc">
+         <topic label="Design Overview for Extdoc" href="isv.html#d0e912"/>
+         <topic label="Workflow: Processing of a Java Selection Event" href="isv.html#d0e1038"/>
+         <topic label="Example of a provider execution scheduling" href="isv.html#d0e1094"/>
+         <topic label="Layout of the ExtdocView" href="isv.html#d0e1187"/>
+         <topic label="Sources of an example provider" href="isv.html#extdoc-example-provider"/>
+      </topic>
+   </topic>
+</toc>

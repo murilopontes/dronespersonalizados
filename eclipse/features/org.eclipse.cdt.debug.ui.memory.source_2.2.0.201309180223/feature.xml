@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.cdt.debug.ui.memory.source"
+      label="%featureName"
+      version="2.2.0.201309180223"
+      provider-name="%providerName">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.cdt.debug.ui.memory.search.source"
+         download-size="20"
+         install-size="71"
+         version="1.3.0.201309180223"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.debug.ui.memory.traditional.source"
+         download-size="54"
+         install-size="225"
+         version="1.2.1.201309180223"
+         unpack="false"/>
+
+    <plugin
+         id="org.eclipse.cdt.debug.ui.memory.floatingpoint.source"
+         download-size="60"
+         install-size="236"
+         version="1.0.0.201309180223"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.cdt.debug.ui.memory.transport.source"
+         download-size="38"
+         install-size="135"
+         version="2.1.0.201309180223"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.cdt.debug.ui.memory.memorybrowser.source"
+         download-size="24"
+         install-size="79"
+         version="1.3.0.201309180223"
+         unpack="false"/>
+
+</feature>

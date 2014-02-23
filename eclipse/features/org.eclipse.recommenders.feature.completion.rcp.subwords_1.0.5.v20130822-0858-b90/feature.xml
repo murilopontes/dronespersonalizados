@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2010 Darmstadt University of Technology.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+
+    Contributors:
+       Darmstadt University of Technology - initial API and implementation.
+
+-->
+<feature
+      id="org.eclipse.recommenders.feature.completion.rcp.subwords"
+      label="Code Recommenders: Subwords Completion"
+      version="1.0.5.v20130822-0858-b90"
+      provider-name="Eclipse Code Recommenders">
+
+   <description url="http://www.eclipse.org/recommenders/">
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.recommenders.feature.rcp.core" version="1.0.0.qualifier"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.recommenders.completion.rcp.subwords"
+         download-size="66"
+         install-size="130"
+         version="1.0.5.v20130822-0858-b90"
+         unpack="false"/>
+
+</feature>

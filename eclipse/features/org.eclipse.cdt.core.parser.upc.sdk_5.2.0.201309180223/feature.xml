@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.cdt.core.parser.upc.sdk"
+      label="%featureName"
+      version="5.2.0.201309180223"
+      provider-name="%providerName"
+      plugin="org.eclipse.cdt.core.parser.upc.source">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license>
+      %license
+   </license>
+
+   <includes
+         id="org.eclipse.cdt.core.parser.upc.source"
+         version="5.2.0.201309180223"/>
+
+   <includes
+         id="org.eclipse.cdt.core.parser.upc.feature"
+         version="5.2.0.201309180223"/>
+
+   <includes
+         id="org.eclipse.cdt.core.lrparser.sdk"
+         version="5.2.0.201309180223"/>
+
+</feature>
