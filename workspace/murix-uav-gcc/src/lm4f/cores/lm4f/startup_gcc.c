@@ -409,17 +409,21 @@ void *__dso_handle = 0;
 /**
  * _sbrk - newlib memory allocation routine
  */
+
+
 typedef char *caddr_t;
+
+uint32_t gBrkUsed=0;
 
 caddr_t _sbrk (int incr)
 {
     double current_sp;
-    extern char end asm ("end"); /* Defined by linker */
+    extern char end asm ("end"); // Defined by linker
     static char * heap_end;
     char * prev_heap_end;
 
     if (heap_end == NULL) {
-        heap_end = &end; /* first ram address after bss and data */
+        heap_end = &end; // first ram address after bss and data
     }
 
     prev_heap_end = heap_end;
@@ -427,13 +431,16 @@ caddr_t _sbrk (int incr)
     // simplistic approach to prevent the heap from corrupting the stack
     // TBD: review for alternatives
     if ( heap_end + incr < (caddr_t)&current_sp ) {
-        heap_end += incr;
+    	heap_end += incr;
+
+    	gBrkUsed+=incr;
         return (caddr_t) prev_heap_end;
     }
     else {
         return NULL;
     }
 }
+
 
 extern int link( char *cOld, char *cNew )
 {

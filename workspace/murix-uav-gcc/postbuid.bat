@@ -22,4 +22,6 @@ arm-none-eabi-size              murix-uav-gcc.elf
 @echo "create listing"
 arm-none-eabi-objdump -S        murix-uav-gcc.elf > murix-uav-gcc.lst
 
+#echo "create sizes"
+arm-none-eabi-nm -S --size-sort -s murix-uav-gcc.elf > murix-uav-gcc.sizes
 

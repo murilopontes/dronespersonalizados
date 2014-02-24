@@ -562,8 +562,8 @@ void cc1101_init(uint8_t cs_pin, uint8_t spi_port,uint8_t gdo0_pin,cc1101_rx_cal
 const char* cc1101_reg_name(uint8_t addr)
 {
 	switch(addr){
-          
-          /*
+
+
 	case 0x00: return "IOCFG2  (GDO2 output pin configuration)"; break;
 	case 0x01: return "IOCFG1  (GDO1 output pin configuration)"; break;
 	case 0x02: return "IOCFG1  (GDO0 output pin configuration)"; break;
@@ -627,8 +627,8 @@ const char* cc1101_reg_name(uint8_t addr)
 	case 0x3D: return "RCCTRL0_STATUS (Last RC Oscillator Calibration Result)"; break;
 	case 0x3E: return "PA_TABLE (PA control settings table)"; break;
 	case 0x3F: return "TXFIFO (Transmit FIFO)/RXFIFO (Receive FIFO)"; break;
-          
-          */
+
+
 	}
 	return "\033[1;31mUNKNOWN-REGISTER\033[m";
 }
@@ -636,8 +636,8 @@ const char* cc1101_marcstate(uint8_t state)
 {
 	switch (state)
 	{
-          
-          /*
+
+
 	case CC1101_MARCSTATE_SLEEP:return "SLEEP (SLEEP)";	break;
 	case CC1101_MARCSTATE_IDLE:	return "IDLE (IDLE)";break;
 	case CC1101_MARCSTATE_XOFF:	return "XOFF (XOFF)";break;
@@ -661,15 +661,15 @@ const char* cc1101_marcstate(uint8_t state)
 	case CC1101_MARCSTATE_TX_END:return "TX_END (TX)";break;
 	case CC1101_MARCSTATE_RXTX_SWITCH:	return "RXTX_SWITCH (RXTX_SETTLING)";break;
 	case CC1101_MARCSTATE_TXFIFO_UNDERFLOW:	return "TXFIFO_UNDERFLOW (TXFIFO_UNDERFLOW)";	break;
-          */
+
 	}
 	return "\033[1;31mUNKNOWN-STATE\033[m" ;
 }
 const char* cc1101_strobe(uint8_t addr)
 {
 	switch(addr){
-          
-          /*
+
+
 	case 0x30: return "SRES   (Reset chip)"; break;
 	case 0x31: return "SFSTXON(Enable and calibrate frequency synthesizer)"; break;
 	case 0x32: return "SXOFF  (Turn off crystal oscillator)"; break;
@@ -684,7 +684,7 @@ const char* cc1101_strobe(uint8_t addr)
 	case 0x3B: return "SFTX   (Flush the TX FIFO buffer)"; break;
 	case 0x3C: return "SWORRST(Reset real time clock)"; break;
 	case 0x3D: return "SNOP   (No operation. Returns status byte)"; break;
-          */
+
 	}
 	return "\033[1;31mUNKNOWN-STROBE\033[m";
 }
@@ -1148,7 +1148,9 @@ void cc1101_packet_recv(void)
 	//
 	if(rxBytes>64){
 
-		Serial.println("CC1101 \033[1;31mERROR\033[m RXBYTES>64");
+		if(_debug){
+			Serial.println("CC1101 \033[1;31mERROR\033[m RXBYTES>64");
+		}
 
 		/* send strobe to enter receive mode */
 		cc1101_command_strobe( CC1101_SIDLE );

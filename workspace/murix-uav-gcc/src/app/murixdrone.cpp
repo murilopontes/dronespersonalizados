@@ -1,4 +1,9 @@
 
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+
 
 #include "murixdrone.h"
 
@@ -56,45 +61,67 @@ numvar bitlash_cmd_imu(void){
 	//
 	imu.update();
 	//
-/*
-	Serial.printf("%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|%f|\r\n",
-			//mpu6050 temperature
-			imu.sensors.temp,
-			//tracking interval time
-			imu.tracking.imu_dt,
-			//accel
-			imu.sensors.ax,
-			imu.sensors.ay,
-			imu.sensors.az,
-			//accel integrate -> speed
-			imu.tracking.acc_linear_x_speed[1],
-			imu.tracking.acc_linear_y_speed[1],
-			imu.tracking.acc_linear_z_speed[1],
-			//accel integrate2 -> position
-			imu.tracking.acc_linear_x_position[1],
-			imu.tracking.acc_linear_y_position[1],
-			imu.tracking.acc_linear_z_position[1],
-			//accel gravity
-			imu.tracking.gravity_x,
-			imu.tracking.gravity_y,
-			imu.tracking.gravity_z,
-			//accel pitch and roll
-			imu.tracking.acc_pitch,
-			imu.tracking.acc_roll,
-			//gyro
-			imu.sensors.gx,
-			imu.sensors.gy,
-			imu.sensors.gz,
-			//gyro integrate -> pitch, roll, yaw
-			imu.tracking.gyro_x_integrate,
-			imu.tracking.gyro_y_integrate,
-			imu.tracking.gyro_z_integrate,
-			//fusion pitch, roll
-			imu.tracking.fusion_pitch,
-			imu.tracking.fusion_roll);
 
-	Serial.printf("ok\r\n");
-        */
+	//mpu6050 temperature
+	Serial.print(imu.sensors.temp,2);
+	Serial.print("|");
+	//tracking interval time
+	Serial.print(imu.tracking.imu_dt,2);
+	Serial.print("|");
+	//accel
+	Serial.print(imu.sensors.ax,2);
+	Serial.print("|");
+	Serial.print(imu.sensors.ay,2);
+	Serial.print("|");
+	Serial.print(imu.sensors.az,2);
+	Serial.print("|");
+	//accel integrate -> speed
+	Serial.print(imu.tracking.acc_linear_x_speed[1],2);
+	Serial.print("|");
+	Serial.print(imu.tracking.acc_linear_y_speed[1],2);
+	Serial.print("|");
+	Serial.print(imu.tracking.acc_linear_z_speed[1],2);
+	Serial.print("|");
+	//accel integrate2 -> position
+	Serial.print(imu.tracking.acc_linear_x_position[1],2);
+	Serial.print("|");
+	Serial.print(imu.tracking.acc_linear_y_position[1],2);
+	Serial.print("|");
+	Serial.print(imu.tracking.acc_linear_z_position[1],2);
+	Serial.print("|");
+	//accel gravity
+	Serial.print(imu.tracking.gravity_x,2);
+	Serial.print("|");
+	Serial.print(imu.tracking.gravity_y,2);
+	Serial.print("|");
+	Serial.print(imu.tracking.gravity_z,2);
+	Serial.print("|");
+	//accel pitch and roll
+	Serial.print(imu.tracking.acc_pitch,2);
+	Serial.print("|");
+	Serial.print(imu.tracking.acc_roll,2);
+	Serial.print("|");
+	//gyro
+	Serial.print(imu.sensors.gx,2);
+	Serial.print("|");
+	Serial.print(imu.sensors.gy,2);
+	Serial.print("|");
+	Serial.print(imu.sensors.gz,2);
+	Serial.print("|");
+	//gyro integrate -> pitch, roll, yaw
+	Serial.print(imu.tracking.gyro_x_integrate,2);
+	Serial.print("|");
+	Serial.print(imu.tracking.gyro_y_integrate,2);
+	Serial.print("|");
+	Serial.print(imu.tracking.gyro_z_integrate,2);
+	Serial.print("|");
+	//fusion pitch, roll
+	Serial.print(imu.tracking.fusion_pitch,2);
+	Serial.print("|");
+	Serial.print(imu.tracking.fusion_roll,2);
+	Serial.print("|");
+	Serial.println("ok");
+
 	return 0;
 }
 
@@ -502,7 +529,7 @@ void cc1101_rx_callback(uint8_t* buf,uint8_t buflen){
 				drone_pilot.pilot_takeoff,
 				drone_pilot.pilot_emergency
 				);
-				*/
+		 */
 
 		uint8_t rf_ack[2] = { 0xca, 0xfe };
 		analogWrite(BLUE_LED ,30);
@@ -546,7 +573,207 @@ numvar bitlash_cmd_cc1101_doff(void) {
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
-void leds_init(){
+void task_dummy(void *arg){
+
+	for(;;){
+		Serial.println("teste");
+		vTaskDelay(500);
+	}
+}
+
+numvar bitbash_cmd_test_task_delete( void )
+{
+	TaskHandle_t xHandle = NULL;
+	// Create the task, storing the handle.
+	xTaskCreate( task_dummy, "NAME", 128, NULL, 0, &xHandle );
+
+	//
+	vTaskDelay(1500);
+
+	// Use the handle to delete the task.
+	if( xHandle != NULL )
+	{
+		vTaskDelete( xHandle );
+	}
+}
+
+
+
+numvar bitlash_cmd_freertos_free(void) {
+
+
+
+
+
+
+
+	char states[]={'R','R','B','S','E'};
+
+
+	/* Take a snapshot of the number of tasks in case it changes while this
+	    function is executing. */
+	int uxArraySize = uxTaskGetNumberOfTasks();
+
+	/* Allocate a TaskStatus_t structure for each task.  An array could be
+	    allocated statically at compile time. */
+	TaskStatus_t *pxTaskStatusArray = (TaskStatus_t *) pvPortMalloc( uxArraySize * sizeof( TaskStatus_t ) );
+
+	if( pxTaskStatusArray != NULL )
+	{
+		//
+		unsigned long ulTotalRunTime, ulStatsAsPercentage;
+
+		/* Generate raw status information about each task. */
+		uxArraySize = uxTaskGetSystemState( pxTaskStatusArray, uxArraySize, &ulTotalRunTime );
+
+		/* For percentage calculations. */
+		ulTotalRunTime /= 100UL;
+
+		/* Avoid divide by zero errors. */
+		if( ulTotalRunTime > 0 )
+		{
+
+			Serial.println("");
+			Serial.println("-----------------------------------------------------");
+			Serial.println("Name\t|Order\t|State\t|cPrio\t|bPrio\t|fStack\t|CPU%");
+			Serial.println("-----------------------------------------------------");
+
+			/* For each populated position in the pxTaskStatusArray array,
+	            format the raw data as human readable ASCII data. */
+			for(int x = 0; x < uxArraySize; x++ )
+			{
+				/* What percentage of the total run time has the task used?
+	                This will always be rounded down to the nearest integer.
+	                ulTotalRunTimeDiv100 has already been divided by 100. */
+				ulStatsAsPercentage = pxTaskStatusArray[x].ulRunTimeCounter / ulTotalRunTime;
+
+				Serial.print(pxTaskStatusArray[x].pcTaskName);
+				Serial.print("\t| ");
+				Serial.print(pxTaskStatusArray[x].xTaskNumber);
+				Serial.print("\t| ");
+				Serial.print(states[pxTaskStatusArray[x].eCurrentState]);
+				Serial.print("\t| ");
+				Serial.print(pxTaskStatusArray[x].uxCurrentPriority);
+				Serial.print("\t| ");
+				Serial.print(pxTaskStatusArray[x].uxBasePriority);
+				Serial.print("\t| ");
+				Serial.print(pxTaskStatusArray[x].usStackHighWaterMark);
+				Serial.print("\t| ");
+				Serial.println(ulStatsAsPercentage);
+
+
+				//Serial.print(pxTaskStatusArray[x].ulRunTimeCounter);
+				//Serial.print("\t| ");
+
+
+			}
+		}
+		Serial.println("-----------------------------------------------------");
+
+		/* The array is no longer needed, free the memory it consumes. */
+		vPortFree( pxTaskStatusArray );
+	}
+
+
+
+
+	Serial.println("");
+
+	extern unsigned long _text;
+	extern unsigned long _etext;
+	extern unsigned long _data;
+	extern unsigned long _edata;
+	extern unsigned long _bss;
+	extern unsigned long _ebss;
+	extern unsigned long _end;
+	extern unsigned long _estack;
+	extern uint32_t gBrkUsed;
+
+	Serial.print((int)&_data,HEX);
+	Serial.println(" data start (ram from code)");
+	Serial.print((int)&_edata,HEX);
+	Serial.println(" data end   (ram from code)");
+	Serial.print((int)&_bss,HEX);
+	Serial.println(" bss start (ram from zero)");
+	Serial.print((int)&_ebss,HEX);
+	Serial.println(" bss end   (ram from zero)");
+	Serial.print((int)&_end,HEX);
+	Serial.println(" start of heap");
+	Serial.print((int)&_estack,HEX);
+	Serial.println(" start of stack");
+
+	Serial.println("");
+
+	int program_size=(&_etext-&_text)*4;
+
+	int data_size=(&_edata-&_data)*4;
+	int bss_size=(&_ebss-&_bss)*4;
+	int heap_stack_size=(&_estack-&_end)*4;
+
+	int32_t free_heap = ((&_estack-&_end)*4)-gBrkUsed;
+	int ram_total=(&_estack-&_data)*4;
+	int ram_free=free_heap+xPortGetFreeHeapSize();
+
+	Serial.print("GCC flash.used=");
+	Serial.println(program_size);
+
+	Serial.print("GCC ram.data.len=");
+	Serial.println(data_size);
+	Serial.print("GCC ram.bss.len=");
+	Serial.println(bss_size);
+	Serial.print("GCC ram.heapstack.len=");
+	Serial.println(heap_stack_size);
+
+	Serial.println("");
+
+	Serial.print("GCC heap.used=");
+	Serial.println(gBrkUsed);
+	Serial.print("GCC heap.free=");
+	Serial.println(free_heap);
+
+	Serial.println("");
+
+	Serial.print("FREERTOS configTOTAL_HEAP_SIZE=");
+	Serial.println(configTOTAL_HEAP_SIZE);
+	Serial.print("FREERTOS xPortGetMinimumEverFreeHeapSize=");
+	Serial.println(xPortGetMinimumEverFreeHeapSize());
+	Serial.print("FREERTOS xPortGetFreeHeapSize=");
+	Serial.println(xPortGetFreeHeapSize());
+
+	Serial.println("");
+
+	Serial.print("GCC+FREERTOS ram total=");
+	Serial.println(ram_total);
+
+	Serial.print("GCC+FREERTOS ram  used=");
+	Serial.println(ram_total-ram_free);
+
+	Serial.print("GCC+FREERTOS ram free=");
+	Serial.println(ram_free);
+
+	return 0;
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+void task_drone_radio(void *arg){
+	//
+	bitlash_cmd_cc1101_reset();
+	for(;;){
+		vTaskDelay(100);
+	}
+	vTaskDelete(NULL);
+}
+void task_drone_leds(void *arg){
 	//
 	pinMode(BLUE_LED,OUTPUT);
 	pinMode(RED_LED,OUTPUT);
@@ -555,62 +782,85 @@ void leds_init(){
 	analogWrite(BLUE_LED ,0);
 	analogWrite(RED_LED  ,1);
 	analogWrite(GREEN_LED,0);
+
+	uint8_t i=0;
+	for(;;){
+		if( i++ % 2){
+			analogWrite(RED_LED  ,i);
+		} else {
+			analogWrite(RED_LED  ,0);
+		}
+		vTaskDelay(500);
+	}
+	vTaskDelete(NULL);
 }
-
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-
-
-void murixdrone_setup(void){
-
-	//
-	leds_init();
-	//
-	drone_pilot.motors_init();
-
-	//
-	initBitlash(115200);
-	//
-	bitlash_cmd_cc1101_reset();
+void task_drone_imu(void *arg){
 	//
 	imu.init();
 	bitlash_cmd_imu_flat_trim();
-
-
-
-
-
+	for(;;){
+		vTaskDelay(100);
+	}
+	vTaskDelete(NULL);
+}
+void task_drone_bitbash(void *arg){
+	//
+	initBitlash(115200);
 	addBitlashFunction("flat", (bitlash_function) bitlash_cmd_imu_flat_trim);
 	addBitlashFunction("imu", (bitlash_function) bitlash_cmd_imu);
-
 	addBitlashFunction("ccsend", (bitlash_function) bitlash_cmd_cc1101_send);
 	addBitlashFunction("ccreset", (bitlash_function) bitlash_cmd_cc1101_reset);
 	addBitlashFunction("ccdebug", (bitlash_function) cc1101_debug_state);
 	addBitlashFunction("ccdon", (bitlash_function) bitlash_cmd_cc1101_don);
 	addBitlashFunction("ccdoff", (bitlash_function) bitlash_cmd_cc1101_doff);
-
 	addBitlashFunction("motor_all", (bitlash_function) bitlash_cmd_all_motor);
 	addBitlashFunction("motor_front", (bitlash_function) bitlash_cmd_motor_front);
 	addBitlashFunction("motor_rear", (bitlash_function) bitlash_cmd_motor_rear);
 	addBitlashFunction("motor_right", (bitlash_function) bitlash_cmd_motor_right);
 	addBitlashFunction("motor_left", (bitlash_function) bitlash_cmd_motor_left);
-
 	addBitlashFunction("fly_man", (bitlash_function) bitlash_fly_man);
 	addBitlashFunction("fly_auto", (bitlash_function) bitlash_fly_auto);
-
-
-
+	addBitlashFunction("rtosfree", (bitlash_function) bitlash_cmd_freertos_free);
+	addBitlashFunction("rtosdelete", (bitlash_function) bitbash_cmd_test_task_delete);
+	for(;;){
+		runBitlash();
+	}
+	vTaskDelete(NULL);
 }
 
 
-void murixdrone_loop(void){
-	runBitlash();
-	//bitlash_fly_man();
-	bitlash_fly_auto();
+void task_drone_motors(void *arg){
+	//
+	drone_pilot.motors_init();
+	// Perform an action every 10 ticks.
+	const TickType_t xFrequency = 10;
+	TickType_t xLastWakeTime;
+	// Initialise the xLastWakeTime variable with the current time.
+	xLastWakeTime = xTaskGetTickCount();
+	for(;;){
+		// Wait for the next cycle.
+		vTaskDelayUntil( &xLastWakeTime, xFrequency );
+		// Perform action here.
+		bitlash_fly_auto();
+		//bitlash_fly_man();
+	}
+	vTaskDelete(NULL);
 }
 
+
+void task_drone_all(void* arg)
+{
+	xTaskCreate(task_drone_bitbash, "bitlash", 256, NULL, 0, NULL);
+
+	xTaskCreate(task_drone_radio, "radio", 128, NULL, 0, NULL);
+	xTaskCreate(task_drone_leds, "leds", 128, NULL, 0, NULL);
+	xTaskCreate(task_drone_imu, "imu", 128, NULL, 0, NULL);
+	xTaskCreate(task_drone_motors, "motors", 128, NULL, 0, NULL);
+	for(;;){
+		vTaskDelay(100);
+	}
+	vTaskDelete(NULL);
+}
 
 
 

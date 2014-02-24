@@ -29,6 +29,8 @@
   Modified 28 September 2010 by Mark Sproul
  */
 
+#include <FreeRTOS.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -231,8 +233,14 @@ HardwareSerial::begin(unsigned long baud)
         free(txBuffer);
     if (rxBuffer != (unsigned char *)0xFFFFFFFF)  // Catch attempts to re-init this Serial instance by freeing old buffer first
         free(rxBuffer);
+
+
     txBuffer = (unsigned char *) malloc(txBufferSize);
     rxBuffer = (unsigned char *) malloc(rxBufferSize);
+    /*
+    txBuffer = (unsigned char *) pvPortMalloc(txBufferSize);
+    rxBuffer = (unsigned char *) pvPortMalloc(rxBufferSize);
+*/
 
     SysCtlDelay(100);
 }

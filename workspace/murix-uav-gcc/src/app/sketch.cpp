@@ -54,16 +54,6 @@ void serial_events(void *pvParameters){
   }
 }
 
-void task_drone(void *pvParameters){
-  murixdrone_setup();
-  for(;;){
-    murixdrone_loop();
-  }
-}
-
-
-
-
 void led_Task(void *pvParameters)
 {
   pinMode(GREEN_LED,OUTPUT);
@@ -82,17 +72,27 @@ void led_Task(void *pvParameters)
   }
 }
 
+void task_setup(void *pvParameters){
+	  // put your setup code here, to run once:
+	    Serial.begin(115200);
+
+		//xTaskCreate(led_Task, "led", 128, NULL, 0, NULL);
+
+		//xTaskCreate(serial_events, "serialrx", 128, NULL, 0, NULL);
+
+		//xTaskCreate(test_all_serials, "serialtx", 128, NULL, 0, NULL);
+
+		//xTaskCreate(task_bitlash, "bitlash", 128, NULL, 0, NULL);
+
+		xTaskCreate(task_drone_all, "drone", 64, NULL, 0, NULL);
+
+		//vTaskDelete(NULL);
+}
+
 void setup()
 {
-  // put your setup code here, to run once:
-    Serial.begin(115200);
-
-	xTaskCreate(led_Task, "led", 128, NULL, 0, NULL);
-	  //xTaskCreate(serial_events, "serialrx", 128, NULL, 0, NULL);
-	  //xTaskCreate(test_all_serials, "serialtx", 128, NULL, 0, NULL);
-	  //xTaskCreate(task_bitlash, "bitlash", 128, NULL, 0, NULL);
-	  //xTaskCreate(task_drone, "drone", 256, NULL, 0, NULL);
-
+	task_setup(NULL);
+	//xTaskCreate(task_setup, "setup", 512, NULL, 0, NULL);
 	vTaskStartScheduler();
 }
 
