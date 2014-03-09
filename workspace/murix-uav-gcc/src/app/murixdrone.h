@@ -9,7 +9,7 @@
 #define MURIXDRONE_H_
 
 
-void task_drone_all(void* arg);
+void create_all_drone_tasks(void);
 
 
 #endif /* MURIXDRONE_H_ */

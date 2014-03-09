@@ -848,18 +848,13 @@ void task_drone_motors(void *arg){
 }
 
 
-void task_drone_all(void* arg)
+void create_all_drone_tasks(void)
 {
 	xTaskCreate(task_drone_bitbash, "bitlash", 256, NULL, 0, NULL);
-
-	xTaskCreate(task_drone_radio, "radio", 128, NULL, 0, NULL);
+	//xTaskCreate(task_drone_radio, "radio", 128, NULL, 0, NULL);
 	xTaskCreate(task_drone_leds, "leds", 128, NULL, 0, NULL);
-	xTaskCreate(task_drone_imu, "imu", 128, NULL, 0, NULL);
-	xTaskCreate(task_drone_motors, "motors", 128, NULL, 0, NULL);
-	for(;;){
-		vTaskDelay(100);
-	}
-	vTaskDelete(NULL);
+	//xTaskCreate(task_drone_imu, "imu", 128, NULL, 0, NULL);
+	//xTaskCreate(task_drone_motors, "motors", 128, NULL, 0, NULL);
 }
 
 
