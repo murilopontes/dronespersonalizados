@@ -15,7 +15,6 @@
 #include <bitlash.h>
 #include <murixdrone.h>
 
-#include <EtherCard.h>
 
 
 void test_all_serials(void *pvParameters){
@@ -76,59 +75,6 @@ void led_Task(void *pvParameters)
 }
 
 
-EtherCard ether;
-
-//callback that prints received packets to the serial port
-void udpSerialPrint(uint16_t port, byte ip[4], const char *data, uint16_t len) {
-	ether.printIp(ip);
-	Serial.print(":");
-	Serial.println(port);
-	Serial.println(data);
-	Serial.println(len);
-}
-
-void task_network_test(void *parm){
-
-#define STATIC 0  // set to 1 to disable DHCP (adjust myip/gwip values below)
-#if STATIC
-// ethernet interface ip address
-static byte myip[] = { 192,168,0,9 };
-// gateway ip address
-static byte gwip[] = { 192,168,0,254 };
-#endif
-
-	// ethernet mac address - must be unique on your network
-	static byte mymac[] = { 0x00,0x4f,0x49,0x00,0x00,0x04 };
-
-
-	Serial.begin(115200);
-	Serial.println("\n[backSoon]");
-
-	//eg. ether.begin(sizeof Ethernet::buffer, mymac, PD_1, 3) //PD_1 - ENC CS Pin, SPImodule 3
-	if (ether.begin(sizeof(ether.bufferpkt), mymac, PD_1,3) == 0) //DEFAULT: PB_5 - ENC CS Pin, SPImodule 2
-		Serial.println( "Failed to access Ethernet controller");
-
-#if STATIC
-	ether.staticSetup(myip, gwip);
-#else
-	if (!ether.dhcpSetup()) Serial.println("DHCP failed");
-#endif
-
-	ether.printIp("IP:  ", ether.myip);
-	ether.printIp("GW:  ", ether.gwip);
-	ether.printIp("DNS: ", ether.dnsip);
-
-	//register udpSerialPrint() to port 1337
-	ether.udpServerListenOnPort(&udpSerialPrint, 1337);
-	//register udpSerialPrint() to port 42.
-	ether.udpServerListenOnPort(&udpSerialPrint, 42);
-	//
-	for(;;){
-		//this must be called for ethercard functions to work.
-		ether.packetLoop(ether.packetReceive());
-	}
-
-}
 
 
 void setup()
@@ -141,10 +87,7 @@ void setup()
 	//xTaskCreate(test_all_serials, "serialtx", 128, NULL, 0, NULL);
 	//xTaskCreate(task_bitlash, "bitlash", 128, NULL, 0, NULL);
 
-	xTaskCreate(task_network_test, "network", 512, NULL, 0, NULL);
-
 	create_all_drone_tasks();
-
 
 	vTaskStartScheduler();
 }
