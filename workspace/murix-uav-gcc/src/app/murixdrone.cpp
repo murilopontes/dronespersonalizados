@@ -850,6 +850,15 @@ void task_drone_motors(void *arg){
 
 void create_all_drone_tasks(void)
 {
+
+    uint32_t ulUser0, ulUser1;
+    ROM_FlashUserGet(&ulUser0, &ulUser1);
+    uint8_t* p_mac0;
+    uint8_t* p_mac1;
+    p_mac0 = (uint8_t*) &ulUser0;
+    p_mac1 = (uint8_t*) &ulUser1;
+    Serial.printf("mac=%02x-%02x-%02x-%02x-%02x-%02x\n",p_mac0[0],p_mac0[1],p_mac0[2],p_mac1[0],p_mac1[1],p_mac1[2]);
+
 	xTaskCreate(task_drone_bitbash, "bitlash", 256, NULL, 0, NULL);
 	xTaskCreate(task_drone_radio, "radio", 128, NULL, 0, NULL);
 	xTaskCreate(task_drone_leds, "leds", 128, NULL, 0, NULL);

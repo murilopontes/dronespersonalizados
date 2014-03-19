@@ -1,6 +1,6 @@
 
 
-#include <Arduino.h>
+#include "Arduino.h"
 #include "GY521.h"
 
 #ifndef M_PI

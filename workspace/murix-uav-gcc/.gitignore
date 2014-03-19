@@ -1,1 +1,5 @@
 Debug/
+debug-iar/
+settings/
+*.tmp
+*.dep
