@@ -1,7 +1,6 @@
 ﻿using Axiom.Core;
 using Axiom.Graphics;
 using Axiom.Math;
-using murix_utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -235,57 +234,15 @@ namespace SerialPlotAccel
                 {
                     this.serialPort1.Open();
                 }
-
-
-                Gamepad_State_SlimDX joy = new Gamepad_State_SlimDX(SlimDX.XInput.UserIndex.One);
-                joy.Update();
-
-                string cmd = "pilot(";
-                cmd += (int)( joy.RightStick.Position.Y * 254);
-                cmd += ",";
-                cmd += (int)( joy.LeftStick.Position.X * 254);
-                cmd += ",";
-                cmd += (int)( joy.LeftStick.Position.Y * 254);
-                cmd += ",";
-                cmd += (int)( joy.RightStick.Position.X * 254);
-                cmd += ",";
-
-                if (joy.A)
-                {
-                    cmd += "1";
-                }
-                else {
-                    cmd += "0";
-                }
-                
-                cmd += ",";
-
-                if (joy.B)
-                {
-                    cmd += "1";
-                }
-                else
-                {
-                    cmd += "0";
-                }
-
-                cmd += ")\r\n";
-
-                Console.WriteLine(cmd);
-                this.serialPort1.WriteLine(cmd);
-                return;
-
-
-
-
-
-
        
                 samples++;
-                
+
+                this.serialPort1.ReadTimeout = 200;
+                this.serialPort1.DiscardInBuffer();
+                this.serialPort1.DiscardOutBuffer();
+
                 this.serialPort1.WriteLine("imu");
-                this.serialPort1.ReadTimeout = 10;
-                string txt = this.serialPort1.ReadExisting();
+                string txt = this.serialPort1.ReadTo("ok");
                 txt = txt.Replace("<","");
                 txt = txt.Replace(">", "");
                 txt = txt.Replace("imu", "");

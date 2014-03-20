@@ -12,7 +12,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>21</version>
+        <version>22</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -30,7 +30,7 @@
         <option>
           <name>Variant</name>
           <version>20</version>
-          <state>0</state>
+          <state>40</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -39,20 +39,20 @@
         <option>
           <name>Input variant</name>
           <version>3</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>Input description</name>
-          <state></state>
+          <state>Full formatting.</state>
         </option>
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>Output description</name>
-          <state></state>
+          <state>Full formatting.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -61,11 +61,11 @@
         <option>
           <name>FPU</name>
           <version>2</version>
-          <state>0</state>
+          <state>5</state>
         </option>
         <option>
           <name>OGCoreOrChip</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GRuntimeLibSelect</name>
@@ -79,15 +79,15 @@
         </option>
         <option>
           <name>RTDescription</name>
-          <state></state>
+          <state>Use the normal configuration of the C/C++ runtime library. No locale interface, C locale, no file descriptor support, no multibytes in printf and scanf, and no hex floats in strtod.</state>
         </option>
         <option>
           <name>OGProductVersion</name>
-          <state>6.50.3.4744</state>
+          <state>5.10.0.159</state>
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>6.50.3.4744</state>
+          <state>7.10.1.6733</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -99,15 +99,15 @@
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
-          <state></state>
+          <state>TM4C123GH6PM	TexasInstruments TM4C123GH6PM</state>
         </option>
         <option>
           <name>GenLowLevelInterface</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>GEndianModeBE</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGBufferedTerminalOutput</name>
@@ -133,17 +133,17 @@
         </option>
         <option>
           <name>RTConfigPath2</name>
-          <state></state>
+          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GFPUCoreSlave</name>
           <version>20</version>
-          <state>0</state>
+          <state>40</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
           <version>20</version>
-          <state>1</state>
+          <state>40</state>
         </option>
         <option>
           <name>OGUseCmsis</name>
@@ -153,18 +153,27 @@
           <name>OGUseCmsisDspLib</name>
           <state>0</state>
         </option>
+        <option>
+          <name>GRuntimeLibThreads</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>28</version>
+        <version>30</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
+          <name>CCOptimizationNoSizeConstraints</name>
+          <state>0</state>
+        </option>
+        <option>
           <name>CCDefines</name>
-          <state></state>
+          <state>ARDUINO=150</state>
+          <state>ewarm</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -225,7 +234,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>0000000</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -293,7 +302,17 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state></state>
+          <state>$PROJ_DIR$\src\bitlash</state>
+          <state>$PROJ_DIR$\src\lm4f\variants\stellarpad</state>
+          <state>$PROJ_DIR$\src\lm4f\cores\lm4f</state>
+          <state>$PROJ_DIR$\src\lm4f\libraries\I2Cdev</state>
+          <state>$PROJ_DIR$\src\lm4f\libraries\Wire</state>
+          <state>$PROJ_DIR$\src\lm4f\libraries\MPU6050</state>
+          <state>$PROJ_DIR$\src\freertos</state>
+          <state>$PROJ_DIR$\src\freertos\Source\include</state>
+          <state>$PROJ_DIR$\src\freertos\Source\portable\IAR\ARM_CM4F</state>
+          <state>$PROJ_DIR$\src\arduino_uip</state>
+          <state>$PROJ_DIR$\src\arduino_uip\utility</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -313,16 +332,16 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -348,7 +367,7 @@
         </option>
         <option>
           <name>IccLang</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>IccCDialect</name>
@@ -387,8 +406,13 @@
           <state>0</state>
         </option>
         <option>
-          <name>CCOptimizationNoSizeConstraints</name>
+          <name>CCNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>CCOptStrategySlave</name>
+          <version>0</version>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -396,7 +420,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>8</version>
+        <version>9</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -542,7 +566,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\src\freertos</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -551,6 +575,10 @@
         <option>
           <name>AExtraOptionsV2</name>
           <state></state>
+        </option>
+        <option>
+          <name>AsmNoLiteralPool</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -609,9 +637,13 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>15</version>
+        <version>16</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>IlinkOutputFile</name>
+          <state>cpp.out</state>
+        </option>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
@@ -623,10 +655,6 @@
         <option>
           <name>IlinkInputFileSlave</name>
           <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOutputFile</name>
-          <state>murix-iot.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -662,7 +690,7 @@
         </option>
         <option>
           <name>IlinkMapFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkLogFile</name>
@@ -686,11 +714,11 @@
         </option>
         <option>
           <name>IlinkIcfOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>lnk0t.icf</state>
+          <state>$PROJ_DIR$\src\murix-ek-lm4f120xl.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -750,7 +778,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state></state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -869,7 +897,7 @@
         </option>
         <option>
           <name>IlinkStackAnalysisEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkStackControlFile</name>
@@ -888,6 +916,10 @@
           <name>CrcUnitSize</name>
           <version>0</version>
           <state>0</state>
+        </option>
+        <option>
+          <name>IlinkThreadsSlave</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
