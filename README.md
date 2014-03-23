@@ -47,7 +47,6 @@ GY-521 (Accelerometer and Gyroscope)
 * 6 x ADC 16 bits
 * "Digital Motion Processor" (DMP)
 * 2k2 i2c pull-ups resistors [please not install more i2c devices in bus]
-* ![GY-521 schematic](datasheets/gy-521.jpg "GY-521 schematic")
 
 
 Frame
