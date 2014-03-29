@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWifi", "SimpleWifi\Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneUdpVideoRX", "DroneUdpVideoRX\DroneUdpVideoRX.csproj", "{F35283D1-8CFE-499A-A2F0-833F7D71775D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneConnect", "DroneConnect\DroneConnect.csproj", "{088F6E48-A1E6-4666-A4C8-22277D66175A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenUAV-ardrone", "DroneConnect\OpenUAV-ardrone.csproj", "{088F6E48-A1E6-4666-A4C8-22277D66175A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneSetPoint", "DroneSetPoint\DroneSetPoint.csproj", "{274FCAF3-08C2-48C1-87F2-88E6BA20AF42}"
 EndProject
@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StellarisMPU6050", "SerialP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PID_Auto_tune_simulator", "PID_auto_tune_simulator\PID_Auto_tune_simulator.csproj", "{D4E33B83-127B-478B-9D09-5FB06A9F29C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroneMURIX", "DroneMURIX\DroneMURIX.csproj", "{350C9F93-9773-4F6C-9539-B6C08CDA88FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenUAV-tiva", "DroneMURIX\OpenUAV-tiva.csproj", "{350C9F93-9773-4F6C-9539-B6C08CDA88FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StellarisXbox", "StellarisXbox\StellarisXbox.csproj", "{51D276F0-D4A2-4E66-80BF-7169159A991D}"
 EndProject
