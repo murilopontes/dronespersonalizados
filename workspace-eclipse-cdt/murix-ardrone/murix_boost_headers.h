@@ -8,6 +8,7 @@
 #ifndef ALL_BOOST_HEADERS_H_
 #define ALL_BOOST_HEADERS_H_
 
+
 #include <boost/bind.hpp>
 #include <boost/exception/all.hpp>
 #include <boost/foreach.hpp>
@@ -32,12 +33,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-
-#include <boost/math/quaternion.hpp>
-#include <boost/mpl/list.hpp>
-#include <boost/units/pow.hpp>
-#include <boost/units/quantity.hpp>
-#include <boost/units/io.hpp>
 
 
 #endif /* ALL_BOOST_HEADERS_H_ */
