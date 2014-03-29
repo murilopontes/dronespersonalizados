@@ -1,0 +1,120 @@
+
+# Eclipse post-build
+#####################################
+cmd /c "${workspace_loc:/${ProjName}}"/postbuid.bat
+
+     
+
+# OpenOCD test
+#####################################
+C:\armtc\openocd-0.7.0\bin-x64>
+openocd-x64-0.7.0.exe -f c:\armtc\openocd-0.7.0\scripts\board\ek-lm4f120xl.cfg
+Open On-Chip Debugger 0.7.0 (2013-05-05-10:44)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.sourceforge.net/doc/doxygen/bugs.html
+Info : This adapter doesn't support configurable speed
+Info : ICDI Firmware version: 9270
+Info : lm4f120h5qr.cpu: hardware has 6 breakpoints, 4 watchpoints
+
+# OpenOCD eclipse
+######################################
+monitor reset halt
+
+monitor reset init
+
+
+# startup_gcc.c
+################################
+
+extern void xPortPendSVHandler(void);
+extern void vPortSVCHandler(void);
+extern void xPortSysTickHandler(void);
+
+#if 0
+    IntDefaultHandler,                      // SVCall handler
+    IntDefaultHandler,                      // Debug monitor handler
+    0,                                      // Reserved
+    IntDefaultHandler,                      // The PendSV handler
+    SysTickIntHandler,                      // The SysTick handler
+#else
+    vPortSVCHandler,                        // SVCall handler
+    IntDefaultHandler,                      // Debug monitor handler
+    0,                                      // Reserved
+    xPortPendSVHandler,                     // The PendSV handler
+    xPortSysTickHandler,                    // The SysTick handler
+#endif    
+
+/////////////////////////
+
+uint32_t gBrkUsed=0;
+
+caddr_t _sbrk (int incr)
+{
+    double current_sp;
+    extern char end asm ("end"); // Defined by linker
+    static char * heap_end;
+    char * prev_heap_end;
+
+    if (heap_end == NULL) {
+        heap_end = &end; // first ram address after bss and data
+    }
+
+    prev_heap_end = heap_end;
+
+    // simplistic approach to prevent the heap from corrupting the stack
+    // TBD: review for alternatives
+    if ( heap_end + incr < (caddr_t)&current_sp ) {
+    	heap_end += incr;
+
+    	gBrkUsed+=incr;
+        return (caddr_t) prev_heap_end;
+    }
+    else {
+        return NULL;
+    }
+}
+
+
+
+#### C
+-ffunction-sections -fdata-sections -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsingle-precision-constant -DF_CPU=80000000L -MMD -DARDUINO=101 -DENERGIA=11 
+-IC:\SourceTree\energia-0101E0011\murix_energia\hardware\lm4f\cores\lm4f 
+-IC:\SourceTree\energia-0101E0011\murix_energia\hardware\lm4f\variants\stellarpad 
+
+#### C++
+-fno-rtti -fno-exceptions -ffunction-sections -fdata-sections -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsingle-precision-constant -DF_CPU=80000000L -MMD -DARDUINO=101 -DENERGIA=11 
+-IC:\SourceTree\energia-0101E0011\murix_energia\hardware\lm4f\cores\lm4f 
+-IC:\SourceTree\energia-0101E0011\murix_energia\hardware\lm4f\variants\stellarpad
+
+#### Linker
+-Os -nostartfiles -nostdlib -Wl,--gc-sections -T "${workspace_loc:/${ProjName}/src\lm4f\cores\lm4f\lm4fcpp.ld}" -Wl,--entry=ResetISR -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsingle-precision-constant 
+-lm -lc -lgcc 
+
+
+######### Print.h
+#include <stdarg.h>
+
+   void printf(const char *format, ...);
+   
+######### Print.c
+   void Print::printf(const char *format, ...)
+   {
+   char buf[128];
+   va_list ap;
+        va_start(ap, format);
+        vsnprintf(buf, sizeof(buf), format, ap);
+        for(char *p = &buf[0]; *p; p++) // emulate cooked mode for newlines
+        {
+                if(*p == '\n')
+                        write('\r');
+                write(*p);
+        }
+        va_end(ap);
+   }
+
+
+
+
+
+

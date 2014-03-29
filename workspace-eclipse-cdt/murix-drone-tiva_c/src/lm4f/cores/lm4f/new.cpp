@@ -1,29 +1,23 @@
 #include "new.h"
 
-#include <FreeRTOS.h>
-
 void * operator new(size_t size)
 {
   return malloc(size);
-  //return pvPortMalloc(size);
 }
 
 void operator delete(void * ptr)
 {
   free(ptr);
-  //vPortFree(ptr);
 } 
 
 void * operator new[](size_t size)
 {
   return malloc(size);
-  //return pvPortMalloc(size);
 }
 
 void operator delete[](void * ptr)
 {
   free(ptr);
-  //vPortFree(ptr);
 }
 
 int __cxa_guard_acquire(__guard *g) {return !*(char *)(g);};

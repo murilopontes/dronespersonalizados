@@ -7,6 +7,10 @@
  *
  *
  ***********************************************************************
+
+ 2013-12-23 Limited size for RX and TX buffers, by spirilis
+
+ 
   Derived from:
   HardwareSerial.cpp - Hardware serial library for Wiring
   Copyright (c) 2006 Nicholas Zambetti.  All right reserved.
@@ -28,8 +32,6 @@
   Modified 23 November 2006 by David A. Mellis
   Modified 28 September 2010 by Mark Sproul
  */
-
-#include <FreeRTOS.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -93,24 +95,63 @@ static const unsigned long g_ulUARTPeriph[8] =
 //*****************************************************************************
 static const unsigned long g_ulUARTConfig[8][2] =
 {
+
+#if defined(PART_TM4C1233H6PM) || defined(PART_LM4F120H5QR)
     {GPIO_PA0_U0RX, GPIO_PA1_U0TX}, {GPIO_PC4_U1RX, GPIO_PC5_U1TX},
     {GPIO_PD6_U2RX, GPIO_PD7_U2TX}, {GPIO_PC6_U3RX, GPIO_PC7_U3TX},
     {GPIO_PC4_U4RX, GPIO_PC5_U4TX},	{GPIO_PE4_U5RX, GPIO_PE5_U5TX},
 	{GPIO_PD4_U6RX, GPIO_PD5_U6TX},	{GPIO_PE0_U7RX, GPIO_PE1_U7TX}
+#elif defined(PART_TM4C129XNCZAD)
+    {GPIO_PA0_U0RX, GPIO_PA1_U0TX}, {GPIO_PQ4_U1RX, GPIO_PQ5_U1TX},
+    {GPIO_PD4_U2RX, GPIO_PD5_U2TX}, {GPIO_PA4_U3RX, GPIO_PA5_U3TX},
+    {GPIO_PK0_U4RX, GPIO_PK1_U4TX},	{GPIO_PH6_U5RX, GPIO_PH7_U5TX},
+	{GPIO_PP0_U6RX, GPIO_PP1_U6TX},	{GPIO_PC4_U7RX, GPIO_PC5_U7TX}
+#elif defined(PART_TM4C1294NCPDT)
+    {GPIO_PA0_U0RX, GPIO_PA1_U0TX}, {GPIO_PB0_U1RX, GPIO_PB1_U1TX},
+    {GPIO_PA6_U2RX, GPIO_PA7_U2TX}, {GPIO_PA4_U3RX, GPIO_PA5_U3TX},
+    {GPIO_PK0_U4RX, GPIO_PK1_U4TX},	{GPIO_PC6_U5RX, GPIO_PC7_U5TX},
+	{GPIO_PP0_U6RX, GPIO_PP1_U6TX},	{GPIO_PC4_U7RX, GPIO_PC5_U7TX}
+#else
+#error "**** No PART defined or unsupported PART ****"
+#endif
 };
 
 static const unsigned long g_ulUARTPort[8] =
 {
+#if defined(PART_TM4C1233H6PM) || defined(PART_LM4F120H5QR)
 	GPIO_PORTA_BASE, GPIO_PORTC_BASE, GPIO_PORTD_BASE, GPIO_PORTC_BASE,
 	GPIO_PORTC_BASE, GPIO_PORTE_BASE, GPIO_PORTD_BASE, GPIO_PORTE_BASE
+#elif defined(PART_TM4C129XNCZAD)
+	GPIO_PORTA_BASE, GPIO_PORTQ_BASE, GPIO_PORTD_BASE, GPIO_PORTA_BASE,
+	GPIO_PORTK_BASE, GPIO_PORTH_BASE, GPIO_PORTP_BASE, GPIO_PORTC_BASE
+#elif defined(PART_TM4C1294NCPDT)
+	GPIO_PORTA_BASE, GPIO_PORTB_BASE, GPIO_PORTA_BASE, GPIO_PORTA_BASE,
+	GPIO_PORTK_BASE, GPIO_PORTC_BASE, GPIO_PORTP_BASE, GPIO_PORTC_BASE
+#else
+#error "**** No PART defined or unsupported PART ****"
+#endif
 };
 
 static const unsigned long g_ulUARTPins[8] =
 {
+#if defined(PART_TM4C1233H6PM) || defined(PART_LM4F120H5QR)
     GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_4 | GPIO_PIN_5,
     GPIO_PIN_6 | GPIO_PIN_7, GPIO_PIN_6 | GPIO_PIN_7,
     GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_4 | GPIO_PIN_5,
     GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_0 | GPIO_PIN_1
+#elif defined(PART_TM4C129XNCZAD)
+    GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_4 | GPIO_PIN_5,
+    GPIO_PIN_4 | GPIO_PIN_5, GPIO_PIN_4 | GPIO_PIN_5,
+    GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_6 | GPIO_PIN_7,
+    GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_4 | GPIO_PIN_5
+#elif defined(PART_TM4C1294NCPDT)
+    GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_0 | GPIO_PIN_1,
+    GPIO_PIN_6 | GPIO_PIN_7, GPIO_PIN_4 | GPIO_PIN_5,
+    GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_6 | GPIO_PIN_7,
+    GPIO_PIN_0 | GPIO_PIN_1, GPIO_PIN_4 | GPIO_PIN_5
+#else
+#error "**** No PART defined or unsupported PART ****"
+#endif
 };
 
 // Constructors ////////////////////////////////////////////////////////////////
@@ -210,7 +251,7 @@ HardwareSerial::begin(unsigned long baud)
 
     ROM_GPIOPinTypeUART(g_ulUARTPort[uartModule], g_ulUARTPins[uartModule]);
 
-	ROM_UARTConfigSetExpClk(UART_BASE, ROM_SysCtlClockGet(), baudRate,
+    ROM_UARTConfigSetExpClk(UART_BASE, F_CPU, baudRate,
                             (UART_CONFIG_PAR_NONE | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_WLEN_8));
     //
@@ -218,8 +259,8 @@ HardwareSerial::begin(unsigned long baud)
     // when any character is received.
     //
     ROM_UARTFIFOLevelSet(UART_BASE, UART_FIFO_TX1_8, UART_FIFO_RX1_8);
-	flushAll();
-	ROM_UARTIntDisable(UART_BASE, 0xFFFFFFFF);
+    flushAll();
+    ROM_UARTIntDisable(UART_BASE, 0xFFFFFFFF);
     ROM_UARTIntEnable(UART_BASE, UART_INT_RX | UART_INT_RT);
     ROM_IntEnable(g_ulUARTInt[uartModule]);
 
@@ -233,14 +274,8 @@ HardwareSerial::begin(unsigned long baud)
         free(txBuffer);
     if (rxBuffer != (unsigned char *)0xFFFFFFFF)  // Catch attempts to re-init this Serial instance by freeing old buffer first
         free(rxBuffer);
-
-
     txBuffer = (unsigned char *) malloc(txBufferSize);
     rxBuffer = (unsigned char *) malloc(rxBufferSize);
-    /*
-    txBuffer = (unsigned char *) pvPortMalloc(txBufferSize);
-    rxBuffer = (unsigned char *) pvPortMalloc(rxBufferSize);
-*/
 
     SysCtlDelay(100);
 }
@@ -303,7 +338,7 @@ void HardwareSerial::end()
 int HardwareSerial::available(void)
 {
     return((rxWriteIndex >= rxReadIndex) ?
-		(rxWriteIndex - rxReadIndex) : SERIAL_BUFFER_SIZE - (rxReadIndex - rxWriteIndex));
+		(rxWriteIndex - rxReadIndex) : rxBufferSize - (rxReadIndex - rxWriteIndex));
 }
 
 int HardwareSerial::peek(void)
@@ -334,7 +369,7 @@ int HardwareSerial::peek(void)
 int HardwareSerial::read(void)
 {
 	unsigned char cChar = peek();
-    rxReadIndex = ((rxReadIndex) + 1) % SERIAL_BUFFER_SIZE;
+    rxReadIndex = ((rxReadIndex) + 1) % rxBufferSize;
 	return(cChar);
 }
 
@@ -365,7 +400,7 @@ size_t HardwareSerial::write(uint8_t c)
     {
         while (TX_BUFFER_FULL);
         txBuffer[txWriteIndex] = '\r';
-		txWriteIndex = (txWriteIndex + 1) % SERIAL_BUFFER_SIZE;
+		txWriteIndex = (txWriteIndex + 1) % txBufferSize;
         numTransmit ++;
     }
 */
@@ -374,7 +409,7 @@ size_t HardwareSerial::write(uint8_t c)
     //
     while (TX_BUFFER_FULL);
     txBuffer[txWriteIndex] = c;
-    txWriteIndex = (txWriteIndex + 1) % SERIAL_BUFFER_SIZE;
+    txWriteIndex = (txWriteIndex + 1) % txBufferSize;
     numTransmit ++;
 
     //
@@ -436,7 +471,7 @@ void HardwareSerial::UARTIntHandler(void){
 
             rxBuffer[rxWriteIndex] =
                 (unsigned char)(lChar & 0xFF);
-            rxWriteIndex = ((rxWriteIndex) + 1) % SERIAL_BUFFER_SIZE;
+            rxWriteIndex = ((rxWriteIndex) + 1) % rxBufferSize;
 
             //
             // If we wrote anything to the transmit buffer, make sure it actually
