@@ -18,14 +18,12 @@
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.309425069" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix" value="arm-none-linux-gnueabi-" valueType="string"/>
 							<option id="cdt.managedbuild.option.gnu.cross.path.270502149" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path" value="C:\ARM-murix\armgcc-2009q1-ardrone\bin" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.168283034" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="${workspace_loc:/vbat}/Debug" enableAutoBuild="true" id="org.eclipse.cdt.build.core.internal.builder.555830500" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" parallelBuildOn="false" stopOnErr="true" superClass="org.eclipse.cdt.build.core.internal.builder"/>
+							<builder buildPath="${workspace_loc:/vbat}/Debug" enableAutoBuild="false" enableCleanBuild="false" enabledIncrementalBuild="false" id="org.eclipse.cdt.build.core.internal.builder.555830500" keepEnvironmentInBuildfile="false" name="CDT Internal Builder" parallelBuildOn="false" stopOnErr="false" superClass="org.eclipse.cdt.build.core.internal.builder"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1219518109" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.561097783" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" value="gnu.c.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.840134992" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1893363527" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;C:\ARM-murix\boost_1_55_0&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\arm-gcc\arm-none-linux-gnueabi\include\c++\4.3.3&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\arm-gcc\arm-none-linux-gnueabi\libc\usr\include&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.65254555" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -33,9 +31,7 @@
 								<option id="gnu.cpp.compiler.option.optimization.level.195658377" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.2007873218" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.114633103" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="C:\ARM-murix\boost_1_55_0"/>
-									<listOptionValue builtIn="false" value="&quot;C:\arm-gcc\arm-none-linux-gnueabi\include\c++\4.3.3&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\arm-gcc\arm-none-linux-gnueabi\libc\usr\include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\ARM-murix\boost_1_55_0&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.1445447232" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=gnu++0x" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1591749831" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
