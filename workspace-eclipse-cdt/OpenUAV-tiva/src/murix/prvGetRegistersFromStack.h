@@ -14,7 +14,11 @@ extern "C" {
 
 /* The prototype shows it is a naked function - in effect this is just an
 assembly function. */
+#ifdef __IAR_SYSTEMS_ICC__
+void FaultISR( void );
+#else
 void FaultISR( void ) __attribute__( ( naked ) );
+#endif
 
 void prvGetRegistersFromStack( uint32_t *pulFaultStackAddress );
 

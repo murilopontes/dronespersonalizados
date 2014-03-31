@@ -164,7 +164,10 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state></state>
+          <state>F_CPU=80000000L </state>
+          <state>ARDUINO=101 </state>
+          <state>ENERGIA=11</state>
+          <state>ewarm</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -293,17 +296,15 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$\src</state>
-          <state>$PROJ_DIR$\src\app</state>
-          <state>$PROJ_DIR$\src\app-freertos</state>
-          <state>$PROJ_DIR$\src\bitlash</state>
-          <state>$PROJ_DIR$\src\freertos\include</state>
-          <state>$PROJ_DIR$\src\freertos\portable\IAR\ARM_CM4F</state>
-          <state>$PROJ_DIR$\src\lm4f\cores\lm4f</state>
-          <state>$PROJ_DIR$\src\lm4f\libraries\EEPROM</state>
-          <state>$PROJ_DIR$\src\lm4f\libraries\SPI</state>
-          <state>$PROJ_DIR$\src\lm4f\libraries\Wire</state>
-          <state>$PROJ_DIR$\src\lm4f\variants\stellarpad</state>
+          <state>$PROJ_DIR$\..\src\murix</state>
+          <state>$PROJ_DIR$\..\src\bitlash</state>
+          <state>$PROJ_DIR$\..\src\freertos\include</state>
+          <state>$PROJ_DIR$\..\src\freertos\portable\IAR\ARM_CM4F</state>
+          <state>$PROJ_DIR$\..\src\lm4f\cores\lm4f</state>
+          <state>$PROJ_DIR$\..\src\lm4f\libraries\EEPROM</state>
+          <state>$PROJ_DIR$\..\src\lm4f\libraries\SPI</state>
+          <state>$PROJ_DIR$\..\src\lm4f\libraries\Wire</state>
+          <state>$PROJ_DIR$\..\src\lm4f\variants\stellarpad</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -456,7 +457,10 @@
         </option>
         <option>
           <name>ADefines</name>
-          <state></state>
+          <state>F_CPU=80000000L </state>
+          <state>ARDUINO=101 </state>
+          <state>ENERGIA=11</state>
+          <state>ewarm</state>
         </option>
         <option>
           <name>AList</name>
@@ -552,7 +556,15 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\src\murix</state>
+          <state>$PROJ_DIR$\..\src\bitlash</state>
+          <state>$PROJ_DIR$\..\src\freertos\include</state>
+          <state>$PROJ_DIR$\..\src\freertos\portable\IAR\ARM_CM4F</state>
+          <state>$PROJ_DIR$\..\src\lm4f\cores\lm4f</state>
+          <state>$PROJ_DIR$\..\src\lm4f\libraries\EEPROM</state>
+          <state>$PROJ_DIR$\..\src\lm4f\libraries\SPI</state>
+          <state>$PROJ_DIR$\..\src\lm4f\libraries\Wire</state>
+          <state>$PROJ_DIR$\..\src\lm4f\variants\stellarpad</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -696,11 +708,11 @@
         </option>
         <option>
           <name>IlinkIcfOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$TOOLKIT_DIR$\config\linker\TexasInstruments\LM4F120H5QR.icf</state>
+          <state>$PROJ_DIR$\murix-uav-iar.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -879,7 +891,7 @@
         </option>
         <option>
           <name>IlinkStackAnalysisEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkStackControlFile</name>
@@ -930,6 +942,459 @@
   </configuration>
   <group>
     <name>src</name>
+    <group>
+      <name>bitlash</name>
+      <file>
+        <name>$PROJ_DIR$\..\src\bitlash\bitlash.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\bitlash\bitlash.h</name>
+      </file>
+    </group>
+    <group>
+      <name>freertos</name>
+      <group>
+        <name>portable</name>
+        <file>
+          <name>$PROJ_DIR$\..\src\freertos\portable\MemMang\heap_4.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\src\freertos\portable\IAR\ARM_CM4F\port.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\src\freertos\portable\IAR\ARM_CM4F\portasm.s</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\src\freertos\portable\IAR\ARM_CM4F\portmacro.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$\..\src\freertos\croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\freertos\event_groups.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\freertos\list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\freertos\queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\freertos\tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\freertos\timers.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lm4f</name>
+      <group>
+        <name>cores</name>
+        <group>
+          <name>lm4f</name>
+          <group>
+            <name>driverlib</name>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\adc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\adc.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\aes.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\aes.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\can.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\can.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\comp.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\comp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\cpu.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\cpu.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\crc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\crc.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\debug.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\des.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\des.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\eeprom.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\eeprom.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\emac.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\emac.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\epi.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\epi.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\epi_workaround_ccs.s</name>
+              <excluded>
+                <configuration>debug-iar</configuration>
+              </excluded>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\flash.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\flash.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\fpu.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\fpu.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\gpio.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\gpio.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\hibernate.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\hibernate.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\i2c.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\i2c.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\interrupt.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\interrupt.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\lcd.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\lcd.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\mpu.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\mpu.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\pin_map.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\pwm.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\pwm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\qei.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\qei.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\rom.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\rom_map.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\rtos_bindings.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\shamd5.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\shamd5.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\ssi.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\ssi.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\sw_crc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\sw_crc.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\sysctl.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\sysctl.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\sysexc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\sysexc.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\systick.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\systick.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\timer.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\timer.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\uart.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\uart.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\udma.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\udma.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\usb.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\usb.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\watchdog.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\driverlib\watchdog.h</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Arduino.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\binary.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Client.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Energia.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\HardwareSerial.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\HardwareSerial.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\IPAddress.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\IPAddress.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\itoa.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\itoa.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\main.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\new.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\new.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Print.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Print.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Printable.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\random.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Server.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\startup_gcc.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Stream.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Stream.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Tone.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\Udp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\WCharacter.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\WInterrupts.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\wiring.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\wiring_analog.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\wiring_digital.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\wiring_private.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\wiring_pulse.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\wiring_shift.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\WMath.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\WString.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\cores\lm4f\WString.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>libraries</name>
+        <group>
+          <name>EEPROM</name>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\libraries\EEPROM\EEPROM.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\libraries\EEPROM\EEPROM_.cpp</name>
+          </file>
+        </group>
+        <group>
+          <name>SPI</name>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\libraries\SPI\SPI.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\libraries\SPI\SPI.h</name>
+          </file>
+        </group>
+        <group>
+          <name>Wire</name>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\libraries\Wire\Wire.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\libraries\Wire\Wire.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>variants</name>
+        <group>
+          <name>stellarpad</name>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\variants\stellarpad\part.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\variants\stellarpad\pins_energia.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>murix</name>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\cc1101.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\cc1101.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\cc1101_regs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\FreeRTOSConfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\GY521.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\GY521.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\murix_pid.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\murix_pid.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\murixdrone.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\murixdrone.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\prvGetRegistersFromStack.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\prvGetRegistersFromStack.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\sketch.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\src\murix\vApplicationStackOverflowHook.cpp</name>
+      </file>
+    </group>
   </group>
 </project>
 

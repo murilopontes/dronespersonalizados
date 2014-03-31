@@ -94,5 +94,10 @@ extern "C" void UARTIntHandler5(void);
 extern "C" void UARTIntHandler6(void);
 extern "C" void UARTIntHandler7(void);
 
+#ifdef __IAR_SYSTEMS_ICC__
+extern void serialEventRun(void);
+#else
 extern void serialEventRun(void) __attribute__((weak));
+#endif
+
 #endif

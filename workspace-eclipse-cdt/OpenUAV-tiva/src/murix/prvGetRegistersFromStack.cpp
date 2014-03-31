@@ -15,6 +15,16 @@
 prvGetRegistersFromStack(). */
 void FaultISR(void)
 {
+#ifdef __IAR_SYSTEMS_ICC__
+
+asm("tst lr,#4");
+asm("ite eq");
+asm("mrseq r0, msp");
+asm("mrsne r0, psp");
+asm("b prvGetRegistersFromStack");
+
+#else
+  
     __asm volatile
     (
         " tst lr, #4                                                \n"
@@ -26,6 +36,7 @@ void FaultISR(void)
         " bx r2                                                     \n"
         " handler2_address_const: .word prvGetRegistersFromStack    \n"
     );
+#endif
 }
 
 

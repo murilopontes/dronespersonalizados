@@ -169,7 +169,7 @@ SPIClass::SPIClass(uint8_t module) {
 }
   
 void SPIClass::begin() {
-	unsigned long initialData = 0;
+	uint32_t initialData = 0;
 
     if(SSIModule == NOT_ACTIVE) {
         SSIModule = BOOST_PACK_SPI;
@@ -243,7 +243,7 @@ void SPIClass::setClockDivider(uint8_t divider){
 }
 
 uint8_t SPIClass::transfer(uint8_t data) {
-	unsigned long rxData;
+	uint32_t rxData;
 
 	ROM_SSIDataPut(SSIBASE, data);
 

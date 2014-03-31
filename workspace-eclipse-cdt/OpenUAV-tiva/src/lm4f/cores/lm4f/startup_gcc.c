@@ -35,13 +35,24 @@
 //
 //*****************************************************************************
 
+#ifdef __IAR_SYSTEMS_ICC__
+#pragma language=extended
+#pragma segment="CSTACK"
+#endif
+
+
 #include "Energia.h"
 #include "inc/hw_types.h"
 #include "inc/hw_nvic.h"
 #include <stdio.h>
 #include <stdarg.h>
+
+#ifdef __IAR_SYSTEMS_ICC__
+
+#else
 #include <sys/types.h>
 #include <sys/stat.h>
+#endif
 //*****************************************************************************
 //
 // Forward declaration of the default fault handlers.
@@ -78,12 +89,34 @@ extern void GPIORIntHandler(void);
 extern void GPIOSIntHandler(void);
 extern void GPIOTIntHandler(void);
 #endif
+
+#ifdef __IAR_SYSTEMS_ICC__
+extern void lwIPEthernetIntHandler(void);
+#else
 extern void lwIPEthernetIntHandler(void) __attribute__((weak));
+#endif
+
 extern void SysTickIntHandler(void);
 
 /*
  * create some overridable default signal handlers
  */
+#ifdef __IAR_SYSTEMS_ICC__
+
+void UARTIntHandler(void);
+void UARTIntHandler1(void);
+void UARTIntHandler2(void);
+void UARTIntHandler3(void);
+void UARTIntHandler4(void);
+void UARTIntHandler5(void);
+void UARTIntHandler6(void);
+void UARTIntHandler7(void);
+void ToneIntHandler(void);
+void I2CIntHandler(void);
+void Timer5IntHandler(void);
+
+#else
+
 __attribute__((weak)) void UARTIntHandler(void) {}
 __attribute__((weak)) void UARTIntHandler1(void) {}
 __attribute__((weak)) void UARTIntHandler2(void) {}
@@ -95,6 +128,8 @@ __attribute__((weak)) void UARTIntHandler7(void) {}
 __attribute__((weak)) void ToneIntHandler(void) {}
 __attribute__((weak)) void I2CIntHandler(void) {}
 __attribute__((weak)) void Timer5IntHandler(void) {}
+#endif
+
 //*****************************************************************************
 // System stack start determined by ldscript, normally highest ram address
 //*****************************************************************************
@@ -112,10 +147,26 @@ extern void vPortSVCHandler(void);
 extern void xPortSysTickHandler(void);
 
 #ifdef TARGET_IS_BLIZZARD_RB1
-__attribute__ ((section(".isr_vector")))
-void (* const g_pfnVectors[])(void) =
+
+
+#ifdef __IAR_SYSTEMS_ICC__
+typedef void( *intfunc )( void );
+typedef union { intfunc __fun; void * __ptr; } intvec_elem;
+
+#pragma location = ".intvec"
+__root const intvec_elem g_pfnVectors[] @ ".intvec" = 
+
+#else
+__attribute__ ((section(".isr_vector"))) void (* const g_pfnVectors[])(void) =
+#endif
+
+
 {
+#ifdef __IAR_SYSTEMS_ICC__
+   { .__ptr = __sfe( "CSTACK" ) },   
+#else
    (void *)&_estack,                        // The initial stack pointer, 0x20008000 32K
+#endif   
     ResetISR,                               // The reset handler
     NmiSR,                                  // The NMI handler
     FaultISR,                               // The hard fault handler
@@ -448,6 +499,10 @@ void ResetISR(void) {
     unsigned long *pulSrc, *pulDest;
     unsigned i, cnt;
 
+#ifdef __IAR_SYSTEMS_ICC__
+
+#else
+    
     //
     // Copy the data segment initializers from flash to SRAM.
     //
@@ -470,7 +525,8 @@ void ResetISR(void) {
             "    blt     1b"
     );
     (void)_bss; (void)_ebss; // get rid of unused warnings
-
+#endif
+    
     //
     // Enable the floating-point unit before calling c++ ctors
     //
@@ -479,6 +535,13 @@ void ResetISR(void) {
                          ~(NVIC_CPAC_CP10_M | NVIC_CPAC_CP11_M)) |
                          NVIC_CPAC_CP10_FULL | NVIC_CPAC_CP11_FULL);
 
+#ifdef __IAR_SYSTEMS_ICC__
+    
+    extern void __iar_program_start( void );
+    __iar_program_start();
+    
+#else
+    
     //
     // call any global c++ ctors
     //
@@ -494,6 +557,9 @@ void ResetISR(void) {
     // call 'C' entry point, Energia never returns from main
     //
     main();
+
+#endif    
+    
 }
 
 //*****************************************************************************
@@ -544,6 +610,10 @@ static void IntDefaultHandler(void) {
     }
 }
 
+#ifdef __IAR_SYSTEMS_ICC__
+
+#else
+
 /* syscall stuff */
 void *__dso_handle = 0;
 
@@ -551,6 +621,7 @@ void *__dso_handle = 0;
  * _sbrk - newlib memory allocation routine
  */
 typedef char *caddr_t;
+
 
 
 uint32_t gBrkUsed=0;
@@ -580,7 +651,6 @@ caddr_t _sbrk (int incr)
         return NULL;
     }
 }
-
 
 
 
@@ -640,3 +710,6 @@ extern void _exit (void)
 
 }
 */
+
+#endif
+

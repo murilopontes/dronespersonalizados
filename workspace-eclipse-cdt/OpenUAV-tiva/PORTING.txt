@@ -1,4 +1,37 @@
 
+# IAR
+#####################################
+
+$PROJ_DIR$\..\src\murix
+$PROJ_DIR$\..\src\bitlash
+$PROJ_DIR$\..\src\freertos\include
+$PROJ_DIR$\..\src\freertos\portable\IAR\ARM_CM4F
+$PROJ_DIR$\..\src\lm4f\cores\lm4f
+$PROJ_DIR$\..\src\lm4f\libraries\EEPROM
+$PROJ_DIR$\..\src\lm4f\libraries\SPI
+$PROJ_DIR$\..\src\lm4f\libraries\Wire
+$PROJ_DIR$\..\src\lm4f\variants\stellarpad
+
+F_CPU=80000000L 
+ARDUINO=101 
+ENERGIA=11
+
+///////////////////////////////////////////////
+new.h
+HardwareSerial.h
+HardwareSerial.cpp
+WCharacter.h
+SPI.cpp
+///////////////////////////////////////////////
+#ifdef __IAR_SYSTEMS_ICC__
+
+int isascii(int x);
+int toascii(int x);
+
+#endif
+///////////////////////////////////////////////
+
+
 # Eclipse post-build
 #####################################
 cmd /c "${workspace_loc:/${ProjName}}"/postbuid.bat

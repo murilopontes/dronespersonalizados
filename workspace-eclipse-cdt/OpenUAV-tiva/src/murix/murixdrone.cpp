@@ -621,7 +621,7 @@ numvar bitlash_cmd_freertos_free(void) {
 	if( pxTaskStatusArray != NULL )
 	{
 		//
-		unsigned long ulTotalRunTime, ulStatsAsPercentage;
+		uint32_t ulTotalRunTime, ulStatsAsPercentage;
 
 		/* Generate raw status information about each task. */
 		uxArraySize = uxTaskGetSystemState( pxTaskStatusArray, uxArraySize, &ulTotalRunTime );
@@ -679,6 +679,18 @@ numvar bitlash_cmd_freertos_free(void) {
 
 	Serial.println("");
 
+#ifdef __IAR_SYSTEMS_ICC__
+	 unsigned long _text;
+	 unsigned long _etext;
+	 unsigned long _data;
+	 unsigned long _edata;
+	 unsigned long _bss;
+	 unsigned long _ebss;
+	 unsigned long _end;
+	 unsigned long _estack;
+	 uint32_t gBrkUsed;
+
+#else         
 	extern unsigned long _text;
 	extern unsigned long _etext;
 	extern unsigned long _data;
@@ -688,6 +700,7 @@ numvar bitlash_cmd_freertos_free(void) {
 	extern unsigned long _end;
 	extern unsigned long _estack;
 	extern uint32_t gBrkUsed;
+#endif        
 
 	Serial.print((int)&_data,HEX);
 	Serial.println(" data start (ram from code)");

@@ -22,6 +22,31 @@
 
 #include <ctype.h>
 
+#ifdef __IAR_SYSTEMS_ICC__
+
+int isascii(int x);
+int toascii(int x);
+
+// WCharacter.h prototypes
+inline boolean isAlphaNumeric(int c);
+inline boolean isAlpha(int c);
+inline boolean isAscii(int c);
+inline boolean isWhitespace(int c);
+inline boolean isControl(int c);
+inline boolean isDigit(int c);
+inline boolean isGraph(int c);
+inline boolean isLowerCase(int c);
+inline boolean isPrintable(int c);
+inline boolean isPunct(int c);
+inline boolean isSpace(int c);
+inline boolean isUpperCase(int c);
+inline boolean isHexadecimalDigit(int c);
+inline int toAscii(int c);
+inline int toLowerCase(int c);
+inline int toUpperCase(int c);
+
+#else
+
 // WCharacter.h prototypes
 inline boolean isAlphaNumeric(int c) __attribute__((always_inline));
 inline boolean isAlpha(int c) __attribute__((always_inline));
@@ -39,6 +64,8 @@ inline boolean isHexadecimalDigit(int c) __attribute__((always_inline));
 inline int toAscii(int c) __attribute__((always_inline));
 inline int toLowerCase(int c) __attribute__((always_inline));
 inline int toUpperCase(int c)__attribute__((always_inline));
+
+#endif
 
 
 // Checks for an alphanumeric character. 

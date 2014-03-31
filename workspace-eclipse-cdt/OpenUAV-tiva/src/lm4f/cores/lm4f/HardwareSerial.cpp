@@ -531,6 +531,19 @@ UARTIntHandler7(void)
     Serial7.UARTIntHandler();
 }
 
+#ifdef __IAR_SYSTEMS_ICC__
+
+void serialEvent() {}
+void serialEvent1() {}
+void serialEvent2() {}
+void serialEvent3() {}
+void serialEvent4() {}
+void serialEvent5() {}
+void serialEvent6() {}
+void serialEvent7() {}
+
+#else
+
 void serialEvent() __attribute__((weak));
 void serialEvent() {}
 void serialEvent1() __attribute__((weak));
@@ -547,6 +560,8 @@ void serialEvent6() __attribute__((weak));
 void serialEvent6() {}
 void serialEvent7() __attribute__((weak));
 void serialEvent7() {}
+
+#endif
 
 void serialEventRun(void)
 {
