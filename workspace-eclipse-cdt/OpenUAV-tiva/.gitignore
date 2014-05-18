@@ -3,3 +3,4 @@ debug-iar/
 settings/
 *.tmp
 *.dep
+/build-linux

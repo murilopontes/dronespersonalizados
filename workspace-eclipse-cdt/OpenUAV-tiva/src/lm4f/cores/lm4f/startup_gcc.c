@@ -47,6 +47,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#include "prvGetRegistersFromStack.h"
+
 #ifdef __IAR_SYSTEMS_ICC__
 
 #else
@@ -60,7 +62,7 @@
 //*****************************************************************************
 void ResetISR(void);
 static void NmiSR(void);
-static void FaultISR(void);
+//static void FaultISR(void);
 static void IntDefaultHandler(void);
 
 //*****************************************************************************
@@ -585,6 +587,7 @@ static void NmiSR(void) {
 // for examination by a debugger.
 //
 //*****************************************************************************
+/*
 static void FaultISR(void) {
     //
     // Enter an infinite loop.
@@ -593,6 +596,7 @@ static void FaultISR(void) {
         ; // trap FAULT
     }
 }
+*/
 
 //*****************************************************************************
 //

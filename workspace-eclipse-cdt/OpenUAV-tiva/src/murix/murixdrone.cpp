@@ -23,8 +23,11 @@
 // SPI driver
 #include <SPI.h>
 // CC1101 driver
-#include <cc1101.h>
+#include <cc1101_murix.h>
 
+
+#include "AIR430BoostFCC.h"
+#include "utility/Platform.h"
 
 ////////////////////////////////////////////////////////////////////
 // Bitlash
@@ -550,10 +553,36 @@ numvar bitlash_cmd_cc1101_send(void) {
 	return 0;
 }
 
-numvar bitlash_cmd_cc1101_reset(void) {
-	cc1101_init(12,0,14,cc1101_rx_callback);
+numvar bitlash_cmd_cc1101_reset_spi0(void) {
+        //CS,PORT,GDO,MISO
+        //PORT A ->
+	cc1101_init(PA_3,0,PB_3,PA_4,cc1101_rx_callback); 
 	return 0;
 }
+numvar bitlash_cmd_cc1101_reset_spi1(void) {
+        //CS,PORT,GDO,MISO
+        //PORT F -> buttons and leds
+	//cc1101_init(PF_3,1,PB_3,PF_0,cc1101_rx_callback); 
+	return 0;
+}
+numvar bitlash_cmd_cc1101_reset_spi2(void) {
+        //CS,PORT,GDO,MISO
+        //PORT B ->
+        // PB2-> GDO
+        // PB0-> CSN
+        // PB6 -> MISO  
+  
+	cc1101_init(RF_SPI_CSN,2,RF_GDO0,RF_SPI_MISO,cc1101_rx_callback); 
+	return 0;
+}
+numvar bitlash_cmd_cc1101_reset_spi3(void) {
+        //CS,PORT,GDO,MISO
+        //PORT D ->
+	cc1101_init(PD_1,3,PB_3,PD_2,cc1101_rx_callback); 
+	return 0;
+}
+
+
 numvar bitlash_cmd_cc1101_debugstate(void) {
 	cc1101_debug_state();
 	return 0;
@@ -780,8 +809,29 @@ numvar bitlash_cmd_freertos_free(void) {
 
 void task_drone_radio(void *arg){
 	//
-	bitlash_cmd_cc1101_reset();
+	//bitlash_cmd_cc1101_reset_spi2();
+
+  //Radio.begin(0x00, CHANNEL_1, POWER_MAX);
+
 	for(;;){
+    
+          /*
+struct sPacket
+{
+  uint8_t from;           // Local node address that message originated from
+  uint8_t message[59];    // Local node message [MAX. 59 bytes]
+};   
+struct sPacket rxPacket;
+          
+          Serial.println("rx-wait...\r\n");
+          int rxed = Radio.receiverOn((unsigned char*)&rxPacket, sizeof(rxPacket), 1000);
+          if(rxed>0){
+            Serial.println("rx-ok\r\n");
+          } else {
+            Serial.println("rx-timeout\r\n");
+          }
+          */
+  
 		vTaskDelay(100);
 	}
 	vTaskDelete(NULL);
@@ -822,7 +872,10 @@ void task_drone_bitbash(void *arg){
 	addBitlashFunction("flat", (bitlash_function) bitlash_cmd_imu_flat_trim);
 	addBitlashFunction("imu", (bitlash_function) bitlash_cmd_imu);
 	addBitlashFunction("ccsend", (bitlash_function) bitlash_cmd_cc1101_send);
-	addBitlashFunction("ccreset", (bitlash_function) bitlash_cmd_cc1101_reset);
+	addBitlashFunction("ccreset0", (bitlash_function) bitlash_cmd_cc1101_reset_spi0);
+	addBitlashFunction("ccreset1", (bitlash_function) bitlash_cmd_cc1101_reset_spi1);
+	addBitlashFunction("ccreset2", (bitlash_function) bitlash_cmd_cc1101_reset_spi2);
+	addBitlashFunction("ccreset3", (bitlash_function) bitlash_cmd_cc1101_reset_spi3);
 	addBitlashFunction("ccdebug", (bitlash_function) cc1101_debug_state);
 	addBitlashFunction("ccdon", (bitlash_function) bitlash_cmd_cc1101_don);
 	addBitlashFunction("ccdoff", (bitlash_function) bitlash_cmd_cc1101_doff);
@@ -873,10 +926,10 @@ void create_all_drone_tasks(void)
     Serial.printf("mac=%02x-%02x-%02x-%02x-%02x-%02x\n",p_mac0[0],p_mac0[1],p_mac0[2],p_mac1[0],p_mac1[1],p_mac1[2]);
 
 	xTaskCreate(task_drone_bitbash, "bitlash", 256, NULL, 0, NULL);
-	xTaskCreate(task_drone_radio, "radio", 128, NULL, 0, NULL);
-	xTaskCreate(task_drone_leds, "leds", 128, NULL, 0, NULL);
-	xTaskCreate(task_drone_imu, "imu", 128, NULL, 0, NULL);
-	xTaskCreate(task_drone_motors, "motors", 128, NULL, 0, NULL);
+	xTaskCreate(task_drone_radio, "radio", 300, NULL, 0, NULL);
+	//xTaskCreate(task_drone_leds, "leds", 128, NULL, 0, NULL);
+	//xTaskCreate(task_drone_imu, "imu", 128, NULL, 0, NULL);
+	//xTaskCreate(task_drone_motors, "motors", 128, NULL, 0, NULL);
 }
 
 

@@ -251,6 +251,7 @@ uint8_t SPIClass::transfer(uint8_t data) {
 
 	ROM_SSIDataGet(SSIBASE, &rxData);
 
+     
 	return (uint8_t) rxData;
 }
 

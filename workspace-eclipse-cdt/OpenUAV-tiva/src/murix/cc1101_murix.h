@@ -13,7 +13,7 @@
 typedef void (*cc1101_rx_callback_func)(uint8_t* buf,uint8_t buflen);
 
 ///////////////////////////////////////////////////////////////////////////////////////
-void cc1101_init(uint8_t cs_pin, uint8_t spi_port,uint8_t gdo0_pin,cc1101_rx_callback_func func);
+void cc1101_init(uint8_t cs_pin, uint8_t spi_port,uint8_t gdo0_pin,uint8_t mosi_pin,cc1101_rx_callback_func func);
 void cc1101_debug_on(void);
 void cc1101_debug_off(void);
 

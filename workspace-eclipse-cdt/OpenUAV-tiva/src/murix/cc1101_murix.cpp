@@ -9,7 +9,7 @@
 #include <Energia.h>
 #include <SPI.h>
 
-#include "cc1101.h"
+#include "cc1101_murix.h"
 #include "cc1101_regs.h"
 
 
@@ -38,10 +38,11 @@ it reaches its limit (64 bytes).
 
 
 //////////////////////////////////////////////////////////////////////////////////
-static uint8_t _debug=0;
+static uint8_t _debug=1;
 static uint8_t _cs_pin=0;
 static uint8_t _spi_port=0;
 static uint8_t _gdo0_pin=0;
+static uint8_t _miso_pin=0;
 static cc1101_rx_callback_func _func;
 
 
@@ -412,26 +413,27 @@ cc1101_register_write(0x@AH@,0x@VH@);//@RN@:@Rd@
 
 
 
-
-void cc1101_init(uint8_t cs_pin, uint8_t spi_port,uint8_t gdo0_pin,cc1101_rx_callback_func func)
+void cc1101_init(uint8_t cs_pin, uint8_t spi_port,uint8_t gdo0_pin,uint8_t miso_pin,cc1101_rx_callback_func func)
 {
 	Serial.println("cc1101_init");
 	_cs_pin=cs_pin;
 	_spi_port=spi_port;
 	_gdo0_pin=gdo0_pin;
 	_func=func;
-
-	//arduino stuff
-	SPI.begin();
-	SPI.setModule(_spi_port);
+        _miso_pin=miso_pin;
 
 	//
 	pinMode(_cs_pin, OUTPUT);
-
-
-
-	//reset radio
+        
+        
+	//arduino stuff
+	SPI.setModule(_spi_port);
+        SPI.setDataMode(SPI_MODE0);
+        SPI.setClockDivider(SPI_CLOCK_DIV128);
+        
+	SPI.begin();
 	SPI.transfer(CC1101_SRES);
+        SPI.end();
 	//wait wake up
 	delay(5);
 
@@ -440,6 +442,11 @@ void cc1101_init(uint8_t cs_pin, uint8_t spi_port,uint8_t gdo0_pin,cc1101_rx_cal
 
 
 	if(_debug){
+          for(int i=0;i<=0xff;i++){
+		cc1101_register_read(i);
+          
+          }
+          
 		//test SPI
 		cc1101_register_write( CC1101_PKTLEN, CC1101_MAX_FIFO_ERRATA );
 		if(cc1101_register_read( CC1101_PKTLEN ) != CC1101_MAX_FIFO_ERRATA ){
@@ -447,9 +454,6 @@ void cc1101_init(uint8_t cs_pin, uint8_t spi_port,uint8_t gdo0_pin,cc1101_rx_cal
 		} else {
 			Serial.println("CC1101 SPI write \033[1;32mOK!\033[m");
 		}
-		//test radio version
-		cc1101_register_read( CC1101_PARTNUM);
-		cc1101_register_read( CC1101_VERSION);
 	}
 
 	//cc1101_apply_smartrf_433mhz_600();
@@ -688,22 +692,32 @@ const char* cc1101_strobe(uint8_t addr)
 	}
 	return "\033[1;31mUNKNOWN-STROBE\033[m";
 }
+
 ////////////////////////////////////////////////////////
+uint8_t chipstatus;
+
+
 uint8_t cc1101_command_strobe(uint8_t addr)
 {
 	//noInterrupts();
 
-	uint8_t chipstatus;
-	if(_debug){
-		Serial.print("CC1101 strobe=");
-		Serial.println(cc1101_strobe(addr));
-	}
 
-	digitalWrite(_cs_pin,1);
+        SPI.begin();
+        
+	//digitalWrite(_cs_pin,1);
+        //delayMicroseconds(5);
 	digitalWrite(_cs_pin,0);
+        //delayMicroseconds(5);
+        //while (digitalRead(_miso_pin));
+        
 	chipstatus = SPI.transfer(addr);
 	digitalWrite(_cs_pin,1);
 
+        SPI.end();
+
+        if(_debug){
+		Serial.printf("CC1101 strobe=%s chipstatus=%02x\r\n",cc1101_strobe(addr),chipstatus);
+	}
 	//interrupts();
 
 	return chipstatus;
@@ -712,25 +726,28 @@ uint8_t cc1101_spi_register_single_byte(uint8_t addrByte,uint8_t mode, uint8_t w
 {
 	//noInterrupts();
 
+        SPI.begin();
+  
 	uint8_t readValue;
 	//
-	digitalWrite(_cs_pin,1);
+	//digitalWrite(_cs_pin,1);
+        //delayMicroseconds(5);
 	digitalWrite(_cs_pin,0);
+        //delayMicroseconds(5);
+        //while (digitalRead(_miso_pin));
+
 	//
-	SPI.transfer(addrByte | mode);
+	chipstatus = SPI.transfer(addrByte | mode);
 	readValue = SPI.transfer(writeValue);
 	//
 	digitalWrite(_cs_pin,1);
 
+        SPI.end();
+        
 	if(_debug){
-		Serial.print("CC1101 reg=");
-		Serial.print(cc1101_reg_name(addrByte));
-		Serial.print(" addr=");
-		Serial.print(addrByte,HEX);
-		Serial.print(" write=");
-		Serial.print(writeValue,HEX);
-		Serial.print(" read=");
-		Serial.println(readValue,HEX);
+		Serial.printf("CC1101 reg=%s addr=%02x write=%02x read=%02x chip=%02x\r\n",
+                              cc1101_reg_name(addrByte),
+                              addrByte,writeValue,readValue,chipstatus);
 	}
 
 	//interrupts();
@@ -742,14 +759,22 @@ void cc1101_spi_register_multi_byte(uint8_t addrByte,uint8_t mode, uint8_t * pDa
 
 	//noInterrupts();
 
-	digitalWrite(_cs_pin,1);
+        SPI.begin();
+  
+	//digitalWrite(_cs_pin,1);
+        //delayMicroseconds(5);
 	digitalWrite(_cs_pin,0);
-	SPI.transfer(addrByte | mode);
+        //delayMicroseconds(5);
+        //while (digitalRead(_miso_pin));
+
+	chipstatus = SPI.transfer(addrByte | mode);
 	for(uint8_t idx=0;idx<len;idx++){
 		pData[idx] = SPI.transfer(pData[idx]);
 	}
 	digitalWrite(_cs_pin,1);
 
+        SPI.end();
+        
 	if(_debug){
 		Serial.print("CC1101 reg=");
 		Serial.print(cc1101_reg_name(addrByte));
@@ -762,11 +787,12 @@ void cc1101_spi_register_multi_byte(uint8_t addrByte,uint8_t mode, uint8_t * pDa
 /////////////////////////////////////////////////////////////
 uint8_t cc1101_register_read(uint8_t addr)
 {
-	return( cc1101_spi_register_single_byte(addr, CC1101_READ_BURST, CC1101_DUMMY_BYTE) );
+	return( cc1101_spi_register_single_byte(addr, CC1101_READ_BURST, 0x0) );
 }
 void cc1101_register_write(uint8_t addr, uint8_t value)
 {
 	cc1101_spi_register_single_byte(addr,CC1101_WRITE_BYTE, value);
+        cc1101_register_read(addr);
 }
 void cc1101_fifo_rx_read(uint8_t * pData, uint8_t len)
 {

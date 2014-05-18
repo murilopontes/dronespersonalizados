@@ -228,7 +228,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>1111111</state>
+          <state>0000000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -304,6 +304,7 @@
           <state>$PROJ_DIR$\..\src\lm4f\libraries\EEPROM</state>
           <state>$PROJ_DIR$\..\src\lm4f\libraries\SPI</state>
           <state>$PROJ_DIR$\..\src\lm4f\libraries\Wire</state>
+          <state>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433</state>
           <state>$PROJ_DIR$\..\src\lm4f\variants\stellarpad</state>
         </option>
         <option>
@@ -324,7 +325,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -333,7 +334,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -1310,6 +1311,45 @@
       <group>
         <name>libraries</name>
         <group>
+          <name>AIR_BOOST_433</name>
+          <group>
+            <name>utility</name>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\A110LR09.cpp</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\A110LR09.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\A110LR09Config.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\A110x2500.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\A110x2500Radio.cpp</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\A110x2500Radio.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\CC1101.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\CC1101.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\Platform.cpp</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\utility\Platform.h</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$\..\src\lm4f\libraries\AIR_BOOST_433\AIR430BoostFCC.h</name>
+          </file>
+        </group>
+        <group>
           <name>EEPROM</name>
           <file>
             <name>$PROJ_DIR$\..\src\lm4f\libraries\EEPROM\EEPROM.h</name>
@@ -1353,10 +1393,7 @@
     <group>
       <name>murix</name>
       <file>
-        <name>$PROJ_DIR$\..\src\murix\cc1101.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$\..\src\murix\cc1101.h</name>
+        <name>$PROJ_DIR$\..\src\murix\cc1101_murix.cpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\src\murix\cc1101_regs.h</name>
