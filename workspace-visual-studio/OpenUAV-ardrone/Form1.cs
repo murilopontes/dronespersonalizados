@@ -62,7 +62,7 @@ namespace DroneConnect
             this.backgroundWorker_ping.RunWorkerAsync();
 
             //wifi
-            this.backgroundWorker_wifi.RunWorkerAsync();
+           // this.backgroundWorker_wifi.RunWorkerAsync();
 
             //joystick
             this.backgroundWorker_joystick.RunWorkerAsync();

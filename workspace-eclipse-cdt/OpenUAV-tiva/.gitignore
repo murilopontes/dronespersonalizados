@@ -4,3 +4,4 @@ settings/
 *.tmp
 *.dep
 /build-linux
+/build-windows

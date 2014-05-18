@@ -2,7 +2,7 @@
 
 
 echo "DEPLOY------start"
-..\..\..\pc\DroneTelnetCmd\bin\Debug\DroneTelnetCmd.exe "killall -9 drone ; exit"
+..\..\..\workspace-visual-studio\Binaries\DroneTelnetCmd.exe "killall -9 OpenUAV-ardrone ; exit"
 ftp -s:..\ftp_drone.txt
-..\..\..\pc\DroneTelnetCmd\bin\Debug\DroneTelnetCmd.exe "chmod +x /data/video/drone ; exit"
+..\..\..\workspace-visual-studio\Binaries\DroneTelnetCmd.exe "chmod +x /data/video/OpenUAV-ardrone ; exit"
 echo "DEPLOY------end"

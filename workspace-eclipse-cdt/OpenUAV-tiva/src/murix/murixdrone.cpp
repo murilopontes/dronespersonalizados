@@ -26,8 +26,8 @@
 #include <cc1101_murix.h>
 
 
-#include "AIR430BoostFCC.h"
-#include "utility/Platform.h"
+//#include "AIR430BoostFCC.h"
+//#include "utility/Platform.h"
 
 ////////////////////////////////////////////////////////////////////
 // Bitlash
@@ -572,13 +572,13 @@ numvar bitlash_cmd_cc1101_reset_spi2(void) {
         // PB0-> CSN
         // PB6 -> MISO  
   
-	cc1101_init(RF_SPI_CSN,2,RF_GDO0,RF_SPI_MISO,cc1101_rx_callback); 
+	//cc1101_init(RF_SPI_CSN,2,RF_GDO0,RF_SPI_MISO,cc1101_rx_callback);
 	return 0;
 }
 numvar bitlash_cmd_cc1101_reset_spi3(void) {
         //CS,PORT,GDO,MISO
         //PORT D ->
-	cc1101_init(PD_1,3,PB_3,PD_2,cc1101_rx_callback); 
+	//cc1101_init(PD_1,3,PB_3,PD_2,cc1101_rx_callback);
 	return 0;
 }
 
