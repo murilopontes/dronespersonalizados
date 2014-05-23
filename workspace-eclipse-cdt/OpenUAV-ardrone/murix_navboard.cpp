@@ -5,11 +5,18 @@
  *      Author: mpontes
  */
 
+#include <stdlib.h>
+#include <stdint.h>
+#include <math.h>
+
+#include <boost/thread/thread.hpp>
+#include <boost/circular_buffer.hpp>
+#include <boost/atomic.hpp>
+#include <boost/asio.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
 #include "murix_navboard.h"
-
-#include "murix_boost_headers.h"
-#include "murix_cpp_headers.h"
-
 #include "murix_gpio.h"
 #include "murix_constraint.h"
 
@@ -263,6 +270,13 @@ navboard_fusion_t::navboard_fusion_t(){
 	//
 	dt=0;
 	seq=0;
+}
+
+void navboard_fusion_t::Calibrate(){
+	navboard_raw_calibration_t calib;
+	//atomic_navboard_fusion
+
+	atomic_navboard_raw_calibration = calib;
 }
 
 void navboard_fusion_t::Compute(navboard_raw_calibration_t calib,double dt){

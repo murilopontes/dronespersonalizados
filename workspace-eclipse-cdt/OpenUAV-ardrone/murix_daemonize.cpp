@@ -5,10 +5,12 @@
  *      Author: mpontes
  */
 
-#include "murix_daemonize.h"
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
-#include "murix_boost_headers.h"
-#include "murix_cpp_headers.h"
+#include "murix_daemonize.h"
 
 
 

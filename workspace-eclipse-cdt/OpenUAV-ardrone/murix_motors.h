@@ -8,8 +8,6 @@
 #ifndef MURIX_MOTORS_H_
 #define MURIX_MOTORS_H_
 
-#include "murix_boost_headers.h"
-#include "murix_cpp_headers.h"
 
 class motor_speed_t {
 public:

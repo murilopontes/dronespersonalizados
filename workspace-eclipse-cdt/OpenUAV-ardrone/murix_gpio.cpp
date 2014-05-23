@@ -5,10 +5,11 @@
  *      Author: mpontes
  */
 
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "murix_gpio.h"
 
-#include "murix_cpp_headers.h"
 
 int gpio_set(int nr,gpio_action val)
 {

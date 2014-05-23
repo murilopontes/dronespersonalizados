@@ -5,8 +5,11 @@
  *      Author: mpontes
  */
 
-#include "murix_cpp_headers.h"
-#include "murix_boost_headers.h"
+#include <boost/atomic.hpp>
+#include <boost/thread/thread.hpp>
+#include <boost/asio.hpp>
+
+
 #include "murix_singleton.h"
 #include "murix_daemonize.h"
 #include "murix_camera.h"

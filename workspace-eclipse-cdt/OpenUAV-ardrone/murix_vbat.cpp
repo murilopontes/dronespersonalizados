@@ -5,10 +5,20 @@
  *      Author: mpontes
  */
 
+
+#include <stdio.h>
+#include <boost/atomic.hpp>
+#include <boost/thread/thread.hpp>
+#include <boost/asio.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 #include "murix_vbat.h"
 
-#include "murix_cpp_headers.h"
-#include "murix_boost_headers.h"
 
 // i2c library
 #include "i2c-dev.h"

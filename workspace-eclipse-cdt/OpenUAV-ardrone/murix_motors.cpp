@@ -5,11 +5,16 @@
  *      Author: mpontes
  */
 
+#include <stdint.h>
+#include <boost/atomic.hpp>
+#include <boost/asio.hpp>
+#include <boost/asio/serial_port.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/thread/thread.hpp>
+
+
 #include "murix_motors.h"
-
-#include "murix_boost_headers.h"
-#include "murix_cpp_headers.h"
-
 #include "murix_gpio.h"
 #include "murix_constraint.h"
 

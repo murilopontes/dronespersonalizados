@@ -8,8 +8,6 @@
 #ifndef MURIX_NAVBOARD_H_
 #define MURIX_NAVBOARD_H_
 
-#include "murix_boost_headers.h"
-#include "murix_cpp_headers.h"
 
 typedef struct
 {
@@ -121,6 +119,7 @@ public:
 
 	navboard_fusion_t();
 	void Compute(navboard_raw_calibration_t calibration_data,double dt);
+	void Calibrate(void);
 };
 
 

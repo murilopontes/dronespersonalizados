@@ -5,10 +5,14 @@
  *      Author: mpontes
  */
 
+
+#include <boost/asio.hpp>
+#include <boost/atomic.hpp>
+#include <boost/shared_ptr.hpp>
+
+
 #include "murix_http_server.h"
 
-#include "murix_cpp_headers.h"
-#include "murix_boost_headers.h"
 
 boost::atomic<int> atomic_http_requests(0);
 

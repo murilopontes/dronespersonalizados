@@ -8,8 +8,6 @@
 #ifndef MURIX_JOYSTICK_H_
 #define MURIX_JOYSTICK_H_
 
-#include "murix_cpp_headers.h"
-#include "murix_boost_headers.h"
 
 class joystick_cmd_t {
 public:

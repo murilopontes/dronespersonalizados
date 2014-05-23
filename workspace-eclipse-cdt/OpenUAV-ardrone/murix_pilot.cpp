@@ -5,11 +5,11 @@
  *      Author: mpontes
  */
 
+#include "boost/atomic.hpp"
+#include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/thread/thread.hpp>
+
 #include "murix_pilot.h"
-
-#include "murix_boost_headers.h"
-#include "murix_cpp_headers.h"
-
 #include "murix_pid.h"
 #include "murix_motors.h"
 #include "murix_constraint.h"

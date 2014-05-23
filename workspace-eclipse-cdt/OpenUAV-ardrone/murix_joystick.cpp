@@ -5,11 +5,14 @@
  *      Author: mpontes
  */
 
+#include <stdint.h>
+#include <boost/atomic.hpp>
+#include <boost/asio.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 #include "murix_joystick.h"
 
-#include "murix_cpp_headers.h"
-#include "murix_boost_headers.h"
 
 
 joystick_cmd_t::joystick_cmd_t(){

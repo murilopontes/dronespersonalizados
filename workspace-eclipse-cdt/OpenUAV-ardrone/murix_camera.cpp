@@ -8,8 +8,12 @@
 
 #include "murix_camera.h"
 
-#include "murix_boost_headers.h"
-#include "murix_cpp_headers.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
 
 
 //mmap, munmap - map or unmap files or devices into memory

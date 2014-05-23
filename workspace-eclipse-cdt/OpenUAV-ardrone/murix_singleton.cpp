@@ -5,11 +5,11 @@
  *      Author: mpontes
  */
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "murix_singleton.h"
-
-#include "murix_cpp_headers.h"
-#include "murix_boost_headers.h"
 
 
 //
