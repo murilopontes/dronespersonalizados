@@ -19,6 +19,7 @@ using System.Globalization;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace DroneConnect
 {
@@ -70,7 +71,12 @@ namespace DroneConnect
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Environment.Exit(0);
+            Process.GetCurrentProcess().Kill();
+        }
+        
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Process.GetCurrentProcess().Kill();
         }
 
         #endregion
@@ -438,7 +444,7 @@ namespace DroneConnect
                     js.throttle = (Int16)(joy.RightStick.Position.Y * 10);
                     js.yaw = (Int16)(joy.RightStick.Position.X * 250);
 
-                    if (joy.B || joy.RightTrigger > 0.5) js.emergency = 1;
+                    if (joy.B) js.emergency = 1;
                     else js.emergency = 0;
 
                     if (joy.A) js.takeoff = 1;
@@ -542,6 +548,8 @@ namespace DroneConnect
 
 
         }
+
+
 
    
 

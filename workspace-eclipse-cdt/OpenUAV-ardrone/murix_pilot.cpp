@@ -178,6 +178,53 @@ void pilot_using_joystick_only(void){
 	}
 }
 
+
+double* neural(double roll_delta, double roll_error,double motors[4]){
+
+
+	return motors;
+}
+
+void pilot_using_neural_network(void){
+
+	double time_now = 0;
+
+	double speed_of_motor1 = 1;
+	double speed_of_motor2 = 1;
+	double speed_of_motor3 = 1;
+	double speed_of_motor4 = 1;
+
+	double roll_sensor=0;
+	double roll_sensor_back=0;
+	double roll_joystick=0;
+	double roll_delta = roll_sensor - roll_joystick;
+	double roll_error = 0;
+
+	double pitch_delta = roll_sensor - roll_joystick;
+	double pitch_error = 0;
+
+	double yaw_delta = roll_sensor - roll_joystick;
+	double yaw_error = 0;
+
+	while(1){
+		roll_error = roll_joystick - roll_sensor_back;
+		roll_delta = roll_sensor - roll_joystick;
+
+		pitch_error = roll_joystick - roll_sensor_back;
+		pitch_delta = roll_sensor - roll_joystick;
+
+		yaw_error = roll_joystick - roll_sensor_back;
+		yaw_delta = roll_sensor - roll_joystick;
+
+		//run neural
+
+		//set motors with neural output
+	}
+
+
+
+}
+
 void pilot_using_joystick_with_stabilizer(void){
 
 	//
@@ -291,66 +338,59 @@ void pilot_using_joystick_with_stabilizer(void){
 
 			/////////////////////////////////////////////////////////
 
-			//PID1 - setpoint=joystick input=angle
-			pid_angle_pitch.kp = 2.5;
-			pid_angle_pitch.Setpoint = constraint_s16(cmd.pitch_speed,-60,60);
+#define MAX_PITCH_ROLL_ANGLE 30
+#define MAX_YAW_ANGLE 180
+
+			pid_angle_pitch.kp = 2;
+			pid_angle_pitch.Setpoint = constraint_s16(cmd.pitch_speed,-MAX_PITCH_ROLL_ANGLE,MAX_PITCH_ROLL_ANGLE);
 			pid_angle_pitch.Input = fusion.acc_pitch;
 			pid_angle_pitch.Compute();
 
-#define ROLL_MAX 250
+			pid_angle_roll.kp = 2;
+			pid_angle_roll.Setpoint=constraint_s16(cmd.roll_speed,-MAX_PITCH_ROLL_ANGLE,MAX_PITCH_ROLL_ANGLE);
+			pid_angle_roll.Input = fusion.acc_roll;
+			pid_angle_roll.Compute();
 
-			//PID2 - setpoint=PID1.out input=gyro
+			/*
+			pid_angle_yaw.kp = 2;
+			pid_angle_yaw.Setpoint=constraint_s16(cmd.yaw_speed,-MAX_YAW_ANGLE,MAX_YAW_ANGLE);
+			pid_angle_yaw.Input = fusion.gyro_z_integrate;
+			pid_angle_yaw.Compute();
+*/
+
+			////////////////////////////////////////////////////////////////////
+
+#define MAX_PITH_ROLL_YAW_SPEED 150
+
 			pid_rate_pitch.kp = 2;
-			pid_rate_pitch.Setpoint = constraint_s16(pid_angle_pitch.Output,-ROLL_MAX,ROLL_MAX);
-			//pid_rate_pitch.Setpoint = constraint_s16(cmd.pitch_speed,-ROLL_MAX,ROLL_MAX);
+			pid_rate_pitch.Setpoint = constraint_s16(pid_angle_pitch.Output,-MAX_PITH_ROLL_YAW_SPEED,MAX_PITH_ROLL_YAW_SPEED);
 			pid_rate_pitch.Input = fusion.gyro_x;
 			pid_rate_pitch.Compute();
 
-			/////////////////////////////////////////////////////////
-
-			//PID1
-			pid_angle_roll.kp=2;
-			pid_angle_roll.Setpoint=constraint_s16(cmd.roll_speed,-30,30);
-			pid_angle_roll.Input = fusion.acc_roll;
-			pid_angle_roll.Compute();
-			//PID2
-
 			pid_rate_roll.kp = 2;
-			pid_rate_roll.Setpoint = constraint_s16(pid_angle_roll.Output,-ROLL_MAX,ROLL_MAX);
-			//pid_rate_roll.Setpoint = constraint_s16(cmd.roll_speed,-ROLL_MAX,ROLL_MAX);
+			pid_rate_roll.Setpoint = constraint_s16(pid_angle_roll.Output,-MAX_PITH_ROLL_YAW_SPEED,MAX_PITH_ROLL_YAW_SPEED);
 			pid_rate_roll.Input = fusion.gyro_y;
 			pid_rate_roll.Compute();
 
-			/////////////////////////////////////////////////////////
-
-			//PID1
-			pid_angle_yaw.Setpoint=cmd.yaw_speed;
-			pid_angle_yaw.Input = fusion.gyro_z_integrate;
-			pid_angle_yaw.Compute();
-			//PID2
-			pid_rate_yaw.Setpoint = pid_angle_yaw.Output;
-			pid_rate_yaw.Input = fusion.gyro_y;
+			pid_rate_yaw.kp = 2;
+			pid_rate_yaw.Setpoint = constraint_s16(cmd.yaw_speed,-MAX_PITH_ROLL_YAW_SPEED,MAX_PITH_ROLL_YAW_SPEED);
+			pid_rate_yaw.Input = fusion.gyro_z;
 			pid_rate_yaw.Compute();
 
 			/////////////////////////////////////////////////////////
 
-			//constraint_s16(cmd.pitch_speed,-200,200)+
 			pitch_speed=pid_rate_pitch.Output;
-			//constraint_s16(cmd.roll_speed,-200,200)+
 			roll_speed=pid_rate_roll.Output;
-			//constraint_s16(cmd.yaw_speed,-1,1);
 			yaw_speed=pid_rate_yaw.Output;
-			//constraint_s16(cmd.height_speed,-3,3);
+
 			height_speed+=cmd.height_speed;
 
 			//clamp
-			height_speed=constraint_s16(height_speed,      50  ,  300  );
-
-			pitch_speed =constraint_s16(pitch_speed ,      -ROLL_MAX  ,  ROLL_MAX  );
-			roll_speed  =constraint_s16(roll_speed  ,      -ROLL_MAX  ,  ROLL_MAX  );
-			yaw_speed   =constraint_s16(yaw_speed   ,      -70  ,  70  );
+			height_speed=constraint_s16(height_speed,      50    ,  300  );
+			pitch_speed =constraint_s16(pitch_speed ,      -100  ,  100  );
+			roll_speed  =constraint_s16(roll_speed  ,      -100  ,  100  );
+			yaw_speed   =constraint_s16(yaw_speed   ,      -100  ,  100  );
 		}
-
 
 		//mix table
 		speeds_user.front_left  = height_speed +constraint_s16((-pitch_speed + roll_speed - yaw_speed),0,511);
@@ -360,7 +400,6 @@ void pilot_using_joystick_with_stabilizer(void){
 
 		//send to motors
 		atomic_motor_speed=speeds_user;
-		//printf("stable pilot > %d %d %d %d\r\n",height_speed,pitch_speed,roll_speed,yaw_speed);
 
 
 
